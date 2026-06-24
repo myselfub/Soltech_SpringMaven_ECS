@@ -1,5 +1,5 @@
-﻿# ECS
-ECS
+﻿# Soltech_SpringMaven_ECS
+솔텍시스템-한국수자원공사 전력에너지 전주기 통합시스템 구축운영, eGovMaven, Websquare
 
 - pom.xml 에러, Tomcat 에러, 404 에러 등 에러 발생 시
   1. 상단 메뉴바 Project-Clean
