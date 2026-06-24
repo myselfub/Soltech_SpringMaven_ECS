@@ -1,0 +1,1322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/dash_pbme_ecs.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSEC1000000.xml
+			* 설 명 : 종합 계획/건설/관리/폐기 현황
+			* 작성일 : 2023.02.01
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.01 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaDashYear" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="prvyy" dataType="number" name="전년도"></w2:key>
+						<w2:key id="thsyy" dataType="number" name="금년도"></w2:key>
+						<w2:key id="nxtyy" dataType="number" name="후년도"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltPrvyyNxtyyData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltThsyyData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltThsyyPlanList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="cmmnCdNm" dataType="text" name="구분코드"></w2:column>
+						<w2:column id="gubun1" dataType="text" name="금년도 계획 구분1"></w2:column>
+						<w2:column id="sum" dataType="number" name="금년도 계획 합계"></w2:column>
+						<w2:column id="lgwtpw" dataType="number" name="금년도 계획 대수력"></w2:column>
+						<w2:column id="smlhp" dataType="number" name="금년도 계획 소수력"></w2:column>
+						<w2:column id="tdpw" dataType="number" name="금년도 계획 조력"></w2:column>
+						<w2:column id="snpw" dataType="number" name="금년도 계획 태양광"></w2:column>
+						<w2:column id="wdpw" dataType="number" name="금년도 계획 풍력"></w2:column>
+						<w2:column id="wtht" dataType="number" name="금년도 계획 수열"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltThsyyCnstrcList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="cmmnCdNm" dataType="text" name="구분코드"></w2:column>
+						<w2:column id="gubun1" dataType="text" name="금년도 건설 구분1"></w2:column>
+						<w2:column id="sum" dataType="number" name="금년도 건설 합계"></w2:column>
+						<w2:column id="lgwtpw" dataType="number" name="금년도 건설 대수력"></w2:column>
+						<w2:column id="smlhp" dataType="number" name="금년도 건설 소수력"></w2:column>
+						<w2:column id="tdpw" dataType="number" name="금년도 건설 조력"></w2:column>
+						<w2:column id="snpw" dataType="number" name="금년도 건설 태양광"></w2:column>
+						<w2:column id="wdpw" dataType="number" name="금년도 건설 풍력"></w2:column>
+						<w2:column id="wtht" dataType="number" name="금년도 건설 수열"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltThsyyMngList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="cmmnCdNm" dataType="text" name="구분코드"></w2:column>
+						<w2:column id="gubun1" dataType="text" name="금년도 관리 구분1"></w2:column>
+						<w2:column id="sum" dataType="number" name="금년도 관리 합계"></w2:column>
+						<w2:column id="lgwtpw" dataType="number" name="금년도 관리 대수력"></w2:column>
+						<w2:column id="smlhp" dataType="number" name="금년도 관리 소수력"></w2:column>
+						<w2:column id="tdpw" dataType="number" name="금년도 관리 조력"></w2:column>
+						<w2:column id="snpw" dataType="number" name="금년도 관리 태양광"></w2:column>
+						<w2:column id="wdpw" dataType="number" name="금년도 관리 풍력"></w2:column>
+						<w2:column id="wtht" dataType="number" name="금년도 관리 수열"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltThsyyDsuseList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="cmmnCdNm" dataType="text" name="구분코드"></w2:column>
+						<w2:column id="gubun1" dataType="text" name="금년도 폐기 구분1"></w2:column>
+						<w2:column id="sum" dataType="number" name="금년도 폐기 합계"></w2:column>
+						<w2:column id="lgwtpw" dataType="number" name="금년도 폐기 대수력"></w2:column>
+						<w2:column id="smlhp" dataType="number" name="금년도 폐기 소수력"></w2:column>
+						<w2:column id="tdpw" dataType="number" name="금년도 폐기 조력"></w2:column>
+						<w2:column id="snpw" dataType="number" name="금년도 폐기 태양광"></w2:column>
+						<w2:column id="wdpw" dataType="number" name="금년도 폐기 풍력"></w2:column>
+						<w2:column id="wtht" dataType="number" name="금년도 폐기 수열"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"observeEvent" : false,
+		"minYear" : 1980,
+		"maxYear" : Number(utilLib.getCurrentDate("yyyy")) + 1
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSEC1000000", {"initScreenCallback" : scwin.searchDatas});
+		//scwin.searchDatas();
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		scwin.setDashYear();
+	};
+
+	/**
+	 * 년도선택 이벤트 처리
+	 */
+	scwin.initData.dashYearEvent = false;
+	scwin.setDashYear = function() {
+		scwin.setDashYearData();
+		/*
+		[...document.querySelectorAll("#" + $p.getFrameId() + " .dash-con-box-pbme .dash-water-drop-shape-con .dash-water-drop-label")].filter(emt =>
+			!emt.id.endsWith("spnThsyy")).forEach(emt => {
+		*/
+		[...document.querySelectorAll("#" + $p.getFrameId() + " .dash-con-box-pbme .dash-water-drop-shape-con .dash-water-drop-label")].forEach(emt => {
+			emt.addEventListener("click", function(e) {
+				if (!scwin.initData.dashYearEvent) {
+					var _this = e.target;
+					scwin.initData.dashYearEvent = true;
+					while(_this.tagName.toLowerCase() != "span") {
+						_this = _this.parentElement;
+						if (_this.tagName.toLowerCase() == "body") {
+							return;
+						}
+					}
+					var dataYear = _this.getAttribute("data-year"); // _this.textContent
+					if (scwin.initData.minYear > Number(dataYear) || Number(dataYear) >= scwin.initData.maxYear) {
+						scwin.initData.dashYearEvent = false;
+						return;
+					}
+					if (_this.classList.value.includes("-prvyy")) {
+						scwin.setDashYearData(Number(dataYear), "prvyy");
+					} else if (_this.classList.value.includes("-nxtyy")) {
+						scwin.setDashYearData(Number(dataYear), "nxtyy");
+					} else {
+						scwin.setDashYearData(Number(dataYear), "thsyy");
+					}
+				}
+			});
+		});
+	};
+
+	/**
+	 * 년도선택 데이터 바인딩
+	 */
+	scwin.setDashYearData = function(year, type) {
+		if (!year) {
+			year = Number($p.getCurrentServerDate("yyyy"));
+			var isEmpty = true;
+			//var isEmpty = false;
+		}
+		var dashYear = dmaDashYear.getJSON();
+		dashYear["prvyy"] = (Number(year) - 1);
+		document.getElementById(spnPrvyy.getID()).setAttribute("data-year", (Number(year) - 1));
+		dashYear["thsyy"] = Number(year);
+		document.getElementById(spnThsyy.getID()).setAttribute("data-year", Number(year));
+		dashYear["nxtyy"] = (Number(year) + 1);
+		document.getElementById(spnNxtyy.getID()).setAttribute("data-year", (Number(year) + 1));
+		dmaDashYear.setJSON(dashYear);
+		if (isEmpty) {
+			document.getElementById(spnNxtyy.getID()).style.cursor = "not-allowed";
+			var duration = 200;
+			var lineHeight = 3;
+			var letterSpacing = -10;
+			/*
+			var duration = 100;
+			var lineHeight = 4.5;
+			var letterSpacing = -10;
+			*/
+			odoo.default({
+				"el" : "#" + spnPrvyy.getID(), // 타겟 Element
+				"from" : "-", // 시작하는 글자
+				"to" : dashYear["prvyy"], // 끝나는 글자
+				"animationDelay" : 10, // 애니메이션 시작전 딜레이
+				//"letterAnimationDelay" : 10, // 1글자씩 딜레이
+				"lineHeight" : lineHeight, // 글자 위아래 간격
+				"letterSpacing" : letterSpacing, // 글자 사이간격
+				"duration": duration, // 애니메이션 진행시간(23.04.21 JS를 수정한거라 수정본 사라지지 않게 조심)
+			});
+			odoo.default({
+				"el" : "#" + spnNxtyy.getID(),
+				"from" : "-",
+				"to" : dashYear["nxtyy"],
+				"animationDelay" : 10,
+				//"letterAnimationDelay" : 10,
+				"lineHeight" : lineHeight,
+				"letterSpacing" : letterSpacing,
+				"duration": duration,
+			});
+			odoo.default({
+				"el" : "#" + spnThsyy.getID(),
+				"from" : "-",
+				"to" : dashYear["thsyy"],
+				"animationDelay" : 10,
+				//"letterAnimationDelay" : 10,
+				//"lineHeight" : 6.1,
+				"lineHeight" : lineHeight,
+				"letterSpacing" : letterSpacing,
+				"duration": duration,
+			});
+		} else {
+			var prvyyFrom = year - 1;
+			var prvyyTo = year - 1;
+			var nxtyyFrom = year + 1;
+			var nxtyyTo = year + 1;
+			var thsyyFrom = year;
+			var thsyyTo = year;
+			if (type == "prvyy") {
+				prvyyFrom = year;
+				prvyyTo = year - 1;
+				nxtyyFrom = year + 2;
+				nxtyyTo = year + 1;
+				thsyyFrom = year + 1;
+				thsyyTo = year;
+			} else if (type == "nxtyy") {
+				prvyyFrom = year - 2;
+				prvyyTo = year - 1;
+				nxtyyFrom = year;
+				nxtyyTo = year + 1;
+				thsyyFrom = year -1;
+				thsyyTo = year;
+			}
+			if (scwin.initData.minYear > Number(prvyyTo)) {
+				document.getElementById(spnPrvyy.getID()).style.cursor = "not-allowed";
+			} else if (Number(nxtyyTo) >= scwin.initData.maxYear) {
+				document.getElementById(spnNxtyy.getID()).style.cursor = "not-allowed";
+			} else {
+				document.getElementById(spnPrvyy.getID()).removeAttribute("style")
+				document.getElementById(spnNxtyy.getID()).removeAttribute("style")
+			}
+			var duration = 200;
+			var lineHeight = 3;
+			var letterSpacing = -10;
+			odoo.default({
+				"el" : "#" + spnPrvyy.getID(), // 타겟 Element
+				"from" : prvyyFrom, // 시작하는 글자
+				"to" : prvyyTo, // 끝나는 글자
+				"animationDelay" : 10, // 애니메이션 시작전 딜레이
+				//"letterAnimationDelay" : 10, // 1글자씩 딜레이
+				"lineHeight" : lineHeight, // 글자 위아래 간격
+				"letterSpacing" : letterSpacing, // 글자 사이간격
+				"duration": duration, // 애니메이션 진행시간(23.04.21 JS를 수정한거라 수정본 사라지지 않게 조심)
+			});
+			odoo.default({
+				"el" : "#" + spnNxtyy.getID(),
+				"from" : nxtyyFrom,
+				"to" : nxtyyTo,
+				"animationDelay" : 10,
+				//"letterAnimationDelay" : 10,
+				"lineHeight" : lineHeight,
+				"letterSpacing" : letterSpacing,
+				"duration": duration,
+			});
+			odoo.default({
+				"el" : "#" + spnThsyy.getID(),
+				"from" : thsyyFrom,
+				"to" : thsyyTo,
+				"animationDelay" : 10,
+				//"letterAnimationDelay" : 10,
+				"lineHeight" : lineHeight,
+				"letterSpacing" : letterSpacing,
+				"duration": duration,
+			});
+			setTimeout(() => {
+				scwin.initData.dashYearEvent = false;
+			}, 300);
+		}
+		scwin.setThsyyLabelClickEvent();
+		scwin.serachYearData();
+	};
+
+	/**
+	 * 전주기 현황 타이틀 클릭시 이동 이벤트 등록
+	 */
+	scwin.setThsyyLabelClickEvent = function() {
+		ecsLib.setMenuClickEvent(".dash-con-box-pbme .dash-list-box-bottom",
+			"dash-box-con-box-",
+			{
+				"ECSPB100000" : "ECSPB000000",
+				"ECSME100000" : "ECSME000000",
+				"ECSME200000" : "ECSME000000"
+			},
+			{
+				"p" : "ECSPB100000",
+				"b" : "ECSPB100000",
+				"m" : "ECSME100000",
+				"e" : "ECSME200000"
+			},
+			{
+				"year" : dmaDashYear.getJSON().thsyy
+			}
+		);
+	};
+
+	/*
+	 * 년도 데이터 조회
+	 */
+	scwin.serachYearData = function() {
+		var dashYear = dmaDashYear.getJSON();
+		scwin.searchPrvyyNxtyyData();
+		scwin.searchThsyyData(dashYear["thsyy"]);
+	};
+
+	/**
+	 * 전년도 및 후년도 데이터 조회_0922
+	 */
+	scwin.searchPrvyyNxtyyData = function() {
+		var dashYear = dmaDashYear.getJSON();
+		var strtDt = dashYear["prvyy"];
+		var endDt = dashYear["nxtyy"];
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+
+		var option = {
+			action : "ec/pbme/retrieve-pbme-sttus.do" +
+				queryString,
+			method : "get",
+			resData : dltPrvyyNxtyyData,
+			success : "scwin.searchPrvyyNxtyyDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전년도 및 후년도 및 금년도 라벨 데이터 조회 콜백_0922
+	 */
+	scwin.searchPrvyyNxtyyDataCallBack = function() {
+		var prvyyNxtyyData = dltPrvyyNxtyyData.getAllJSON();
+		var dashYear = dmaDashYear.getJSON();
+		var strtDt = dashYear["prvyy"];
+		var endDt = dashYear["nxtyy"];
+		var year = dashYear["thsyy"];
+
+		// 전년도 데이터 매핑
+		var planCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "planComptEqpCpcty") || 0).inqireIemVu;
+		spnPrvyyPlanCpcty.setLabel(ecsLib.dsplFrmt(planCpcty, 2));
+		var planAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "planComptAmt") || 0).inqireIemVu;
+		spnPrvyyPlanAmt.setLabel(ecsLib.dsplFrmt(planAmt, 2));
+		var planFoundng = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "planFoundngCnt") || 0).inqireIemVu;
+		spnPrvyyPlanFoundng.setLabel(ecsLib.dsplFrmt(planFoundng));
+		var planPrgs = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "planPrgsCnt") || 0).inqireIemVu;
+		spnPrvyyPlanPrgs.setLabel(ecsLib.dsplFrmt(planPrgs));
+		var planCompt = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "planComptCnt") || 0).inqireIemVu;
+		spnPrvyyPlanCompt.setLabel(ecsLib.dsplFrmt(planCompt));
+		var cnstrcCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "cnstrcComptEqpCpcty") || 0).inqireIemVu;
+		spnPrvyyCnstrcCpcty.setLabel(ecsLib.dsplFrmt(cnstrcCpcty, 2));
+		var cnstrcAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "cnstrcComptAmt") || 0).inqireIemVu;
+		spnPrvyyCnstrcAmt.setLabel(ecsLib.dsplFrmt(cnstrcAmt, 2));
+		var cnstrcFoundng = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "cnstrcFoundngCnt") || 0).inqireIemVu;
+		spnPrvyyCnstrcFoundng.setLabel(ecsLib.dsplFrmt(cnstrcFoundng));
+		var cnstrcPrgs = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "cnstrcPrgsCnt") || 0).inqireIemVu;
+		spnPrvyyCnstrcPrgs.setLabel(ecsLib.dsplFrmt(cnstrcPrgs));
+		var cnstrcCompt = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "cnstrcComptCnt") || 0).inqireIemVu;
+		spnPrvyyCnstrcCompt.setLabel(ecsLib.dsplFrmt(cnstrcCompt));
+		var mngCnt = (prvyyNxtyyData.reduce((sum, obj) => obj.inqireDe == strtDt && obj.iemDivId == "mngReprMntnc" || obj.inqireDe == strtDt && obj.iemDivId == "mngRemt" || obj.inqireDe == strtDt && obj.iemDivId == "mngChckMntnc" ? sum + Number(obj.inqireIemVu) : sum, 0) || 0);
+		spnPrvyyMngCnt.setLabel(ecsLib.dsplFrmt(mngCnt));
+		var mngAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "mngAmt") || 0).inqireIemVu;
+		spnPrvyyMngAmt.setLabel(ecsLib.dsplFrmt(mngAmt, 2));
+		var mngReprMntnc = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "mngReprMntnc") || 0).inqireIemVu;
+		spnPrvyyMngReprMntnc.setLabel(ecsLib.dsplFrmt(mngReprMntnc));
+		var mngRemt = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "mngRemt") || 0).inqireIemVu;
+		spnPrvyyMngRemt.setLabel(ecsLib.dsplFrmt(mngRemt));
+		var mngChckMntnc = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "mngChckMntnc") || 0).inqireIemVu;
+		spnPrvyyMngChckMntnc.setLabel(ecsLib.dsplFrmt(mngChckMntnc));
+		var dsuseCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "dsuseComptEqpCpcty") || 0).inqireIemVu;
+		spnPrvyyDsuseCpcty.setLabel(ecsLib.dsplFrmt(dsuseCpcty, 2));
+		var dsuseAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "dsuseComptAmt") || 0).inqireIemVu;
+		spnPrvyyDsuseAmt.setLabel(ecsLib.dsplFrmt(dsuseAmt, 2));
+		var dsuseFoundng = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "dsuseFoundngCnt") || 0).inqireIemVu;
+		spnPrvyyDsuseFoundng.setLabel(ecsLib.dsplFrmt(dsuseFoundng));
+		var dsusePrgs = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "dsusePrgsCnt") || 0).inqireIemVu;
+		spnPrvyyDsusePrgs.setLabel(ecsLib.dsplFrmt(dsusePrgs));
+		var dsuseCompt = (prvyyNxtyyData.find(obj => obj.inqireDe == strtDt && obj.iemDivId == "dsuseComptCnt") || 0).inqireIemVu;
+		spnPrvyyDsuseCompt.setLabel(ecsLib.dsplFrmt(dsuseCompt));
+
+		// 후년도 데이터 매핑
+		var planCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "planComptEqpCpcty") || 0).inqireIemVu;
+		spnNxtyyPlanCpcty.setLabel(ecsLib.dsplFrmt(planCpcty, 2));
+		var planAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "planComptAmt") || 0).inqireIemVu;
+		spnNxtyyPlanAmt.setLabel(ecsLib.dsplFrmt(planAmt, 2));
+		var planFoundng = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "planFoundngCnt") || 0).inqireIemVu;
+		spnNxtyyPlanFoundng.setLabel(ecsLib.dsplFrmt(planFoundng));
+		var planPrgs = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "planPrgsCnt") || 0).inqireIemVu;
+		spnNxtyyPlanPrgs.setLabel(ecsLib.dsplFrmt(planPrgs));
+		var planCompt = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "planComptCnt") || 0).inqireIemVu;
+		spnNxtyyPlanCompt.setLabel(ecsLib.dsplFrmt(planCompt));
+		var cnstrcCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "cnstrcComptEqpCpcty") || 0).inqireIemVu;
+		spnNxtyyCnstrcCpcty.setLabel(ecsLib.dsplFrmt(cnstrcCpcty, 2));
+		var cnstrcAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "cnstrcComptAmt") || 0).inqireIemVu;
+		spnNxtyyCnstrcAmt.setLabel(ecsLib.dsplFrmt(cnstrcAmt, 2));
+		var cnstrcFoundng = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "cnstrcFoundngCnt") || 0).inqireIemVu;
+		spnNxtyyCnstrcFoundng.setLabel(ecsLib.dsplFrmt(cnstrcFoundng));
+		var cnstrcPrgs = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "cnstrcPrgsCnt") || 0).inqireIemVu;
+		spnNxtyyCnstrcPrgs.setLabel(ecsLib.dsplFrmt(cnstrcPrgs));
+		var cnstrcCompt = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "cnstrcComptCnt") || 0).inqireIemVu;
+		spnNxtyyCnstrcCompt.setLabel(ecsLib.dsplFrmt(cnstrcCompt));
+		var mngCnt = (prvyyNxtyyData.reduce((sum, obj) => obj.inqireDe == endDt && obj.iemDivId == "mngReprMntnc" || obj.inqireDe == endDt && obj.iemDivId == "mngRemt" || obj.inqireDe == endDt && obj.iemDivId == "mngChckMntnc" ? sum + Number(obj.inqireIemVu) : sum, 0) || 0);
+		spnNxtyyMngCnt.setLabel(ecsLib.dsplFrmt(mngCnt));
+		var mngAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "mngAmt") || 0).inqireIemVu;
+		spnNxtyyMngAmt.setLabel(ecsLib.dsplFrmt(mngAmt, 2));
+		var mngReprMntnc = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "mngReprMntnc") || 0).inqireIemVu;
+		spnNxtyyMngReprMntnc.setLabel(ecsLib.dsplFrmt(mngReprMntnc));
+		var mngRemt = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "mngRemt") || 0).inqireIemVu;
+		spnNxtyyMngRemt.setLabel(ecsLib.dsplFrmt(mngRemt));
+		var mngChckMntnc = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "mngChckMntnc") || 0).inqireIemVu;
+		spnNxtyyMngChckMntnc.setLabel(ecsLib.dsplFrmt(mngChckMntnc));
+		var dsuseCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "dsuseComptEqpCpcty") || 0).inqireIemVu;
+		spnNxtyyDsuseCpcty.setLabel(ecsLib.dsplFrmt(dsuseCpcty, 2));
+		var dsuseAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "dsuseComptAmt") || 0).inqireIemVu;
+		spnNxtyyDsuseAmt.setLabel(ecsLib.dsplFrmt(dsuseAmt, 2));
+		var dsuseFoundng = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "dsuseFoundngCnt") || 0).inqireIemVu;
+		spnNxtyyDsuseFoundng.setLabel(ecsLib.dsplFrmt(dsuseFoundng));
+		var dsusePrgs = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "dsusePrgsCnt") || 0).inqireIemVu;
+		spnNxtyyDsusePrgs.setLabel(ecsLib.dsplFrmt(dsusePrgs));
+		var dsuseCompt = (prvyyNxtyyData.find(obj => obj.inqireDe == endDt && obj.iemDivId == "dsuseComptCnt") || 0).inqireIemVu;
+		spnNxtyyDsuseCompt.setLabel(ecsLib.dsplFrmt(dsuseCompt));
+
+		// 금년도 라벨 데이터 매핑
+		var planCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == year && obj.iemDivId == "planComptEqpCpcty") || 0).inqireIemVu;
+		spnThsyyPlanCpcty.setLabel(ecsLib.dsplFrmt(planCpcty, 2));
+		var planAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == year && obj.iemDivId == "planComptAmt") || 0).inqireIemVu;
+		spnThsyyPlanAmt.setLabel(ecsLib.dsplFrmt(planAmt, 2));
+		var cnstrcCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == year && obj.iemDivId == "cnstrcComptEqpCpcty") || 0).inqireIemVu;
+		spnThsyyCnstrcCpcty.setLabel(ecsLib.dsplFrmt(cnstrcCpcty, 2));
+		var cnstrcAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == year && obj.iemDivId == "cnstrcComptAmt") || 0).inqireIemVu;
+		spnThsyyCnstrcAmt.setLabel(ecsLib.dsplFrmt(cnstrcAmt, 2));
+		var mngCnt = (prvyyNxtyyData.reduce((sum, obj) => obj.inqireDe == year && obj.iemDivId == "mngReprMntnc" || obj.inqireDe == year && obj.iemDivId == "mngRemt" || obj.inqireDe == year && obj.iemDivId == "mngChckMntnc" ? sum + Number(obj.inqireIemVu) : sum, 0) || 0);
+		spnThsyyMngCnt.setLabel(ecsLib.dsplFrmt(mngCnt));
+		var mngAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == year && obj.iemDivId == "mngAmt") || 0).inqireIemVu;
+		spnThsyyMngAmt.setLabel(ecsLib.dsplFrmt(mngAmt, 2));
+		var dsuseCpcty = (prvyyNxtyyData.find(obj => obj.inqireDe == year && obj.iemDivId == "dsuseComptEqpCpcty") || 0).inqireIemVu;
+		spnThsyyDsuseCpcty.setLabel(ecsLib.dsplFrmt(dsuseCpcty, 2));
+		var dsuseAmt = (prvyyNxtyyData.find(obj => obj.inqireDe == year && obj.iemDivId == "dsuseComptAmt") || 0).inqireIemVu;
+		spnThsyyDsuseAmt.setLabel(ecsLib.dsplFrmt(dsuseAmt, 2));
+	};
+
+	/**
+	 * 금년도의 데이터 조회_0926
+	 */
+	scwin.searchThsyyData = function(year) {
+		var strtDt = year;
+		var endDt = year;
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+
+		var option = {
+			action : "ec/pbme/retrieve-pbme-sttus-setcsc.do" +
+				queryString,
+			method : "get",
+			resData : dltThsyyPlanList,
+			success : "scwin.searchThsyyDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 금년도의 데이터 조회 콜백_0926
+	 */
+	scwin.searchThsyyDataCallBack = function() {
+		var thsyyPlanData = dltThsyyPlanList.getAllJSON();
+		var planData = thsyyPlanData.filter(obj => obj.cmmnCdNm.startsWith("plan"));
+		var cnstrcData = thsyyPlanData.filter(obj => obj.cmmnCdNm.startsWith("cnstrc"));
+		var mngData = thsyyPlanData.filter(obj => obj.cmmnCdNm.startsWith("mng"));
+		var dsuseData = thsyyPlanData.filter(obj => obj.cmmnCdNm.startsWith("dsuse"));
+
+		dltThsyyPlanList.setJSON(planData);
+		dltThsyyCnstrcList.setJSON(cnstrcData);
+		dltThsyyMngList.setJSON(mngData);
+		dltThsyyDsuseList.setJSON(dsuseData);
+		// 그리드 병합
+		/*
+		grdThsyyPlan.mergeCell({"rowIndex" : 0, "colIndex" : 0, "rowSpan" : 3, "colSpan" : 1});
+		grdThsyyCnstrc.mergeCell({"rowIndex" : 0, "colIndex" : 0, "rowSpan" : 3, "colSpan" : 1});
+		grdThsyyMng.mergeCell({"rowIndex" : 0, "colIndex" : 0, "rowSpan" : 3, "colSpan" : 1});
+		grdThsyyDsuse.mergeCell({"rowIndex" : 0, "colIndex" : 0, "rowSpan" : 3, "colSpan" : 1});
+		*/
+	};
+]]></script>
+		<script type="text/javascript" src="/resources/js/common/codevember16_odoo.js"></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="dash-con-box dash-con-box-pbme">
+						<xf:group class="dash-list-box dash-list-box-top">
+							<xf:group class="dash-box">
+								<xf:group class="dash-box-con dash-box-con-prvyy">
+									<xf:group class="dash-square">
+										<xf:group class="dash-square-top dash-box-title-p">계&amp;ensp;획</xf:group>
+										<xf:group class="dash-square-box">
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-50" tagname="col"></xf:group>
+													<xf:group class="wd-50" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyPlanCpcty" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyPlanAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-55" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-12" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">수&amp;ensp;립</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyPlanFoundng" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">진&amp;ensp;행</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyPlanPrgs" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">완&amp;ensp;료</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyPlanCompt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group class="dash-square">
+										<xf:group class="dash-square-top dash-box-title-p">건&amp;ensp;설</xf:group>
+										<xf:group class="dash-square-box">
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-50" tagname="col"></xf:group>
+													<xf:group class="wd-50" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyCnstrcCpcty" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyCnstrcAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-55" tagname="col" style=""></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-12" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" style="">
+													<xf:group tagname="td">수&amp;ensp;립</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyCnstrcFoundng" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">진&amp;ensp;행</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyCnstrcPrgs" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">완&amp;ensp;료</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyCnstrcCompt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group class="dash-square">
+										<xf:group class="dash-square-top dash-box-title-p">관&amp;ensp;리</xf:group>
+										<xf:group class="dash-square-box">
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-50" tagname="col"></xf:group>
+													<xf:group class="wd-50" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														건수
+														<w2:span class="dash-box-sub-title" label="(건)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyMngCnt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyMngAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-55" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-12" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">수선유지</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyMngReprMntnc" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">개&amp;ensp;대&amp;ensp;체</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyMngRemt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">점검정비</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyMngChckMntnc" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group class="dash-square">
+										<xf:group class="dash-square-top dash-box-title-p">폐&amp;ensp;기</xf:group>
+										<xf:group class="dash-square-box">
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-50" tagname="col"></xf:group>
+													<xf:group class="wd-50" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyDsuseCpcty" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyDsuseAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-55" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-12" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">수&amp;ensp;립</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyDsuseFoundng" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">진&amp;ensp;행</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyDsusePrgs" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">완&amp;ensp;료</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnPrvyyDsuseCompt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-water-drop-shape">
+									<w2:water_drop_shape></w2:water_drop_shape>
+									<xf:group class="dash-water-drop-shape-con">
+										<w2:span id="spnPrvyy" class="dash-water-drop-label dash-water-drop-label-prvyy" label="-"></w2:span>
+										<w2:span id="spnNxtyy" class="dash-water-drop-label dash-water-drop-label-nxtyy" label="-"></w2:span>
+										<w2:span id="spnThsyy" class="dash-water-drop-label dash-water-drop-label-thsyy" label="-"></w2:span>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con dash-box-con-nxtyy">
+									<xf:group class="dash-square">
+										<xf:group class="dash-square-top dash-box-title-p">계&amp;ensp;획</xf:group>
+										<xf:group class="dash-square-box">
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-50" tagname="col"></xf:group>
+													<xf:group class="wd-50" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyPlanCpcty" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyPlanAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-55" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-12" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">수&amp;ensp;립</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyPlanFoundng" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">진&amp;ensp;행</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyPlanPrgs" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">완&amp;ensp;료</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyPlanCompt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group class="dash-square">
+										<xf:group class="dash-square-top dash-box-title-p">건&amp;ensp;설</xf:group>
+										<xf:group class="dash-square-box">
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-50" tagname="col"></xf:group>
+													<xf:group class="wd-50" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyCnstrcCpcty" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyCnstrcAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-55" tagname="col" style=""></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-12" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" style="">
+													<xf:group tagname="td">수&amp;ensp;립</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyCnstrcFoundng" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">진&amp;ensp;행</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyCnstrcPrgs" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">완&amp;ensp;료</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyCnstrcCompt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group class="dash-square">
+										<xf:group class="dash-square-top dash-box-title-p">관&amp;ensp;리</xf:group>
+										<xf:group class="dash-square-box">
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-50" tagname="col"></xf:group>
+													<xf:group class="wd-50" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														건수
+														<w2:span class="dash-box-sub-title" label="(건)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyMngCnt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyMngAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-55" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-12" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">수선유지</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyMngReprMntnc" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">개&amp;ensp;대&amp;ensp;체</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyMngRemt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">점검정비</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyMngChckMntnc" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group class="dash-square">
+										<xf:group class="dash-square-top dash-box-title-p">폐&amp;ensp;기</xf:group>
+										<xf:group class="dash-square-box">
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-50" tagname="col"></xf:group>
+													<xf:group class="wd-50" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyDsuseCpcty" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyDsuseAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="dash-square-con" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-55" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-12" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">수&amp;ensp;립</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyDsuseFoundng" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">진&amp;ensp;행</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyDsusePrgs" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">완&amp;ensp;료</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnNxtyyDsuseCompt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">건</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="dash-list-box dash-list-box-bottom">
+							<xf:group class="dash-box">
+								<xf:group class="dash-box-con dash-box-con-box-p">
+									<xf:group class="dash-box-con-title">
+										<!-- <w2:textbox class="wd-10 dash-box-con-title-label dash-box-con-title-p" label="계획" / -->
+										<xf:group class="text-l">계 획&amp;emsp;</xf:group>
+										<w2:dash_pbme_bangul_p class="dash-box-con-title-label dash-box-con-title-p dash-box-con-bangul-p"></w2:dash_pbme_bangul_p>
+										<xf:group class="dash-box-con-title-data wd-24">
+											<xf:group tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-45" tagname="col"></xf:group>
+													<xf:group class="wd-55" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" toolTip="계획완료 용량">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThsyyPlanCpcty" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="wd-3"></xf:group>
+										<xf:group class="dash-box-con-title-data wd-24">
+											<xf:group tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-45" tagname="col"></xf:group>
+													<xf:group class="wd-55" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" toolTip="계획완료 금액">
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThsyyPlanAmt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<w2:gridView id="grdThsyyPlan" class="dash-grd" dataList="dltThsyyPlanList" readOnly="true" checkReadOnlyOnPaste="true"
+										checkReadOnlyOnCut="true" focusMode="none" tooltipDisplay="true" resize="false" defaultCellHeight="35" visibleRowNum="5"
+										rowMouseOverColor="#FFFFFF00">
+										<w2:header>
+											<w2:row>
+												<w2:column id="hGubun" inputType="text" width="120" value="구분"></w2:column>
+												<w2:column id="hSum" inputType="text" width="130" value="합계"></w2:column>
+												<w2:column id="hLgwtpw" inputType="text" width="125" value="대수력"></w2:column>
+												<w2:column id="hSmlhp" inputType="text" width="125" value="소수력"></w2:column>
+												<w2:column id="hTdpw" inputType="text" width="125" value="조력"></w2:column>
+												<w2:column id="hSnpw" inputType="text" width="125" value="태양광"></w2:column>
+												<w2:column id="hWdpw" inputType="text" width="125" value="풍력"></w2:column>
+												<w2:column id="hWtht" inputType="text" width="125" value="수열"></w2:column>
+											</w2:row>
+										</w2:header>
+										<w2:gBody>
+											<w2:row>
+												<w2:column id="gubun1" inputType="text" blockSelect="true" style="height:45px;"></w2:column>
+												<w2:column id="sum" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="lgwtpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="smlhp" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="tdpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="snpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="wdpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="wtht" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+											</w2:row>
+										</w2:gBody>
+										<!-- <w2:subTotal> 김동현차장 요청으로 합계 주석_231205
+											<w2:row>
+											<w2:column id="stGubun" inputType="text" value="합계"></w2:column>
+											<w2:column id="stSum" inputType="expression" expression="sum('sum')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stLgwtpw" inputType="expression" expression="sum('lgwtpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stSmlhp" inputType="expression" expression="sum('smlhp')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stTdpw" inputType="expression" expression="sum('tdpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stSnpw" inputType="expression" expression="sum('snpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stWdpw" inputType="expression" expression="sum('wdpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stWtht" inputType="expression" expression="sum('wtht')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											</w2:row>
+											</w2:subTotal> -->
+									</w2:gridView>
+								</xf:group>
+								<xf:group class="dash-box-con dash-box-con-box-b">
+									<xf:group class="dash-box-con-title">
+										<xf:group class="wd-11"></xf:group>
+										<xf:group class="dash-box-con-title-data wd-24">
+											<xf:group tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-45" tagname="col"></xf:group>
+													<xf:group class="wd-55" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" toolTip="건설완료 용량">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThsyyCnstrcCpcty" label="-" ref="data:dmaThsyyData.thsyyCnstrcCpcty"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="wd-3"></xf:group>
+										<xf:group class="dash-box-con-title-data wd-24">
+											<xf:group tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-45" tagname="col"></xf:group>
+													<xf:group class="wd-55" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" toolTip="건설완료 금액">
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThsyyCnstrcAmt" label="-" ref="data:dmaThsyyData.thsyyCnstrcAmt"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<!-- <w2:textbox class="wd-10 dash-box-con-title-label dash-box-con-title-b" label="건설"></w2:textbox> -->
+										<w2:dash_pbme_bangul_b class="dash-box-con-title-label dash-box-con-title-b dash-box-con-bangul-b"></w2:dash_pbme_bangul_b>
+										<xf:group class="text-r margin-l-min-w">&amp;emsp;건 설</xf:group>
+									</xf:group>
+									<w2:gridView id="grdThsyyCnstrc" class="dash-grd" dataList="dltThsyyCnstrcList" readOnly="true" checkReadOnlyOnPaste="true"
+										checkReadOnlyOnCut="true" focusMode="none" tooltipDisplay="true" resize="false" defaultCellHeight="35" visibleRowNum="5"
+										rowMouseOverColor="#FFFFFF00">
+										<w2:header>
+											<w2:row>
+												<w2:column id="hGubun" inputType="text" width="120" value="구분"></w2:column>
+												<w2:column id="hSum" inputType="text" width="130" value="합계"></w2:column>
+												<w2:column id="hLgwtpw" inputType="text" width="125" value="대수력"></w2:column>
+												<w2:column id="hSmlhp" inputType="text" width="125" value="소수력"></w2:column>
+												<w2:column id="hTdpw" inputType="text" width="125" value="조력"></w2:column>
+												<w2:column id="hSnpw" inputType="text" width="125" value="태양광"></w2:column>
+												<w2:column id="hWdpw" inputType="text" width="125" value="풍력"></w2:column>
+												<w2:column id="hWtht" inputType="text" width="125" value="수열"></w2:column>
+											</w2:row>
+										</w2:header>
+										<w2:gBody>
+											<w2:row>
+												<w2:column id="gubun1" inputType="text" blockSelect="true" style="height:45px;"></w2:column>
+												<w2:column id="sum" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="lgwtpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="smlhp" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="tdpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="snpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="wdpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="wtht" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+											</w2:row>
+										</w2:gBody>
+										<!-- <w2:subTotal> 김동현차장 요청으로 합계 주석_231205
+											<w2:row>
+											<w2:column id="stGubun" inputType="text" value="합계"></w2:column>
+											<w2:column id="stSum" inputType="expression" expression="sum('sum')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stLgwtpw" inputType="expression" expression="sum('lgwtpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stSmlhp" inputType="expression" expression="sum('smlhp')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stTdpw" inputType="expression" expression="sum('tdpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stSnpw" inputType="expression" expression="sum('snpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stWdpw" inputType="expression" expression="sum('wdpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stWtht" inputType="expression" expression="sum('wtht')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											</w2:row>
+											</w2:subTotal> -->
+									</w2:gridView>
+								</xf:group>
+								<xf:group class="dash-box-con dash-box-con-box-m">
+									<xf:group class="dash-box-con-title">
+										<!-- <w2:textbox class="wd-10 dash-box-con-title-label dash-box-con-title-m" label="관리"></w2:textbox> -->
+										<xf:group class="text-l">관 리&amp;emsp;</xf:group>
+										<w2:dash_pbme_bangul_m class="dash-box-con-title-label dash-box-con-title-m dash-box-con-bangul-m"></w2:dash_pbme_bangul_m>
+										<xf:group class="dash-box-con-title-data wd-24 ml-5">
+											<xf:group tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-45" tagname="col"></xf:group>
+													<xf:group class="wd-55" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" toolTip="관리완료 건수">
+													<xf:group tagname="td">
+														건수
+														<w2:span class="dash-box-sub-title" label="(건)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThsyyMngCnt" label="-" ref="data:dmaThsyyData.thsyyMngCnt"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="wd-3"></xf:group>
+										<xf:group class="dash-box-con-title-data wd-24">
+											<xf:group tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-45" tagname="col"></xf:group>
+													<xf:group class="wd-55" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" toolTip="관리완료 금액">
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThsyyMngAmt" label="-" ref="data:dmaThsyyData.thsyyMngAmt"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<w2:gridView id="grdThsyyMng" class="dash-grd" dataList="dltThsyyMngList" readOnly="true" checkReadOnlyOnPaste="true"
+										checkReadOnlyOnCut="true" focusMode="none" tooltipDisplay="true" resize="false" defaultCellHeight="35" visibleRowNum="5"
+										rowMouseOverColor="#FFFFFF00">
+										<w2:header>
+											<w2:row>
+												<w2:column id="hGubun" inputType="text" width="120" value="구분"></w2:column>
+												<w2:column id="hSum" inputType="text" width="130" value="합계"></w2:column>
+												<w2:column id="hLgwtpw" inputType="text" width="125" value="대수력"></w2:column>
+												<w2:column id="hSmlhp" inputType="text" width="125" value="소수력"></w2:column>
+												<w2:column id="hTdpw" inputType="text" width="125" value="조력"></w2:column>
+												<w2:column id="hSnpw" inputType="text" width="125" value="태양광"></w2:column>
+												<w2:column id="hWdpw" inputType="text" width="125" value="풍력"></w2:column>
+												<w2:column id="hWtht" inputType="text" width="125" value="수열"></w2:column>
+											</w2:row>
+										</w2:header>
+										<w2:gBody>
+											<w2:row>
+												<w2:column id="gubun1" inputType="text" blockSelect="true"></w2:column>
+												<w2:column id="sum" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="lgwtpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="smlhp" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="tdpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="snpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="wdpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="wtht" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											</w2:row>
+										</w2:gBody>
+										<w2:subTotal>
+											<w2:row>
+												<w2:column id="stGubun" inputType="text" value="합계"></w2:column>
+												<w2:column id="stSum" inputType="expression" expression="sum('sum')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="stLgwtpw" inputType="expression" expression="sum('lgwtpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="stSmlhp" inputType="expression" expression="sum('smlhp')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="stTdpw" inputType="expression" expression="sum('tdpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="stSnpw" inputType="expression" expression="sum('snpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="stWdpw" inputType="expression" expression="sum('wdpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+												<w2:column id="stWtht" inputType="expression" expression="sum('wtht')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											</w2:row>
+										</w2:subTotal>
+									</w2:gridView>
+								</xf:group>
+								<xf:group class="dash-box-con dash-box-con-box-e">
+									<xf:group class="dash-box-con-title">
+										<xf:group class="wd-11"></xf:group>
+										<xf:group class="dash-box-con-title-data wd-24">
+											<xf:group tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-45" tagname="col"></xf:group>
+													<xf:group class="wd-55" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" toolTip="폐기완료 용량">
+													<xf:group tagname="td">
+														용량
+														<w2:span class="dash-box-sub-title" label="(MW)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThsyyDsuseCpcty" label="-" ref="data:dmaThsyyData.thsyyDsuseCpcty"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="wd-3"></xf:group>
+										<xf:group class="dash-box-con-title-data wd-24">
+											<xf:group tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-45" tagname="col"></xf:group>
+													<xf:group class="wd-55" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr" toolTip="폐기완료 금액">
+													<xf:group tagname="td">
+														금액
+														<w2:span class="dash-box-sub-title" label="(억원)"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThsyyDsuseAmt" label="-" ref="data:dmaThsyyData.thsyyDsuseAmt"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<!-- <w2:textbox class="wd-10 dash-box-con-title-label dash-box-con-title-e" label="폐기"></w2:textbox> -->
+										<w2:dash_pbme_bangul_e class="dash-box-con-title-label dash-box-con-title-e dash-box-con-bangul-e"></w2:dash_pbme_bangul_e>
+										<xf:group class="text-r margin-l-min-w">&amp;emsp;폐 기</xf:group>
+									</xf:group>
+									<w2:gridView id="grdThsyyDsuse" class="dash-grd" dataList="dltThsyyDsuseList" readOnly="true" checkReadOnlyOnPaste="true"
+										checkReadOnlyOnCut="true" focusMode="none" tooltipDisplay="true" resize="false" defaultCellHeight="35" visibleRowNum="5"
+										rowMouseOverColor="#FFFFFF00">
+										<w2:header>
+											<w2:row>
+												<w2:column id="hGubun" inputType="text" width="120" value="구분"></w2:column>
+												<w2:column id="hSum" inputType="text" width="130" value="합계"></w2:column>
+												<w2:column id="hLgwtpw" inputType="text" width="125" value="대수력"></w2:column>
+												<w2:column id="hSmlhp" inputType="text" width="125" value="소수력"></w2:column>
+												<w2:column id="hTdpw" inputType="text" width="125" value="조력"></w2:column>
+												<w2:column id="hSnpw" inputType="text" width="125" value="태양광"></w2:column>
+												<w2:column id="hWdpw" inputType="text" width="125" value="풍력"></w2:column>
+												<w2:column id="hWtht" inputType="text" width="125" value="수열"></w2:column>
+											</w2:row>
+										</w2:header>
+										<w2:gBody>
+											<w2:row>
+												<w2:column id="gubun1" inputType="text" blockSelect="true" style="height:45px;"></w2:column>
+												<w2:column id="sum" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="lgwtpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="smlhp" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="tdpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="snpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="wdpw" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+												<w2:column id="wtht" inputType="text" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" style="height:45px;"></w2:column>
+											</w2:row>
+										</w2:gBody>
+										<!-- <w2:subTotal> 김동현차장 요청으로 합계 주석_231205
+											<w2:row>
+											<w2:column id="stGubun" inputType="text" value="합계"></w2:column>
+											<w2:column id="stSum" inputType="expression" expression="sum('sum')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stLgwtpw" inputType="expression" expression="sum('lgwtpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stSmlhp" inputType="expression" expression="sum('smlhp')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stTdpw" inputType="expression" expression="sum('tdpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stSnpw" inputType="expression" expression="sum('snpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stWdpw" inputType="expression" expression="sum('wdpw')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											<w2:column id="stWtht" inputType="expression" expression="sum('wtht')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"></w2:column>
+											</w2:row>
+											</w2:subTotal> -->
+									</w2:gridView>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

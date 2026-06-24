@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+	]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "Flow 현황 화살표",
+			"version": "",
+			"apis": [],
+			"pluginName": "flow_sttus_arrow",
+			"width": "217",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "flow_sttus_arrow",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "170.41px"
+			}
+		-->
+		<xf:group class="flow-sttus-arrow" tagname="svg" pluginName="flow_sttus_arrow">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+		/**
+		 * //property handling
+		 * $w.log("id:" + options.id);
+		 * $w.log("style:" + options.style);
+		 * $w.log("class:" + options.class);
+		 * $w.log("ref:" + options.ref);
+		 *
+		 * //event trigger
+		*/
+		// 초기 수행함수 
+		this.initFlowSttusArrow = function() {
+		};
+
+		// 초기 실행함수 수행
+		this.initFlowSttusArrow();
+]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>20</w2:width>
+				<w2:height>16</w2:height>
+				<w2:viewBox>0 0 51 54</w2:viewBox>
+				<w2:fill>none</w2:fill>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="g">
+				<xf:group tagname="path">
+					<w2:attributes>
+						<w2:d>
+							M5.15873 1.55773C3.98236 0.390978 2.08288 0.39878 0.916127 1.57516C-0.250624 2.75153
+							-0.242822 4.65101 0.933553 5.81776L22.4776
+							27.1856L0.933553 48.5534C-0.242822 49.7202
+							-0.250624 51.6197 0.916127 52.796C2.08288 53.9724 3.98236 53.9802 5.15873 52.8135L28.8054
+							29.3156C29.4184 28.7523 29.7378 27.9855 29.7378 27.1856C29.7378 26.3857 29.4184 25.6189
+							28.8504 25.0556L5.15873 1.55773ZM25.4659
+							1.55773C24.2895 0.390978 22.39 0.39878 21.2233
+							1.57516C20.0565 2.75153 20.0643 4.65101 21.2407 5.81776L42.7848 27.1856L21.2407
+							48.5534C20.0643 49.7202 20.0565 51.6197 21.2233 52.796C22.39 53.9724 24.2895 53.9802
+							25.4659 52.8135L49.1576 29.3156C49.7255 28.7523
+							50.045 27.9855 50.045 27.1856C50.045 26.3857
+							49.7255 25.6189 49.1576 25.0556L25.4659 1.55773Z
+						</w2:d>
+						<!-- <w2:fill>#808080</w2:fill> -->
+						<w2:fill>#1E5B94</w2:fill>
+					</w2:attributes>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "계획/건설/관리/폐기 종합현황 대시보드 방울이_계획",
+			"version": "",
+			"apis": [],
+			"pluginName": "dash_pbme_bangul_p",
+			"width": "1550px",
+			"company": "Soltech",
+			"developer": "WHS",
+			"componentName": "dash_pbme_bangul_p",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "207px"
+			}
+		-->
+		<xf:group class="dash-pbme-bangul-p" tagname="svg" pluginName="dash_pbme_bangul_p">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initDashPbmeP = function() {
+					// 기본 설정
+					var dashPbmePClipPathUrl = "url(#" + grpDashPbmePClipPath.getID() + ")";
+					var dashPbmePFillUrl0 = "url(#" + grpDashPbmePFill0.getID() + ")";
+					var dashPbmePFillUrl1 = "url(#" + grpDashPbmePFill1.getID() + ")";
+					var dashPbmePFillUrl2 = "url(#" + grpDashPbmePFill2.getID() + ")";
+					var dashPbmePFillUrl3 = "url(#" + grpDashPbmePFill3.getID() + ")";
+					var dashPbmePFillUrl4 = "url(#" + grpDashPbmePFill4.getID() + ")";
+					var dashPbmePFillUrl5 = "url(#" + grpDashPbmePFill5.getID() + ")";
+
+					document.getElementById(grpObjP.getID()).setAttribute("clip-path", dashPbmePClipPathUrl);
+					document.getElementById(grpFill0.getID()).setAttribute("fill", dashPbmePFillUrl0);
+					document.getElementById(grpFill1.getID()).setAttribute("fill", dashPbmePFillUrl1);
+					document.getElementById(grpFill2.getID()).setAttribute("fill", dashPbmePFillUrl2);
+					document.getElementById(grpFill3.getID()).setAttribute("fill", dashPbmePFillUrl3);
+					document.getElementById(grpFill4.getID()).setAttribute("fill", dashPbmePFillUrl4);
+					document.getElementById(grpFill5.getID()).setAttribute("fill", dashPbmePFillUrl5);
+				};
+
+				// 초기 실행함수 수행
+				this.initDashPbmeP();
+		]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>75</w2:width>
+				<w2:height>65</w2:height>
+				<w2:viewBox>0 0 75 65</w2:viewBox>
+				<w2:fill>none</w2:fill>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="g">
+				<xf:group tagname="defs">
+					<xf:group id="grpDashPbmePFill0" tagname="linearGradient">
+						<w2:attributes>
+							<w2:x1>56.1004</w2:x1>
+							<w2:y1>39.2399</w2:y1>
+							<w2:x2>-3.68674</w2:x2>
+							<w2:y2>21.5575</w2:y2>
+							<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+						</w2:attributes>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#ED6C00</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#FDD000</w2:stop-color>
+								<w2:offset>1</w2:offset>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+					<xf:group id="grpDashPbmePFill1" tagname="linearGradient">
+						<w2:attributes>
+							<w2:x1>50.5252</w2:x1>
+							<w2:y1>47.5775</w2:y1>
+							<w2:x2>4.02605</w2:x2>
+							<w2:y2>33.8252</w2:y2>
+							<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+						</w2:attributes>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#00B9EF</w2:stop-color>
+								<w2:offset>0.4</w2:offset>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#4694D1</w2:stop-color>
+								<w2:offset>1</w2:offset>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+					<xf:group id="grpDashPbmePFill2" tagname="radialGradient">
+						<w2:attributes>
+							<w2:cx>0</w2:cx>
+							<w2:cy>0</w2:cy>
+							<w2:r>1</w2:r>
+							<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+							<w2:gradientTransform>translate(50.2686 17.585) scale(46.7281 46.5307)</w2:gradientTransform>
+						</w2:attributes>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>white</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#7ECEF4</w2:stop-color>
+								<w2:offset>0.5</w2:offset>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#0075C2</w2:stop-color>
+								<w2:offset>0.9</w2:offset>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#0081CC</w2:stop-color>
+								<w2:offset>1</w2:offset>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+					<xf:group id="grpDashPbmePFill3" tagname="radialGradient">
+						<w2:attributes>
+							<w2:cx>0</w2:cx>
+							<w2:cy>0</w2:cy>
+							<w2:r>1</w2:r>
+							<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+							<w2:gradientTransform>translate(50.2686 17.585) scale(46.7281 46.5307)</w2:gradientTransform>
+						</w2:attributes>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>white</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#7ECEF4</w2:stop-color>
+								<w2:offset>0.5</w2:offset>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#0075C2</w2:stop-color>
+								<w2:offset>0.9</w2:offset>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#0081CC</w2:stop-color>
+								<w2:offset>1</w2:offset>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+					<xf:group id="grpDashPbmePFill4" tagname="linearGradient">
+						<w2:attributes>
+							<w2:x1>67.4719</w2:x1>
+							<w2:y1>40.133</w2:y1>
+							<w2:x2>62.3954</w2:x2>
+							<w2:y2>54.2338</w2:y2>
+							<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+						</w2:attributes>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#F6FAED</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#E6EADE</w2:stop-color>
+								<w2:offset>1</w2:offset>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+					<xf:group id="grpDashPbmePFill5" tagname="radialGradient">
+						<w2:attributes>
+							<w2:cx>0</w2:cx>
+							<w2:cy>0</w2:cy>
+							<w2:r>1</w2:r>
+							<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+							<w2:gradientTransform>translate(50.2686 17.585) scale(46.7281 46.5307)</w2:gradientTransform>
+						</w2:attributes>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>white</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#7ECEF4</w2:stop-color>
+								<w2:offset>0.5</w2:offset>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#0075C2</w2:stop-color>
+								<w2:offset>0.9</w2:offset>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#0081CC</w2:stop-color>
+								<w2:offset>1</w2:offset>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+					<xf:group id="grpDashPbmePClipPath" tagname="clipPath">
+						<xf:group tagname="rect">
+							<w2:attributes>
+								<w2:width>75</w2:width>
+								<w2:height>65</w2:height>
+								<w2:fill>white</w2:fill>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpObjP" tagname="g">
+					<w2:attributes>
+						<w2:clip-path>url(#grpDashPbmePClipPath)</w2:clip-path>
+					</w2:attributes>
+					<xf:group id="grpFill0" tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M52.6611 46.6044C43.6158 26.2496 20.8938 13.2895 0 7.95807L1.25363 22.1058C26.3523 25.9289 43.9727 40.8742 51.2333 52.2652
+							</w2:d>
+							<w2:fill>url(#grpDashPbmePFill0)</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group id="grpFill1" tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M50.1632 45.8935C39.8469 33.8523 20.9467 26.9258 4.5625 29.1104L5.81613 43.2582C15.3315 39.8599 31.0889 37.6407 46.4981 48.659
+							</w2:d>
+							<w2:fill>url(#grpDashPbmePFill1)</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M50.1628 45.8936L47.8471 47.636C43.4855 42.3306 37.1913 36.7131 29.2168 32.0232C37.4437 34.9793 44.9133 39.7733 50.1541
+								45.8936H50.1628Z
+							</w2:d>
+							<w2:fill>#00478B</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group id="grpFill2" tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M65.3186 11.8418C64.5177 11.4517 63.8909 11.1483 63.534 10.7929C62.9768 10.2294 62.7592 8.98103 62.4806 7.41195C61.9669 4.48183
+								61.3227
+								0.832194 58.267 0.398745C55.3157 -0.0173655 54.0273 1.45636 53.8358 2.85207C53.7052 3.77098 54.0099 4.4905 54.6367
+								4.77658C54.6541
+								4.77658 54.6802 4.77658 54.6976 4.79392C54.3233 4.4905 54.184 3.9877 54.2798 3.28552C54.4452 2.14121 55.5247 1.37834
+								56.7435
+								1.55172C58.4324 1.78578 59.2856 2.71336 59.0853 4.08306C58.711 6.70109 57.1701 9.33646 53.9664 8.87701L53.1045
+								8.74697C50.5189
+								8.33953 47.9072 8.13147 45.3041 11.0182C42.6924 13.9137 41.047 15.8035 39.5148 17.0345C37.556 18.6209 35.6756 19.0544
+								34.1782
+								21.8198C33.2467 23.5449 31.5142 29.0757 36.581 34.3898C39.0534 36.9818 42.0395 39.3918 44.8427 40.6748C44.9733 40.7355
+								45.1213
+								40.7962 45.2867 40.8569C48.2119 54.1724 38.3395 62.0005 44.8079 63.847C49.718 65.2514 52.852 57.8827 52.852 57.8827L55.8555
+								58.0821C55.8555 58.0821 53.3657 64.0377 57.292 64.6359C61.3924 65.26 68.0174 53.5049 64.9617 41.3597C65.2142 41.247 65.4667 41.1169
+								65.7104 40.9869C66.5897 40.5014 72.7534 37.3199 73.8416 29.6652C75.1213 16.5664 68.74 13.4889 65.3099 11.8331L65.3186 11.8418Z
+							</w2:d>
+							<w2:fill>url(#grpDashPbmePFill2)</w2:fill>
+							<w2:stroke>#BAE3F9</w2:stroke>
+							<w2:stroke-width>0.75</w2:stroke-width>
+							<w2:stroke-linecap>round</w2:stroke-linecap>
+							<w2:stroke-linejoin>round</w2:stroke-linejoin>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M46.3845 24.4205C46.132 25.2094 45.4878 25.7122 44.9481 25.5388C44.417 25.3654 44.1907 24.5852 44.4431 23.7963C44.7043 23.0074
+								45.3398 22.5046 45.8796 22.678C46.4106 22.8514 46.637 23.6316 46.3758 24.4205H46.3845Z
+							</w2:d>
+							<w2:fill>#009DDA</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M57.8846 28.9717C57.606 29.8212 56.9183 30.3587 56.3524 30.168C55.7778 29.986 55.534 29.1451 55.8126 28.3042C56.0912 27.4546
+								56.779 26.9171 57.3535 27.1079C57.9281 27.2899 58.1632 28.1308 57.8933 28.9803L57.8846 28.9717Z
+							</w2:d>
+							<w2:fill>#009DDA</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M46.6289 31.9712C47.2296 36.271 50.947 36.2277 53.8634 34.3205
+							</w2:d>
+							<w2:stroke>#009DDA</w2:stroke>
+							<w2:stroke-width>0.58</w2:stroke-width>
+							<w2:stroke-linecap>round</w2:stroke-linecap>
+							<w2:stroke-linejoin>round</w2:stroke-linejoin>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M53.3835 38.6029C53.0614 38.4122 52.6348 38.5076 52.4345 38.8283C52.2343 39.1491 52.3301 39.5738 52.6522 39.7732L59.73
+								44.1337L60.4612 42.9547L53.3835 38.5943V38.6029Z
+							</w2:d>
+							<w2:fill>#898989</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group id="grpFill3" tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M51.4852 43.6743C53.5485 45.0786 55.1678 38.5422 59.2682 41.507C61.462 43.0934 57.231 51.277 50.5537 49.9766C46.3402 49.1531
+								45.1823 44.1684 44.4336 40.4754
+							</w2:d>
+							<w2:fill>url(#grpDashPbmePFill3)</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M51.4852 43.6743C53.5485 45.0786 55.1678 38.5422 59.2682 41.507C61.462 43.0934 57.231 51.277 50.5537 49.9766C46.3402 49.1531
+								45.1823 44.1684 44.4336 40.4754
+							</w2:d>
+							<w2:stroke>#BAE3F9</w2:stroke>
+							<w2:stroke-width>0.75</w2:stroke-width>
+							<w2:stroke-linecap>round</w2:stroke-linecap>
+							<w2:stroke-linejoin>round</w2:stroke-linejoin>
+						</w2:attributes>
+					</xf:group>
+					<xf:group id="grpFill4" tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M67.7918 51.9185C67.6351 52.2912 67.1389 52.5773 66.6862 52.5686L54.8551 52.3172C54.4024 52.3086 54.176 51.9965 54.3327
+								51.6324L60.5225 37.4413C60.6792 37.0685 61.1754 36.7824 61.6281 36.7911L73.4592 37.0425C73.9119 37.0512 74.1383 37.3632 73.9816
+								37.7273L67.7918 51.9185Z
+							</w2:d>
+							<w2:fill>url(#grpDashPbmePFill4)</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M69.8715 38.2388L64.0996 38.1175L64.7177 36.6957L70.4896 36.8171L69.8715 38.2388Z
+							</w2:d>
+							<w2:fill>#F9C385</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group id="grpFill5" tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M68.9491 47.454C66.4244 45.6421 67.0164 43.3275 68.4006 41.7844C69.7413 40.2934 74.8429 40.3194 74.6775 44.8793C74.573 47.688
+								72.6577 51.9098 70.8469 52.0052C68.1656 52.1525 68.122 51.199 68.122 51.199L68.9491 47.4453V47.454Z
+							</w2:d>
+							<w2:fill>url(#grpDashPbmePFill5)</w2:fill>
+							<w2:stroke>#BAE3F9</w2:stroke>
+							<w2:stroke-width>0.75</w2:stroke-width>
+							<w2:stroke-linecap>round</w2:stroke-linecap>
+							<w2:stroke-linejoin>round</w2:stroke-linejoin>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

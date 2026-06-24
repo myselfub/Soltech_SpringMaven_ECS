@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <w2:userPalette defaultIcon="mix.png" desc=""/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[ ]]></script>
+    </head>
+    <body><xf:group class="layout-float type-btn" id="" style="">
+	<xf:group class="float-con left-area" id="" style="">
+		<xf:group class="con-box" id="" style="">
+			<xf:group class="title-group" id="" style="">
+				<xf:group class="" id="" style="" tagname="h3">
+					<xf:group class="tool-tip-btn" id="" style="">
+</xf:group>
+					<w2:span id="" label="전화번호 목록" style="">
+</w2:span>
+					<w2:span class="title-num" displayFormat="###,###,###" id="" label="00" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="com-area" id="" style="">
+					<xf:group class="info-box" id="" style="">
+</xf:group>
+					<xf:group class="btn-group" id="" style="">
+						<w2:anchor class="up_move fa fa-angle-up" id="" outerDiv="false" style="">
+							<xf:label>
+<![CDATA[행추가]]></xf:label>
+</w2:anchor>
+						<w2:anchor class="down_move fa fa-angle-down" id="" outerDiv="false" style="">
+							<xf:label>
+<![CDATA[행추가]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+</xf:group>
+			<xf:group class="list-box box" id="" style="">
+				<w2:gridView autoFit="allColumn" dataList="dataList1" fixedColumnWithHidden="true" focusMode="row" id="" ignoreCellClick="false" ignoreToggleOnDisabled="false" readOnly="" scrollByColumn="false" style="height: 275px;" useShiftKey="true" visibleRowNum="10">
+					<w2:header id="header1" style="">
+						<w2:row id="row2" style="">
+							<w2:column blockSelect="false" checkboxLabel="&amp;nbsp;" displayMode="label" id="column17" inputType="checkbox" width="20">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="column15" inputType="text" value="성명" width="70">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="column13" inputType="text" value="소속" width="70">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="column11" inputType="text" value="전화번호" width="70">
+</w2:column>
+</w2:row>
+</w2:header>
+					<w2:gBody id="gBody4" style="">
+						<w2:row id="row5" style="">
+							<w2:column blockSelect="false" checkboxLabel="&amp;nbsp;" displayMode="label" id="col1" inputType="checkbox" style="height:24px;" width="20">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="col2" inputType="text" style="height:24px;" width="70">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="col3" inputType="text" style="height:24px;" width="70">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="col4" inputType="text" style="height:24px;" width="70">
+</w2:column>
+</w2:row>
+</w2:gBody>
+</w2:gridView>
+</xf:group>
+</xf:group>
+</xf:group>
+	<xf:group class="float-con center-area" id="" style="">
+		<xf:group class="center-btn-group" id="" style="">
+			<w2:anchor class="fa fa-angle-right" clickEventElement="" ev:onclick="" id="" outerDiv="false" style="">
+				<xf:label>
+<![CDATA[넣기]]></xf:label>
+</w2:anchor>
+			<w2:anchor class="fa fa-angle-left" clickEventElement="" ev:onclick="" id="" outerDiv="false" style="">
+				<xf:label>
+<![CDATA[빼기]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+	<xf:group class="float-con right-area" id="" style="">
+		<xf:group class="con-box" id="" style="">
+			<xf:group class="title-group" id="" style="">
+				<xf:group class="" id="" style="" tagname="h3">
+					<xf:group class="tool-tip-btn" id="" style="">
+</xf:group>
+					<w2:span id="" label="전화번호 목록" style="">
+</w2:span>
+					<w2:span class="title-num" displayFormat="###,###,###" id="" label="00" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="com-area" id="" style="">
+					<xf:group class="info-box" id="" style="">
+</xf:group>
+					<xf:group class="btn-group" id="" style="">
+						<w2:anchor class="up_move fa fa-angle-up" id="" outerDiv="false" style="">
+							<xf:label>
+<![CDATA[행추가]]></xf:label>
+</w2:anchor>
+						<w2:anchor class="down_move fa fa-angle-down" id="" outerDiv="false" style="">
+							<xf:label>
+<![CDATA[행추가]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+</xf:group>
+			<xf:group class="list-box box" id="" style="">
+				<w2:gridView autoFit="allColumn" dataList="dataList1" fixedColumnWithHidden="true" focusMode="row" id="" ignoreCellClick="false" ignoreToggleOnDisabled="false" readOnly="" scrollByColumn="false" style="height: 275px;" useShiftKey="true" visibleRowNum="10">
+					<w2:header id="header1" style="">
+						<w2:row id="row2" style="">
+							<w2:column blockSelect="false" checkboxLabel="&amp;nbsp;" displayMode="label" id="column17" inputType="checkbox" width="20">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="column15" inputType="text" value="성명" width="70">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="column13" inputType="text" value="소속" width="70">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="column11" inputType="text" value="전화번호" width="70">
+</w2:column>
+</w2:row>
+</w2:header>
+					<w2:gBody id="gBody4" style="">
+						<w2:row id="row5" style="">
+							<w2:column blockSelect="false" checkboxLabel="&amp;nbsp;" displayMode="label" id="col1" inputType="checkbox" style="height:24px;" width="20">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="col2" inputType="text" style="height:24px;" width="70">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="col3" inputType="text" style="height:24px;" width="70">
+</w2:column>
+							<w2:column blockSelect="false" displayMode="label" id="col4" inputType="text" style="height:24px;" width="70">
+</w2:column>
+</w2:row>
+</w2:gBody>
+</w2:gridView>
+</xf:group>
+</xf:group>
+</xf:group>
+</xf:group>
+</body>
+</html>

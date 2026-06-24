@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/content-layout.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/animate.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/font-awesome.min.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript" lazy="false"><![CDATA[ 
+/*
+		if (scwin.initStatus) {
+			if (typeof scwin.initScreen === "function") {
+				scwin.initScreen();
+			}
+			
+			if (typeof scwin.initContent === "function") {
+				scwin.initContent();
+			}
+		}
+
+		$("[class*=card-box]").parent().addClass("card-m");
+*/
+		]]></script>
+		<w2:require src="/ui/common/udc/monthcalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/periodCalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/periodMonthcalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/periodYearcalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/quartercalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/timePicker.xml"></w2:require>
+		<w2:require src="/ui/common/udc/yearcalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainBackArrowSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/longArrowRightSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/shortArrowRightSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapInLabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapOutLabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapBasinLabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapHBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapGBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapNBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapYBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapJejuBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapUlleungBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapAllSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/beltMenuSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/waterDropShapeSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainCbnNtrltSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/flowSttusArrowSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/flowSttusPBLabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/flowSttusMELabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/detailMapHBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/detailMapGBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/detailMapYBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/detailMapNBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltTreeSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltFactorySvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltBangUlBodySvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltLHandSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltRHandSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashPbmeBangUlPSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashPbmeBangUlMSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashPbmeBangUlBSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashPbmeBangUlESvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainCbnNtrltScaleSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainCbnNtrltEarthSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainCbnNtrltPollutionSvg.xml"></w2:require>
+	</head>
+	<body>
+	</body>
+</html>

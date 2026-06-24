@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 생산 - REC 발급량 -->
+<mapper namespace="TM_PN50001_Dao">
+	<select id="TM_PN50001_Dao_retrieveRecIssList" parameterType="kw.ecs.pn.reciss.vo.RecIssVo" resultType="egovMap">
+		/* TM_PN50001_Dao_retrieveRecIssList */
+		SELECT /*+ LEADING(MAPPING STDR_MAPPING DATAS) */
+			DATAS.prdctn_year,
+			DATAS.rec_eqp_cd_nm,
+			MAPPING.cmmn_cd_nm AS elcpwstn_nm,
+			DATAS.mon01_iem_vu,
+			DATAS.mon02_iem_vu,
+			DATAS.mon03_iem_vu,
+			DATAS.mon04_iem_vu,
+			DATAS.mon05_iem_vu,
+			DATAS.mon06_iem_vu,
+			DATAS.mon07_iem_vu,
+			DATAS.mon08_iem_vu,
+			DATAS.mon09_iem_vu,
+			DATAS.mon10_iem_vu,
+			DATAS.mon11_iem_vu,
+			DATAS.mon12_iem_vu,
+			ROUND((
+				NVL(mon01_iem_vu, 0) + NVL(mon02_iem_vu, 0) + NVL(mon03_iem_vu, 0) + NVL(mon04_iem_vu, 0) +
+				NVL(mon05_iem_vu, 0) + NVL(mon06_iem_vu, 0) + NVL(mon07_iem_vu, 0) + NVL(mon08_iem_vu, 0) +
+				NVL(mon09_iem_vu, 0) + NVL(mon10_iem_vu, 0) + NVL(mon11_iem_vu, 0) + NVL(mon12_iem_vu, 0)
+			), 0) AS sum,
+			DATAS.frst_regist_dt,
+			DATAS.frst_rgstr_id,
+			DATAS.last_updt_dt,
+			DATAS.last_updusr_id,
+			DATAS.updt_rsn
+		FROM
+			tm_pn50001 DATAS,
+			(
+				SELECT
+					cmmn_cd,
+					cmmn_cd_nm,
+					cmmn_cd_dc,
+					upper_cmmn_cd,
+					usr_dfn_vu1
+				FROM
+					tc_ecs_cd
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_2003'
+			) MAPPING,
+			WRO.tc_eg10101 STDR_MAPPING
+		WHERE
+			DATAS.rec_eqp_cd_nm = MAPPING.cmmn_cd
+			AND MAPPING.usr_dfn_vu1 = STDR_MAPPING.elcpwstn_cd(+)
+			AND DATAS.prdctn_year = SUBSTR(#{strtDt}, 0, 4)
+			<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+			AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> IN (
+				SELECT
+					objid
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+				)
+				WHERE
+					1 = 1
+					AND cmmn_cd = #{ecsBasinDivCd}
+			)
+			</if>
+			<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+			AND MAPPING.upper_cmmn_cd IN (
+				SELECT
+					cmmn_cd,
+					REGEXP_SUBSTR(cmmn_cd_nm, '[^(]+') AS cmmn_cd_nm
+				FROM tc_ecs_cd
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_1001'
+					AND cmmn_cd = #{ecsSetcscDivCd}
+			)
+			</if>
+			<if test='null != ecsElcpwstnDivCd and "" neq ecsElcpwstnDivCd and "ALL" neq ecsElcpwstnDivCd'>
+			AND DATAS.rec_eqp_cd_nm = #{ecsElcpwstnDivCd}
+			</if>
+		ORDER BY
+			DATAS.prdctn_year,
+			DATAS.rec_eqp_cd_nm
+	</select>
+
+	<update id="TM_PN50001_Dao_saveRecIssList" parameterType="kw.ecs.pn.reciss.vo.RecIssVo">
+		/* TM_PN50001_Dao_saveRecIssList */
+		MERGE INTO
+			tm_pn50001 A
+		USING (
+			SELECT
+				#{prdctnYear} AS prdctn_year,
+				#{recEqpCdNm} AS rec_eqp_cd_nm,
+				#{mon01IemVu} AS mon01_iem_vu,
+				#{mon02IemVu} AS mon02_iem_vu,
+				#{mon03IemVu} AS mon03_iem_vu,
+				#{mon04IemVu} AS mon04_iem_vu,
+				#{mon05IemVu} AS mon05_iem_vu,
+				#{mon06IemVu} AS mon06_iem_vu,
+				#{mon07IemVu} AS mon07_iem_vu,
+				#{mon08IemVu} AS mon08_iem_vu,
+				#{mon09IemVu} AS mon09_iem_vu,
+				#{mon10IemVu} AS mon10_iem_vu,
+				#{mon11IemVu} AS mon11_iem_vu,
+				#{mon12IemVu} AS mon12_iem_vu,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.prdctn_year = B.prdctn_year
+			AND A.rec_eqp_cd_nm = B.rec_eqp_cd_nm
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.mon01_iem_vu = B.mon01_iem_vu,
+				A.mon02_iem_vu = B.mon02_iem_vu,
+				A.mon03_iem_vu = B.mon03_iem_vu,
+				A.mon04_iem_vu = B.mon04_iem_vu,
+				A.mon05_iem_vu = B.mon05_iem_vu,
+				A.mon06_iem_vu = B.mon06_iem_vu,
+				A.mon07_iem_vu = B.mon07_iem_vu,
+				A.mon08_iem_vu = B.mon08_iem_vu,
+				A.mon09_iem_vu = B.mon09_iem_vu,
+				A.mon10_iem_vu = B.mon10_iem_vu,
+				A.mon11_iem_vu = B.mon11_iem_vu,
+				A.mon12_iem_vu = B.mon12_iem_vu,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.prdctn_year,
+				A.rec_eqp_cd_nm,
+				A.mon01_iem_vu,
+				A.mon02_iem_vu,
+				A.mon03_iem_vu,
+				A.mon04_iem_vu,
+				A.mon05_iem_vu,
+				A.mon06_iem_vu,
+				A.mon07_iem_vu,
+				A.mon08_iem_vu,
+				A.mon09_iem_vu,
+				A.mon10_iem_vu,
+				A.mon11_iem_vu,
+				A.mon12_iem_vu,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.prdctn_year,
+				B.rec_eqp_cd_nm,
+				B.mon01_iem_vu,
+				B.mon02_iem_vu,
+				B.mon03_iem_vu,
+				B.mon04_iem_vu,
+				B.mon05_iem_vu,
+				B.mon06_iem_vu,
+				B.mon07_iem_vu,
+				B.mon08_iem_vu,
+				B.mon09_iem_vu,
+				B.mon10_iem_vu,
+				B.mon11_iem_vu,
+				B.mon12_iem_vu,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<delete id="TM_PN50001_Dao_deleteRecIssList" parameterType="kw.ecs.pn.reciss.vo.RecIssVo">
+		/* TM_PN50001_Dao_deleteRecIssList */
+		DELETE FROM
+			tm_pn50001
+		WHERE
+			prdctn_year = #{prdctnYear}
+			AND rec_eqp_cd_nm = #{recEqpCdNm}
+	</delete>
+</mapper>

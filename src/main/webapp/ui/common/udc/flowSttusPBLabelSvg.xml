@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "계획/건설_Flow 현황 타이틀 라벨",
+			"version": "",
+			"apis": [],
+			"pluginName": "flow_sttus_label",
+			"width": "269",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "flow_sttus_label",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "71px"
+			}
+		-->
+		<xf:group class="flow-sttus-label" tagname="svg" pluginName="flow_sttus_label">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initFlowSttusLabel = function() {
+					this.setStyle("background", options.background || "#FFFFFF");
+
+					var labelBackUrl = "url(#" + radialGradient.getID() + ")";
+					document.getElementById(labelTitleBack.getID()).setAttribute("fill", labelBackUrl);
+
+					var titleId = document.getElementById(labelTextTop.getID());
+					var allText = document.getElementsByTagName("text");
+					var textClass = document.querySelectorAll(".label-text-wrap");
+
+					var titleTextTop = document.getElementById(labelTitleTextTop.getID());
+					if (options.topTitle && options.topTitle != "") {
+						titleTextTop.innerHTML = options.topTitle;
+					}
+					if (options.topX && options.topX != "") {
+						titleTextTop.setAttribute("x", options.topX);
+					}
+					if (options.topY && options.topY != "") {
+						titleTextTop.setAttribute("y", options.topY);
+					}
+
+					var titleTextBottom = document.getElementById(labelTitleTextBottom.getID());
+					if (options.bottomTitle && options.bottomTitle != "") {
+						titleTextBottom.innerHTML = options.bottomTitle;
+					}
+					if (options.bottomX && options.bottomX != "") {
+						titleTextBottom.setAttribute("x", options.bottomX);
+					}
+					if (options.bottomY && options.bottomY != "") {
+						titleTextBottom.setAttribute("y", options.bottomY);
+					}
+
+					var text = document.getElementById(labelTextTop.getID());
+					if (options.text && options.text != "") {
+						text.innerHTML = options.text;
+					}
+					if (options.textX && options.textX != "") {
+						text.setAttribute("x", options.textX);
+					}
+					if (options.textY && options.textY != "") {
+						text.setAttribute("y", options.textY);
+					}
+				};
+
+				this.setLabelTitleText = function(topTitle, topX, topY, bottomTitle, bottomX, bottomY) {
+					var titleTextTop = document.getElementById(labelTitleTextTop.getID());
+					if (topTitle && topTitle != "") {
+						titleTextTop.innerHTML = topTitle;
+					}
+					if (topX && topX != "") {
+						titleTextTop.setAttribute("x", topX);
+					}
+					if (topY && topY != "") {
+						titleTextTop.setAttribute("y", topY);
+					}
+
+					var titleTextBottom = document.getElementById(labelTitleTextBottom.getID());
+					if (bottomTitle && bottomTitle != "") {
+						titleTextBottom.innerHTML = bottomTitle;
+					}
+					if (bottomX && bottomX != "") {
+						titleTextBottom.setAttribute("x", bottomX);
+					}
+					if (bottomY && bottomY != "") {
+						titleTextBottom.setAttribute("y", bottomY);
+					}
+				};
+
+				this.setLabelText = function(titleTop, topX, topY, titleBottom, bottomX, bottomY) {
+					var textTop = document.getElementById(labelTextTop.getID());
+					var textBottom = document.getElementById(labelTextBottom.getID());
+
+					if (titleTop && titleTop != "") {
+						textTop.innerHTML = titleTop;
+					}
+					if (topX && topX != "") {
+						textTop.setAttribute("x", topX);
+					}
+					if (topY && topY != "") {
+						textTop.setAttribute("y", topY);
+					}
+					if (titleBottom && titleBottom != "") {
+						textBottom.innerHTML = titleBottom;
+						textTop.setAttribute("y", (Number(topY)-40).toString());
+						textBottom.setAttribute("y", (Number(topY)+20).toString());
+						textBottom.setAttribute("x", topX);
+					} else {
+						textBottom.innerHTML = "";
+					}
+				};
+
+				this.cleanLabelTitleProcess = function() {
+					var labelBackUrl = "url(#" + radialGradient.getID() + ")";
+					var titleTextTop = document.getElementById(labelTitleTextTop.getID());
+					var titleTextBottom = document.getElementById(labelTitleTextBottom.getID());
+
+					//title 초기화
+					document.getElementById(labelTitleBack.getID()).setAttribute("fill", labelBackUrl);
+					titleTextTop.classList.remove("title-animate-blinking-50");
+					titleTextTop.classList.remove("title-color-gray");
+					titleTextBottom.classList.remove("title-animate-blinking-50");
+					titleTextBottom.classList.remove("title-color-gray");
+				}
+
+				//param {bChange : 변경 여부, bData : 데이터 여부, fillColor : 타이틀 색상}
+				this.setLabelTitleProcess = function(bChange, bData, fillColor) {
+					if (!fillColor) fillColor = "#8E8E8E";
+					var labelBackUrl = "url(#" + radialGradient.getID() + ")";
+					var titleTextTop = document.getElementById(labelTitleTextTop.getID());
+					var titleTextBottom = document.getElementById(labelTitleTextBottom.getID());
+
+					//title 설정
+					if(!bChange) {
+						titleTextTop.classList.add("title-color-gray");
+						titleTextBottom.classList.add("title-color-gray");
+						document.getElementById(labelTitleBack.getID()).setAttribute("fill", fillColor);
+					}
+					if(bData) {
+						if(bChange) {
+							titleTextTop.classList.add("title-animate-blinking-50");
+							titleTextBottom.classList.add("title-animate-blinking-50");
+						}
+					}
+				};
+
+				// 초기 실행함수 수행
+				this.initFlowSttusLabel();
+]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>162.3</w2:width>
+				<w2:height>38</w2:height>
+				<w2:viewBox>0 0 768 170</w2:viewBox>
+				<w2:preserveAspectRatio>none</w2:preserveAspectRatio>
+				<w2:fill>none</w2:fill>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="g">
+				<xf:group tagname="defs">
+					<xf:group id="radialGradient" tagname="radialGradient">
+						<w2:attributes>
+							<w2:cx>0</w2:cx>
+							<w2:cy>0</w2:cy>
+							<w2:r>1</w2:r>
+							<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+							<w2:gradientTransform>translate(0 168.222) scale(768 769.985)</w2:gradientTransform>
+						</w2:attributes>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>#24A8D2</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:offset>0.26</w2:offset>
+								<w2:stop-color>#228FCC</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:offset>0.59</w2:offset>
+								<w2:stop-color>#1E5DBB</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:offset>0.96</w2:offset>
+								<w2:stop-color>#162CA1</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:offset>1</w2:offset>
+								<w2:stop-color>#162CA1</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="g">
+					<xf:group id="labelTitleBack" tagname="path">
+						<w2:attributes>
+							<w2:d>M210.272 145.5V0H0V169.75H768V145.5H274.272Z</w2:d>
+							<w2:fill>url(#radialGradient)</w2:fill>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="text">
+					<w2:attributes>
+						<w2:fill>white</w2:fill>
+						<w2:font-size>52</w2:font-size>
+						<w2:font-weight>600</w2:font-weight>
+						<w2:letter-spacing>0em</w2:letter-spacing>
+					</w2:attributes>
+					<xf:group id="labelTitleTextTop" tagname="tspan">
+						<w2:attributes>
+							<w2:x>50</w2:x>
+							<w2:y>70</w2:y>
+						</w2:attributes>
+					</xf:group>
+					<xf:group id="labelTitleTextBottom" tagname="tspan">
+						<w2:attributes>
+							<w2:x>50</w2:x>
+							<w2:y>130</w2:y>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="text">
+					<w2:attributes>
+						<w2:fill>#222222</w2:fill>
+						<w2:font-size>52</w2:font-size>
+						<w2:font-weight>600</w2:font-weight>
+						<w2:letter-spacing>0em</w2:letter-spacing>
+					</w2:attributes>
+					<xf:group id="labelTextTop" tagname="tspan">
+						<w2:attributes>
+							<w2:x>340</w2:x>
+							<w2:y>102</w2:y>
+						</w2:attributes>
+					</xf:group>
+					<xf:group id="labelTextBottom" tagname="tspan">
+						<w2:attributes>
+							<w2:x>340</w2:x>
+							<w2:y>102</w2:y>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

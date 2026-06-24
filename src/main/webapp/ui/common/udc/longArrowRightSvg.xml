@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "좌측 화살표",
+			"version": "",
+			"apis": [],
+			"pluginName": "long_arrow_right",
+			"width": "50px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "long_arrow_right",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "35px"
+			}
+		-->
+		<xf:group class="long-arrow-right" tagname="svg" pluginName="long_arrow_right">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>50</w2:width>
+				<w2:viewBox>0 0 202 143</w2:viewBox>
+				<w2:preserveAspectRatio>xMidYMid meet</w2:preserveAspectRatio>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="g">
+				<w2:attributes>
+					<w2:transform>translate(0.0, 143.0) scale(0.1, -0.1)</w2:transform>
+					<w2:fill>#000000</w2:fill>
+					<w2:stroke>none</w2:stroke>
+				</w2:attributes>
+				<xf:group tagname="path">
+					<w2:attributes>
+						<w2:d>
+							M1270 1246 l0 -176 -635 0 -635 0 0 -355 0 -355 635 0 635 0 2 -175 3 -175 325 311 c179 171 344 329 368 353 l42 42
+							-297 285 c-164
+							157 -331 316 -370 353 l-73 68 0 -176z
+						</w2:d>
+					</w2:attributes>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

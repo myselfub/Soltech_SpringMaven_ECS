@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Context Root + resources/css/*.css 로 include -->
+<?xml-stylesheet href="/resources/css/common.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+		</xf:model>
+		<script lazy="false" type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"componentName": "month_calendar",
+			"pluginName": "month_calendar",
+			"company": "",
+			"developer": "",
+			"category": "Basic",
+			"notSupportBrowser": "",
+			"version": "",
+			"htmlRender": "",
+			"icon": "",
+			"disableIcon": "",
+			"description": "",
+			"width": "100px",
+			"height": "21px",
+			"properties": [
+			{
+			"name": "id",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"description": "udc 아이디"
+			},
+			{
+			"name": "date",
+			"default": "",
+			"type": "number",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 초기 값"
+			},
+			{
+			"name": "ref",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 Ref"
+			},
+			{
+			"name": "class",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "udc 클래스"
+			},
+			{
+			"name": "disabled",
+			"default": "",
+			"type": "combobox",
+			"option": "[true,false]",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "desc"
+			}
+			],
+			"events": [
+			{
+			"name":"onchangeValue(info)",
+			"type":"user",
+			"description": "udc 클래스"
+			}
+			],
+			"apis": [
+			{
+			"name": "getDate",
+			"description": "desc",
+			"params": [],
+			"return": [{
+			"type": "String",
+			"description": "desc"
+			}]
+			},
+			{
+			"name": "setDate",
+			"description": "desc",
+			"params": [{
+			"type": "Number",
+			"name": "strDate",
+			"description": "desc"
+			}],
+			"return": [{
+			"type": "String",
+			"description": "desc"
+			}]
+			}
+			]
+			}
+		-->
+		<xf:group class="gb_udc_cal month" id="" style="" pluginName="month_calendar">
+			<xf:group class="" id="" style="">
+				<xf:group style="" id="" class="month_wrap">
+					<xf:input id="ibx_Date" title="" class="cal_from" maxlength="6" displayFormat="####-##">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							udc_obj.showMonthCalendar();
+						]]></script>
+						<script ev:event="onviewchange(info)" type="text/javascript"><![CDATA[
+							udc_obj.displayCalMonth(info.newValue);
+						]]></script>
+					</xf:input>
+					<w2:anchor outerDiv="false" style="" id="btn_ShowCalendar" class="btn_cal">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							udc_obj.showMonthCalendar();
+						]]></script>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="f_layer_m1" id="div_Month" style="display:none" title="Title">
+				<xf:group class="cb" id="grp_Calendar" style="" ev:onblur="">
+					<xf:group class="month_cal_box" id="" style="">
+						<xf:group class="c_header" id="" style="">
+							<w2:textbox class="year" id="tbx_Year" label="2016" style=""></w2:textbox>
+							<w2:anchor class="prev" id="btn_PrevYear" outerDiv="false" style="">
+								<script ev:event="onclick" type="javascript"><![CDATA[
+									udc_obj.changeYear((parseInt(tbx_Year.getValue()) - 1) + "");
+								]]></script>
+								<xf:label><![CDATA[이전]]></xf:label>
+							</w2:anchor>
+							<w2:anchor class="next" id="btn_NextYear" outerDiv="false" style="">
+								<script ev:event="onclick" type="javascript"><![CDATA[
+									udc_obj.changeYear((parseInt(tbx_Year.getValue()) + 1) + "");
+								]]></script>
+								<xf:label><![CDATA[다음]]></xf:label>
+							</w2:anchor>
+						</xf:group>
+						<xf:group class="c_body" id="" style="">
+							<xf:group class="w2tb" id="" style="" tagname="table">
+								<w2:attributes>
+									<w2:summary></w2:summary>
+								</w2:attributes>
+								<xf:group tagname="colgroup">
+									<xf:group style="width:25.00%" tagname="col"></xf:group>
+									<xf:group style="width:25.00%" tagname="col"></xf:group>
+									<xf:group style="width:25.00%" tagname="col"></xf:group>
+									<xf:group style="width:25.00%" tagname="col"></xf:group>
+								</xf:group>
+								<xf:group tagname="tr">
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month01">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("01");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="1" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month02">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("02");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="2" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month03">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("03");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="3" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month04">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("04");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="4" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group tagname="tr" id="">
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month05">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("05");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="5" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month06">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("06");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="6" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month07">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("07");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="7" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month08">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("08");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="8" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group tagname="tr" id="">
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month09">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("09");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="9" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month10">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("10");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="10" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month11">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("11");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="11" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td" id="btn_Month12">
+										<xf:group class="" id="" style="" tagname="a">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickMonths("12");
+											]]></script>
+											<w2:attributes>
+												<w2:href>#none</w2:href>
+											</w2:attributes>
+											<w2:span id="" label="12" style=""></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+			/**
+			* //property handling
+			* $w.log("id:" + options.id);
+			* $w.log("date:" + options.date);
+			* $w.log("ref:" + options.ref);
+			*
+			* //event trigger
+			* udc_obj.trigger("onBtnCalendarClick"); 
+			*/
+
+			// 초기 수행함수 
+			this.initMonthCalendar = function() {
+				this.today = "";
+				this.selectedDate = "";
+
+				var tmpDate = new Date();
+				var year = tmpDate.getFullYear();
+				var month = tmpDate.getMonth() + 1;
+
+				if (parseInt(month) < 10) {
+					month = "0" + month;
+				}
+				this.today = year + month + "";
+
+				tbx_Year.setValue(year);
+
+				// ref 설젇 
+				if (options.ref != "") {
+					ibx_Date.setRef(options.ref);
+				}
+				if (ibx_Date.getValue() == "" && options.date != undefined) {
+					// udc의 초기 설정값
+					ibx_Date.setValue(options.date);
+				}
+			};
+
+			this.showMonthCalendar = function() {
+				this.selectedDate = ibx_Date.getValue();
+
+				if (this.selectedDate.length >= 4) {
+					this.changeYear(this.selectedDate);
+				}
+				if (div_Month.getStyle("display") == "none") {
+					div_Month.setStyle("display", "");
+				} else {
+					div_Month.setStyle("display", "none");
+				}
+			};
+
+			// 시작 년도가 변경된 경우
+			this.changeYear = function(strDate) {
+				tbx_Year.setValue(strDate.substr(0, 4));
+				for (var i = 1; i <= 12; i++) {
+					// 월 구성 '##'
+					var month = "00" + i;
+					month = month.substr(month.length - 2, 2);
+
+					eval("btn_Month" + month).removeClass("today");
+
+					// 변경된 년도가 올해인 경우 현재 월에 today 클래스를 추가하여 화면에 표시되도록 함 
+					if (strDate.substr(0, 4) == this.today.substr(0, 4)) {
+						if (month == this.today.substr(4, 2)) {
+							eval("btn_Month" + month).addClass("today");
+						}
+					}
+					// 선택된 월 표시
+					eval("btn_Month" + month).removeClass("selected");
+					if (strDate.substr(0, 4) == this.selectedDate.substr(0, 4)) {
+						if (month == this.selectedDate.substr(4, 2)) {
+							eval("btn_Month" + month).addClass("selected");
+						}
+					}
+				}
+			};
+
+			// 시작월 클릭시
+			this.clickMonths = function(strMonth) {
+				for(var i = 1; i <= 12; i++) {
+					// 월 구성 '##'
+					var month = "00" + i;
+					month = month.substr(month.length - 2, 2);
+					eval("btn_Month" + month).removeClass("selected");
+
+					if (month == strMonth) {
+						eval("btn_Month" + month).addClass("selected");
+					}
+				}
+
+				// this.selectedDate = tbx_Year.getValue() + "-" + strMonth;
+				this.selectedDate = tbx_Year.getValue() + strMonth;
+				ibx_Date.setValue(this.selectedDate);
+				var tmpValue = {originalValue : ibx_Date.originalValue, value : ibx_Date.getValue()};
+
+				div_Month.setStyle("display", "none");
+				udc_obj.trigger("onchangeValue" , tmpValue);
+				// udc_obj.changeMonth();
+			};
+
+			// 확인 버튼 클릭시 
+			this.changeMonth = function() {
+				// if (this.selectedDate.length == 7) {
+					// ibx_Date.setValue(this.selectedDate);
+				// }
+				if (this.selectedDate.length == 6) {
+					ibx_Date.setValue(this.selectedDate);
+				}
+
+				div_Month.setStyle("display", "none");
+			};
+
+			/**
+			 * 년월 문자열 display
+			 * @param <String> value yyyyMM
+			 * @return yyyy-MM
+			 */
+			udc_obj.displayCalMonth = function(value) {
+				var date_dlmt = "-";
+				value = value.replaceAll("-", "");
+				var year_data = "";
+				var month_data = "";
+				var i;
+				var flagYn;
+				if (value.length == 6) {
+					for (i = 0; i < 6; i++) {
+						var c = value.charAt(i);
+						if ((c < '0' || c > '9')) {
+							flagYn = false;
+						} else {
+							flagYn = true;
+						}
+						if (i < 4) {
+							year_data += c;
+						} else if (i >= 4 && i < 6) {
+							month_data += c;
+						}
+					}
+					if (flagYn) {
+						var mnthst = month_data;
+						var mnth = parseInt(mnthst, 10);
+						if (mnth < 1 || mnth > 12) {
+							ibx_Date.setValue( "" );
+							// return "";
+						} else {
+							ibx_Date.setValue(value.substr(0, 4) + date_dlmt + scwin.lpad(value.substr(4, 2), 2, "0"));
+							// return value.substr(0, 4) + date_dlmt + scwin.lpad(value.substr(4, 2), 2, "0");
+						}
+					} else {
+						ibx_Date.setValue("");
+						// return "";
+					}
+				}
+				if (value.length < 6) {
+					ibx_Date.setValue("");
+					// return "";
+				}
+			};
+
+			/**
+			 * 입력받은 str 의 왼쪽을 num만큼 chr로 채운다.
+			 * 
+			 * @date 2014. 12. 10.
+			 * @param <String> str 원본 문자열
+			 * @param <Number> num 채울 자리수
+			 * @param <String> chr 채울 문자
+			 * @example utilLib.lpad("1", 3, "0")
+			 * @return
+			 */
+			scwin.lpad = function(str, num, chr) {
+				if (!str || !chr || str.length >= num) {
+					return str;
+				}
+
+				var max = num - str.length;
+				for ( var i = 0; i < max; i++) {
+					str = chr + str;
+				}
+
+				return str;
+			};
+
+			/**
+			 * 년월 문자열 validate
+			 * @param <String> value yyyyMM
+			 * @return
+			 */
+			scwin.validateCalMonth = function(value) {
+				if (value.length < 5) {
+					comLib.alert($p, "날짜 데이터 자리수가 맞지 않습니다.", "scwin.validateCalMonthCallback");
+				}
+
+				if (parseInt(value.substr(4, 2)) > 12) {
+					comLib.alert($p, "날짜 월 데이터가 맞지 않습니다.", "scwin.validateCalMonthCallback");
+				}
+
+				return value;
+			};
+
+			scwin.validateCalMonthCallback = function() {
+				ibx_Date.focus();
+			};
+
+			udc_obj.getDate = function() {
+				if(ibx_Date.getValue() == "") {
+					return null;
+				} else {
+					return ibx_Date.getValue();
+				}
+			};
+
+			udc_obj.setDate = function(strDate) {
+				ibx_Date.setValue(strDate);
+			};
+
+			//초기 실행함수 수행
+			this.initMonthCalendar();
+	
+			]]></script>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+		</xf:group>
+	</body>
+</html>

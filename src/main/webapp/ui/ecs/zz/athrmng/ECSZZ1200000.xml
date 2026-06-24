@@ -1,0 +1,915 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSZZ1200000.xml
+			* 설 명 : 에너지공통_권한관리_화면관리
+			* 작성일 : 2023.02.09
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.09 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltScrinList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="scrinId" dataType="text" name="화면ID"></w2:column>
+						<w2:column id="intnSysDivCd" dataType="text" name="시스템구분"></w2:column>
+						<w2:column id="intnSysDivNm" dataType="text" name="시스템구분명"></w2:column>
+						<w2:column id="scrinNm" dataType="text" name="화면명"></w2:column>
+						<w2:column id="scrinUrl" dataType="text" name="화면URL"></w2:column>
+						<w2:column id="scrinDc" dataType="text" name="화면설명"></w2:column>
+						<w2:column id="hpcmFileNm" dataType="text" name="도움말파일명"></w2:column>
+						<w2:column id="pgeNo" dataType="text" name="페이지번호"></w2:column>
+						<w2:column id="hpcmVidoFileNm" dataType="text" name="도움말영상파일명"></w2:column>
+						<w2:column id="useYn" dataType="text" name="사용여부"></w2:column>
+						<w2:column id="lastUpdtDt" dataType="text" name="최종수정일자"></w2:column>
+						<w2:column id="lastUpdusrNm" dataType="text" name="최종수정자"></w2:column>
+						<w2:column id="parmVu" dataType="text" name="조회조건코드"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap id="dmaSaveScrin" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="scrinId" dataType="text" name="화면ID"></w2:key>
+						<w2:key id="intnSysDivCd" dataType="text" name="시스템구분"></w2:key>
+						<w2:key id="scrinNm" dataType="text" name="화면명"></w2:key>
+						<w2:key id="scrinUrl" dataType="text" name="화면URL"></w2:key>
+						<w2:key id="scrinDc" dataType="text" name="화면설명"></w2:key>
+						<w2:key id="hpcmFileNm" dataType="text" name="도움말파일명"></w2:key>
+						<w2:key id="pgeNo" dataType="text" name="페이지번호"></w2:key>
+						<w2:key id="hpcmVidoFileNm" dataType="text" name="도움말영상파일명"></w2:key>
+						<w2:key id="linkinfo" name="규정정보링크URL" dataType="text"></w2:key>
+						<w2:key id="useYn" dataType="text" name="사용여부"></w2:key>
+						<w2:key id="lastInfo" dataType="text" name="최종수정정보"></w2:key>
+						<w2:key id="rowStatus" dataType="text" name="상태값"></w2:key>
+						<w2:key id="parmVu" dataType="text" name="조회조건코드"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap id="dmaInqireParam">
+					<w2:keyInfo>
+						<w2:key id="intnSysDivCd" dataType="text" name="시스템구분"></w2:key>
+						<w2:key id="scrinId" dataType="text" name="화면ID"></w2:key>
+						<w2:key id="scrinNm" dataType="text" name="화면명"></w2:key>
+						<w2:key id="usrId" name="사용자ID" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltInqireScrinInfoList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="scrinId" dataType="text" name="화면ID"></w2:column>
+						<w2:column id="scrinNm" dataType="text" name="화면명"></w2:column>
+						<w2:column id="menuCnt" dataType="text" name="메뉴설정건수"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltSysDivCdList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" dataType="text" name="시스템구분코드"></w2:column>
+						<w2:column id="sysDivCdNm" dataType="text" name="시스템구분코드명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.rowIndex = -1;
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSZZ1200000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 로그인한 사용자 ID 변수설정
+		scwin.usrId = comLib.getUsrId();
+
+		// 사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+		scwin.setAthrSysDivCd();
+	};
+
+	/**
+	 * 사용자에게 부여가된 권한의 시스템구분코드만을 조회
+	 * @param
+	 * @return
+	 */
+	scwin.setAthrSysDivCd = function () {
+		var requestData = {};
+
+		// 사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+		requestData.data = {"usrId" : scwin.usrId, "sysDivCd":"SCM_0000"};
+
+		var option = {
+			action : "sc/authmng/retrieveAthrSysDivCd.do",
+			reqData : requestData,
+			resData : dltSysDivCdList,
+			success : "scwin.retrieveAthrSysDivCdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.requestAjaxSyncCode($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.retrieveAthrSysDivCdCallback = function (resBody, e) {
+		if (dltSysDivCdList.getRowCount() == 0) {
+			// 시스템관리자만 접근이 가능합니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00343"), "utilLib.winContainerClose");
+			return;
+		}
+
+		var sysDivCd = comLib.getSysDivCd();
+
+		dmaInqireParam.set("intnSysDivCd", sysDivCd);
+		dmaInqireParam.set("usrId", scwin.usrId);
+
+		dmaSaveScrin.set("intnSysDivCd", sysDivCd);
+
+		// 화면 오픈시 자동조회를 한다.
+		comLib.setEnterKeyEvent(grpInqire, scwin.btnInqire_onclick);
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var requestData = {};
+		requestData.dmaInqireParam =dmaInqireParam.getJSON();
+
+		var option = {
+			action : "zz/authmng/retrieveScrin.do",
+			reqData : requestData,
+			resData : dltScrinList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireCallback = function(resBody) {
+		if (resBody.message.code == "success"){
+			txtCnt.setValue(dltScrinList.getRowCount());
+		} else {
+			comLib.alert($p, "fail");
+		}
+
+		// 화면 오픈과 동시에 메뉴상세항목은 초기화 한다.
+		if (scwin.rowIndex == -1) { 
+			scwin.btnNew_onclick();
+		} else {
+			grdScrinList.setFocusedCell(scwin.rowIndex, 0, false);
+		}
+	};
+
+	/**
+	 * 대내화면 등록을 위해 신규버튼 클릭시 dataMap 초기화 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnNew_onclick = function() {
+		// 데이터 맵 초기화
+		dmaSaveScrin.reset();
+		// PK 수정 불가능 하도록 수정(초기에는 활성화, 값이 있으면 비활성화)
+		ibxScrinId.setDisabled(false);
+		// 최종수정시간은 메뉴목록에서 선택을 했을 경우만 db 내용을 보여준다.
+		tbxLastUpdtDt.setValue("");
+		// 시스템 구분 값 설정
+		dmaSaveScrin.set("intnSysDivCd", comLib.getSysDivCd());
+		// 사용여부는 Defualt로  Y 로 셋팅된다.
+		dmaSaveScrin.set("useYn", "Y");
+		// 신규 flag 설정
+		dmaSaveScrin.set("rowStatus", "C");
+		// 그리드 선택 초기화
+		scwin.rowIndex = -1;
+	};
+
+	/**
+	 * 메뉴상세에서 기재한 내용을 수정/저장한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		var valRowStatus = dmaSaveScrin.get("rowStatus");
+		var newFlag = false;
+
+		if (utilLib.validateGroup(grpDtl, dmaSaveScrin)) {
+			newFlag = true;
+		} else {
+			newFlag = false;
+			return;
+		}
+
+		if (newFlag) {
+			if (valRowStatus != "D") {
+				if (valRowStatus == "C") {
+					// 중복체크
+					var insert = dmaSaveScrin.getJSON();
+
+					for (var idx = 0; idx < dltScrinList.getRowCount(); idx++) {
+						if (insert.scrinId == dltScrinList.getCellData(idx, "scrinId")) {
+							// {0}(은/는) 중복될 수 없습니다.
+							comLib.alert($p, utilLib.getMessage("SCM.INFO.00068", "화면ID"));
+							return;
+						}
+					}
+				}
+
+				// 저장할것인지 confirm
+				comLib.confirm($p, utilLib.getMessage("SCM.INFO.00321"), "scwin.saveConfirmCallback");
+			} else {
+				// 삭제할것인지 confirm
+				comLib.confirm($p, utilLib.getMessage("SCM.INFO.00251"), "scwin.saveConfirmCallback");
+			}
+		}
+	};
+
+	/**
+	 * 수정/저장 ComfirmCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var requestData = {};
+		requestData.dmaSaveScrin = dmaSaveScrin.getJSON();
+
+		var option = {
+			action : "zz/authmng/saveScrinMng.do",
+			reqData : requestData,
+			success : "scwin.saveScrinMngCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 수정/저장 CallBack 실행한다. 
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.saveScrinMngCallback = function(resBody) {
+		// comLib.alert($p, resBody.message.code_name);
+
+		var stat = dmaSaveScrin.get("rowStatus");
+
+		if (stat == "D") {
+			// 삭제되었습니다.\n프로그램의 소스파일....은 서버에서 삭제하시기 바랍니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00326"));
+			scwin.btnNew_onclick();
+		} else {
+			// 저장되었습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00327"));
+		}
+
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 작업중이던 내용을 취소한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnCancl_onclick = function() {
+		// 작업중이던 dataMap을 초기화한다.
+		scwin.btnNew_onclick();
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 화면목록에서 선택한 화면을 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDel_onclick = function() {
+		var scrinId = "";
+		scrinId = dmaSaveScrin.get("scrinId");
+
+		if (scrinId != null || scrinId != "") {
+			dmaSaveScrin.set("rowStatus", "D");
+			scwin.selectScrinInfo();
+		} else {
+			// 삭제하고자 하는 데이터 선택 후 삭제하도록 알림
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00252"));
+		}
+	};
+
+	/**
+	 * 화면 삭제전 등록된 정보가 있는지 확인한다.
+	 * @param
+	 * @return
+	 */
+	scwin.selectScrinInfo = function() {
+		var requestData = {};
+		requestData.dmaSaveScrin = dmaSaveScrin.getJSON();
+
+		var option = {
+			action : "zz/authmng/selectScrinInfo.do",
+			reqData : requestData,
+			resData : dltInqireScrinInfoList,
+			success : "scwin.searchScrinInfoCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 화면 삭제전 등록된 정보조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.searchScrinInfoCallback = function(resBody) {
+		var menuCnt = 0;
+
+		if (resBody.message.code == "success") {
+			menuCnt = dltInqireScrinInfoList.getCellData(0, "menuCnt");
+
+			if (menuCnt == 0) {
+				scwin.btnSave_onclick();
+			} else {
+				// 사용중인 데이터는 삭제 못하도록 메세지 알림
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00246", dltInqireScrinInfoList.getCellData(0, "scrinNm")));
+			}
+		}
+	};
+
+	/**
+	 * 조회된 메뉴목록을 엑셀로 다운로드한다.
+	 * @param
+	 * @return
+	 */ 
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm = spnSubTitle.getValue();
+		// 엑셀 내부 타이틀 추가_240108
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 6,
+			text 		: `${menuNm}_` + `${subTitleNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		comLib.downloadExcel(grdScrinList, {
+			fileName : `${menuNm}_` + `${subTitleNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			useDataFormat: true,
+			applyDataFormat : true
+		}, infoArr);
+	};
+
+	/**
+	 * 특정 셀을 선택시 해당 내용을 상세내역으로 표출한다.
+	 * @param <Int> row
+	 * @param <Int> col
+	 * @return
+	 */
+	scwin.grdScrinList_oncellclick = function(row, col) {
+		var rowIndex = row;
+		var colIndex = col;
+		var setJsonData = dltScrinList.getRowJSON(rowIndex);
+
+		scwin.rowIndex = rowIndex;
+
+		// 폼 초기화
+		$p.$("#spnFileName").text("");
+		$p.$("#trFileName").hide();
+
+		dmaSaveScrin.setJSON(setJsonData);
+		dmaSaveScrin.set("lastInfo", dltScrinList.getCellData(rowIndex, "lastUpdtDt") + " " + dltScrinList.getCellData(rowIndex, "lastUpdusrNm"));
+
+		var info = dmaSaveScrin.get("lastInfo");
+		// PK 수정 불가능 하도록 수정(초기에는 활성화, 값이 있으면 비활성화)
+		if (info != "") {
+			ibxScrinId.setDisabled(true);
+		}
+		// 수정 flag 설정
+		dmaSaveScrin.set("rowStatus", "U");
+	};
+
+	/**
+ 	 * 화면ID 등록의 편리함 제공
+	 * @param <Object> info
+	 * @return
+	 */
+	scwin.actIntnSysdivCd2_onviewchange = function(info) {
+		var oldValue = info.oldValue;
+		var newValue = info.newValue;
+
+		if (newValue != "") {
+			dmaSaveScrin.set("scrinId", newValue);
+			ibxScrinId.focus();
+		} else {
+			// {0} 은 필수 입력값입니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "시스템구분"));
+			dmaSaveScrin.set("scrinId", "");
+			actIntnSysdivCd2.focus();
+		}
+	};
+
+	/**
+	 * 입력된 영문자를 대문자로 변환
+	 * @param
+	 * @return
+	 */
+	scwin.ibxScrinId_onviewchange = function(info) {
+		var newValue = info.newValue;
+
+		if (newValue != "") {
+			dmaSaveScrin.set("scrinId" , newValue.toUpperCase());
+		}
+	};
+
+	/**
+	 * 규정정보 돋보기 클릭
+	 */
+	scwin.btnLinkinfo_onclick = function() {
+		if(dmaSaveScrin.get("scrinId") == "") {
+			comLib.alert($p, "선택된 화면ID가 없습니다.");
+			return false;
+		} else {
+			var law_url = comLib.LAW_POP_URL.substring(0, comLib.LAW_POP_URL.indexOf("wq")) ;
+			var url = law_url + "syslink.jsp?systemid=" + dmaSaveScrin.get("scrinId") + "&ugbn=admin";
+
+			var options = {
+				title : "관련 규정.법령 연계",
+				width : 900,
+				height : 370,
+				modal : true,
+				closeAction : scwin.regltnLinkUrlCallBack
+			};
+			comLib.openPopup($p, "SCMSC30000003", url, options);
+		}
+	};
+
+	/**
+	 * 규정정보 돋보기 팝업 callback
+	 */
+	scwin.regltnLinkUrlCallBack = function() {
+		scwin.btnInqire_onclick();
+
+		var url = "syslink.jsp?systemid=" + dmaSaveScrin.get("scrinId");
+		dmaSaveScrin.set("linkinfo", url);
+
+		return true;
+	};
+	]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group id="grpInqire" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="시스템구분">
+								</w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="actIntnSysdivCd1" chooseOptionLabel="- 전체 -" displayMode="label" editType="select"
+									ref="data:dmaInqireParam.intnSysDivCd" search="contain" submenuSize="auto" useKeywordHighlight="false" visibleRowNum="5" disabled="true"
+									ev:onviewchange="scwin.actIntnSysdivCd1_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltSysDivCdList">
+											<w2:label ref="sysDivCdNm"></w2:label>
+											<w2:value ref="sysDivCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="화면ID"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:input id="ibxScrinId1" ref="data:dmaInqireParam.scrinId"></xf:input>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="화면명"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:input id="ibxScrinNm1" ref="data:dmaInqireParam.scrinNm"></xf:input>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" userData1="Q" outerDiv="false" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="layout-float">
+					<xf:group class="float-con left-area cw13">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span id="spnSubTitle" label="화면목록">
+									</w2:span>
+									<w2:span id="txtCnt" class="title-num" label="0">
+									</w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group class="list-box box">
+								<w2:gridView id="grdScrinList" class="resized" dataList="dltScrinList" scrollByColumnAdaptive="false" summaryAuto="false"
+									useShiftKey="true" scrollByColumn="false" focusMode="row" fixedColumnWithHidden="true" ignoreCellClick="false" visibleRowNum="19"
+									ignoreToggleOnDisabled="false" readOnly="true" ev:oncellclick="scwin.grdScrinList_oncellclick" sortable="true" tooltipDisplay="true"
+									style="height:45rem;" defaultCellHeight="35">
+									<w2:caption></w2:caption>
+									<w2:header>
+										<w2:row>
+											<w2:column id="hIntnSysDivNm" value="시스템구분" inputType="text" width="150">
+											</w2:column>
+											<w2:column id="hScrinId" value="화면ID" inputType="text" width="170">
+											</w2:column>
+											<w2:column id="hScrinNm" value="화면명" inputType="text" width="170">
+											</w2:column>
+											<w2:column id="hScrinUrl" value="화면URL" inputType="text" width="330">
+											</w2:column>
+											<w2:column id="hScrinDc" value="화면설명" inputType="text" width="150">
+											</w2:column>
+											<w2:column id="hUseYn" value="사용여부" inputType="text" width="100">
+											</w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="intnSysDivCd" inputType="select" chooseOption="true" chooseOptionLabel="선택">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="scrinId" inputType="text">
+											</w2:column>
+											<w2:column id="scrinNm" inputType="text" textAlign="left">
+											</w2:column>
+											<w2:column id="scrinUrl" inputType="text" textAlign="left">
+											</w2:column>
+											<w2:column id="scrinDc" inputType="text" textAlign="left">
+											</w2:column>
+											<w2:column id="useYn" inputType="checkbox" blockSelect="false" checkboxLabel="&amp;nbsp" falseValue="N"
+												trueValue="Y" valueType="other" dataType="boolean">
+											</w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="float-con right-area cw7">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="화면상세">
+									</w2:span>
+								</xf:group>
+								<xf:group class="com-area">
+									<xf:group class="btn-group">
+										<w2:anchor id="btnNew" outerDiv="false" ev:onclick="scwin.btnNew_onclick" userData1="N">
+											<xf:label><![CDATA[신규]]></xf:label>
+										</w2:anchor>
+										<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down" outerDiv="false" ev:onclick="scwin.btnDownExcel_onclick"
+											userData1="E">
+											<xf:label><![CDATA[엑셀]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+									<xf:group class="info-box">
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="view-box box height-sam">
+								<xf:group id="grpDtl" class="w2tb" tagname="table">
+									<xf:group tagname="colgroup">
+										<xf:group class="detail_tit" tagname="col">
+										</xf:group>
+										<xf:group tagname="col">
+										</xf:group>
+										<xf:group tagname="col">
+										</xf:group>
+										<xf:group tagname="col">
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="시스템구분">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>3</w2:colspan>
+												<w2:rowspan>1</w2:rowspan>
+											</w2:attributes>
+											<xf:group class="cw10"></xf:group>
+											<w2:autoComplete id="actIntnSysdivCd2" chooseOption="true" chooseOptionLabel="- 전체 -" displayMode="label"
+												editType="select" ref="data:dmaSaveScrin.intnSysDivCd" search="contain" submenuSize="auto" useKeywordHighlight="false"
+												visibleRowNum="5" disabled="true" ev:onviewchange="scwin.actIntnSysdivCd2_onviewchange">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:autoComplete>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="화면ID">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:input id="ibxScrinId" ref="data:dmaSaveScrin.scrinId" ev:onviewchange="scwin.ibxScrinId_onviewchange" mandatory="true">
+											</xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="화면명">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:input id="ibxScrinNm2" ref="data:dmaSaveScrin.scrinNm" mandatory="true">
+											</xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="화면URL">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:input id="ibxScrinUrl" ref="data:dmaSaveScrin.scrinUrl">
+											</xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="화면설명">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:textarea id="txaAthrDc" ref="data:dmaSaveScrin.scrinDc" style="height: 131px;">
+											</xf:textarea>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="도움말파일명">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:input id="txaHpcmFileNm" ref="data:dmaSaveScrin.hpcmFileNm">
+											</xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="페이지번호">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:input id="txaPgeNo" ref="data:dmaSaveScrin.pgeNo">
+											</xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="도움말영상">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:input id="txaHpcmVidoFileNm" ref="data:dmaSaveScrin.hpcmVidoFileNm">
+											</xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="규정정보">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>3</w2:colspan>
+												<w2:rowspan>1</w2:rowspan>
+											</w2:attributes>
+											<xf:group class="input_search" pluginName="input_Search">
+												<xf:input id="ibxLinkinfo" ref="data:dmaSaveScrin.linkinfo"></xf:input>
+												<w2:anchor id="btnLinkinfo" class="fa fa-search" outerDiv="false" ev:onclick="scwin.btnLinkinfo_onclick" userData1="Q">
+													<xf:label><![CDATA[조회]]></xf:label>
+												</w2:anchor>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="조회조건코드">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:input id="ibxParmCd" ref="data:dmaSaveScrin.parmVu">
+											</xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="사용여부">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:select1 id="radUseYn" appearance="full" cols="2" ref="data:dmaSaveScrin.useYn" selectedIndex="0" renderType="radiogroup"
+												style="width: 150px;height: 21px;">
+												<xf:choices>
+													<xf:item>
+														<xf:label><![CDATA[예]]></xf:label>
+														<xf:value><![CDATA[Y]]></xf:value>
+													</xf:item>
+													<xf:item>
+														<xf:label><![CDATA[아니오]]></xf:label>
+														<xf:value><![CDATA[N]]></xf:value>
+													</xf:item>
+												</xf:choices>
+											</xf:select1>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="최종수정정보">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:group class="mix-box">
+												<xf:group class="cw20">
+													<w2:span id="tbxLastUpdtDt" label=" 천원" ref="data:dmaSaveScrin.lastInfo">
+													</w2:span>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnSave" outerDiv="false" ev:onclick="scwin.btnSave_onclick" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnCancl" outerDiv="false" ev:onclick="scwin.btnCancl_onclick" userData1="CC">
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDel" outerDiv="false" ev:onclick="scwin.btnDel_onclick" userData1="D">
+						<xf:label><![CDATA[삭제]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

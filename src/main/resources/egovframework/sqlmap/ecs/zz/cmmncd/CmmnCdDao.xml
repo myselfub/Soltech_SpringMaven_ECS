@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CmmnCdDao">
+
+	<select id="getCmmnCd" parameterType="kw.ecs.zz.cmmncd.vo.CmmnCdVo" resultType="egovMap">
+		/* sc_CmmnCdDao_getCmmnCd */
+		SELECT
+			A.CL_CD,
+			A.CL_CD_NM,
+			B.CMMN_CD,
+			B.CMMN_CD_NM,
+			B.CMMN_CD_DC
+		FROM
+			tc_wri_cl_cd A,
+			tc_wri_cd B
+		WHERE
+			A.CL_CD = B.CL_CD
+			AND A.USE_YN = 'Y'
+			AND B.USE_YN = #{useYn}
+		<if test="clCd != null and clCd != ''">
+			AND A.CL_CD = #{clCd}
+		</if>
+		<if test="cmmnCdNm != null and cmmnCdNm != ''">
+			AND B.CMMN_CD_NM LIKE #{cmmnCdNm} || '%'
+		</if>
+		<if test="usrDfnEtc == 'ETC1'">
+			<if test="usrDfnEtcVal != null and usrDfnEtcVal = ''">
+				AND B.USR_DFN_ETC1 LIKE #{usrDfnEtcVal} || '%'
+			</if>
+		</if>
+		<if test="usrDfnEtc == 'ETC2'">
+			<if test="usrDfnEtcVal != null and usrDfnEtcVal = ''">
+				AND B.USR_DFN_ETC2 LIKE #{usrDfnEtcVal} || '%'
+			</if>
+		</if>
+		<if test="usrDfnEtc == 'ETC3'">
+			<if test="usrDfnEtcVal != null and usrDfnEtcVal = ''">
+				AND B.USR_DFN_ETC3 LIKE #{usrDfnEtcVal} || '%'
+			</if>
+		</if>
+		ORDER BY
+			A.CL_CD,
+			B.SORT_ORDR,
+			B.CMMN_CD
+	</select>
+
+	<select id="getMenuList" parameterType="kw.ecs.zz.cmmncd.vo.MenuListVo" resultType="egovMap">
+		/* sc_CmmnCdDao_getMenuList */
+		SELECT
+			LEVEL,
+			A.MENU_SYS_SE_CD,
+			A.MENU_ID,
+			A.MENU_NM,
+			A.MENU_ORDR,
+			A.MENU_LEVEL
+		FROM
+			tn_wri_dmst_menu A
+		WHERE
+			A.MENU_SYS_SE_CD = #{menuSysSeCd}
+		<if test="menuNm != null and menuNm != ''">
+			AND (A.MENU_LEVEL = '1' OR A.MENU_NM LIKE #{menuNm} || '%')
+		</if>
+		CONNECT BY
+			NOCYCLE PRIOR A.MENU_ID = A.UPPER_MENU_ID
+		<if test="menuId != null and menuId != ''">
+			START WITH A.MENU_ID = #{menuId}
+		</if>
+		<if test="menuId = null and menuId = ''">
+			START WITH A.MENU_LEVEL = '1'
+		</if>
+		ORDER SIBLINGS BY
+			A.MENU_ORDR
+	</select>
+
+	<select id="getScrinSearch" parameterType="kw.ecs.zz.cmmncd.vo.ScrinListVo" resultType="egovMap">
+		/* sc_CmmnCdDao_getScrinSearch */
+		SELECT
+			A.SCRIN_ID,
+			A.DMST_SYS_SE_CD,
+			A.SCRIN_NM,
+			A.SCRIN_URL,
+			A.SCRIN_DC,
+			A.SAP_LCNS_TY_CD,
+			A.USE_YN
+		FROM
+			tn_wri_dmst_scrin A
+		WHERE
+			1=1
+		<if test="dmstSysSeCd != null and dmstSysSeCd != ''">
+			AND A.DMST_SYS_SE_CD = #{dmstSysSeCd}
+		</if>
+		<if test="scrinNm != null and scrinNm != ''">
+			AND A.SCRIN_NM LIKE #{scrinNm} || '%'
+		</if>
+		<if test="useYn != null and useYn != ''">
+			AND A.USE_YN = #{useYn}
+		</if>
+		ORDER BY
+			DMST_SYS_SE_CD,
+			SCRIN_ID,
+			SCRIN_NM
+	</select>
+</mapper>

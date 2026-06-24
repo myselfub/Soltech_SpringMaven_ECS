@@ -1,0 +1,114 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_INTN_USR_INFO_Dao">
+
+	<select id="TM_ECS_INTN_USR_INFO_Dao_loginIntnUsr" parameterType="kw.scm.sc.login.vo.IntnUsrInfoVo" resultType="kw.scm.sc.login.vo.IntnUsrInfoVo">
+		/* TM_ECS_INTN_USR_INFO_Dao_loginIntnUsr */
+		SELECT
+			A.EMPNO AS USR_ID,
+			A.EMPNO AS USR_EMPNO,
+			A.KORNAME AS USR_NM,
+			'ECS' AS SYS_DIV_CD,
+			'' AS BIZN_DIV_CD,
+			NVL(T.ATHR_ID, 'ECS' || 'GN01') AS ATHR_ID,
+			A.BUSCD AS USR_DEPT_CD,
+			A.DEPT AS USR_DEPT_NM,
+			A.CALCD AS USR_OFCPS_CD,
+			A.POSIT AS USR_OFCPS_NM,
+			A.ZGRCD AS USR_JGRD_CD,
+			A.GRADE AS USR_JGRD_NM,
+			A.BONCD AS USR_HQ_CD,
+			A.HEAD AS USR_HQ_NM,
+			A.TIMCD AS USR_SECT_CD,
+			A.SECT AS USR_SECT_NM,
+			A.KWACD AS USR_TEAM_CD,
+			A.TEAM AS USR_TEAM_NM,
+			A.ZGUNC AS USR_JBGP_CD,
+			A.BGROUP AS USR_JBGP_NM,
+			A.ZGPCD AS USR_JBLN_CD,
+			A.DGROUP AS USR_JBLN_NM,
+			A.STECD AS USR_DTY_CD,
+			A.AFFCD AS USR_DTY_NM,
+			A.TEAM AS USR_TEAM_NM,
+			D.KOSTL AS CSTCT_CD
+		FROM
+			HRM.vm_hr01601 A, (
+				SELECT
+					B.usr_id,
+					--WM_CONCAT(B.athr_id) AS athr_id
+					LISTAGG(B.athr_id, ',') WITHIN GROUP (ORDER BY B.athr_id) AS athr_id
+				FROM
+					tm_ecs_intn_usr_athr B,
+					tm_ecs_intn_athr C
+				WHERE
+					B.athr_id = C.athr_id
+					AND B.usr_id = #{usrId}
+					AND C.intn_sys_div_cd = 'ECS'
+				GROUP BY
+					B.usr_id
+				) T,
+			HRM.vm_hr01a01 D
+		WHERE
+			A.empno = #{usrId}
+			AND A.empno = T.usr_id(+)
+			AND A.buscd = D.objid
+			AND SYSDATE BETWEEN D.strdt AND D.enddt
+	</select>
+
+	<select id="TM_ECS_INTN_USR_INFO_Dao_retrieveUsrInqire" parameterType="kw.ecs.zz.cmmncd.vo.UsrListVo" resultType="egovMap">
+		/* TM_ECS_INTN_USR_INFO_Dao_retrieveUsrInqire */
+		SELECT
+			empno AS usr_id,
+			korname AS usr_nm,
+			empno AS usr_empno,
+			dept AS usr_dept_nm,
+			buscd AS usr_dept_cd,
+			posit AS usr_ofcps_nm,
+			calcd AS usr_ofcps_cd,
+			grade AS usr_jgrd_nm,
+			zgrcd AS usr_jgrd_cd,
+			'Y' AS use_yn
+		FROM
+			HRM.vm_hr01601
+		WHERE
+			1=1
+		<if test="usrDeptCd != null and usrDeptCd != ''">
+			AND buscd = #{usrDeptCd}
+		</if>
+		<if test="usrNm != null and usrNm != ''">
+			AND korname LIKE '%' || #{usrNm} || '%'
+		</if>
+		ORDER BY
+			dept,
+			empno,
+			korname
+	</select>
+
+	<select id="TM_ECS_INTN_USR_INFO_Dao_retrieveUsr" parameterType="kw.ecs.zz.cmmncd.vo.UsrListVo" resultType="egovMap">
+		/* TM_ECS_INTN_USR_INFO_Dao_retrieveUsr */
+		SELECT DISTINCT
+			B.empno AS usr_id,
+			B.korname AS usr_nm,
+			B.empno AS usr_empno,
+			B.buscd AS usr_dept_cd,
+			B.dept AS usr_dept_nm,
+			B.calcd AS usr_ofcps_cd,
+			B.posit AS usr_ofcps_nm,
+			B.zgrcd AS usr_jgrd_cd,
+			B.grade AS usr_jgrd_nm
+		FROM
+			tm_ecs_intn_usr_menu A,
+			HRM.vm_hr01601 B
+		WHERE
+			A.usr_id = B.empno
+		<if test="usrId != null and usrId != ''">
+			/* 사용자 검색을 하여 조회 시 */
+			AND A.usr_id = #{usrId}
+		</if>
+		<if test="usrDeptCd != null and usrDeptCd != ''">
+			/* 부서명으로 검색시 */
+			AND B.buscd = #{usrDeptCd}
+		</if>
+		ORDER BY
+			B.empno
+	</select>
+</mapper>

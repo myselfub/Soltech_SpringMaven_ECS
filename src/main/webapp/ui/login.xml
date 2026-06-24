@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="/resources/css/content.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content-layout.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/animate.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/font-awesome.min.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			============================================================
+			* 소스명 : login.xml
+			* 설 명 : 로그인화면
+			* 작성일 : 2017.07.17.
+			* 사 번 : 60002841
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2017.07.17 60002841(권영훈) 최초 작성
+			* Copyright (C) 2017 by Unlimited K-water, All right reserved.
+			================================================================
+		-->
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataMap id="dmaReqInfo" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="sysDivCd" name="시스템구분코드" dataType="text"></w2:key>
+						<w2:key dataType="text" id="usrId" name="사용자 아이디" />
+						<w2:key id="biznDivCd" name="업무구분코드" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltBiznDivCd" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" name="name1" dataType="text"></w2:column>
+						<w2:column id="cmmnCd" name="name2" dataType="text"></w2:column>
+						<w2:column id="cmmnCdNm" name="name3" dataType="text"></w2:column>
+						<w2:column id="cmmnCdDc" name="name4" dataType="text"></w2:column>
+						<w2:column id="upperClsCd" name="name5" dataType="text"></w2:column>
+						<w2:column id="upperCmmnCd" name="name6" dataType="text"></w2:column>
+						<w2:column id="useYn" name="name7" dataType="text"></w2:column>
+						<w2:column id="sortOrdr" name="name8" dataType="text"></w2:column>
+						<w2:column id="sapLnkYn" name="name9" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu1" name="name10" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu2" name="name11" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu3" name="name12" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataMap id="dmaLoginUsrInfo" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="usrId" name="사용자ID" dataType="text"></w2:key>
+						<w2:key id="usrEmpno" name="사용자사원번호" dataType="text"></w2:key>
+						<w2:key id="usrNm" name="사용자명" dataType="text"></w2:key>
+						<w2:key id="sysDivCd" name="시스템구분코드" dataType="text"></w2:key>
+						<w2:key id="biznDivCd" name="업무구분코드" dataType="text"></w2:key>
+						<w2:key id="athrId" name="권한ID" dataType="text"></w2:key>
+						<w2:key id="usrDeptCd" name="사용자부서코드" dataType="text"></w2:key>
+						<w2:key id="usrDeptNm" name="사용자부서명" dataType="text"></w2:key>
+						<w2:key id="usrOfcpsCd" name="사용자직위코드" dataType="text"></w2:key>
+						<w2:key id="usrOfcpsNm" name="사용자직위명" dataType="text"></w2:key>
+						<w2:key id="usrJgrdCd" name="사용자직급코드" dataType="text"></w2:key>
+						<w2:key id="usrJgrdNm" name="사용자직급명" dataType="text"></w2:key>
+						<w2:key id="usrHqCd" name="사용자본부코드" dataType="text"></w2:key>
+						<w2:key id="usrHqNm" name="사용자본부명" dataType="text"></w2:key>
+						<w2:key id="usrSectCd" name="사용자부(문)코드" dataType="text"></w2:key>
+						<w2:key id="usrSectNm" name="사용자부(문)명" dataType="text"></w2:key>
+						<w2:key id="usrTeamCd" name="사용자팀코드" dataType="text"></w2:key>
+						<w2:key id="usrTeamNm" name="사용자팀명" dataType="text"></w2:key>
+						<w2:key id="usrJbgpCd" name="사용자직군코드" dataType="text"></w2:key>
+						<w2:key id="usrJbgpNm" name="사용자직군명" dataType="text"></w2:key>
+						<w2:key id="usrJblnCd" name="사용자직렬코드" dataType="text"></w2:key>
+						<w2:key id="usrJblnNm" name="사용자직렬명" dataType="text"></w2:key>
+						<w2:key id="usrDtyCd" name="사용자직무코드" dataType="text"></w2:key>
+						<w2:key id="usrDtyNm" name="사용자직무명" dataType="text"></w2:key>
+						<w2:key id="cstctCd" name="코스트센터코드" dataType="text"></w2:key>
+						<w2:key id="conectIp" name="접속IP" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript" lazy="false"><![CDATA[
+	/**
+	 * 화면 초기화
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// [전체공통] 화면초기화 공통 함수 호출
+		// 공통 코드 설정
+		scwin.setCommonCode();
+		if (comLib.getUserInfo("servertype" ) == null) {
+			serverID.setLabel(serverID.getLabel());
+		} else {
+			serverID.setLabel(serverID.getLabel() + comLib.getUserInfo("servertype"));
+		}
+	};
+
+	/**
+	 * 공통 코드 조회
+	 * @param
+	 * @return
+	 */
+	scwin.setCommonCode = function() {
+		var options = [
+			{
+				clsCd : "SCM_0000",
+				object : ["sbxSysDivCd"]
+			}, {
+				clsCd : "SCM_0243"
+			}
+		];
+
+		comLib.setCommonCodeSync($p, options, "scwin.setCommonCodeSyncCallBack");
+	};
+
+	/**
+	 * 공통 코드 조회 콜백
+	 * @param
+	 * @return
+	 */
+	scwin.setCommonCodeSyncCallBack = function() {
+		var sysDivCd = "ECS";
+		sbxSysDivCd.setValue(sysDivCd);
+		sbxSysDivCd.setReadOnly(true);
+
+		scwin.setLwprtCd(sysDivCd);
+	};
+
+	/**
+	 * 하위 코드 필터링
+	 * @param sysDivCd:시스템구분코드
+	 * @return
+	 */
+	scwin.setLwprtCd = function(sysDivCd) {
+		var setJson = ldt_Code_SCM_0243.getMatchedJSON("upperCmmnCd", sysDivCd, true);
+
+		dltBiznDivCd.setJSON(setJson)
+		dmaReqInfo.set("usrId", comLib.getCookie("usrId"));
+		sbxBiznDivCd.setSelectedIndex(1);
+
+		// sbxBiznDivCd.focus();
+		// 자동 로그인
+		if (ibxusrId.getValue() != "") {
+			// scwin.btnLogin_onclick();
+		} else {
+			ibxusrId.focus();
+		}
+	};
+
+	/**
+	 * 로그인 버튼 클릭 함수
+	 * @param
+	 * @return
+	 */
+	scwin.btnLogin_onclick = function() {
+		scwin.login();
+	};
+
+	/**
+	 * 로그인 처리 함수
+	 * @param
+	 * @return
+	 */
+	scwin.login = function() {
+		var usrId = dmaReqInfo.get("usrId");
+
+		if (usrId == "") {
+			comLib.alert($p, "사용자ID를 입력하세요");
+			return false;
+		} else {
+			var requestData = {
+				"dmaReqInfo" : dmaReqInfo.getJSON()
+			};
+			var option = {
+				action : "/zz/login/loginIntnUsr.do",
+				reqData : requestData,
+				resData : dmaLoginUsrInfo,
+				success : "scwin.loginCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		}
+	};
+
+	/**
+	 * 로그인 처리 콜백 함수
+	 * @param resBody:서비스단에서 받은 데이터
+	 * @return
+	 */
+	scwin.loginCallback = function(resBody) {
+		if (resBody.message.code === comLib.STATUS_SUCCESS) {
+			if (cbxIsSaved.getValue() == "Y") {
+				comLib.setCookie("usrId", resBody.data.usrId, 31);
+			}
+			// comLib.setGlobal("globalUserInfo", dmaLoginUsrInfo.getJSON());
+
+			comLib.setUserInfo("usrId", 		dmaLoginUsrInfo.get("usrId"));
+			comLib.setUserInfo("usrEmpno", 		dmaLoginUsrInfo.get("usrEmpno"));
+			comLib.setUserInfo("usrNm", 		dmaLoginUsrInfo.get("usrNm"));
+			comLib.setUserInfo("sysDivCd", 		dmaLoginUsrInfo.get("sysDivCd"));
+			comLib.setUserInfo("biznDivCd", 	dmaLoginUsrInfo.get("biznDivCd"));
+			comLib.setUserInfo("athrId", 		dmaLoginUsrInfo.get("athrId"));
+			comLib.setUserInfo("usrDeptCd", 	dmaLoginUsrInfo.get("usrDeptCd"));
+			comLib.setUserInfo("usrDeptNm", 	dmaLoginUsrInfo.get("usrDeptNm"));
+			comLib.setUserInfo("usrOfcpsCd", 	dmaLoginUsrInfo.get("usrOfcpsCd"));
+			comLib.setUserInfo("usrOfcpsNm", 	dmaLoginUsrInfo.get("usrOfcpsNm"));
+			comLib.setUserInfo("usrJgrdCd", 	dmaLoginUsrInfo.get("usrJgrdCd"));
+			comLib.setUserInfo("usrJgrdNm", 	dmaLoginUsrInfo.get("usrJgrdNm"));
+
+			comLib.setUserInfo("usrHqCd", 		dmaLoginUsrInfo.get("usrHqCd"));
+			comLib.setUserInfo("usrHqNm", 		dmaLoginUsrInfo.get("usrHqNm"));
+			comLib.setUserInfo("usrSectCd", 	dmaLoginUsrInfo.get("usrSectCd"));
+			comLib.setUserInfo("usrSectNm", 	dmaLoginUsrInfo.get("usrSectNm"));
+			comLib.setUserInfo("usrTeamCd", 	dmaLoginUsrInfo.get("usrTeamCd"));
+			comLib.setUserInfo("usrTeamNm", 	dmaLoginUsrInfo.get("usrTeamNm"));
+			comLib.setUserInfo("usrJbgpCd", 	dmaLoginUsrInfo.get("usrJbgpCd"));
+			comLib.setUserInfo("usrJbgpNm", 	dmaLoginUsrInfo.get("usrJbgpNm"));
+			comLib.setUserInfo("usrJblnCd", 	dmaLoginUsrInfo.get("usrJblnCd"));
+			comLib.setUserInfo("usrJblnNm", 	dmaLoginUsrInfo.get("usrJblnNm"));
+			comLib.setUserInfo("usrDtyCd", 		dmaLoginUsrInfo.get("usrDtyCd"));
+			comLib.setUserInfo("usrDtyNm", 		dmaLoginUsrInfo.get("usrDtyNm"));
+			comLib.setUserInfo("cstctCd", 		dmaLoginUsrInfo.get("cstctCd"));
+
+			comLib.setUserInfo("conectIp", 		dmaLoginUsrInfo.get("conectIp"));
+
+			$w.url("/ui/index.xml", {
+				"spa" : true,
+				"replaceHistory" : true,
+				"forceReload" : false
+			});
+		} else if (resBody.message.code === comLib.STATUS_DUP_LOGIN) {
+			comLib.alert($p, resBody.message.code_name);
+			scwin.login();
+		} else {
+			comLib.alert($p, resBody.message.code_name);
+			ibxUserId.focus();
+		}
+	};
+
+	/**
+	 * 화면 초기화 함수 처리
+	 * @param
+	 * @return
+	 */
+	 /*삭제
+		if (scwin.initStatus) {
+			scwin.initScreen();
+		}
+	*/
+
+	/**
+	 * Enter 시 로그인 처리
+	 */
+	scwin.ibxusrId_onkeypress = function(e) {
+		if (e.keyCode == 13) {
+			dmaReqInfo.set("usrId" , ibxusrId.getValue());
+			scwin.login();
+		}
+	};
+	]]></script>
+	</head>
+	<body>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group class="content-area">
+				<xf:group class="con-box" style="width:50%;text-align:center">
+					<xf:group class="title-group">
+						<xf:group tagname="h4">
+							<w2:span id="serverID" label="로그인"></w2:span>
+						</xf:group>
+					</xf:group>
+					<xf:group class="view-box box">
+						<xf:group class="w2tb" tagname="table">
+							<w2:attributes>
+								<w2:summary></w2:summary>
+							</w2:attributes>
+							<xf:group tagname="caption"></xf:group>
+							<xf:group tagname="colgroup">
+								<xf:group tagname="col"></xf:group>
+								<xf:group tagname="col"></xf:group>
+								<xf:group tagname="col"></xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_th right cw6" tagname="th">
+									<w2:attributes>
+										<w2:scope>row</w2:scope>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<w2:span label="시스템구분"></w2:span>
+									<table></table>
+									<w2:attributes>
+										<w2:scope>row</w2:scope>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<w2:attributes>
+										<w2:scope>row</w2:scope>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+								</xf:group>
+								<xf:group class="w2tb_td cw8" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:select1 id="sbxSysDivCd" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass="w2selectbox_disabled"
+										displayMode="label delim value" optionOrder="false" ref="data:dmaReqInfo.sysDivCd" selectedData="true" submenuSize="auto"
+										chooseOptionLabel="---- 선택 ----" delimiter=" : ">
+										<xf:choices></xf:choices>
+									</xf:select1>
+								</xf:group>
+								<xf:group class="w2tb_td" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+										<w2:colspan>1</w2:colspan>
+										<w2:rowspan>3</w2:rowspan>
+									</w2:attributes>
+									<xf:group class="mix-box">
+										<w2:anchor id="btnLogin" outerDiv="false" ev:onclick="scwin.btnLogin_onclick">
+											<xf:label><![CDATA[로그인]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_th right" tagname="th">업무구분</xf:group>
+								<xf:group class="w2tb_td" tagname="td">
+									<xf:select1 id="sbxBiznDivCd" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass="w2selectbox_disabled"
+										displayMode="label delim value" optionOrder="false" ref="data:dmaReqInfo.biznDivCd" selectedData="true" submenuSize="auto"
+										chooseOptionLabel="---- 선택 ----" delimiter=" : ">
+										<xf:choices>
+											<xf:itemset nodeset="data:dltBiznDivCd">
+												<xf:label ref="cmmnCdNm"></xf:label>
+												<xf:value ref="cmmnCd"></xf:value>
+											</xf:itemset>
+										</xf:choices>
+									</xf:select1>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_th right" tagname="th">Login&amp;nbsp;ID</xf:group>
+								<xf:group class="w2tb_td" tagname="td">
+									<xf:input id="ibxusrId" enterBlur="false" mandatory="true" maxByteLength="15" placeholder="사번을 입력하세요" ref="data:dmaReqInfo.usrId"
+										ev:onkeypress="scwin.ibxusrId_onkeypress">
+									</xf:input>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" tagname="th">
+									<w2:attributes>
+										<w2:colspan>3</w2:colspan>
+										<w2:rowspan>1</w2:rowspan>
+									</w2:attributes>
+									<xf:group id="group3">
+										<xf:select id="cbxIsSaved" appearance="full" cols="1" selectedindex="-1">
+											<xf:choices>
+												<xf:item>
+													<xf:label><![CDATA[아이디 저장하기]]></xf:label>
+													<xf:value><![CDATA[Y]]></xf:value>
+												</xf:item>
+											</xf:choices>
+										</xf:select>
+										<w2:textbox label="※ Login ID(개인사번으로 사용)&lt;br/&gt;*** 개인사번으로 권한을 부여하시고 사용하세요 ***">
+										</w2:textbox>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

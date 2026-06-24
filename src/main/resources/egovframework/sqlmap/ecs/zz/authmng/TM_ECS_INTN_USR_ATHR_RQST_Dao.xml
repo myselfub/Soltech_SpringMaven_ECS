@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_INTN_USR_ATHR_RQST_Dao">
+	<select id="TM_ECS_INTN_USR_ATHR_RQST_Dao_retrieveUsrAthrRqst" parameterType="kw.ecs.zz.authmng.vo.UsrAthrRqstVo" resultType="egovMap">
+		/* TM_ECS_INTN_USR_ATHR_RQST_Dao_retrieveUsrAthrRqst */
+		SELECT
+			A.RQST_SEQ,
+			A.USR_ID,
+			(SELECT
+				KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.USR_ID
+			) AS USR_NM,
+			A.ATHR_ID,
+			A.PRGSTS_CD,
+			A.APPLC_STRT_DE,
+			A.APPLC_END_DE,
+			UNIF_RQST_SEQ,
+			TO_CHAR(A.RQST_DT, 'YYYYMMDDHH24MISS') AS RQST_DT,
+			APPRVR_ID,
+			(SELECT
+				KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.APPRVR_ID
+			) AS APPRVR_NM,
+			TO_CHAR(A.APRV_DT, 'YYYYMMDDHH24MISS') AS APRV_DT,
+			TO_CHAR(A.CANCL_DT, 'YYYYMMDDHH24MISS') AS CANCL_DT
+		FROM
+			tm_ecs_intn_usr_athr_rqst A,
+			tm_ecs_intn_athr B,
+			tm_ecs_intn_usr_athr C
+		WHERE
+			1 = 1
+			AND A.ATHR_ID = B.ATHR_ID
+			AND A.ATHR_ID = C.ATHR_ID(+)
+			AND A.USR_ID = C.USR_ID(+)
+		<if test="usrId != '' and usrId != null">
+			AND A.USR_ID = #{usrId}
+		</if>
+		<if test="athrId != '' and athrId != null">
+			/*권한명으로 검색시*/
+			AND B.ATHR_ID = #{athrId}
+		</if>
+	</select>
+
+	<select id="TM_ECS_INTN_USR_ATHR_RQST_Dao_retrieveUsrAthrRqstAdmin" parameterType="kw.ecs.zz.authmng.vo.UsrAthrRqstVo" resultType="egovMap">
+		/* TM_ECS_INTN_USR_ATHR_RQST_Dao_retrieveUsrAthrRqstAdmin */
+		SELECT
+			A.RQST_SEQ,
+			A.USR_ID,
+			(SELECT
+				KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.USR_ID
+			) AS USR_NM,
+			A.ATHR_ID,
+			A.PRGSTS_CD,
+			A.APPLC_STRT_DE,
+			A.APPLC_END_DE,
+			UNIF_RQST_SEQ,
+			TO_CHAR(A.RQST_DT, 'YYYYMMDDHH24MISS') AS RQST_DT,
+			A.APPRVR_ID,
+			(SELECT
+				KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.APPRVR_ID
+			) AS APPRVR_NM,
+			TO_CHAR(A.APRV_DT, 'YYYYMMDDHH24MISS') AS APRV_DT,
+			TO_CHAR(A.CANCL_DT, 'YYYYMMDDHH24MISS') AS CANCL_DT
+		FROM
+			tm_ecs_intn_usr_athr_rqst A,
+			tm_ecs_intn_athr B,
+			tm_ecs_intn_usr_athr C
+		WHERE
+			1 = 1
+			AND A.ATHR_ID = B.ATHR_ID
+			AND A.ATHR_ID = C.ATHR_ID(+)
+			AND A.USR_ID = C.USR_ID(+)
+		<if test="intnSysDivCd != '' and intnSysDivCd != null">
+			/* 관리자일 경우 자신의 시스템구분에 맞는 권한만 조회 */
+			AND B.INTN_SYS_DIV_CD = #{intnSysDivCd}
+		</if>
+		<if test="intnBiznDivCd != '' and intnBiznDivCd != null">
+			/* 업무구분에 맞는 권한만 조회 */
+			AND A.ATHR_ID LIKE  #{intnSysDivCd}|| #{intnBiznDivCd}||'%'
+		</if>
+		<if test="usrId != '' and usrId != null">
+			/* 특정 사용자만 조회 */
+			AND A.USR_ID = #{usrId}
+		</if>
+		<if test="athrId != '' and athrId != null">
+			/* 권한명으로 검색시 */
+			AND A.ATHR_ID = #{athrId}
+		</if>
+		<if test="prgstsCd != '' and prgstsCd != null">
+			/* 상태로 검색시 */
+			AND A.PRGSTS_CD = #{prgstsCd}
+		</if>
+		<if test="endDt != '' and endDt != null">
+			/*신청 일자(기간)으로 조회할 경우*/
+			AND TO_CHAR(A.RQST_DT, 'YYYYMMDDHH24MISS' ) BETWEEN #{strtDt} || '000000' AND #{endDt} || '235959'
+		</if>
+	</select>
+
+	<insert id="TM_ECS_INTN_USR_ATHR_RQST_Dao_insertUsrAthrRqst" parameterType="kw.ecs.zz.authmng.vo.UsrAthrRqstVo">
+		<selectKey keyProperty="rqstSeq" resultType="integer" order="BEFORE"> 
+			SELECT
+				NVL(MAX((RQST_SEQ)) + 1, 1)
+			FROM
+				tm_ecs_intn_usr_athr_rqst
+		</selectKey>
+		/* TM_ECS_INTN_USR_ATHR_RQST_Dao_insertUsrAthrRqst */
+		INSERT INTO tm_ecs_intn_usr_athr_rqst (
+			RQST_SEQ,
+			USR_ID,
+			ATHR_ID,
+			PRGSTS_CD,
+			APPLC_STRT_DE,
+			APPLC_END_DE,
+			UNIF_RQST_SEQ,
+			RQST_DT,
+			APPRVR_ID,
+			APRV_DT,
+			CANCL_DT,
+			FRST_REGIST_DT,
+			FRST_RGSTR_ID,
+			LAST_UPDT_DT,
+			LAST_UPDUSR_ID
+		) VALUES (
+			#{rqstSeq},
+			#{usrId},
+			#{athrId},
+			#{prgstsCd},
+			#{applcStrtDe},
+			#{applcEndDe},
+			#{unifRqstSeq},
+			TO_DATE(#{rqstDt}, 'YYYYMMDDHH24MISS'),
+			#{apprvrId},
+			TO_DATE(#{aprvDt}, 'YYYYMMDDHH24MISS'),
+			TO_DATE(#{canclDt}, 'YYYYMMDDHH24MISS'),
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<update id="TM_ECS_INTN_USR_ATHR_RQST_Dao_updateUsrAthrRqst" parameterType="kw.ecs.zz.authmng.vo.UsrAthrRqstVo">
+		/* TM_ECS_INTN_USR_ATHR_RQST_Dao_updateUsrAthrRqst */
+		UPDATE
+			tm_ecs_intn_usr_athr_rqst
+		SET
+			PRGSTS_CD = DECODE(#{prgstsCd}, 'RO', 'RA', 'RA', 'CA', 'CA', 'RO', #{prgstsCd}),
+			RQST_DT = TO_DATE(#{rqstDt}, 'YYYYMMDDHH24MISS'),
+			APPRVR_ID = #{apprvrId},
+			APRV_DT = TO_DATE(#{aprvDt}, 'YYYYMMDDHH24MISS'),
+			CANCL_DT = TO_DATE(#{canclDt}, 'YYYYMMDDHH24MISS'),
+			LAST_UPDT_DT = SYSDATE,
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE
+			RQST_SEQ = #{rqstSeq}
+	</update>
+
+	<delete id="TM_ECS_INTN_USR_ATHR_RQST_Dao_deleteUsrAthrRqst" parameterType="kw.ecs.zz.authmng.vo.UsrAthrRqstVo">
+		/* TM_ECS_INTN_USR_ATHR_RQST_Dao_deleteUsrAthrRqst */
+		DELETE FROM
+			tm_ecs_intn_usr_athr_rqst
+		WHERE
+			RQST_SEQ = #{rqstSeq}
+			AND PRGSTS_CD = 'RO'
+	</delete>
+</mapper>

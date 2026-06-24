@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "벨트모양 메뉴",
+			"version": "",
+			"apis": [],
+			"pluginName": "belt_menu",
+			"width": "170px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "belt_menu",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "400px"
+			}
+		-->
+		<xf:group class="belt-menu" tagname="svg" pluginName="belt_menu">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initWaterDropShape = function() {
+					// fill 설정
+					var fill = "";
+					if (options.fill && options.fill != "") {
+						fill = options.fill;
+					} else {
+						fill = "url(#" + grpBeltMenuLinear.getID() + ")";
+					}
+					document.getElementById(grpBeltMenuFill.getID()).setAttribute("fill", fill);
+
+					// filter 설정
+					var filter = "";
+					if (options.filter && options.filter != "") {
+						filter = options.filter;
+					} else {
+						filter = "url(#" + grpBeltMenuShadow.getID() + ")";
+					}
+					document.getElementById(grpBeltMenuFilter.getID()).setAttribute("filter", filter);
+
+					document.getElementById(grpBeltMenuBackFill.getID()).setAttribute("fill", "url(#" + grpBeltMenuBackLinear.getID() + ")");
+					document.getElementById(grpBeltMenuBackFill.getID()).setAttribute("mask", "url(#" + grpBeltMenuMask.getID() + ")");
+				};
+
+				// 초기 실행함수 수행
+				this.initWaterDropShape();
+				]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>100%</w2:width>
+				<w2:height>100%</w2:height>
+				<w2:viewBox>0 0 170 400</w2:viewBox>
+				<w2:preserveAspectRatio>none</w2:preserveAspectRatio>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="defs">
+				<xf:group id="grpBeltMenuShadow" tagname="filter">
+					<w2:attributes>
+						<w2:x>0</w2:x>
+						<w2:y>0</w2:y>
+						<w2:width>169</w2:width>
+						<w2:height>400</w2:height>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+						<w2:color-interpolation-filters>sRGB</w2:color-interpolation-filters>
+					</w2:attributes>
+					<xf:group tagname="feFlood">
+						<w2:attributes>
+							<w2:flood-opacity>0</w2:flood-opacity>
+							<w2:result>BackgroundImageFix</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feColorMatrix">
+						<w2:attributes>
+							<w2:in>SourceAlpha</w2:in>
+							<w2:type>matrix</w2:type>
+							<w2:value>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0</w2:value>
+							<w2:result>hardAlpha</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feMorphology">
+						<w2:attributes>
+							<w2:radius>2</w2:radius>
+							<w2:operator>dilate</w2:operator>
+							<w2:in>SourceAlpha</w2:in>
+							<w2:result>effect1_dropShadow_320_29</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feOffset">
+						<w2:attributes>
+							<w2:dx>1</w2:dx>
+							<w2:dy>4</w2:dy>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feGaussianBlur">
+						<w2:attributes>
+							<w2:stdDeviation>5</w2:stdDeviation>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feComposite">
+						<w2:attributes>
+							<w2:in2>hardAlpha</w2:in2>
+							<w2:operator>out</w2:operator>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feColorMatrix">
+						<w2:attributes>
+							<w2:type>matrix</w2:type>
+							<w2:values>0 0 0 0 0.570833 0 0 0 0 0.570833 0 0 0 0 0.570833 0 0 0 0.2 0</w2:values>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feBlend">
+						<w2:attributes>
+							<w2:mode>normal</w2:mode>
+							<w2:in2>BackgroundImageFix</w2:in2>
+							<w2:result>effect1_dropShadow_320_29</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feBlend">
+						<w2:attributes>
+							<w2:mode>normal</w2:mode>
+							<w2:in>SourceGraphic</w2:in>
+							<w2:in2>effect1_dropShadow_320_29</w2:in2>
+							<w2:result>shape</w2:result>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpBeltMenuLinear" tagname="linearGradient">
+					<w2:attributes>
+						<w2:x1>83.7363</w2:x1>
+						<w2:y1>8</w2:y1>
+						<w2:x2>83.7363</w2:x2>
+						<w2:y2>384</w2:y2>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+					</w2:attributes>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:stop-color>#E1E1E1</w2:stop-color>
+							<w2:stop-opacity>0.96916</w2:stop-opacity>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.0001</w2:offset>
+							<w2:stop-color>#EAEAEA</w2:stop-color>
+							<w2:stop-opacity>0.970788</w2:stop-opacity>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.493346</w2:offset>
+							<w2:stop-color>#FAFAFA</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>1</w2:offset>
+							<w2:stop-color>#EAEAEA</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpBeltMenuBackLinear" tagname="linearGradient">
+					<w2:attributes>
+						<w2:x1>83.7363</w2:x1>
+						<w2:y1>8</w2:y1>
+						<w2:x2>83.7363</w2:x2>
+						<w2:y2>384</w2:y2>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+					</w2:attributes>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:stop-color>#BFBFBF</w2:stop-color>
+							<w2:stop-opacity>0</w2:stop-opacity>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.494792</w2:offset>
+							<w2:stop-color>#BFBFBF</w2:stop-color>
+							<w2:stop-opacity>0.5</w2:stop-opacity>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>1</w2:offset>
+							<w2:stop-color>#BFBFBF</w2:stop-color>
+							<w2:stop-opacity>0</w2:stop-opacity>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group id="grpBeltMenuFilter" tagname="g">
+				<w2:attributes>
+					<w2:filter></w2:filter>
+				</w2:attributes>
+				<xf:group id="grpBeltMenuMask" tagname="mask">
+					<w2:attributes>
+						<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+						<w2:fill>#FFFFFF</w2:fill>
+					</w2:attributes>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:fill-rule>evenodd</w2:fill-rule>
+							<w2:clip-rule>evenodd</w2:clip-rule>
+							<w2:d>
+								M38.1608 8C33.0036 8 28.6923 11.9219 28.2054 17.056L11.2363 196L28.2054 374.944C28.6923 380.078 33.0036 384 38.1608
+								384H129.312C134.469 384 138.78 380.078 139.267 374.944L156.236 196L139.267 17.0559C138.78 11.9218 134.469 8 129.312 8H38.1608Z
+							</w2:d>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpBeltMenuFill" tagname="path">
+					<w2:attributes>
+						<w2:fill-rule>evenodd</w2:fill-rule>
+						<w2:clip-rule>evenodd</w2:clip-rule>
+						<w2:shape-rendering>crispEdges</w2:shape-rendering>
+						<w2:d>
+							M38.1608 8C33.0036 8 28.6923 11.9219 28.2054 17.056L11.2363 196L28.2054 374.944C28.6923 380.078 33.0036 384 38.1608
+							384H129.312C134.469 384 138.78 380.078 139.267 374.944L156.236 196L139.267 17.0559C138.78 11.9218 134.469 8 129.312 8H38.1608Z
+						</w2:d>
+						<w2:fill></w2:fill>
+					</w2:attributes>
+				</xf:group>
+				<xf:group id="grpBeltMenuBackFill" tagname="path">
+					<w2:attributes>
+						<w2:d> M28.2054 17.056L29.201 17.1504L28.2054 17.056ZM11.2363 196L10.2408 195.906L10.2318 196L10.2408 196.094L11.2363 196ZM28.2054
+							374.944L27.2099 375.038L27.2099 375.038L28.2054 374.944ZM139.267 374.944L140.263 375.038L140.263 375.038L139.267 374.944ZM156.236
+							196L157.232 196.094L157.241 196L157.232 195.906L156.236 196ZM139.267 17.0559L140.263 16.9615L140.263 16.9615L139.267 17.0559ZM29.201
+							17.1504C29.6391 12.5297 33.5194 9 38.1608 9V7C32.4879 7 27.7454 11.314 27.2099 16.9615L29.201 17.1504ZM12.2319 196.094L29.201
+							17.1504L27.2099 16.9615L10.2408 195.906L12.2319 196.094ZM29.201 374.85L12.2319 195.906L10.2408 196.094L27.2099 375.038L29.201
+							374.85ZM38.1608 383C33.5194 383 29.6391 379.47 29.201 374.85L27.2099 375.038C27.7454 380.686 32.4879 385 38.1608 385V383ZM129.312
+							383H38.1608V385H129.312V383ZM138.272 374.85C137.834 379.47 133.953 383 129.312 383V385C134.985 385 139.727 380.686 140.263
+							375.038L138.272 374.85ZM155.241 195.906L138.272 374.85L140.263 375.038L157.232 196.094L155.241 195.906ZM138.272 17.1503L155.241
+							196.094L157.232 195.906L140.263 16.9615L138.272 17.1503ZM129.312 9C133.953 9 137.834 12.5297 138.272 17.1504L140.263 16.9615C139.727
+							11.314 134.985 7 129.312 7V9ZM38.1608 9H129.312V7H38.1608V9Z
+						</w2:d>
+						<w2:mask></w2:mask>
+						<w2:fill></w2:fill>
+					</w2:attributes>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

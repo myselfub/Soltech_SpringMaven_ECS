@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:tool="http://www.springframework.org/schema/tool" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	default-autowire="byName"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+                http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+                http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                http://www.springframework.org/schema/jdbc  http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+                http://www.springframework.org/schema/jee  http://www.springframework.org/schema/jee/spring-jee.xsd
+                http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+                http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+                http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool.xsd
+                http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+                http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+                http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+	<!--
+		====================================================================
+		Component Scan
+		====================================================================
+	-->
+	<context:component-scan base-package="kw">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service" />
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+	</context:component-scan>
+
+	<!--
+		====================================================================
+		WebSquare Adapter & View
+		====================================================================
+	-->
+	<bean id="wqAdapter" name="wqAdapter" class="kw.fw.adaptor.WqAdapter" />
+	<bean id="wqView" class="kw.fw.adaptor.WqAdapterView" />
+
+	<!--
+		====================================================================
+		Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory
+		====================================================================
+	-->
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+
+	<!--
+		====================================================================
+		어노테이션(Annotation) 기반의 컨트롤러(Controller)를 사용하도록 설정
+		====================================================================
+	-->
+
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="customArgumentResolvers">
+			<list>
+				<bean class="kw.fw.adaptor.CustomWqArgumentResolver">
+					<property name="uiAdaptor">
+						<ref bean="wqAdapter" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!--
+		====================================================================
+		View Resolver
+		====================================================================
+	-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/jsp" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
+
+	<!--
+		====================================================================
+		JSP와 RIA Exception을 통합하기 위한 ExceptionResolver 설정 by kksoo
+		====================================================================
+	-->
+	<bean class="kw.fw.exception.BaseExceptionResolver" />
+	<bean id="imageRenderer" class="kw.fw.cmn.EgovImgPaginationRenderer" />
+	<bean id="paginationManager" class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
+		<property name="rendererType">
+			<map>
+				<entry key="image" value-ref="imageRenderer" />
+			</map>
+		</property>
+	</bean>
+
+	<!--
+		====================================================================
+		Interceptor
+		====================================================================
+	-->
+	<bean id="controllerInterceptor" class="kw.fw.interceptor.ControllerInterceptor" />
+
+	<mvc:interceptors>
+		<ref bean="controllerInterceptor" />
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*.do" />
+			<mvc:exclude-mapping path="/sc/cmmncd/retrieveClsCdCmmnCd.do" />
+			<mvc:exclude-mapping path="/sc/login/loginIntnUsr.do" />
+			<mvc:exclude-mapping path="/zz/login/loginIntnUsr.do" />
+			<mvc:exclude-mapping path="/sc/login/dummyLoginIntnUser.do" />
+			<mvc:exclude-mapping path="/validator.do" />
+			<mvc:exclude-mapping path="/sessionOut.do" />
+			<mvc:exclude-mapping path="/processSso.do" />
+			<mvc:exclude-mapping path="/openOthrSysMnu.do" />
+			<mvc:exclude-mapping path="/sc/file/eai/regacyDownloadAtchFile.do" />
+			<mvc:exclude-mapping path="/pg/frgltyfclty/frgltyfcltymng/eai/saveKrmAprvInfo.do" />
+			<mvc:exclude-mapping path="/**/eai/*.do" />
+			<mvc:exclude-mapping path="/eai/**/*.do" />
+			<mvc:exclude-mapping path="/**/approval/*.do" />
+			<mvc:exclude-mapping path="/zz/authmng/retrieveAthr.do" />
+			<mvc:exclude-mapping path="/zz/authmng/retrieveUsrMenuAthr.do" />
+			<mvc:exclude-mapping path="/zz/authmng/insertUsrAthrRqst.do" />
+			<mvc:exclude-mapping path="/zz/photoview/photoView.do" /> <!-- 사진이미지 보기 -->
+			<mvc:exclude-mapping path="/zz/photoview/tmpPhotoView.do" /> <!-- 사진이미지 미리보기 -->
+			<bean class="kw.fw.interceptor.AuthenticInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!--
+		====================================================================
+		Controller 단의 Action 호출 시 valid한 Token을 점검하는 AOP 설정
+		====================================================================
+	-->
+	<aop:config>
+		<aop:pointcut id="savedTokenTargetMethod" expression="@annotation(kw.fw.token.ValidationToken)" />
+		<aop:aspect ref="savedTokenValidator">
+			<aop:before pointcut-ref="savedTokenTargetMethod" method="beforeTargetMethod" />
+			<aop:after-returning pointcut-ref="savedTokenTargetMethod" method="afterTargetMethod" returning="mav" />
+		</aop:aspect>
+	</aop:config>
+
+	<bean id="savedTokenValidator" class="kw.fw.aop.SavedTokenValidator" />
+
+	<bean id="loginLog" class="kw.fw.aop.LoginLogAspect" />
+	<aop:config>
+		<aop:aspect id="loginLogAspect" ref="loginLog">
+			<aop:around pointcut="execution(* kw..impl.*LoginServiceImpl.*(..))" method="loginLog" />
+		</aop:aspect>
+	</aop:config>
+
+	<mvc:view-controller path="/cmmn/validator.do" view-name="cmmn/validator" />
+
+	<!--
+		====================================================================
+		File Download View
+		====================================================================
+	-->
+	<bean id="commonFileDownloadView" class="kw.fw.view.CommonFileDownloadView">
+		<property name="modelName" value="downloadFile" />
+		<property name="encoding" value="UTF-8" />
+		<property name="alias" value="alias" />
+		<property name="contentType" value="contentsType" />
+	</bean>
+
+</beans>

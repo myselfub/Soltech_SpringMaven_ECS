@@ -1,0 +1,1048 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataList baseNode="list" id="dltQnaMng" repeatNode="map" saveRemovedData="true" style="">
+					<w2:columnInfo>
+						<w2:column dataType="text" id="sysDivCd" name="시스템구분코드"></w2:column>
+						<w2:column dataType="text" id="bbsId" name="게시판ID"></w2:column>
+						<w2:column dataType="text" id="bbsTyCd" name="게시판유형코드"></w2:column>
+						<w2:column dataType="text" id="bbsAtrbCd" name="게시판속성코드"></w2:column>
+						<w2:column dataType="text" id="bbsNm" name="게시판명"></w2:column>
+						<w2:column dataType="text" id="bbsDc" name="게시판설명"></w2:column>
+						<w2:column dataType="text" id="bbsClsUseYn" name="분류사용여부"></w2:column>
+						<w2:column dataType="text" id="bbsClsCd1" name="분류코드"></w2:column>
+						<w2:column dataType="text" id="bbsClsCd2" name="분류코드2"></w2:column>
+						<w2:column dataType="text" id="prcsStatUseYn" name="처리상태여부"></w2:column>
+						<w2:column dataType="text" id="bbsStatCd" name="처리상태코드"></w2:column>
+						<w2:column dataType="text" id="bbsPopupYn" name="게시판팝업여부"></w2:column>
+						<w2:column dataType="text" id="bbsUrl" name="게시판URL"></w2:column>
+						<w2:column dataType="text" id="answerPsblYn" name="답변가능여부"></w2:column>
+						<w2:column dataType="text" id="useYn" name="사용여부"></w2:column>
+						<w2:column dataType="text" id="frstRegistDt" name="최초등록일시"></w2:column>
+						<w2:column dataType="text" id="frstRgstrId" name="최초등록자ID"></w2:column>
+						<w2:column dataType="text" id="lastUpdtDt" name="최종수정일시"></w2:column>
+						<w2:column dataType="text" id="lastUpdusrId" name="최종수정자ID"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltQnaList" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="nttNo" name="게시물ID" dataType="text"></w2:column>
+						<w2:column id="bbsId" name="게시판ID" dataType="text"></w2:column>
+						<w2:column id="sysDivCd" name="시스템구분코드" dataType="text"></w2:column>
+						<w2:column id="sysDivNm" name="시스템구분명" dataType="text"></w2:column>
+						<w2:column id="ctgryId" name="범주ID" dataType="text"></w2:column>
+						<w2:column id="ntceLocgovCd" name="게시지자체코드" dataType="text"></w2:column>
+						<w2:column id="nttClsCd1" name="게시물분류코드1" dataType="text"></w2:column>
+						<w2:column id="nttClsCd2" name="게시물분류코드2" dataType="text"></w2:column>
+						<w2:column id="nttStatCd" name="게시물상태코드" dataType="text"></w2:column>
+						<w2:column id="nttTit" name="게시물제목" dataType="date"></w2:column>
+						<w2:column id="nttCtnt" name="게시물내용" dataType="text"></w2:column>
+						<w2:column id="nttPwdno" name="게시물비밀번호" dataType="text"></w2:column>
+						<w2:column id="nttRdcnt" name="게시물조회수" dataType="text"></w2:column>
+						<w2:column id="nttNtfFnctYn" name="게시물공지기능여부" dataType="text"></w2:column>
+						<w2:column id="ntfStrtDe" name="공지시작일" dataType="text"></w2:column>
+						<w2:column id="ntfEndDe" name="공지종료일" dataType="text"></w2:column>
+						<w2:column id="answerYn" name="답변여부" dataType="text"></w2:column>
+						<w2:column id="parntsNttNo" name="부모게시물ID" dataType="text"></w2:column>
+						<w2:column id="atchflId" name="첨부파일ID" dataType="text"></w2:column>
+						<w2:column id="useYn" name="사용여부" dataType="text"></w2:column>
+						<w2:column id="sortOrdr" name="정렬순서" dataType="text"></w2:column>
+						<w2:column id="priorNttYn" name="비밀게시물여부" dataType="text"></w2:column>
+						<w2:column id="frstRegistDt" name="최초등록일시" dataType="text"></w2:column>
+						<w2:column id="frstRgstrId" name="최초등록자ID" dataType="text"></w2:column>
+						<w2:column id="lastUpdtDt" name="최종수정일시" dataType="text"></w2:column>
+						<w2:column id="lastUpdusrId" name="최종수정자ID" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="저장경로" dataType="text"></w2:column>
+						<w2:column id="saveFileNm" name="저장파일명" dataType="text"></w2:column>
+						<w2:column id="orginlFileNm" name="원본파일명" dataType="text"></w2:column>
+						<w2:column id="fileSize" name="파일사이즈" dataType="text"></w2:column>
+						<w2:column id="korname" name="name31" dataType="text"></w2:column>
+						<w2:column id="dept" name="name32" dataType="text"></w2:column>
+						<w2:column id="posit" name="name34" dataType="text"></w2:column>
+						<w2:column id="nttOdrd" name="name33" dataType="text"></w2:column>
+						<w2:column id="nttClsNm1" name="name35" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltQnaReplaList" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="nttNo" name="게시물ID" dataType="text"></w2:column>
+						<w2:column id="bbsId" name="게시판ID" dataType="text"></w2:column>
+						<w2:column id="sysDivCd" name="시스템구분코드" dataType="text"></w2:column>
+						<w2:column id="sysDivNm" name="시스템구분명" dataType="text"></w2:column>
+						<w2:column id="ctgryId" name="범주ID" dataType="text"></w2:column>
+						<w2:column id="ntceLocgovCd" name="게시지자체코드" dataType="text"></w2:column>
+						<w2:column id="nttClsCd1" name="게시물분류코드1" dataType="text"></w2:column>
+						<w2:column id="nttClsCd2" name="게시물분류코드2" dataType="text"></w2:column>
+						<w2:column id="nttStatCd" name="게시물상태코드" dataType="text"></w2:column>
+						<w2:column id="nttTit" name="게시물제목" dataType="date"></w2:column>
+						<w2:column id="nttCtnt" name="게시물내용" dataType="text"></w2:column>
+						<w2:column id="nttPwdno" name="게시물비밀번호" dataType="text"></w2:column>
+						<w2:column id="nttRdcnt" name="게시물조회수" dataType="text"></w2:column>
+						<w2:column id="nttNtfFnctYn" name="게시물공지기능여부" dataType="text"></w2:column>
+						<w2:column id="ntfStrtDe" name="공지시작일" dataType="text"></w2:column>
+						<w2:column id="ntfEndDe" name="공지종료일" dataType="text"></w2:column>
+						<w2:column id="answerYn" name="답변여부" dataType="text"></w2:column>
+						<w2:column id="parntsNttNo" name="부모게시물ID" dataType="text"></w2:column>
+						<w2:column id="atchflId" name="첨부파일ID" dataType="text"></w2:column>
+						<w2:column id="useYn" name="사용여부" dataType="text"></w2:column>
+						<w2:column id="sortOrdr" name="정렬순서" dataType="text"></w2:column>
+						<w2:column id="priorNttYn" name="비밀게시물여부" dataType="text"></w2:column>
+						<w2:column id="frstRegistDt" name="최초등록일시" dataType="text"></w2:column>
+						<w2:column id="frstRgstrId" name="최초등록자ID" dataType="text"></w2:column>
+						<w2:column id="lastUpdtDt" name="최종수정일시" dataType="text"></w2:column>
+						<w2:column id="lastUpdusrId" name="최종수정자ID" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="저장경로" dataType="text"></w2:column>
+						<w2:column id="saveFileNm" name="저장파일명" dataType="text"></w2:column>
+						<w2:column id="orginlFileNm" name="원본파일명" dataType="text"></w2:column>
+						<w2:column id="fileSize" name="파일사이즈" dataType="text"></w2:column>
+						<w2:column id="korname" name="name31" dataType="text"></w2:column>
+						<w2:column id="dept" name="name32" dataType="text"></w2:column>
+						<w2:column id="posit" name="name34" dataType="text"></w2:column>
+						<w2:column id="nttOdrd" name="name33" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap baseNode="map" id="dmaQnaMt">
+					<w2:keyInfo>
+						<w2:key id="nttNo" name="게시물ID" dataType="text"></w2:key>
+						<w2:key id="bbsId" name="게시판ID" dataType="text"></w2:key>
+						<w2:key id="sysDivCd" name="시스템구분코드" dataType="text"></w2:key>
+						<w2:key id="sysDivNm" name="시스템구분명" dataType="text"></w2:key>
+						<w2:key id="ctgryId" name="범주ID" dataType="text"></w2:key>
+						<w2:key id="ntceLocgovCd" name="게시지자체코드" dataType="text"></w2:key>
+						<w2:key id="nttClsCd1" name="게시물분류코드1" dataType="text"></w2:key>
+						<w2:key id="nttClsCd2" name="게시물분류코드2" dataType="text"></w2:key>
+						<w2:key id="nttStatCd" name="게시물상태코드" dataType="text"></w2:key>
+						<w2:key id="nttTit" name="게시물제목" dataType="date"></w2:key>
+						<w2:key id="nttCtnt" name="게시물내용" dataType="text"></w2:key>
+						<w2:key id="nttPwdno" name="게시물비밀번호" dataType="text"></w2:key>
+						<w2:key id="nttRdcnt" name="게시물조회수" dataType="text"></w2:key>
+						<w2:key id="nttNtfFnctYn" name="게시물공지기능여부" dataType="text"></w2:key>
+						<w2:key id="ntfStrtDe" name="공지시작일" dataType="text"></w2:key>
+						<w2:key id="ntfEndDe" name="공지종료일" dataType="text"></w2:key>
+						<w2:key id="answerYn" name="답변여부" dataType="text"></w2:key>
+						<w2:key id="parntsNttNo" name="부모게시물ID" dataType="text"></w2:key>
+						<w2:key id="atchflId" name="첨부파일ID" dataType="text"></w2:key>
+						<w2:key id="useYn" name="사용여부" dataType="text"></w2:key>
+						<w2:key id="sortOrdr" name="정렬순서" dataType="text"></w2:key>
+						<w2:key id="priorNttYn" name="우선게시물여부" dataType="text"></w2:key>
+						<w2:key id="frstRegistDt" name="최초등록일시" dataType="text"></w2:key>
+						<w2:key id="frstRgstrId" name="최초등록자ID" dataType="text"></w2:key>
+						<w2:key id="lastUpdtDt" name="최종수정일시" dataType="text"></w2:key>
+						<w2:key id="lastUpdusrId" name="최종수정자ID" dataType="text"></w2:key>
+						<w2:key id="rowStatus" name="상태값" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltQnaBbsClsCd" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" name="공통분류코드" dataType="text"></w2:column>
+						<w2:column id="clsCdNm" name="공통분류코드명" dataType="text"></w2:column>
+						<w2:column id="cmmnCd" name="공통코드" dataType="text"></w2:column>
+						<w2:column id="cmmnCdNm" name="공통코드명" dataType="text"></w2:column>
+						<w2:column id="cmmnCdDc" name="공통코드설명" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataMap baseNode="map" id="dmaQnaMng">
+					<w2:keyInfo>
+						<w2:key id="bbsId" name="bbsId" dataType="text"></w2:key>
+						<w2:key id="sysDivCd" name="sysDivCd" dataType="text"></w2:key>
+						<w2:key id="bbsAtrbCd" name="bbsAtrbCd" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap baseNode="map" id="damReplaMng">
+					<w2:keyInfo>
+						<w2:key id="nttNo" name="게시물ID" dataType="text"></w2:key>
+						<w2:key id="bbsId" name="게시판ID" dataType="text"></w2:key>
+						<w2:key id="sysDivCd" name="시스템구분코드" dataType="text"></w2:key>
+						<w2:key id="sysDivNm" name="시스템구분명" dataType="text"></w2:key>
+						<w2:key id="ctgryId" name="범주ID" dataType="text"></w2:key>
+						<w2:key id="ntceLocgovCd" name="게시지자체코드" dataType="text"></w2:key>
+						<w2:key id="nttClsCd1" name="게시물분류코드1" dataType="text"></w2:key>
+						<w2:key id="nttClsCd2" name="게시물분류코드2" dataType="text"></w2:key>
+						<w2:key id="nttStatCd" name="게시물상태코드" dataType="text"></w2:key>
+						<w2:key id="nttTit" name="게시물제목" dataType="date"></w2:key>
+						<w2:key id="nttCtnt" name="게시물내용" dataType="text"></w2:key>
+						<w2:key id="nttPwdno" name="게시물비밀번호" dataType="text"></w2:key>
+						<w2:key id="nttRdcnt" name="게시물조회수" dataType="text"></w2:key>
+						<w2:key id="nttNtfFnctYn" name="게시물공지기능여부" dataType="text"></w2:key>
+						<w2:key id="ntfStrtDe" name="공지시작일" dataType="text"></w2:key>
+						<w2:key id="ntfEndDe" name="공지종료일" dataType="text"></w2:key>
+						<w2:key id="answerYn" name="답변여부" dataType="text"></w2:key>
+						<w2:key id="parntsNttNo" name="부모게시물ID" dataType="text"></w2:key>
+						<w2:key id="atchflId" name="첨부파일ID" dataType="text"></w2:key>
+						<w2:key id="useYn" name="사용여부" dataType="text"></w2:key>
+						<w2:key id="sortOrdr" name="정렬순서" dataType="text"></w2:key>
+						<w2:key id="priorNttYn" name="우선게시물여부" dataType="text"></w2:key>
+						<w2:key id="frstRegistDt" name="최초등록일시" dataType="text"></w2:key>
+						<w2:key id="frstRgstrId" name="최초등록자ID" dataType="text"></w2:key>
+						<w2:key id="lastUpdtDt" name="최종수정일시" dataType="text"></w2:key>
+						<w2:key id="lastUpdusrId" name="최종수정자ID" dataType="text"></w2:key>
+						<w2:key id="rowStatus" name="상태값" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltRepalFileList" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="atchflId" name="파일ID" dataType="text"></w2:column>
+						<w2:column id="fileSeq" name="파일순번" dataType="number"></w2:column>
+						<w2:column id="biznDivCd" name="업무구분코드" dataType="text"></w2:column>
+						<w2:column id="docClsCd" name="문서구분코드" dataType="text"></w2:column>
+						<w2:column id="orginlFileNm" name="파일명" dataType="text"></w2:column>
+						<w2:column id="fileTmprPath" name="임시저장소 저장된 파일명" dataType="text"></w2:column>
+						<w2:column id="docTit" name="문서제목" dataType="text"></w2:column>
+						<w2:column id="docCtnt" name="문서내용" dataType="text"></w2:column>
+						<w2:column id="sapYn" name="SAP여부" dataType="text"></w2:column>
+						<w2:column id="scrinLinkInfo" name="화면링크정보" dataType="text"></w2:column>
+						<w2:column id="pkInfo" name="PK정보" dataType="text"></w2:column>
+						<w2:column id="menuId" name="메뉴ID" dataType="text"></w2:column>
+						<w2:column id="imgData" name="이미지데이터" dataType="text"></w2:column>
+						<w2:column id="chk" name="선택" dataType="text"></w2:column>
+						<w2:column id="name" name="파일명" dataType="text"></w2:column>
+						<w2:column id="displaySize" name="파일사이즈" dataType="text"></w2:column>
+						<w2:column id="Status" name="진행상태" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="파일저장경로" dataType="text"></w2:column>
+						<w2:column id="saveFileNm" name="저장파일명" dataType="text"></w2:column>
+						<w2:column id="atchflTit" name="첨부파일제목" dataType="text"></w2:column>
+						<w2:column id="saveYn" name="name21" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript" lazy="false"><![CDATA[ 
+	scwin.repalStatus = "C";
+	scwin.repFileStr = [];
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		$p.$("#qnaMmodify").click(function() {
+			$("table.creat").removeClass("table-on");
+			$("table.view").removeClass("table-on");
+			$("table.creat").addClass("table-on");
+		});
+		$p.$("#btn_qnaCreate").click(function() {
+			scwin.btnQnaAdd_onclick();
+			$("table.mody").removeClass("table-on");
+			$("table.creat").addClass("table-on");
+			$("table.view").removeClass("table-on");
+		});
+		$(".pop").click(function() {
+			$(this).toggleClass("pop-on","pop-off");
+
+			$(".re-list").toggleClass("full-on");
+			$(".lists.re-li").toggleClass("full-on");
+			$(".re-t").toggleClass("full-on");
+
+			if ($(this)["0"].classList[2] == "pop-on") {
+				$p.$("#grpNttQnaRepla").mCustomScrollbar().css("height",parseInt($(".nav-board").css("height").replace("px", "")) - 150);
+			} else {
+				$p.$("#grpNttQnaRepla").mCustomScrollbar().css("height",parseInt($(".nav-board").css("height").replace("px", "")) - 700);
+			}
+		//$p.$("#grpNttQnaRepla").mCustomScrollbar().css("height",parseInt($(".nav-board").css("height").replace("px", "")) - 150);
+		});
+		$(".nav-title-group .close").click(function() {
+			$(".nav-board").removeClass("board-on");
+			comLib.removeSrc();
+		});
+		$p.$("#qnaTrash").click(function() {
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00251"), "scwin.deleteQnaLeft");
+		});
+		$p.$("#btnCancel").click(function() {
+			if (dmaNttMt.get("rowStatus") == "C") {
+				$("table.creat").removeClass("table-on");
+				$("table.view").removeClass("table-on");
+			} else {
+				$("table.creat").removeClass("table-on");
+				$("table.view").addClass("table-on");
+			}
+		});
+	};
+
+	scwin.selectQna = function(nttQnaNo) {
+		saveQnaNttNo = nttQnaNo;
+		var dltQnaListJson = dltQnaList.getMatchedJSON("nttNo", saveQnaNttNo, true, 0, dltQnaList.getRowCount());
+		//reListId.hide();
+		$("table.creat").removeClass("table-on");
+		$("table.view.repla").addClass("table-on");
+
+		utilLib.clearDcObj(dmaQnaMt);
+
+		dmaQnaMt.set("rowStatus", "U");
+		dmaQnaMt.set("nttNo", dltQnaListJson[0].nttNo);
+		dmaQnaMt.set("bbsId", dltQnaListJson[0].bbsId);
+		dmaQnaMt.set("sysDivCd", dltQnaListJson[0].sysDivCd);
+		dmaQnaMt.set("ctgryId", dltQnaListJson[0].ctgryId);
+		dmaQnaMt.set("ntceLocgovCd", dltQnaListJson[0].ntceLocgovCd);
+		dmaQnaMt.set("nttClsCd1", dltQnaListJson[0].nttClsCd1);
+		dmaQnaMt.set("nttClsCd2", dltQnaListJson[0].nttClsCd2);
+		dmaQnaMt.set("nttStatCd", dltQnaListJson[0].nttStatCd);
+		dmaQnaMt.set("nttTit", dltQnaListJson[0].nttTit);
+		dmaQnaMt.set("nttCtnt", dltQnaListJson[0].nttCtnt);
+		dmaQnaMt.set("nttPwdno", dltQnaListJson[0].nttPwdno);
+		dmaQnaMt.set("nttRdcnt", dltQnaListJson[0].nttRdcnt);
+		dmaQnaMt.set("nttNtfFnctYn", dltQnaListJson[0].nttNtfFnctYn);
+		dmaQnaMt.set("ntfStrtDe", dltQnaListJson[0].ntfStrtDe);
+		dmaQnaMt.set("ntfEndDe", dltQnaListJson[0].ntfEndDe);
+		dmaQnaMt.set("answerYn", dltQnaListJson[0].answerYn);
+		dmaQnaMt.set("priorNttYn", dltQnaListJson[0].priorNttYn);
+		dmaQnaMt.set("atchflId", dltQnaListJson[0].atchflId);
+		dmaQnaMt.set("useYn", dltQnaListJson[0].useYn);
+		dmaQnaMt.set("sortOrdr", dltQnaListJson[0].sortOrdr);
+		dmaQnaMt.set("lastUpdtDt", dltQnaListJson[0].frstRegistDt);
+		dmaQnaMt.set("frstRgstrId", dltQnaListJson[0].frstRgstrId);
+		
+		if (dltQnaListJson[0].frstRgstrId != comLib.getUsrId()) {
+			qnaMmodify.hide();
+			qnaTrash.hide();
+		} else {
+			qnaMmodify.show("inline-block");
+			qnaTrash.show("inline-block");
+		}
+
+		//scwin.updateNttRdcnt();
+
+		qnaUser.setLabel(dltQnaListJson[0].korname+" / "+dltQnaListJson[0].posit+" / " + dltQnaListJson[0].dept);
+		qnaDay.setLabel(dltQnaListJson[0].lastUpdtDt);
+		viewFileQna.render.innerHTML = ""; 
+		var dltQnaJson = dltQnaReplaList.getMatchedJSON("parntsNttNo", dltQnaListJson[0].nttNo, true, 0, dltQnaReplaList.getRowCount());
+		var str = [];
+		var repFile =[];
+		if (dltQnaJson.length > 0) {
+			for(var i=0;i<dltQnaJson.length;i++) {
+				str.push("<div class=\"w2group re-g\">");
+				str.push("<div class=\"w2group user\">");
+				str.push("<span class=\"w2span ac\">A</span>");
+				str.push("<span class=\"w2span name\">"+dltQnaJson[i].korname+" ㅣ "+dltQnaJson[i].dept+" ㅣ " + dltQnaJson[i].posit+"</span>");
+				str.push("<span class=\"w2span day\">"+dltQnaJson[i].frstRegistDt+"</span>");
+				if (comLib.getUsrId() == dltQnaJson[i].frstRgstrId) {
+					str.push("<div class=\"w2group btn-group\">");
+					str.push("<a class=\"w2anchor2 modify\" href=\"javascript:" + comLib.getFrameId($p) + "scwin.detailsQnaRepla('"+dltQnaJson[i].nttNo+"');\">수정</a>");
+					str.push("<a class=\"w2anchor2 trash\" href=\"javascript:" + comLib.getFrameId($p) + "scwin.deleteQnaRepla('"+dltQnaJson[i].nttNo+"');\">삭제</a>");
+					str.push("</div>");
+				}
+				str.push("</div>");
+				str.push("<div class=\"w2group view-txt\">");
+				str.push("<span class=\"w2span \">"+dltQnaJson[i].nttCtnt+"</span>");
+				str.push("</div>");
+				str.push("<div class=\"w2group view-file\" id=\"repFile_"+dltQnaJson[i].atchflId+"\">");
+				if (dltQnaJson[i].atchflId !="") {
+					repFile.push(dltQnaJson[i].atchflId);
+				}
+				//str.push("<a class=\"w2anchor2 \" href=\"javascript:void(null);\">"+dltQnaJson[i].atchflId+"</a>");
+				str.push("</div>");
+				str.push("</div>");
+			}
+			replaArea.render.innerHTML = str.join(""); 
+		} else {
+			replaArea.render.innerHTML = ""; 
+		}
+		utilLib.clearDcObj(qnaAtchfl.getWindow()._dltNttFile);
+		if (dltQnaListJson[0].atchflId != null && dltQnaListJson[0].atchflId != "") {
+			var requestData = {};
+			requestData.dmaFileBasic = {atchflId : dltQnaListJson[0].atchflId };
+			var option = {
+				action : "sc/file/fileList.do",
+				reqData : requestData,
+				resData : qnaAtchfl.getWindow()._dltNttFile,
+				success : "scwin.searchQnaMtCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		} else {
+			qnaAtchfl.getWindow()._dltNttFile.deleteRow(0);
+		}
+
+		if (repFile.length > 0) {
+			scwin.replaFile(repFile);
+		}
+	};
+
+	scwin.replaFile = function(repFile) {
+		dltRepalFileList.setData(repFile, false, ["atchflId"]);
+		var requestData = {};
+		repFileStr = repFile;
+		requestData.data = dltRepalFileList.getAllJSON();
+		var option = {
+			action : "sc/file/replaFileList.do",
+			reqData : requestData,
+			resData : "",
+			success : "scwin.replaFileCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.replaFileCallback = function(resBody) {
+		if (resBody.message.code == 'success') {
+			utilLib.clearDcObj(dltRepalFileList);
+			dltRepalFileList.setJSON(resBody.message.data, true); // append data
+			if (dltRepalFileList.getRowCount() > 0) {
+				for(var y=0; y<scwin.repFileStr.length; y++) {
+					var str = [];
+					for(var i=0;i<dltRepalFileList.getRowCount();i++) {
+						if (scwin.repFileStr[y] == dltRepalFileList.getCellData(i, "atchflId")) {
+							str.push("<a href=\"javascript:" + comLib.getFrameId($p) + "scwin.fileQnaDownload('"+dltRepalFileList.getCellData(i, "atchflId")+"','"+dltRepalFileList.getCellData(i, "fileSeq")+"');\" class='w2anchor2 '>");
+							str.push(dltRepalFileList.getCellData(i, "orginlFileNm"));
+							str.push("</a>");
+						}
+					}
+					$p.$("#repFile_"+scwin.repFileStr[y]).html(str.join(""));
+				}
+			}
+		} else {
+			alert("fail");
+		}
+		scwin.repFileStr = [];
+	};
+
+	/**
+	 * 조회 콜백 함수
+	 * @param
+	 * @return
+	 */
+	scwin.searchQnaMtCallback = function(resBody) {
+		if (resBody.message.code == 'success') {
+			if (qnaAtchfl.getWindow()._dltNttFile.getRowCount() > 0) {
+				var str = [];
+				for(var i=0;i<qnaAtchfl.getWindow()._dltNttFile.getRowCount();i++) {
+					str.push("<a href=\"javascript:" + comLib.getFrameId($p) + "scwin.fileQnaDownload('"+qnaAtchfl.getWindow()._dltNttFile.getCellData(i, "atchflId")+"','"+qnaAtchfl.getWindow()._dltNttFile.getCellData(i, "fileSeq")+"');\" class='w2anchor2 '>");
+					str.push(qnaAtchfl.getWindow()._dltNttFile.getCellData(i, "orginlFileNm"));
+					str.push("</a>");
+				}
+				viewFileQna.render.innerHTML = str.join(""); 
+			} else {
+				viewFileQna.render.innerHTML = ""; 
+			}
+		} else {
+			alert("fail");
+		}
+	};
+
+	scwin.btnQnaSave_onclick_onclick = function() {
+		// 입력값 셋팅
+		if (qnaAtchfl.getWindow()._mpdNttMultiAtchFile.getFileCount() > 0) {
+			qnaAtchfl.getWindow()._mpdNttMultiAtchFile.startUpload();
+		} else {
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00321"), "scwin.saveNttConfirmCallback");
+		}
+	};
+
+	/**
+	 * 저장처리
+	 */
+	scwin.saveNttConfirmCallback = function() {
+		var requestData = {};
+		requestData.data = dmaQnaMt.getJSON();
+		requestData.data1 = qnaAtchfl.getWindow()._dltNttFile.getModifiedJSON();
+		var option = {
+			action : "sc/ntt/saveNtt.do",
+			reqData : requestData,
+			resData : dltQnaList,
+			success : "scwin.saveQnaInsertCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.saveQnaInsertCallback = function(resBody) {
+		comLib.NTT_NO = resBody.message.data;
+		utilLib.clearDcObj(dltQnaList);
+		utilLib.clearDcObj(dltQnaReplaList);
+		//scwin.choiseQna(txtQnaNo.getValue() ,parseInt(txtCnt.getValue())+1);
+		scwin.choiseQna(txtQnaNo.getValue() ,txtCnt.getValue());
+	}; 
+
+	scwin.saveQnaCallback = function(resBody) {
+		comLib.NTT_NO = resBody.message.data;
+		utilLib.clearDcObj(dltQnaList);
+		utilLib.clearDcObj(dltQnaReplaList);
+		scwin.choiseQna(txtQnaNo.getValue() ,txtCnt.getValue());
+	};
+
+	//scwin.saveCallback
+	//저장 후 게시물 목록
+	scwin.choiseQna = function(bbsId, cnt) {
+		btnSaveRepal.show("inline-block");
+		btnUpdateRepal.hide();
+
+		$("table.creat").removeClass("table-on");
+		$("table.view").removeClass("table-on");
+		utilLib.clearDcObj(dmaQnaMt);
+
+		var dltQnaMngJson = dltQnaMng.getMatchedJSON("bbsId", bbsId, true, 0, dltQnaMng.getRowCount());
+	
+		if (dltQnaMngJson.length > 0) {
+			var nttTit = "";
+			var korname = "";
+	
+			if (sbxSearchTyCd.getValue() == "01") {
+				nttTit = inputNttSearch.getValue();
+			}
+			if (sbxSearchTyCd.getValue() == "02") {
+				korname = inputNttSearch.getValue();
+			}
+
+			dmaQnaMt.set("bbsId", dltQnaMngJson[0].bbsId);
+			dmaQnaMt.set("sysDivCd", dltQnaMngJson[0].sysDivCd);
+			var requestData = {};
+
+			if (cnt < comLib.PAGE_QNA_SIZE) {
+				cnt = comLib.PAGE_QNA_SIZE;
+			}
+			requestData.data = {bbsId:dltQnaMngJson[0].bbsId ,"nttTit" : nttTit,"korname" : korname, rnum:0 ,totalCount : cnt - comLib.PAGE_QNA_SIZE, pageSize : comLib.PAGE_QNA_SIZE};
+
+			var option = {
+				action : "sc/ntt/retrieveQnaNtt.do",
+				reqData : requestData,
+				resData : "",
+				success : "comLib.choiseQnaCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		}
+	};
+
+	scwin.btnQnaAdd_onclick = function() {
+		utilLib.clearDcObj(qnaAtchfl.getWindow()._dltNttFile);
+
+		var nttClsCd1 = dmaQnaMt.get("nttClsCd1");
+		var bbsId = 	dmaQnaMt.get("bbsId");
+		var sysDivCd = 	dmaQnaMt.get("sysDivCd");
+
+		if (bbsId == '') {
+			nttClsCd1 = dltQnaMng.getCellData(0, "nttClsCd1")
+			bbsId = 	dltQnaMng.getCellData(0, "bbsId")
+			sysDivCd = 	dltQnaMng.getCellData(0, "sysDivCd")
+		}
+
+		utilLib.clearDcObj(dmaQnaMt);
+		dmaQnaMt.set("rowStatus", "C");
+		dmaQnaMt.set("nttClsCd1", nttClsCd1);
+		dmaQnaMt.set("bbsId", bbsId);
+		dmaQnaMt.set("sysDivCd", sysDivCd);
+		dmaQnaMt.set("priorNttYn", "N");
+		dmaQnaMt.set("nttClsCd1", "");
+	};
+
+	scwin.deleteQnaLeft = function() {
+		for(var i=0; i < qnaAtchfl.getWindow()._dltNttFile.getRowCount() ; i++) {
+			qnaAtchfl.getWindow()._dltNttFile.deleteRow(i);
+		}
+		dmaQnaMt.set("rowStatus", "D");
+		var requestData = {};
+		requestData.data = dmaQnaMt.getJSON();
+		requestData.data1 = qnaAtchfl.getWindow()._dltNttFile.getAllJSON();
+		//requestData.data1 = [];
+
+		var option = {
+			action : "sc/ntt/saveNtt.do",
+			reqData : requestData,
+			success : "scwin.deleteQnaCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.deleteQnaCallback = function() {
+		$("table.view").removeClass("table-on");
+		utilLib.clearDcObj(dltQnaList);
+		utilLib.clearDcObj(dltQnaReplaList);
+		var requestData = {};
+		requestData.data = {
+			"bbsId":dmaQnaMt.get("bbsId"),
+			"nttTit" : "",
+			rnum:0,
+			totalCount : 0,
+			pageSize : comLib.PAGE_QNA_SIZE
+		};
+
+		var option = {
+			action : "sc/ntt/retrieveQnaNtt.do",
+			reqData : requestData,
+			resData : "",
+			success : "scwin.choiseQnaCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	* 게시물 조회후 콜백 로직을 수행한다.
+	*/
+	scwin.choiseQnaCallback = function(resBody) {
+		replaTxt.setValue("");
+		if (resBody.message.code == 'success') {
+			dltQnaList.setJSON(resBody.dltQnaList, true);
+			dltQnaReplaList.setJSON(resBody.dltQnaReplaList, true);
+			if (dltQnaList.getRowCount() > 0) {
+				var str = [];
+				for(var i=0;i<dltQnaList.getRowCount();i++) {
+					str.push("<div class=\"w2group text-group\">");
+					str.push("<ul class=\"w2group \">");
+					str.push("<li class=\"w2group \">");
+					str.push("<div class=\"w2group talk\">");
+					str.push("<a href=\"javascript:" + comLib.getFrameId($p) + "scwin.selectQna('"+dltQnaList.getCellData(i, "nttNo")+"');\" class=\"w2anchor2 \">");
+					if (dltQnaList.getCellData(i, "nttClsNm1") != "") {
+						str.push("[" + dltQnaList.getCellData(i, "nttClsNm1") + "]   ");
+					}
+					str.push(dltQnaList.getCellData(i, "nttTit"));
+					str.push("</a>");
+					str.push("<div class=\"w2group user\">");
+					str.push("<img src=\"/resources/images/common/pic-c-qa.png\" class=\"w2image \">");
+					str.push("<span class=\"w2span name\">"+dltQnaList.getCellData(i, "korname")+" ㅣ "+dltQnaList.getCellData(i, "dept")+" ㅣ " + dltQnaList.getCellData(i, "posit")+"</span>");
+					str.push("<span class=\"w2span day\">"+dltQnaList.getCellData(i, "frstRegistDt")+"</span>");
+					str.push("</div>");
+					str.push("</div>");
+					str.push("</il>");
+					var dltQnaJson = dltQnaReplaList.getMatchedJSON("parntsNttNo", dltQnaList.getCellData(i, "nttNo"), true, 0, dltQnaReplaList.getRowCount());
+					if (dltQnaReplaList.getMatchedJSON("parntsNttNo", dltQnaList.getCellData(i, "nttNo"), true, 0, dltQnaReplaList.getRowCount()) == "") {
+						str.push("<li class=\"w2group de\">");
+						str.push("<div class=\"w2group \">");
+						str.push("<span class=\"w2span \">답변 대기중입니다.</span>");
+						str.push("<a class=\"w2anchor2 \" href=\"javascript:" + comLib.getFrameId($p) + "scwin.selectQna('"+dltQnaList.getCellData(i, "nttNo")+"');\">답변하기</a>");
+						str.push("</div>");
+						str.push("</il>");
+					} else {
+						str.push("<li class=\"w2group re\">");
+						for(var y=0;y<dltQnaJson.length;y++) {
+							str.push("<div class=\"w2group \">");
+							str.push("<a class=\"w2anchor2 \" href=\"javascript:" + comLib.getFrameId($p) + "scwin.selectQna('"+dltQnaList.getCellData(i, "nttNo")+"');\" class=\"w2anchor2 \">");
+							str.push(dltQnaJson[y].nttCtnt);
+							str.push("</a>");
+							str.push("<div class=\"w2group user\">");
+							str.push("<span class=\"w2span name\">"+dltQnaJson[y].korname+" ㅣ "+dltQnaJson[y].dept+" ㅣ " + dltQnaJson[y].posit+"</span>");
+							str.push("<span class=\"w2span day\">"+dltQnaJson[y].frstRegistDt+"</span>");
+							str.push("</div>");
+							str.push("</div>");
+						}
+						str.push("</li>");
+					}
+
+					str.push("</ui>");
+					str.push("</div>");
+				}
+				qnaDetail.render.innerHTML = str.join(""); 
+			} else {
+				qnaDetail.render.innerHTML = ""; 
+			}
+			if (saveQnaNttNo != "") {
+				scwin.selectQna(saveQnaNttNo);
+			}
+		} else {
+			alert("fail");
+		}
+	};
+
+	scwin.btnSaveRepal_onclick = function() {
+		// 입력값 셋팅
+		scwin.repalStatus = "C";
+		if (replaTxt.getValue() == "") {
+			comLib.alert($p,  utilLib.getMessage("SCM.INFO.00004", "답변 내용 "));
+			return false;
+		}
+		if (repalAtchfl.getWindow()._mpdRepalMultiAtchFile.getFileCount() > 0) {
+			repalAtchfl.getWindow()._mpdRepalMultiAtchFile.startUpload();
+		} else {
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00321"), "scwin.saveRepalConfirmCallback");
+		}
+	};
+
+	/**
+	 * 저장처리
+	 */
+	scwin.saveRepalConfirmCallback = function() {
+		//alert (11);
+		comLib.NTT_NO = dmaQnaMt.get("nttNo");
+		damReplaMng.set("rowStatus", "C");
+		damReplaMng.set("parntsNttNo", dmaQnaMt.get("nttNo"));
+		damReplaMng.set("nttNo", "");
+		damReplaMng.set("bbsId", dmaQnaMt.get("bbsId"));
+		damReplaMng.set("sysDivCd", dmaQnaMt.get("sysDivCd"));
+		damReplaMng.set("nttClsCd1", dmaQnaMt.get("nttClsCd1"));
+		damReplaMng.set("nttClsCd2", dmaQnaMt.get("nttClsCd2"));
+		damReplaMng.set("nttTit", "답변 : "+dmaQnaMt.get(" nttTit"));
+		damReplaMng.set("nttCtnt", replaTxt.getValue());
+		damReplaMng.set("answerYn", "Y");
+		damReplaMng.set("priorNttYn", "N");
+		damReplaMng.set("useYn", "Y");
+
+		//utilLib.clearDcObj(repalAtchfl.getWindow()._dltRepalFile);
+		//repalAtchfl.getWindow()._dltRepalFile.setJSON(resBody.dltQnaList, true);
+		var requestData = {};
+		requestData.data = damReplaMng.getJSON();
+		requestData.data1 = repalAtchfl.getWindow()._dltRepalFile.getModifiedJSON();
+		//alert ("1" + JSON.stringify(requestData));
+		//alert ("2" +	JSON.stringify(qnaAtchfl.getWindow()._dltNttFile.getAllJSON()));
+		//requestData.data1 = [];
+		var option = {
+			action : "sc/ntt/saveNtt.do",
+			reqData : requestData,
+			resData : "",
+			success : "scwin.saveQnaReplaCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+	
+	scwin.saveQnaReplaCallback = function(resBody) {
+		utilLib.clearDcObj(dltQnaList);
+		utilLib.clearDcObj(dltQnaReplaList);
+		replaTxt.setValue("");
+		utilLib.clearDcObj(repalAtchfl.getWindow()._dltRepalFile);
+		scwin.choiseQna(txtQnaNo.getValue(), txtCnt.getValue());
+	};
+
+	/**
+	 * 첨부파일 다운로드
+	 * @param event
+	 * @return 첨부파일
+	 */
+	scwin.fileQnaDownload = function(atchflId, fileSeq) {
+		if (atchflId != null && atchflId != '') {
+			var dmaTest = {
+				"atchflId" : atchflId,
+				"fileSeq" : fileSeq
+			};
+			var xmlValue = JSON.stringify(dmaTest);
+			// $w.download("/sc/file/downloadAtchFileOne.do", xmlValue, "get");
+			comLib.downloadAtchfl("/sc/file/downloadAtchFileOne.do", xmlValue, "get");
+		}
+	};
+
+	scwin.detailsQnaRepla = function(repNo) {
+		btnSaveRepal.hide();
+		btnUpdateRepal.show("inline-block");
+
+		var dltQnaReplaJson = dltQnaReplaList.getMatchedJSON("nttNo", repNo, true, 0, dltQnaReplaList.getRowCount());
+
+		replaTxt.setValue(dltQnaReplaJson[0].nttCtnt);
+
+		damReplaMng.set("rowStatus", "U");
+		damReplaMng.set("nttNo", dltQnaReplaJson[0].nttNo);
+		damReplaMng.set("bbsId", dltQnaReplaJson[0].bbsId);
+		damReplaMng.set("sysDivCd", dltQnaReplaJson[0].sysDivCd);
+		damReplaMng.set("parntsNttNo", dltQnaReplaJson[0].parntsNttNo);
+		damReplaMng.set("nttClsCd1", dltQnaReplaJson[0].nttClsCd1);
+		damReplaMng.set("nttClsCd2", dltQnaReplaJson[0].nttClsCd2);
+		damReplaMng.set("nttTit", dltQnaReplaJson[0].nttTit);
+		damReplaMng.set("atchflId", dltQnaReplaJson[0].atchflId);
+		damReplaMng.set("answerYn", dltQnaReplaJson[0].answerYn);
+		damReplaMng.set("priorNttYn", dltQnaReplaJson[0].priorNttYn);
+		damReplaMng.set("useYn", dltQnaReplaJson[0].useYn);
+
+		utilLib.clearDcObj(repalAtchfl.getWindow()._dltRepalFile);
+		var dltRepalFileListJson =  dltRepalFileList.getMatchedJSON("atchflId", dltQnaReplaJson[0].atchflId, true, 0, dltRepalFileList.getRowCount());
+		repalAtchfl.getWindow()._dltRepalFile.setJSON(dltRepalFileListJson, true);
+	};
+
+	scwin.btnUpdateRepal_onclick = function() {
+		// 입력값 셋팅
+		scwin.repalStatus = "U";
+		if (replaTxt.getValue() == "") {
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "답변 내용 "));
+			return false;
+		}
+		if (_mpdRepalMultiAtchFile.getFileCount() > 0) {
+			_mpdRepalMultiAtchFile.startUpload();
+		} else {
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00321"), "saveUpdateRepalConfirmCallback");
+		}
+	};
+
+	/**
+	 * 저장처리
+	 */
+	scwin.saveUpdateRepalConfirmCallback = function() {
+		comLib.NTT_NO = damReplaMng.get("parntsNttNo");
+		damReplaMng.set("rowStatus", "U");
+		damReplaMng.set("nttCtnt", replaTxt.getValue());
+		var requestData = {};
+		requestData.data = damReplaMng.getJSON();
+		requestData.data1 = repalAtchfl.getWindow()._dltRepalFile.getModifiedJSON();
+		//requestData.data1 = [];
+		var option = {
+			action : "sc/ntt/saveNtt.do",
+			reqData : requestData,
+			resData : "",
+			success : "scwin.saveQnaReplaCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.deleteQnaRepla = function(repNo) {
+		var requestData = {};
+		requestData.data = {
+			"nttNo" : repNo
+		};
+
+		var option = {
+			action : "sc/ntt/deleteQnaRepla.do",
+			reqData : requestData,
+			success : "scwin.saveQnaCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	//신규버튼 클릭시
+	scwin.btnQnaAddList_onclick = function() {
+		comLib.choiseQna(txtQnaNo.getValue(), txtCnt.getValue());
+	};
+
+	scwin.searchQnaBtn_onclick = function() {
+		comLib.choiseQna(txtQnaNo.getValue(), 0);
+	};
+	]]></script>
+	</head>
+	<body>
+		<xf:group class="nav-board qna" id="" style="">
+			<xf:group class="nav-title-group" id="" style="">
+				<xf:group class="" id="" style="" tagname="h2">
+					<w2:span class="" id="" label="Q&amp;A" style=""></w2:span>
+					<xf:input id="txtCnt" label="0" style="display: none;"></xf:input>
+					<xf:input id="txtQnaNo" label="0" style="display: none;"></xf:input>
+				</xf:group>
+				<xf:group class="search-group" id="" style="">
+					<xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false" disabledClass=""
+						displayMode="label" id="sbxSearchTyCd" optionOrder="false" selectedData="true" style="" submenuSize="auto">
+						<xf:choices>
+							<xf:item>
+								<xf:label><![CDATA[제목]]></xf:label>
+								<xf:value><![CDATA[01]]></xf:value>
+							</xf:item>
+							<xf:item>
+								<xf:label><![CDATA[작성자]]></xf:label>
+								<xf:value><![CDATA[02]]></xf:value>
+							</xf:item>
+						</xf:choices>
+					</xf:select1>
+					<xf:group class="input_search" id="" pluginName="input_Search" style="">
+						<xf:input id="inputNttSearch" initValue="" readOnly="" style=""></xf:input>
+						<w2:anchor class="fa fa-search" id="searchQnaBtn" outerDiv="false" style="" ev:onclick="scwin.searchQnaBtn_onclick">
+							<xf:label><![CDATA[조회]]></xf:label>
+						</w2:anchor>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group" id="" style="">
+					<w2:anchor class="creat" id="btn_qnaCreate" outerDiv="false" style="">
+						<xf:label><![CDATA[쓰기]]></xf:label>
+					</w2:anchor>
+					<w2:anchor class="close" id="" outerDiv="false" style="">
+						<xf:label><![CDATA[삭제]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="nav-content" id="" style="">
+				<xf:group class="navs">
+					<xf:group class="nav" id="qnaList" style=""></xf:group>
+				</xf:group>
+				<xf:group class="lists re-li" id="grpNttQnAList">
+					<xf:group class="chat" id="qnaDetail" style=""></xf:group>
+					<xf:trigger id="btnQnaAddList" style="" type="button" class="m-more-btn" ev:onclick="scwin.btnQnaAddList_onclick"></xf:trigger>
+				</xf:group>
+				<xf:group class="cvs">
+					<xf:group class="cv" id="" style="">
+						<xf:group class="w2tb creat" id="" style="" tagname="table">
+							<w2:attributes>
+								<w2:summary></w2:summary>
+							</w2:attributes>
+							<xf:group tagname="caption"></xf:group>
+							<xf:group tagname="colgroup">
+								<xf:group style="width:100.00%" tagname="col">
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="mix-box" id="" style="">
+										<xf:group class="cw7" id="" style="">
+											<xf:select1 allOption="" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass=""
+												displayMode="label" optionOrder="false" selectedData="true" style="" submenuSize="auto" ref="data:dmaQnaMt.nttClsCd1" id="sbxQnaClsCd1">
+												<xf:choices>
+													<xf:itemset nodeset="data:dltQnaBbsClsCd">
+														<xf:label ref="cmmnCdNm"></xf:label>
+														<xf:value ref="cmmnCd"></xf:value>
+													</xf:itemset>
+												</xf:choices>
+											</xf:select1>
+										</xf:group>
+										<xf:group class="cw10" id="" style="">
+											<!-- <xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false" disabledClass="" displayMode="label" 
+												id=""
+												optionOrder="false" selectedData="true" style="" submenuSize="auto"> <xf:choices> <xf:item> <xf:label><![CDATA[2차 카테고리 선택]]></xf:label> 
+												<xf:value></xf:value>
+												</xf:item> </xf:choices> </xf:select1> -->
+										</xf:group>
+										<xf:group class="cw3" id="" style="">
+											<!-- <xf:select appearance="full" cols="1" disabled="" displaymessage="true" id="" renderType="checkboxgroup" rows="" selectedindex="-1"
+												style="">
+												<xf:choices>
+												<xf:item>
+												<xf:label><![CDATA[중요]]></xf:label>
+												<xf:value></xf:value>
+												</xf:item>
+												</xf:choices>
+												</xf:select> -->
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:input disabled="" id="" initValue="" placeholder="제목을 입력하세요." readOnly="" style="" ref="data:dmaQnaMt.nttTit"
+										maxlength="" maxByteLength="450">
+									</xf:input>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:textarea id="" style="" ref="data:dmaQnaMt.nttCtnt"></xf:textarea>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<w2:wframe src="/ui/common/fileUpload/boardMultiAtchfl.xml" id="qnaAtchfl" />
+								</xf:group>
+							</xf:group>
+							<xf:group style="" tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="btn-group" style="" tagname="">
+										<w2:attributes>
+											<w2:headers></w2:headers>
+										</w2:attributes>
+										<w2:anchor class="del" id="" outerDiv="false" style="">
+											<xf:label><![CDATA[취소]]></xf:label>
+										</w2:anchor>
+										<w2:anchor class="" id="" outerDiv="false" style="" ev:onclick="scwin.btnQnaSave_onclick_onclick">
+											<xf:label><![CDATA[확인]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="w2tb view repla" id="" style="" tagname="table">
+							<w2:attributes>
+								<w2:summary></w2:summary>
+							</w2:attributes>
+							<xf:group tagname="caption"></xf:group>
+							<xf:group tagname="colgroup">
+								<xf:group style="width:100.00%" tagname="col">
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr" id="groRepal">
+								<xf:group class="w2tb_td re-in" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:textarea id="replaTxt" placeholder="답변을 입력하세요" style="">
+									</xf:textarea>
+									<xf:group style="" tagname="">
+										<w2:attributes>
+											<w2:headers></w2:headers>
+										</w2:attributes>
+										<w2:wframe src="/ui/common/fileUpload/repalMultiAtchfl.xml" id="repalAtchfl" />
+									</xf:group>
+									<xf:group class="btn-group" style="margin-top:5px;" tagname="">
+										<w2:attributes>
+											<w2:headers></w2:headers>
+										</w2:attributes>
+										<w2:anchor class="del" id="" outerDiv="false" style="">
+											<xf:label><![CDATA[취소]]></xf:label>
+										</w2:anchor>
+										<w2:anchor class="" id="btnSaveRepal" outerDiv="false" style="" ev:onclick="scwin.btnSaveRepal_onclick">
+											<xf:label><![CDATA[답변]]></xf:label>
+										</w2:anchor>
+										<w2:anchor class="" id="btnUpdateRepal" outerDiv="false" ev:onclick="scwin.btnUpdateRepal_onclick" style="display: none;">
+											<xf:label><![CDATA[답변수정]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="title" id="" style="">
+										<w2:span id="" label="" ref="data:dmaQnaMt.nttTit">
+										</w2:span>
+										<xf:group class="btn-group" id="" style="">
+											<w2:anchor class="pop" id="" outerDiv="false" style="">
+												<xf:label><![CDATA[수정]]></xf:label>
+											</w2:anchor>
+											<w2:anchor class="modify" id="qnaMmodify" outerDiv="false">
+												<xf:label><![CDATA[수정]]></xf:label>
+											</w2:anchor>
+											<w2:anchor id="qnaTrash" class="trash" outerDiv="false" style="">
+												<xf:label><![CDATA[삭제]]></xf:label>
+											</w2:anchor>
+										</xf:group>
+									</xf:group>
+									<xf:group class="user" id="" style="">
+										<xf:image id="" src="/resources/images/common/pic-c-39.png">
+										</xf:image>
+										<w2:span class="name" id="qnaUser" label="">
+										</w2:span>
+										<w2:span class="day" id="qnaDay" label="" style="">
+										</w2:span>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td re-t" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="view-area">
+										<xf:group style="" id="grpNttQnaCnt">
+											<xf:group class="view-txt" style="">
+												<w2:span id="" ref="data:dmaQnaMt.nttCtnt" label="">
+												</w2:span>
+											</xf:group>
+											<xf:group class="view-file" id="viewFileQna" style=""></xf:group>
+											<xf:group class="re-list" id="">
+												<xf:group class="view-area">
+													<xf:group style="" id="grpNttQnaRepla">
+														<xf:group style="" id="replaArea" class="re-g">
+														</xf:group>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

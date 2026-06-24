@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <w2:userPalette defaultIcon="mix.png" desc="템플릿 PS-4-1-2참고 span삭제 후 .btn-group 안에 버튼 만 사용가능"/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[ ]]></script>
+    </head>
+    <body><xf:group class="bc-num" id="" style="">
+	<w2:span label="2017년 3월" style="" id="">
+	</w2:span>
+	<w2:anchor outerDiv="false" style="" class="fa fa-angle-left" id="">
+		<xf:label>
+<![CDATA[]]></xf:label>
+</w2:anchor>
+	<w2:anchor outerDiv="false" style="" class="fa fa-angle-right" id="">
+		<xf:label>
+<![CDATA[]]></xf:label>
+</w2:anchor>
+</xf:group>
+</body>
+</html>

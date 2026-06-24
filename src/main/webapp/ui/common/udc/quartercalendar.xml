@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Context Root + resources/css/*.css 로 include -->
+<?xml-stylesheet href="/resources/css/common.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+		</xf:model>
+		<script lazy="false" type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"componentName": "quarter_calendar",
+			"pluginName": "quarter_calendar",
+			"company": "",
+			"developer": "",
+			"category": "Basic",
+			"notSupportBrowser": "",
+			"version": "",
+			"htmlRender": "",
+			"icon": "",
+			"disableIcon": "",
+			"description": "",
+			"width": "100px",
+			"height": "21px",
+			"properties": [
+			{
+			"name": "id",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"description": "udc 아이디"
+			},
+			{
+			"name": "date",
+			"default": "",
+			"type": "number",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 초기 값"
+			},
+			{
+			"name": "ref",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 Ref"
+			},
+			{
+			"name": "class",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "udc 클래스"
+			},
+			{
+			"name": "disabled",
+			"default": "",
+			"type": "combobox",
+			"option": "[true,false]",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "desc"
+			}
+			],
+			"events": [],
+			"apis": [
+			{
+			"name": "getDate",
+			"description": "desc",
+			"params": [],
+			"return": [{
+			"type": "String",
+			"description": "desc"
+			}]
+			},
+			{
+			"name": "setDate",
+			"description": "desc",
+			"params": [{
+			"type": "Number",
+			"name": "strDate",
+			"description": "desc"
+			}],
+			"return": [{
+			"type": "String",
+			"description": "desc"
+			}]
+			}
+			]
+			}
+		-->
+		<xf:group class="gb_udc_cal quarter" id="" style="" pluginName="quarter_calendar">
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+			/**
+			* //property handling
+			* $w.log("id:" + options.id);
+			* $w.log("date:" + options.date);
+			* $w.log("ref:" + options.ref);
+			*
+			* //event trigger
+			* udc_obj.trigger("onBtnCalendarClick"); 
+			*/
+
+			// 초기 수행함수 
+			this.initQuarterCalendar = function() {
+				this.today = "";
+				this.selectedDate = "";
+
+				var tmpDate = new Date();
+				var year = tmpDate.getFullYear();
+
+				tbx_Year.setValue( year );
+				// udc의 초기 설정값
+				if (ibx_Date.getValue() == "" && options.date != undefined) {
+					ibx_Date.setValue(options.date);
+				}
+				// ref 설젇 
+				if (options.ref != "") {
+					ibx_Date.setRef(options.ref);
+				}
+			};
+
+			this.showQuarterCalendar = function() {
+				this.selectedDate = ibx_Date.getValue();
+
+				if (this.selectedDate.length >= 4) {
+					this.changeYear(this.selectedDate);
+				}
+
+				if (div_Quarter.getStyle("display") == "none") {
+					div_Quarter.setStyle("display", "");
+				} else {
+					div_Quarter.setStyle("display", "none");
+				}
+			};
+
+			// 시작 년도가 변경된 경우
+			this.changeYear = function(strDate) {
+				tbx_Year.setValue(strDate.substr(0, 4));
+				for (var i = 1; i <= 4; i++) {
+					// 월 구성 '##'
+					var quarter = "00" + i;
+					quarter = quarter.substr(quarter.length - 2, 2);
+
+					eval("btn_Quarter" + quarter).removeClass("today");
+
+					// 변경된 년도가 올해인 경우 현재 월에 today 클래스를 추가하여 화면에 표시되도록 함 
+					if (strDate.substr(0,4) == this.today.substr(0,4)) {
+						if(quarter == this.today.substr(4,2)) {
+							eval("btn_Quarter" + quarter).addClass("today");
+						}
+					}
+					// 선택된 월 표시
+					eval("btn_Quarter" + quarter).removeClass("selected");
+					if (strDate.substr(0,4) == this.selectedDate.substr(0,4)) {
+						if (quarter == this.selectedDate.substr(4,2)) {
+							eval("btn_Quarter" + quarter).addClass("selected");
+						}
+					}
+				}
+			};
+			
+			//시작월 클릭시
+			this.clickQuarters = function(strQuarter) {
+				for (var i = 1; i <= 4; i++)  {
+					// 월 구성 '##'
+					var quarter = "00" + i;
+					quarter = quarter.substr(quarter.length - 2, 2);
+					eval("btn_Quarter" + quarter).removeClass("selected");
+
+					if (quarter == strQuarter) {
+						eval("btn_Quarter" + quarter).addClass("selected");
+					}
+				}
+				this.selectedDate = tbx_Year.getValue() + strQuarter;
+
+				udc_obj.changeQuarter();
+			};
+			
+			//확인 버튼 클릭시 
+			this.changeQuarter = function() {
+				ibx_Date.setValue(this.selectedDate);
+
+				div_Quarter.setStyle("display", "none");
+			};
+
+			scwin.validateCalQuarterCallback = function() {
+				ibx_Date.focus();
+			};
+
+			udc_obj.getDate = function() {
+				if (ibx_Date.getValue() == "") {
+					return null;
+				} else {
+					return ibx_Date.getValue();
+				}
+			};
+
+			udc_obj.setDate = function(strDate) {
+				ibx_Date.setValue(strDate);
+			};
+
+			// 초기 실행함수 수행
+			this.initQuarterCalendar();
+			]]></script>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				* //property handling
+				*
+				* //event trigger
+				*/
+			]]></script>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<xf:group style="" id="">
+				<xf:group style="" id="" class="quarter_wrap">
+					<xf:input dataType="number" validator="" applyFormat="" style="cursor:pointer;" readOnly="false" id="ibx_Date" title=""
+						class="cal_from" mandatory="" ioFormat="" minlength="" maxlength="6">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							udc_obj.showQuarterCalendar();
+						]]>
+						</script>
+						<script ev:event="onkeyup(e)" type="text/javascript"><![CDATA[
+							if (ibx_Date.getValue().length == 4 ) {
+								udc_obj.changeYear(ibx_Date.getValue().substr(0, 4));
+							}
+							if (ibx_Date.getValue().length == 6) {
+								udc_obj.clickQuarters(ibx_Date.getValue().substr(4, 2));
+							}
+						]]></script>
+						<script ev:event="onchange" type="text/javascript"><![CDATA[
+							if (ibx_Date.getValue().length == 6) {
+								udc_obj.changeYear(ibx_Date.getValue().substr(0, 4));
+								udc_obj.clickQuarters(ibx_Date.getValue().substr(4, 2));
+							}
+						]]></script>
+					</xf:input>
+					<w2:anchor outerDiv="false" style="" id="btn_ShowCalendar" class="btn_cal">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+						udc_obj.showQuarterCalendar();
+						]]></script>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group style="display:none" id="div_Quarter" title="Title" class="f_layer_m1">
+				<xf:group ev:onblur="" style="" id="grp_Calendar" class="cb">
+					<xf:group style="" id="" class="quarter_cal_box">
+						<xf:group style="" id="" class="c_header">
+							<w2:textbox style="" id="tbx_Year" label="2016" class="year">
+							</w2:textbox>
+							<w2:anchor outerDiv="false" style="" id="btn_PrevYear" class="prev">
+								<script ev:event="onclick" type="javascript"><![CDATA[
+									udc_obj.changeYear((parseInt(tbx_Year.getValue()) - 1) + "");
+								]]></script>
+								<xf:label><![CDATA[이전]]></xf:label>
+							</w2:anchor>
+							<w2:anchor outerDiv="false" style="" id="btn_NextYear" class="next">
+								<script ev:event="onclick" type="javascript"><![CDATA[
+									udc_obj.changeYear((parseInt(tbx_Year.getValue()) + 1) + "");
+								]]></script>
+								<xf:label><![CDATA[다음]]></xf:label>
+							</w2:anchor>
+						</xf:group>
+						<xf:group style="" id="" class="c_body">
+							<xf:group tagname="table" style="" id="" class="w2tb">
+								<w2:attributes>
+									<w2:summary></w2:summary>
+								</w2:attributes>
+								<xf:group tagname="colgroup">
+									<xf:group tagname="col" style="width:50.00%">
+									</xf:group>
+									<xf:group tagname="col" style="width:50.00%">
+									</xf:group>
+								</xf:group>
+								<xf:group tagname="tr">
+									<xf:group tagname="td" style="" id="btn_Quarter01" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickQuarters("01");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="" label="1분기">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Quarter02" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickQuarters("02");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="" label="2분기">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group tagname="tr">
+									<xf:group tagname="td" style="" id="btn_Quarter03" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickQuarters("03");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="" label="3분기">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Quarter04" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickQuarters("04");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="" label="4분기">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 생산 - 전력에너지 생산현황 -->
+<mapper namespace="PRDCTN_STTUS_Dao">
+	<sql id="PRDCTN_STTUS_Dao_Common">
+	WITH MONTH_LIST AS (
+		SELECT /*+ MATERIALZE */
+			TO_CHAR(ADD_MONTHS(TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM'), LEVEL - 1), 'yyyyMM') AS mt
+		FROM
+			DUAL
+		CONNECT BY
+			LEVEL &lt;= MONTHS_BETWEEN(TO_DATE(SUBSTR(#{strtDt}, 0, 6), 'yyyyMM'), TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM')) + 1
+	), ELCPWSTN_CLS_CD_LIST AS (
+		<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+	), MONTH_DATA_LIST AS (
+		SELECT /*+ MATERIALZE LEADING(LST HST MPF) */
+			LST.mt,
+			MAX(LST.cmmn_cd) AS cmmn_cd,
+			DECODE(LST.elcpwstn_cls_cd, '0005', '0004', LST.elcpwstn_cls_cd) AS elcpwstn_cls_cd,
+			CASE
+				WHEN MAX(LST.elcpwstn_cls_nm) = '한전거래'
+				THEN '태양광'
+				ELSE MAX(LST.elcpwstn_cls_nm)
+			END AS elcpwstn_cls_nm,
+			LST.elcpwstn_cd,
+			CASE
+				WHEN MAX(LST.elcpwstn_cls_nm) = '한전거래'
+				THEN MAX(LST.elcpwstn_nm) || '(한전거래)'
+				ELSE MAX(LST.elcpwstn_nm)
+			END AS elcpwstn_nm,
+			MAX(LST.hq_cd) AS hq_cd,
+			MAX(LST.hq_cd_dsply_ordr) AS hq_cd_dsply_ordr,
+			MAX(LST.cstct_vu) AS cstct_vu,
+			MAX(LST.cstct_nm) AS cstct_nm,
+			MAX(LST.elcpwstn_cpcty) AS elcpwstn_cpcty,
+			ROUND(NVL(SUM(LST.s2val), 0), 0) AS s2,
+			ROUND(NVL(SUM(LST.r2val), 0), 0) AS r2,
+			ROUND(NVL(SUM(LST.r3val + NVL(MPF.epwr_indust_fnd_fund_amt, 0)), 0) - NVL(SUM(HST.etc_dstb_profit_amt), 0)) AS r3,
+			CASE
+				WHEN LST.mt = TO_CHAR(SYSDATE, 'yyyyMM')
+				THEN TO_CHAR(SYSDATE, 'dd')
+				ELSE TO_CHAR(LAST_DAY(LST.mt || '01'), 'dd')
+			END AS dcnt,
+			MAX(dsply_ordr) AS dsply_ordr
+		FROM (
+			SELECT /*+ LEADING(BASE MONTH_LIST LT1 LT2 LT4) */
+				MONTH_LIST.mt,
+				BASE.elcpwstn_nm,
+				BASE.elcpwstn_cd,
+				BASE.centr_elyrs_yn,
+				LT1.elyrs_plan_qy * 1000 AS s2val, /* mW * 1000 => kW */
+				LT2.elyrs_plan_qy / 1000 AS r2val, /* W / 1000 => kW */
+				DECODE(BASE.centr_elyrs_yn,
+					'N', NVL(LT4.sep_amt, LT2.excclc_amt),
+					DECODE(LT2.excclc_amt,
+						'', LT4.excclc_amt,
+						DECODE(LT2.excclc_amt,
+							0, LT4.excclc_amt,
+							LT2.excclc_amt
+						)
+					)
+				) AS r3val,
+				BASE.hq_cd,
+				(
+					SELECT
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1000'
+						AND usr_dfn_vu2 = BASE.hq_cd
+				) AS hq_cd_dsply_ordr,
+				BASE.cstct_vu,
+				BASE.cstct_nm,
+				BASE.cmmn_cd,
+				BASE.elcpwstn_cls_cd,
+				BASE.elcpwstn_cls_nm,
+				BASE.elcpwstn_cpcty,
+				BASE.dsply_ordr
+			FROM
+				MONTH_LIST, (
+					SELECT
+						elcpwstn_cd,
+						elcpwstn_nm,
+						DECODE(centr_elyrs_yn,
+							'X', 'N',
+							centr_elyrs_yn
+						) AS centr_elyrs_yn,
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> AS hq_cd,
+						cstct_vu,
+						(
+							SELECT
+								stext
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								SYSDATE BETWEEN strdt AND enddt
+								AND objid IN (
+									SELECT
+										DISTINCT
+										CASE
+											WHEN MIN(depth) OVER(PARTITION BY kostl) = depth
+											THEN objid
+											ELSE NULL
+										END
+									FROM
+										HRM.vm_hr01a01
+									WHERE
+										SYSDATE BETWEEN strdt AND enddt
+										AND TRIM(kostl) IS NOT NULL
+								)
+								AND kostl = LPAD(cstct_vu, 10, '0')
+						) AS cstct_nm,
+						(
+							SELECT
+								cmmn_cd
+							FROM
+								ELCPWSTN_CLS_CD_LIST
+							WHERE
+								elcpwstn_cls_cd LIKE '%' || A.elcpwstn_cls_cd || '%'
+								AND cnd LIKE '%02%'
+								AND ROWNUM = 1
+						) AS cmmn_cd,
+						elcpwstn_cls_cd,
+						(
+							SELECT
+								cmmn_cd_nm
+							FROM
+								ELCPWSTN_CLS_CD_LIST
+							WHERE
+								elcpwstn_cls_cd LIKE '%' || A.elcpwstn_cls_cd || '%'
+								AND cnd LIKE '%02%'
+								AND ROWNUM = 1
+						) AS elcpwstn_cls_nm,
+						elcpwstn_cpcty,
+						accnut_acnt_cd,
+						dsply_ordr
+					FROM
+						WRO.tc_eg10101 A
+					WHERE
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> IN (
+							SELECT
+								objid
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+							)
+							WHERE
+								1 = 1
+								<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+								AND cmmn_cd = #{ecsBasinDivCd}
+								</if>
+						)
+						AND elcpwstn_cls_cd IN (
+							SELECT
+								DISTINCT REGEXP_SUBSTR(elcpwstn_cls_cd, '[^,]+', 1, LEVEL) AS elcpwstn_cls_cd
+							FROM (
+								SELECT
+									elcpwstn_cls_cd
+								FROM
+									ELCPWSTN_CLS_CD_LIST
+								WHERE
+									1 = 1
+									<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+									AND cmmn_cd = #{ecsSetcscDivCd}
+									</if>
+							)
+							CONNECT BY
+								LEVEL &lt;= LENGTH(REGEXP_REPLACE(elcpwstn_cls_cd, '[^,]+', '')) + 1
+						)
+						AND centr_elyrs_yn IN ('Y', 'N', 'X')
+						AND accnut_acnt_cd LIKE '' || '%'
+				) BASE, (
+					SELECT
+						SUBSTR(stdr_plan_ym, 0, 6) AS stdr_plan_ym,
+						elcpwstn_cd,
+						ROUND(SUM(elyrs_plan_qy), 3) AS elyrs_plan_qy
+					FROM (
+						SELECT
+							stdr_plan_ym,
+							elcpwstn_cd,
+							SUM(elyrs_plan_qy) AS elyrs_plan_qy
+						FROM
+							WRO.tc_eg10112
+						WHERE
+							stdr_plan_ym BETWEEN (
+									SELECT
+										MIN(mt)
+									FROM
+										MONTH_LIST
+								)
+								AND (
+									SELECT
+										MAX(mt)
+									FROM
+										MONTH_LIST
+								)
+						GROUP BY
+							stdr_plan_ym,
+							elcpwstn_cd
+						/*
+						UNION ALL
+						SELECT
+							elcpwstn_cd,
+							(SUM(elyrs_plan_qy) / '99') * '01' AS elyrs_plan_qy
+						FROM
+							WRO.tc_eg10112
+						WHERE
+							stdr_plan_ym = '299999'
+						GROUP BY
+							elcpwstn_cd
+						*/
+					)
+					GROUP BY
+						SUBSTR(stdr_plan_ym, 0, 6),
+						elcpwstn_cd
+				) LT1, (
+					SELECT
+						stdr_de,
+						elcpwstn_cd,
+						ROUND(elyrs_plan_qy, 3) AS elyrs_plan_qy,
+						ROUND(excclc_amt, 3) AS excclc_amt
+					FROM (
+						SELECT
+							SUBSTR(stdr_de, 0, 6) AS stdr_de,
+							elcpwstn_cd,
+							SUM(elyrs_qy) AS elyrs_plan_qy,
+							SUM(excclc_amt) AS excclc_amt
+						FROM
+							WRO.tm_eg04105
+						WHERE
+							stdr_de BETWEEN (
+									SELECT
+										MIN(mt)
+									FROM
+										MONTH_LIST
+								) || '01'
+								AND (
+									SELECT
+										MAX(mt)
+									FROM
+										MONTH_LIST
+								) || '31'
+							AND excclc_div_cd = '0001' /* 자체 */
+						GROUP BY
+							SUBSTR(stdr_de, 0, 6),
+							elcpwstn_cd
+						UNION ALL
+						SELECT
+							SUBSTR(stdr_plan_ym, 0, 6) AS stdr_plan_ym,
+							elcpwstn_cd,
+							SUM(elyrs_qy) * 1000 AS elyrs_plan_qy,
+							SUM(splval_amt) AS excclc_amt
+						FROM
+							WRO.tm_eg04117
+						WHERE
+							stdr_plan_ym BETWEEN (
+									SELECT
+										MIN(mt)
+									FROM
+										MONTH_LIST
+								)
+								AND (
+									SELECT
+										MAX(mt)
+									FROM
+										MONTH_LIST
+								)
+						GROUP BY
+							SUBSTR(stdr_plan_ym, 0, 6),
+							elcpwstn_cd
+					)
+				) LT2, (
+					SELECT
+						SUBSTR(stdr_de, 0, 6) AS stdr_de,
+						elcpwstn_cd,
+						ROUND(SUM(sep_amt), 3) AS sep_amt,
+						ROUND(SUM(excclc_sum_amt), 3) AS excclc_amt
+					FROM
+						WRO.tm_eg03121
+					WHERE
+						stdr_de BETWEEN (
+								SELECT
+									MIN(mt)
+								FROM
+									MONTH_LIST
+							) || '01'
+							AND (
+								SELECT
+									MAX(mt)
+								FROM
+									MONTH_LIST
+							) || '31'
+						AND excclc_div_cd = '0001'
+					GROUP BY
+						SUBSTR(stdr_de, 0, 6),
+						elcpwstn_cd
+				) LT4
+				WHERE
+					LT1.elcpwstn_cd(+) = BASE.elcpwstn_cd
+					AND LT2.elcpwstn_cd(+) = BASE.elcpwstn_cd
+					AND LT4.elcpwstn_cd(+) = BASE.elcpwstn_cd
+					AND LT1.stdr_plan_ym(+) = MONTH_LIST.mt
+					AND LT2.stdr_de(+) = MONTH_LIST.mt
+					AND LT4.stdr_de(+) = MONTH_LIST.mt
+			) LST, (
+				SELECT
+					SUBSTR(stdr_plan_ym, 0, 6) AS stdr_plan_ym,
+					elcpwstn_cd,
+					ROUND(SUM(etc_dstb_profit_amt), 3) AS etc_dstb_profit_amt
+				FROM
+					WRO.tm_eg05115
+				WHERE
+					stdr_plan_ym BETWEEN (
+							SELECT
+								MIN(mt)
+							FROM
+								MONTH_LIST
+						)
+						AND (
+							SELECT
+								MAX(mt)
+							FROM
+								MONTH_LIST
+						)
+				GROUP BY
+					SUBSTR(stdr_plan_ym, 0, 6),
+					elcpwstn_cd
+			) HST, (
+				SELECT
+					SUBSTR(stdr_de, 0, 6) AS stdr_de,
+					elcpwstn_cd,
+					ROUND(TRUNC(SUM(TO_NUMBER(epwr_indust_fnd_fund_amt)) - TO_NUMBER(TRUNC(SUM(epwr_indust_fnd_rdcamt_vu), -1)), -1), 3) AS epwr_indust_fnd_fund_amt
+				FROM
+					WRO.tm_eg05106
+				WHERE
+					stdr_de BETWEEN (
+							SELECT
+								MIN(mt)
+							FROM
+								MONTH_LIST
+						) || '01'
+						AND (
+							SELECT
+								MAX(mt)
+							FROM
+								MONTH_LIST
+						) || '31'
+				GROUP BY
+					SUBSTR(stdr_de, 0, 6),
+					elcpwstn_cd
+			) MPF
+		WHERE
+			HST.elcpwstn_cd(+) = LST.elcpwstn_cd
+			AND HST.stdr_plan_ym(+) = LST.mt
+			AND MPF.elcpwstn_cd(+) = LST.elcpwstn_cd
+			AND MPF.stdr_de(+) = LST.mt
+			<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+			AND cstct_vu = #{ecsChrgDeptId}
+			</if>
+		GROUP BY
+			LST.mt,
+			LST.elcpwstn_cls_cd,
+			LST.elcpwstn_cd
+	)
+	</sql>
+
+	<select id="PRDCTN_STTUS_Dao_retrievePrdctnSttusSetcscByList" parameterType="kw.ecs.pn.prdctnsttus.vo.PrdctnSttusVo" resultType="egovMap">
+		/* PRDCTN_STTUS_Dao_retrievePrdctnSttusSetcscByList */
+		<include refid="PRDCTN_STTUS_Dao.PRDCTN_STTUS_Dao_Common"></include>
+		SELECT /*+ LEADING(YEAR_DATA MONTH_DATA) */
+			MONTH_DATA.cmmn_cd AS cmmn_cd,
+			MONTH_DATA.elcpwstn_cls_cd AS setcsc_cd,
+			MONTH_DATA.elcpwstn_cls_nm AS setcsc_nm,
+			MONTH_DATA.elcpwstn_cpcty AS eqp_cpcty,
+			MONTH_DATA.mt_elyrs_qy_plan AS mly_elyrs_qy_plan,
+			MONTH_DATA.mt_elyrs_qy_acmslt AS mly_elyrs_qy_acmslt,
+			MONTH_DATA.mt_elyrs_qy_acmtrt AS mly_elyrs_qy_acmtrt,
+			ROUND(CASE
+				WHEN MONTH_DATA.elcpwstn_cpcty * 24 * MONTH_DATA.dcnt IS NOT NULL
+					AND MONTH_DATA.elcpwstn_cpcty * 24 * MONTH_DATA.dcnt != 0
+				THEN NVL(MONTH_DATA.mt_elyrs_qy_acmslt, 0) / (MONTH_DATA.elcpwstn_cpcty * 24 * MONTH_DATA.dcnt)
+				ELSE NULL
+			END * 100, 1) AS mly_eqp_utlz_rt,
+			YEAR_DATA.yy_elyrs_qy_plan AS fyer_elyrs_qy_plan,
+			YEAR_DATA.yy_elyrs_qy_acmslt AS fyer_elyrs_qy_acmslt,
+			YEAR_DATA.yy_elyrs_qy_acmtrt AS fyer_elyrs_qy_acmtrt,
+			YEAR_DATA.elyrs_ern_acmslt AS fyer_ern,
+			ROUND(CASE
+				WHEN MONTH_DATA.elcpwstn_cpcty * 24 * YEAR_DATA.dcnt IS NOT NULL
+					AND MONTH_DATA.elcpwstn_cpcty * 24 * YEAR_DATA.dcnt != 0
+				THEN NVL(YEAR_DATA.yy_elyrs_qy_acmslt, 0) / (MONTH_DATA.elcpwstn_cpcty * 24 * YEAR_DATA.dcnt)
+				ELSE NULL
+			END * 100, 1) AS fyer_eqp_utlz_rt,
+			(
+				SELECT
+					sort_ordr
+				FROM
+					tc_ecs_cd
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_1001'
+					AND cmmn_cd = MONTH_DATA.cmmn_cd
+			) AS ecs_ordr
+		FROM (
+			SELECT
+				mt,
+				MAX(cmmn_cd) AS cmmn_cd,
+				elcpwstn_cls_cd,
+				MAX(elcpwstn_cls_nm) AS elcpwstn_cls_nm,
+				ROUND(SUM(elcpwstn_cpcty), 0) AS elcpwstn_cpcty,
+				SUM(s2) / 1000 AS mt_elyrs_qy_plan,
+				SUM(r2) / 1000 AS mt_elyrs_qy_acmslt,
+				CASE
+					WHEN SUM(r2) &gt; 0 AND SUM(s2) &gt; 0
+					THEN ROUND(SUM(r2) / SUM(s2) * 100, 1)
+					ELSE 0
+				END AS mt_elyrs_qy_acmtrt,
+				MAX(dcnt) AS dcnt,
+				MIN(hq_cd_dsply_ordr) AS hq_cd_dsply_ordr,
+				MIN(dsply_ordr) AS dsply_ordr
+			FROM
+				MONTH_DATA_LIST
+			WHERE
+				mt = SUBSTR(#{strtDt}, 0, 6)
+			GROUP BY
+				mt,
+				elcpwstn_cls_cd
+		) MONTH_DATA LEFT JOIN (
+			SELECT
+				SUBSTR(mt, 0, 4) AS mt,
+				elcpwstn_cls_cd,
+				MAX(elcpwstn_cls_nm) AS elcpwstn_cls_nm,
+				SUM(yy_elyrs_qy_plan) / 1000 AS yy_elyrs_qy_plan,
+				SUM(yy_elyrs_qy_acmslt) / 1000 AS yy_elyrs_qy_acmslt,
+				CASE
+					WHEN SUM(yy_elyrs_qy_acmslt) &gt; 0 AND SUM(yy_elyrs_qy_plan) &gt; 0
+					THEN ROUND(SUM(yy_elyrs_qy_acmslt) / SUM(yy_elyrs_qy_plan) * 100, 1)
+					ELSE 0
+				END AS yy_elyrs_qy_acmtrt,
+				ROUND(SUM(elyrs_ern_acmslt), 0) AS elyrs_ern_acmslt, /* 원 => 원 */
+				MAX(dcnt) AS dcnt,
+				MIN(hq_cd_dsply_ordr) AS hq_cd_dsply_ordr,
+				MIN(dsply_ordr) AS dsply_ordr
+			FROM (
+				SELECT
+					SUBSTR(mt, 0, 4) AS mt,
+					elcpwstn_cls_cd,
+					MAX(elcpwstn_cls_nm) AS elcpwstn_cls_nm,
+					SUM(s2) AS yy_elyrs_qy_plan,
+					SUM(r2) AS yy_elyrs_qy_acmslt,
+					SUM(r3) AS elyrs_ern_acmslt,
+					SUM(dcnt) AS dcnt,
+					MIN(hq_cd_dsply_ordr) AS hq_cd_dsply_ordr,
+					MIN(dsply_ordr) AS dsply_ordr
+				FROM
+					MONTH_DATA_LIST
+				GROUP BY
+					SUBSTR(mt, 0, 4),
+					elcpwstn_cls_cd,
+					elcpwstn_cd
+			)
+			GROUP BY
+				SUBSTR(mt, 0, 4),
+				elcpwstn_cls_cd
+		) YEAR_DATA
+		ON
+			MONTH_DATA.elcpwstn_cls_cd = YEAR_DATA.elcpwstn_cls_cd
+		ORDER BY
+			ecs_ordr
+	</select>
+
+	<select id="PRDCTN_STTUS_Dao_retrievePrdctnSttusSetcscByChartList" parameterType="kw.ecs.pn.prdctnsttus.vo.PrdctnSttusVo" resultType="egovMap">
+		/* PRDCTN_STTUS_Dao_retrievePrdctnSttusSetcscByChartList */
+		<include refid="PRDCTN_STTUS_Dao.PRDCTN_STTUS_Dao_Common"></include>
+		SELECT
+			MAX(elcpwstn_cls_nm) AS setcsc_nm,
+			MAX(elcpwstn_nm) AS elcpwstn_nm,
+			SUM(s2) / 1000 AS elyrs_qy_plan,
+			SUM(r2) / 1000 AS elyrs_qy_acmslt,
+			CASE
+				WHEN SUM(r2) &gt; 0 AND SUM(s2) &gt; 0
+				THEN ROUND(SUM(r2) / SUM(s2) * 100, 1)
+				ELSE 0
+			END AS elyrs_qy_acmtrt
+		FROM
+			MONTH_DATA_LIST
+		WHERE
+			1 = 1
+			<if test='null != cnd and "month" eq cnd'>
+			AND mt = SUBSTR(#{strtDt}, 0, 6)
+			</if>
+		GROUP BY
+			<choose>
+				<when test='null != cnd and "month" eq cnd'>
+			mt,
+				</when>
+				<otherwise>
+			SUBSTR(mt, 0, 4),
+				</otherwise>
+			</choose>
+			elcpwstn_cls_cd,
+			elcpwstn_cd
+		ORDER BY
+			MIN(hq_cd_dsply_ordr),
+			MIN(elcpwstn_cls_cd),
+			MIN(dsply_ordr),
+			<choose>
+				<when test='null != cnd and "month" eq cnd'>
+			mt
+				</when>
+				<otherwise>
+			SUBSTR(mt, 0, 4)
+				</otherwise>
+			</choose>
+	</select>
+
+	<select id="PRDCTN_STTUS_Dao_retrievePrdctnSttusDeptByList" parameterType="kw.ecs.pn.prdctnsttus.vo.PrdctnSttusVo" resultType="egovMap">
+		/* PRDCTN_STTUS_Dao_retrievePrdctnSttusDeptByList */
+		<include refid="PRDCTN_STTUS_Dao.PRDCTN_STTUS_Dao_Common"></include>
+		SELECT /*+ LEADING(YEAR_DATA MONTH_DATA) */
+			MONTH_DATA.cstct_vu AS dept_cd,
+			MONTH_DATA.cstct_nm AS dept_nm,
+			MONTH_DATA.elcpwstn_cpcty AS eqp_cpcty,
+			MONTH_DATA.mt_elyrs_qy_plan AS mly_elyrs_qy_plan,
+			MONTH_DATA.mt_elyrs_qy_acmslt AS mly_elyrs_qy_acmslt,
+			MONTH_DATA.mt_elyrs_qy_acmtrt AS mly_elyrs_qy_acmtrt,
+			ROUND(CASE
+				WHEN MONTH_DATA.elcpwstn_cpcty * 24 * MONTH_DATA.dcnt IS NOT NULL
+					AND MONTH_DATA.elcpwstn_cpcty * 24 * MONTH_DATA.dcnt != 0
+				THEN NVL(MONTH_DATA.mt_elyrs_qy_acmslt, 0) / (MONTH_DATA.elcpwstn_cpcty * 24 * MONTH_DATA.dcnt)
+				ELSE NULL
+			END * 100, 1) AS mly_eqp_utlz_rt,
+			YEAR_DATA.yy_elyrs_qy_plan AS fyer_elyrs_qy_plan,
+			YEAR_DATA.yy_elyrs_qy_acmslt AS fyer_elyrs_qy_acmslt,
+			YEAR_DATA.yy_elyrs_qy_acmtrt AS fyer_elyrs_qy_acmtrt,
+			ROUND(CASE
+				WHEN MONTH_DATA.elcpwstn_cpcty * 24 * YEAR_DATA.dcnt IS NOT NULL
+					AND MONTH_DATA.elcpwstn_cpcty * 24 * YEAR_DATA.dcnt != 0
+				THEN NVL(YEAR_DATA.yy_elyrs_qy_acmslt, 0) / (MONTH_DATA.elcpwstn_cpcty * 24 * YEAR_DATA.dcnt)
+				ELSE NULL
+			END * 100, 1) AS fyer_eqp_utlz_rt,
+			YEAR_DATA.elyrs_ern_acmslt AS fyer_ern
+		FROM (
+			SELECT
+				mt,
+				cstct_vu,
+				MAX(cstct_nm) AS cstct_nm,
+				ROUND(SUM(elcpwstn_cpcty), 0) AS elcpwstn_cpcty,
+				SUM(s2) / 1000 AS mt_elyrs_qy_plan,
+				SUM(r2) / 1000 AS mt_elyrs_qy_acmslt,
+				CASE
+					WHEN SUM(r2) &gt; 0 AND SUM(s2) &gt; 0
+					THEN ROUND(SUM(r2) / SUM(s2) * 100, 1)
+					ELSE 0
+				END AS mt_elyrs_qy_acmtrt,
+				MAX(dcnt) AS dcnt,
+				MIN(hq_cd_dsply_ordr) AS hq_cd_dsply_ordr,
+				MIN(dsply_ordr) AS dsply_ordr
+			FROM
+				MONTH_DATA_LIST
+			WHERE
+				1 = 1
+				AND mt = SUBSTR(#{strtDt}, 0, 6)
+			GROUP BY
+				mt,
+				cstct_vu
+		) MONTH_DATA LEFT JOIN (
+			SELECT
+				cstct_vu,
+				MAX(cstct_nm) AS cstct_nm,
+				SUM(yy_elyrs_qy_plan) / 1000 AS yy_elyrs_qy_plan,
+				SUM(yy_elyrs_qy_acmslt) / 1000 AS yy_elyrs_qy_acmslt,
+				CASE
+					WHEN SUM(yy_elyrs_qy_acmslt) &gt; 0 AND SUM(yy_elyrs_qy_plan) &gt; 0
+					THEN ROUND(SUM(yy_elyrs_qy_acmslt) / SUM(yy_elyrs_qy_plan) * 100, 1)
+					ELSE 0
+				END AS yy_elyrs_qy_acmtrt,
+				ROUND(SUM(elyrs_ern_acmslt), 0) AS elyrs_ern_acmslt, /* 원 => 원 */
+				MAX(dcnt) AS dcnt,
+				MIN(hq_cd_dsply_ordr) AS hq_cd_dsply_ordr,
+				MIN(dsply_ordr) AS dsply_ordr
+			FROM (
+				SELECT
+					SUBSTR(mt, 0, 4) AS mt,
+					cstct_vu,
+					MAX(cstct_nm) AS cstct_nm,
+					SUM(s2) AS yy_elyrs_qy_plan,
+					SUM(r2) AS yy_elyrs_qy_acmslt,
+					SUM(r3) AS elyrs_ern_acmslt,
+					SUM(dcnt) AS dcnt,
+					MIN(hq_cd_dsply_ordr) AS hq_cd_dsply_ordr,
+					MIN(dsply_ordr) AS dsply_ordr
+				FROM
+					MONTH_DATA_LIST
+				GROUP BY
+					SUBSTR(mt, 0, 4),
+					cstct_vu,
+					elcpwstn_cd
+			)
+			WHERE
+				1 = 1
+			GROUP BY
+				SUBSTR(mt, 0, 4),
+				cstct_vu
+		) YEAR_DATA
+		ON
+			MONTH_DATA.cstct_vu = YEAR_DATA.cstct_vu
+		ORDER BY
+			MONTH_DATA.hq_cd_dsply_ordr,
+			MONTH_DATA.dsply_ordr
+	</select>
+
+	<select id="PRDCTN_STTUS_Dao_retrievePrdctnSttusDeptByChartList" parameterType="kw.ecs.pn.prdctnsttus.vo.PrdctnSttusVo" resultType="egovMap">
+		/* PRDCTN_STTUS_Dao_retrievePrdctnSttusDeptByChartList */
+		<include refid="PRDCTN_STTUS_Dao.PRDCTN_STTUS_Dao_Common"></include>
+		SELECT
+			MAX(cstct_nm) AS dept_nm,
+			MAX(elcpwstn_nm) AS elcpwstn_nm,
+			SUM(s2) / 1000 AS elyrs_qy_plan,
+			SUM(r2) / 1000 AS elyrs_qy_acmslt,
+			CASE
+				WHEN SUM(r2) &gt; 0 AND SUM(s2) &gt; 0
+				THEN ROUND(SUM(r2) / SUM(s2) * 100, 1)
+				ELSE 0
+			END AS elyrs_qy_acmtrt
+		FROM
+			MONTH_DATA_LIST
+		WHERE
+			1 = 1
+			<if test='null != cnd and "month" eq cnd'>
+			AND mt = SUBSTR(#{strtDt}, 0, 6)
+			</if>
+		GROUP BY
+			<choose>
+				<when test='null != cnd and "month" eq cnd'>
+			mt,
+				</when>
+				<otherwise>
+			SUBSTR(mt, 0, 4),
+				</otherwise>
+			</choose>
+			elcpwstn_cls_cd,
+			elcpwstn_cd
+		ORDER BY
+			MIN(hq_cd_dsply_ordr),
+			MIN(elcpwstn_cls_cd),
+			MIN(dsply_ordr),
+			<choose>
+				<when test='null != cnd and "month" eq cnd'>
+			mt
+				</when>
+				<otherwise>
+			SUBSTR(mt, 0, 4)
+				</otherwise>
+			</choose>
+	</select>
+</mapper>

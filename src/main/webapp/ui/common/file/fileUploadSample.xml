@@ -1,0 +1,781 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection>
+            	<w2:dataList id="fileDataList" baseNode="list" saveRemovedData="true" repeatNode="map">
+            		<w2:columnInfo>
+            			<w2:column id="chk" name="선택" dataType="text"></w2:column>
+            			<w2:column id="name" name="파일명" dataType="text"></w2:column>
+            			<w2:column id="displaySize" name="파일사이즈" dataType="text"></w2:column>
+            			<w2:column id="Status" name="전송상태" dataType="text"></w2:column>
+            		</w2:columnInfo>
+            		<w2:data use="true"></w2:data>
+            	</w2:dataList>
+            	<w2:dataList id="bigFileDataList" baseNode="list" saveRemovedData="true" repeatNode="map">
+            		<w2:columnInfo>
+            			<w2:column id="chk" name="선택" dataType="text"></w2:column>
+            			<w2:column id="name" name="파일명" dataType="text"></w2:column>
+            			<w2:column id="displaySize" name="파일사이즈" dataType="text"></w2:column>
+            			<w2:column id="Status" name="진행상태" dataType="text"></w2:column>
+            			<w2:column id="orginlFileNm" name="원본파일명" dataType="text"></w2:column>
+            			<w2:column id="fileTempPath" name="임시저장파일명" dataType="text"></w2:column>
+            		</w2:columnInfo>
+            		<w2:data use="true"></w2:data>
+            	</w2:dataList>
+            	<w2:dataList id="dltMultiFileDataList" baseNode="list" saveRemovedData="true" repeatNode="map">
+            		<w2:columnInfo>
+            			<w2:column id="chk" name="선택" dataType="text"></w2:column>
+            			<w2:column id="name" name="파일명" dataType="text"></w2:column>
+            			<w2:column id="displaySize" name="파일사이즈" dataType="text"></w2:column>
+            			<w2:column id="Status" name="진행상태" dataType="text"></w2:column>
+            			<w2:column id="orginlFileNm" name="원본파일명" dataType="text"></w2:column>
+            			<w2:column id="fileTempPath" name="임시저장파일명" dataType="text"></w2:column>
+            		</w2:columnInfo>
+            		<w2:data use="true"></w2:data>
+            	</w2:dataList>
+            	<w2:dataList baseNode="list" repeatNode="map" id="dltFile">
+            		<w2:columnInfo>
+            			<w2:column id="orginlFileNm" name="파일명" dataType="text"></w2:column>
+            			<w2:column id="fileTempPath" name="임시저장소 저장된 파일명" dataType="text"></w2:column>
+            			<w2:column id="atchFileId" name="파일ID" dataType="text"></w2:column>
+            			<w2:column id="fileSn" name="파일순번" dataType="number"></w2:column>
+            			<w2:column id="imgData" name="이미지데이터" dataType="text"></w2:column>
+
+            			<w2:column id="sysSeCd" name="시스템구분코드" dataType="text"></w2:column>
+            			<w2:column id="jobSeCd" name="업무구분코드" dataType="text"></w2:column>
+            			<w2:column id="docClCd" name="문서분류코드" dataType="text"></w2:column>
+            			<w2:column id="docSj" name="문서제목" dataType="text"></w2:column>
+            			<w2:column id="docCn" name="문서내용" dataType="text"></w2:column>
+            			<w2:column id="sapYn" name="SAP여부" dataType="text"></w2:column>
+            			<w2:column id="scrinLinkInfo" name="화면링크정보" dataType="text"></w2:column>
+            			<w2:column id="pkInfo" name="PK정보" dataType="text"></w2:column>
+            			<w2:column id="menuId" name="메뉴ID" dataType="text"></w2:column>
+            		</w2:columnInfo>
+            		<w2:data use="false"></w2:data>
+            	</w2:dataList>
+            	<w2:dataList baseNode="list" repeatNode="map" id="dataList1" saveRemovedData="true">
+            		<w2:columnInfo>
+            			<w2:column id="col1" name="대분류" dataType="text"></w2:column>
+            			<w2:column id="col2" name="소분류" dataType="text"></w2:column>
+            			<w2:column id="col3" name="이미지종류" dataType="text"></w2:column>
+            		</w2:columnInfo>
+            		<w2:data use="true">
+            			<w2:row>
+            				<col1><![CDATA[위치대분류]]></col1>
+            				<col2><![CDATA[위치상세정보]]></col2>
+            				<col3><![CDATA[전경이미지]]></col3>
+            			</w2:row>
+            			<w2:row>
+            				<col1><![CDATA[위치상세정보]]></col1>
+            				<col2><![CDATA[소분류]]></col2>
+            				<col3><![CDATA[배경이미지]]></col3>
+            			</w2:row>
+            			<w2:row>
+            				<col1><![CDATA[대분류]]></col1>
+            				<col2><![CDATA[소분류]]></col2>
+            				<col3><![CDATA[전경이미지]]></col3>
+            			</w2:row>
+            		</w2:data>
+            	</w2:dataList>
+            	<w2:dataMap baseNode="map" id="dmaImgData">
+            		<w2:keyInfo>
+            			<w2:key id="imgData" name="이미지데이터" dataType="text"></w2:key>
+            		</w2:keyInfo>
+            	</w2:dataMap>
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[
+    scwin.initScreen = function() {
+		
+//		scwin.searchImgFile();
+		cbx_Progress.checkAll(true);
+		file_status.show();
+    };
+    
+    
+    /*****************************************************************
+    * 싱글파일 업로드
+    *****************************************************************/
+	// 파일선택이후 처리 함수
+	function singSelectCallback() {
+		var fileInfos = mpd_SingleFile.getFileInfos();
+		console.log ( fileInfos);
+		
+		//selectCallback 처리 공통함수 호출
+		//mpd_File (멀티업로드 컨포넌트ID, ibx_input(첨부파일명 보여주는 input box), dataList(첨부파일정보 DataCollection)
+		fileLib.selectCallback(mpd_SingleFile, ibx_AtchFile, fileDataList);
+	};
+
+	/**
+	 * 첨부파일 전송 (임시저장이 완료되면 ondone 함수를 호출한다.)
+	 * @param
+	 * @return
+	 */
+	scwin.btn_TransFile_onclick = function() {
+		mpd_SingleFile.startUpload();
+	};
+	
+   /**
+    * 첨부파일 전송완료 후 발생하는 이벤트
+    * @param fileData 임시저장된 파일정보
+    * @return
+    */
+	scwin.mpd_SingleFile_ondone = function(fileData) {
+		//임시저장된 결과 Data를 DataCollection에 셋팅
+		fileLib.dataListSetting(dlt_File, fileData);
+		if ( dlt_File.getAllJSON().length > 0 ) {
+			comLib.confirm($p, utilLib.getMessage("SC.INFO.00321"), "saveFileBasicConfirmCallback");   //저장하시겠습니까?
+		} else {
+			comLib.alert($p, utilLib.getMessage( "SC.INFO.00304")); //처리할 데이터가 존재하지 않습니다.
+		}
+	};
+	
+	/**
+     * 첨부파일 삭제
+     * @param
+	 * @return
+	 */
+	scwin.btn_DelFile_onclick = function() {
+		fileLib.deleteFileList(ibx_AtchFile, mpd_SingleFile, fileDataList, dlt_File);
+	};
+	
+	 /*****************************************************************
+    * 대용량파일 업로드
+    *****************************************************************/
+   	/**
+   	 *  파일선택이후
+   	 * @param
+   	 * @return
+   	 */
+	function singlBigSelectCallback() {
+		bigFileDataList.removeAll();
+		fileLib.selectCallback(mpd_SinglBigFile, ibx_AtchBigFile, bigFileDataList);
+	};
+    
+    /** 
+     * progress 처리
+     * @param  info 파일전송상태(percent)
+     * @return
+     */
+	scwin.mpd_BigFile_onprogress = function(info) {
+		ibx_BigFileStatus.setValue( info.percentData + "%" );
+		ibx_BigFileStatus.setStyle("display", "block");
+		ibx_BigFileStatus.setStyle("background","#ffcc00");
+		ibx_BigFileStatus.setStyle("background-repeat","repeat-x");
+		ibx_BigFileStatus.setStyle("background-position","left top");
+		ibx_BigFileStatus.setStyle("background-image","url('/sc/resources/images/common/pro.png')");
+		ibx_BigFileStatus.setStyle( "width" , info.percentData + "%" );
+	};
+	
+	/**
+	 * 대용량 파일 삭제
+	 * @param
+	 * @return
+	 */
+	scwin.btn_DelBigFile_onclick = function() {
+		ibx_AtchBigFile.setValue( "" );
+		mpd_SinglBigFile.removeAllFiles();
+	};
+	
+	/**
+	 * 파일전송(전송버튼 존재시 사용함, 이 프로젝트에서는 전송버튼 사용하지 않음)
+	 * 전송완료후는 ondone 함수를 call한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btn_TransBigFile_onclick = function() {
+		mpd_SinglBigFile.startUpload();
+	};
+	
+	/**
+	 * 첨부파일 임시저장완료 후 발생하는 이벤트
+	 * @param data 임시저장된 파일정보(원본파일명, 임시저장파일명, 파일사이즈)
+	 * @resutn 
+	 */
+	scwin.mpd_SinglBigFile_ondone = function(data) {
+		//임시저장된 결과 Data를 DataCollection에 셋팅
+//		dataSetting(data);
+		fileLib.dataListSetting(dlt_File, data);
+		if ( dlt_File.getAllJSON().length > 0 ) {
+			comLib.confirm($p, utilLib.getMessage("SC.INFO.00321"), "saveFileBasicConfirmCallback");   //저장하시겠습니까?
+		} else {
+			comLib.alert($p, utilLib.getMessage( "SC.INFO.00304")); //처리할 데이터가 존재하지 않습니다.
+		}
+	};
+	
+    /*****************************************************************
+    * 멀티파일 업로드
+    *****************************************************************/
+    /**
+   	 *  파일선택이후
+   	 * @param
+   	 * @return
+   	 */
+	function multiSelectCallback() {
+		fileLib.multiSelectCallback(mpd_multiAtchFile, multiFileDataList);
+	};
+	
+	/**
+	 * 첨부파일 임시저장완료 후 발생하는 이벤트
+	 * @param data 임시저장된 파일정보(원본파일명, 임시저장파일명, 파일사이즈)
+	 * @resutn 
+	 */
+	scwin.mpd_multiAtchFile_ondone = function(data) {
+		fileLib.dataListSetting(dlt_File, data);
+		if ( dlt_File.getAllJSON().length > 0 ) {
+			comLib.confirm($p, utilLib.getMessage("SC.INFO.00321"), "saveFileBasicConfirmCallback");   //저장하시겠습니까?
+		} else {
+			comLib.alert($p, utilLib.getMessage( "SC.INFO.00304")); //처리할 데이터가 존재하지 않습니다.
+		}
+	};	
+
+	/**
+	 * 파일전송(전송버튼 존재시 사용함, 이 프로젝트에서는 전송버튼 사용하지 않음)
+	 * 전송완료후는 ondone 함수를 call한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btn_MultiTransFile_onclick = function() {
+		mpd_multiAtchFile.startUpload();
+	};
+	
+	
+	/**
+	 * 선택한 파일 삭제
+	 * @param
+	 * @return
+	 */
+	scwin.btn_DelMultiFile_onclick = function() {
+		fileLib.multiDeleteFileList(grd_MultiFile, mpd_multiAtchFile, multiFileDataList, dlt_File);
+	};
+	
+	 /** 
+      * progress 처리
+      * @param  info 파일전송상태(percent)
+      * @return
+      */
+	scwin.mpd_multiAtchFile_onprogress = function(info) {
+		console.log ("전송상태값 : " + info.percentData + "%");
+		var rowidx = multiFileDataList.getMatchedIndex("name", info.fileName);
+
+		$("td[colindex='3']:eq("+rowidx+") .w2grid_input").text(info.percentData+"%");
+		$("td[colindex='3']:eq("+rowidx+") .w2grid_input").css("width", info.percentData+"%");
+	};
+	
+		
+    /*****************************************************************
+    * 이미지 업로드
+    *****************************************************************/
+	function imgSelectCallback() {
+		fileLib.selectCallback(mpd_ImgFile, ibx_ImgFile, fileDataList);
+		console.log ( "Image File Info : " + JSON.stringify( fileDataList.getAllJSON() ) );
+		//mpd_ImgFile.startUpload();
+	};
+	
+	//이미지 파일 삭제
+	scwin.btn_DelImgFile_onclick = function() {
+		fileLib.deleteFileList(ibx_ImgFile, mpd_ImgFile, fileDataList, dlt_File);
+	};
+	
+	scwin.mpd_ImgFile_ondone = function(data) {
+//		alert ( "첨부 이미지파일이 임시저장 저장되었습니다.");
+//		dataSetting(data);
+		fileLib.dataListSetting(dlt_File, data);
+		if ( dlt_File.getAllJSON().length > 0 ) {
+			comLib.confirm($p, utilLib.getMessage("SC.INFO.00321"), "saveFileBasicConfirmCallback");   //저장하시겠습니까?
+		} else {
+			comLib.alert($p, utilLib.getMessage( "SC.INFO.00304")); //처리할 데이터가 존재하지 않습니다.
+		}
+		
+	};
+	
+	/*****************************************************************
+	* 첨부파일 저장하기 (임시저장을 먼저 실시함)
+	******************************************************************/
+	scwin.btn_FileSave_onclick = function() {
+
+		//임시파일저장하기
+		//임시저장후 mpd_SingleFile_ondone Function호출 (컨포넌트 Default)
+		if (fileDataList.getRowCount() > 0 ) {
+			mpd_SingleFile.startUpload();
+		} else if (bigFileDataList.getRowCount() > 0 ) {
+			mpd_SinglBigFile.startUpload();
+		} else if ( multiFileDataList.getRowCount() > 0 ) {
+			mpd_multiAtchFile.startUpload();
+		}
+	
+//		if ( dlt_File.getAllJSON().length > 0 ) {
+//			comLib.confirm($p, "첨부파일을 저장하시겠습니까?", "saveFileBasicConfirmCallback");
+//		} else {
+//			comLib.alert($p,  "저장할 첨부파일이 존재하지 않습니다.");
+//		}
+	};
+	
+	//첨부파일 저장하기
+	scwin.saveFileBasicConfirmCallback = function() { 
+			var requestData = {"dlt_file" : dlt_File.getAllJSON() };
+			var option = {action : "sc/file/insertAtchFile.do"
+			               , reqData : requestData
+			               , resData : dlt_File
+			               , success : "scwin.saveFileBasicCallback"
+			               , isShowMeg : false
+				            };			
+			ajaxLib.executeAjax($p, option);
+	};
+		
+	// 저장후 콜백
+	scwin.saveFileBasicCallback  = function(resBody) {
+		comLib.alert($p, resBody.message.code_name);
+		resetFileData();
+	};
+	
+   /*
+	* 이미지파일 저장하기
+	*/
+	scwin.btn_ImgFileSave_onclick = function() {
+		mpd_ImgFile.startUpload();
+		
+//		if ( dlt_File.getAllJSON().length > 0 ) {
+//			comLib.confirm($p, "첨부파일을 저장하시겠습니까?", "saveImgFileBasicConfirmCallback");
+//		} else {
+//			comLib.alert($p,  "저장할 첨부파일이 존재하지 않습니다.");
+//		}
+	};
+	
+	scwin.saveImgFileBasicConfirmCallback = function() { 
+			var requestData = {"dlt_File" : dlt_File.getAllJSON() };
+			var option = {action : "sc/file/insertAtchFile.do"
+			               , reqData : requestData
+			               , resData : dlt_File
+			               , success : "scwin.saveImgFileBasicCallback"
+			               , isShowMeg : false
+				            };			
+			ajaxLib.executeAjax($p, option);
+	};
+		
+	// 저장후 콜백
+	scwin.saveImgFileBasicCallback  = function(resBody) {
+		comLib.alert($p, resBody.message.code_name);
+	};
+	
+	/**
+	 * 첨부파일 View
+	 */
+	scwin.btn_SearchImg_onclick = function() {
+		scwin.searchImgFile();
+	};
+	 
+	scwin.searchImgFile = function() {
+		dlt_File.insertRow( 0 );
+		dlt_File.setCellData( 0 , dlt_File.getColumnIndex( "atchFileId" ) , ibx_atchFileId.getValue() );		//첨부파일ID
+		dlt_File.setCellData( 0 , dlt_File.getColumnIndex( "fileSn" ) , ibx_FileSn.getValue() );						//첨부파일순번
+
+		var requestData = {"dlt_File": dlt_File.getRowJSON(0) };
+		var option = {action : "file/imgFileView.do"
+	               , reqData : requestData
+	               , resData : dlt_File
+		           , success : "scwin.searchCallback"
+		           , isShowMeg : false
+	                 };			
+		ajaxLib.executeAjax($p, option);	
+	};
+	
+	/**
+	 * 첨부파일 조회
+	 */
+	scwin.searchCallback = function(resBody) {
+//		console.log ( "resBody : " + JSON.stringify(resBody.data.imgData));
+		if (resBody.message.code == 'success' ) {
+			dma_ImgData.set( "imgData" , resBody.data.imgData );
+		} else {
+			comLib.alert($p, utilLib.getMessage("SC.ERROR.00023"));   //이미지 정보가 존재하지 않습니다.
+		}
+		
+	};
+	
+	// 첨부파일 DataCollection 셋팅
+	function dataSetting(data) {
+		var insertedIndex;
+		for (var i = 0 ; i < data.length; i++) {
+			insertedIndex = dlt_file.insertRow( );
+			dlt_file.setCellData( insertedIndex , dlt_file.getColumnIndex( "orginlFileNm" ) , data[i].localFile );
+			dlt_file.setCellData( insertedIndex , dlt_file.getColumnIndex( "idvdinfoInclsYn" ) , "N" );         //개인정보포함여부
+			dlt_file.setCellData( insertedIndex , dlt_file.getColumnIndex( "sapYn" ) , "N" );                    //SAP여부 
+			dlt_file.setCellData( insertedIndex, dlt_file.getColumnIndex("fileTempPath"), data[i].file);
+		}
+	};
+	
+	// 화면 데이터 초기화
+	function resetFileData() {
+		fileDataList.removeAll();
+		bigFileDataList.removeAll();
+		multiFileDataList.removeAll();
+		dlt_file.removeAll();
+		mpd_SingleFile.removeAllFiles();
+		mpd_SinglBigFile.removeAllFiles();
+		mpd_multiAtchFile.removeAllFiles();
+		ibx_AtchFile.setValue( "" );
+		ibx_AtchBigFile.setValue("");
+	};
+	
+	//신규 버튼 클릭시 데이터 초기화
+	scwin.btn_NewImg_onclick = function() {
+		sbx_Lclas.setSelectedIndex( 0 );
+		sbx_Mclas.setSelectedIndex( 0 );
+		sbx_Sclas.setSelectedIndex( 0 );
+		ibx_ImgFile.setValue( "" );
+		fileDataList.removeAll();
+		mpd_ImgFile.removeAllFiles();
+	};
+	
+	scwin.btn_PupupCall_onclick = function() {
+		var options = {
+					title : "SAP용 파일 업로드", width : 1000, height : 600, 
+					popupParam : { closeCallbackFncName : "scwin.mutiFileUploadCallback" }
+				};
+			comLib.openPopup($p, "sapFileUpload", "/ui/common/file/sample_002.xml", options);
+	};
+	
+	
+	scwin.cbx_Progress_onviewchange = function(info) {
+		
+		console.log ( " info : " + JSON.stringify(info) );
+		if (info.checked) {
+			file_status.show();
+		} else {
+			file_status.hide();
+		};
+	};
+	
+//	scwin.cbx_Progress_onchange = function() {
+//		alert ( "11111111" );
+//	};
+	]]></script>
+	
+	<style type="text/css">
+		<![CDATA[
+
+			td[colindex='3'] .w2grid_input { 
+				display: block;
+				text-align: right;
+				background-color: yellow;
+				width: 0%;
+			}
+		]]>
+	</style>
+	
+    </head>
+    <body>
+    	<xf:group style="" class="wrap">
+    		<xf:group class="w2tb" id="" style="background:#fff;" tagname="table">
+    			<w2:attributes>
+    				<w2:summary></w2:summary>
+    			</w2:attributes>
+    			<xf:group style="" tagname="tr">
+    				<xf:group class="title-group" id="" style="">
+    					<xf:group style="" id="" class="" tagname="h3">
+    						<w2:span label="단일파일업로드" style="" id=""></w2:span>
+    					</xf:group>
+    				</xf:group>
+    			</xf:group>
+    			<xf:group style="" tagname="tr">
+    				<xf:group class="w2tb_td cw8" style="height:50px;" tagname="td">
+    					<xf:group class="file-upload">
+    						<xf:group class="file-group">
+    							<xf:input id="ibx_AtchFile"></xf:input>
+    							<w2:multiupload maxcount="1" filter="*:*.*" mode="html5_transparent" action="" wmode="false" style="" id="mpdSingleFile" maxsize="20480"
+													uploadButton="" selectCallback="singSelectCallback" ev:ondone="scwin.mpdSingleFile_ondone" >
+    							</w2:multiupload>
+    							<w2:anchor outerDiv="false" style="" id="btn_AddFile" class="fa fa-file-o file-btn file-search-btn" ev:onclick="scwin.btn_AddFile_onclick">
+    								<xf:label><![CDATA[파일찾기]]></xf:label>
+    							</w2:anchor>
+    						</xf:group>
+    						<xf:group class="file-g-group">
+    							<w2:anchor outerDiv="false" style="" id="btnDelFile" ev:onclick="scwin.btnDelFile_onclick" class="fa fa-trash file-btn file-del-btn">
+    								<xf:label><![CDATA[삭제]]></xf:label>
+    							</w2:anchor>
+    						</xf:group>
+    					</xf:group>
+    				</xf:group>
+    				<!-- <xf:group class="w2tb_td cw4" tagname="td">
+    					<w2:anchor outerDiv="false" style="position: absolute;width: 111px; height:25px;margin-left:10px; " id="btnTransFile" ev:onclick="scwin.btnTransFile_onclick">
+    						<xf:label><![CDATA[전송]]></xf:label>
+    					</w2:anchor>
+    				</xf:group> -->
+    			</xf:group>
+    		</xf:group>
+    		<!-- 대용량 싱글 파일 -->
+    		<xf:group class="w2tb" id="" style="background:#fff;" tagname="table">
+    			<w2:attributes>
+    				<w2:summary></w2:summary>
+    			</w2:attributes>
+    			<xf:group style="" tagname="tr">
+    				<xf:group class="title-group" id="" style="">
+    					<xf:group style="" id="" class="" tagname="h3">
+    						<w2:span label="단일 파일업로드" style="" id=""></w2:span>
+    					</xf:group>
+    				</xf:group>
+    			</xf:group>
+    			<xf:group style="" tagname="tr">
+    				<xf:group class="w2tb_td cw8" tagname="td" style="height:50px;">
+    					<xf:group class="file-upload big-file">
+    						<xf:group class="file-group">
+    							<xf:input id="ibx_AtchBigFile"></xf:input>
+    							<w2:multiupload maxcount="1" filter="*:*.*" mode="html5_transparent" action="" wmode="false" style="" id="mpdSinglBigFile" maxsize="2048000"
+													 uploadButton="" selectCallback="singlBigSelectCallback" ev:ondone="scwin.mpdSinglBigFile_ondone" ev:onprogress="scwin.mpdBigFile_onprogress">
+    							</w2:multiupload>
+    							<w2:anchor outerDiv="false" class="fa fa-file-o file-btn file-search-btn" style="" id="">
+    								<xf:label><![CDATA[파일찾기]]></xf:label>
+    							</w2:anchor>
+    						</xf:group>
+    						<xf:group class="file-g-group">
+    							<w2:anchor outerDiv="false" style="" id="btn_DelBigFile" class="fa fa-trash file-btn file-del-btn" 
+    											ev:onclick="scwin.btnDelBigFile_onclick">
+    								<xf:label><![CDATA[삭제]]></xf:label>
+    							</w2:anchor>
+    							<xf:group class="file-bar" id="file_status">
+    								<xf:input id="ibxBigFileStatus" style="" initValue="0%" title="0%">
+    								</xf:input>
+    							</xf:group>
+    						</xf:group>
+    					</xf:group>
+    				</xf:group>
+    				<xf:group class="w2tb_td cw4" tagname="td">
+    					<!-- <w2:anchor outerDiv="false" style="position: static;width: 111px; height:25px;margin-left:10px;" id="btnTransBigFile" ev:onclick="scwin.btnTransBigFile_onclick">
+    						<xf:label><![CDATA[전송]]></xf:label>
+    					</w2:anchor> -->
+    					<xf:select appearance="full" cols="" id="cbxProgress" renderType="table" rows="" selectedindex="-1"
+    						style="width:133px;height:38px;" ev:onviewchange="scwin.cbxProgress_onviewchange" ev:onchange="scwin.cbxProgress_onchange">
+    						<xf:choices>
+    							<xf:item>
+    								<xf:label><![CDATA[상태바여부]]></xf:label>
+    								<xf:value><![CDATA[]]></xf:value>
+    							</xf:item>
+    						</xf:choices>
+    					</xf:select>
+    				</xf:group>
+    			</xf:group>
+    		</xf:group>
+    		<!-- 대용량 싱글 파일 -->
+    		<!-- 멀티 파일 업로드 -->
+    		<xf:group class="footer" id="" style="">
+    			<xf:group class="btn-group" id="" style="">
+    				<w2:anchor class="" ev:onclick="scwin.btnFileSave_onclick" id="btnFileSave" outerDiv="false" style="">
+    					<xf:label><![CDATA[저장]]></xf:label>
+    				</w2:anchor>
+    				<w2:anchor class="" ev:onclick="scwin.btnImgFileSave_onclick" id="btnImgFileSave" outerDiv="false" style="">
+    					<xf:label><![CDATA[이미지저장]]></xf:label>
+    				</w2:anchor>
+    				<w2:anchor class="" ev:onclick="scwin.btnPupupCall_onclick" id="btnPupupCall" outerDiv="false" style="">
+    					<xf:label><![CDATA[팝업호출]]></xf:label>
+    				</w2:anchor>
+    			</xf:group>
+    		</xf:group>
+    		<xf:group class="content-area" id="" style="">
+    			<xf:group class="multy-up-list" id="" style="">
+    				<xf:group id="group1" style="" class="btn-group">
+    					<xf:group id="upload" class="up">
+    						<w2:multiupload action="" ev:ondone="scwin.mpdMultiAtchFile_ondone" ev:onprogress="scwin.mpdMultiAtchFile_onprogress"
+    							filter="*:*.*" id="mpdMultiAtchFile" maxcount="" maxsize="2048000" mode="html5_transparent" selectCallback="multiSelectCallback" style=""
+    							uploadButton="" wmode="false">
+    						</w2:multiupload>
+    						<w2:anchor class="" ev:onclick="scwin.btnMultiAtchFile_onclick" id="btnMultiAtchFile" style="">
+    							<xf:label><![CDATA[추가]]></xf:label>
+    						</w2:anchor>
+    					</xf:group>
+    					<w2:anchor class="delete_ing" ev:onclick="scwin.btnDelMultiFile_onclick" id="btnDelMultiFile" style="">
+    						<xf:label><![CDATA[삭제]]></xf:label>
+    					</w2:anchor>
+    					<!-- <w2:anchor class="start" ev:onclick="scwin.btn_MultiTransFile_onclick" id="btn_MultiTransFile" style="">
+    						<xf:label><![CDATA[전송]]></xf:label>
+   						</w2:anchor> -->
+    				</xf:group>
+    				<w2:gridView autoFit="allColumn" dataList="dltMultiFileDataList" fixedColumnWithHidden="true" id="grdMultiFile" ignoreCellClick="false"
+    					scrollByColumn="false" style="height:150px;" useShiftKey="true" class="multiFile">
+    					<w2:header id="header1" style="">
+    						<w2:row id="row2" style="">
+    							<w2:column blockSelect="false" checkboxLabel="&amp;nbsp;" id="column11" inputType="checkbox" style="height:20px;"
+    								value="chk" width="27">
+    							</w2:column>
+    							<w2:column blockSelect="false" id="column9" inputType="text" style="height:20px;" value="파일명" width="273"></w2:column>
+    							<w2:column blockSelect="false" id="column7" inputType="text" style="height:20px;" value="파일사이즈" width="92"></w2:column>
+    							<w2:column blockSelect="false" id="column3" inputType="text" style="height:20px;" value="전송상태" width="175">
+    							</w2:column>
+    						</w2:row>
+    					</w2:header>
+    					<w2:gBody id="gBody4" style="">
+    						<w2:row id="row5" style="">
+    							<w2:column blockSelect="false" checkboxLabel="&amp;nbsp;" id="chk" inputType="checkbox" style="height:20px;" width="27">
+    							</w2:column>
+    							<w2:column blockSelect="false" id="name" inputType="text" style="height:20px;" textAlign="left" width="273"></w2:column>
+    							<w2:column blockSelect="false" id="displaySize" inputType="text" style="height:20px;" width="92"></w2:column>
+    							<w2:column blockSelect="false" id="Status" inputType="text" style="height:20px;" value="" class="fileStatus">
+    							</w2:column>
+    						</w2:row>
+    					</w2:gBody>
+    				</w2:gridView>
+    			</xf:group>
+    			<!-- 멀티 파일 업로드 -->
+    			<xf:group class="layout-float file-form" id="" style="">
+    				<xf:group class="float-con left-area" id="" style="">
+    					<xf:group class="con-box" id="" style="">
+    						<xf:group class="list-box box height-sam" id="" style="">
+    							<xf:group class="title-group" id="" style="">
+    								<xf:group class="" id="" style="" tagname="h4">
+    									<w2:span id="" label="첨부목록" style=""></w2:span>
+    								</xf:group>
+    								<xf:group class="com-area" id="" style="">
+    									<xf:group class="btn-group" id="" style=""></xf:group>
+    								</xf:group>
+    							</xf:group>
+    							<w2:gridView dataList="dataList1" fixedColumnWithHidden="true" id="" ignoreCellClick="false"
+    								ignoreToggleOnDisabled="false" scrollByColumn="false" scrollByColumnAdaptive="false" style="height: 150px;" summaryAuto="false"
+    								useShiftKey="true">
+    								<w2:caption style="" id="caption1" value="this is a grid caption."></w2:caption>
+    								<w2:header style="" id="header1">
+    									<w2:row style="" id="row1">
+    										<w2:column width="70" inputType="text" style="height:20px" id="column5" blockSelect="false"
+    											displayMode="label" value="대분류">
+    										</w2:column>
+    										<w2:column width="70" inputType="text" style="height:20px" id="column3" blockSelect="false"
+    											displayMode="label" value="소분류">
+    										</w2:column>
+    										<w2:column width="70" inputType="text" style="height:20px" id="column1" blockSelect="false"
+    											displayMode="label" value="이미지종류">
+    										</w2:column>
+    									</w2:row>
+    								</w2:header>
+    								<w2:gBody style="" id="gBody1">
+    									<w2:row style="" id="row2">
+    										<w2:column width="70" inputType="text" style="height:20px" id="col1" blockSelect="false" displayMode="label"
+    											headers="" class="left">
+    										</w2:column>
+    										<w2:column width="70" inputType="text" style="height:20px" id="col2" blockSelect="false" displayMode="label"
+    											headers="" class="left">
+    										</w2:column>
+    										<w2:column width="70" inputType="text" style="height:20px" id="col3" blockSelect="false" displayMode="label"
+    											headers="" class="left">
+    										</w2:column>
+    									</w2:row>
+    								</w2:gBody>
+    							</w2:gridView>
+    						</xf:group>
+    					</xf:group>
+    				</xf:group>
+    				<xf:group class="float-con right-area" id="" style="">
+    					<xf:group class="con-box" id="" style="">
+    						<xf:group class="view-box box height-sam" id="" style="">
+    							<xf:group class="title-group" id="" style="">
+    								<xf:group class="" id="" style="" tagname="h4">
+    									<w2:span id="" label="첨부상세" style=""></w2:span>
+    								</xf:group>
+    								<xf:group class="com-area" id="" style="">
+    									<xf:group class="btn-group" id="" style="">
+    										<w2:anchor id="btn_NewImg" outerDiv="false" style="" ev:onclick="scwin.btn_NewImg_onclick">
+    											<xf:label><![CDATA[신규]]></xf:label>
+    										</w2:anchor>
+    										<w2:anchor id="btn_SearchImg" outerDiv="false" style="" ev:onclick="scwin.btn_SearchImg_onclick">
+    											<xf:label><![CDATA[조회]]></xf:label>
+    										</w2:anchor>
+    									</xf:group>
+    								</xf:group>
+    								<xf:input id="ibx_atchFileId" style="width:165px;height:41px;" toolTip="첨부파일ID입력(ex:2017160)"></xf:input>
+    								<xf:input id="ibx_FileSn" style="width:144px;height:38px;" toolTip="파일순번(ex:1)"></xf:input>
+    							</xf:group>
+    							<xf:group class="file-box" id="" style="">
+    								<xf:group class="list" id="" style="">
+    									<xf:group class="w2tb" id="" style="" tagname="table">
+    										<w2:attributes>
+    											<w2:summary></w2:summary>
+    										</w2:attributes>
+    										<xf:group tagname="colgroup">
+    											<xf:group style="" tagname="col"></xf:group>
+    											<xf:group style="" tagname="col"></xf:group>
+    										</xf:group>
+    										<xf:group style="" tagname="tr">
+    											<xf:group class="w2tb_td" style="" tagname="td">
+    												<xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false"
+    													disabledClass="w2selectbox_disabled" displayMode="label" id="sbx_Lclas" optionOrder="false" selectedData="true" style=""
+    													submenuSize="auto">
+    													<xf:choices>
+    														<xf:item>
+    															<xf:label><![CDATA[위치대분류]]></xf:label>
+    															<xf:value><![CDATA[]]></xf:value>
+    														</xf:item>
+    													</xf:choices>
+    												</xf:select1>
+    											</xf:group>
+    											<xf:group class="w2tb_td" style="" tagname="td">
+    												<xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false"
+    													disabledClass="w2selectbox_disabled" displayMode="label" id="sbx_Mclas" optionOrder="false" selectedData="true" style=""
+    													submenuSize="auto">
+    													<xf:choices>
+    														<xf:item>
+    															<xf:label><![CDATA[위치상세정보]]></xf:label>
+    															<xf:value><![CDATA[]]></xf:value>
+    														</xf:item>
+    													</xf:choices>
+    												</xf:select1>
+    											</xf:group>
+    											<xf:group class="w2tb_td" style="" tagname="td">
+    												<xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false"
+    													disabledClass="w2selectbox_disabled" displayMode="label" id="sbx_Sclas" optionOrder="false" selectedData="true" style=""
+    													submenuSize="auto">
+    													<xf:choices>
+    														<xf:item>
+    															<xf:label><![CDATA[전경이미지]]></xf:label>
+    															<xf:value><![CDATA[]]></xf:value>
+    														</xf:item>
+    													</xf:choices>
+    												</xf:select1>
+    											</xf:group>
+
+    										</xf:group>
+    									</xf:group>
+    								</xf:group>
+    								<xf:group class="file-search" id="" style="">
+    									<xf:group class="file-upload" style="">
+    										<xf:group class="file-group">
+    											<xf:input id="ibx_ImgFile"></xf:input>
+    											<w2:multiupload action="" ev:ondone="scwin.mpd_ImgFile_ondone" filter="그림파일:*.jpg;*.gif;*.png"
+    												id="mpd_ImgFile" maxcount="1" maxsize="" mode="html5_transparent" selectCallback="imgSelectCallback" style="" uploadButton=""
+    												wmode="false">
+    											</w2:multiupload>
+    											<w2:anchor class="fa fa-file-o file-btn file-search-btn" ev:onclick="scwin.btn_AddImgFile_onclick"
+    												id="btn_AddImgFile" outerDiv="false" style="">
+    												<xf:label><![CDATA[파일찾기]]></xf:label>
+    											</w2:anchor>
+    										</xf:group>
+    										<xf:group class="file-g-group">
+    											<w2:anchor class="fa fa-trash file-btn file-del-btn" ev:onclick="scwin.btn_DelImgFile_onclick"
+    												id="btn_DelImgFile" outerDiv="false" style="">
+    												<xf:label><![CDATA[삭제]]></xf:label>
+    											</w2:anchor>
+    										</xf:group>
+    									</xf:group>
+    								</xf:group>
+    							</xf:group>
+    							<xf:group style="" id="" class="file-view">
+    								<xf:image src="" style="width:200px; height:150px" id="img_PreView" ref="data:dma_ImgData.imgData">
+    									<!-- <xf:image src="" style="" id="img_PreView"> -->
+    								</xf:image>
+    							</xf:group>
+    						</xf:group>
+    					</xf:group>
+    				</xf:group>
+    			</xf:group>
+
+    		</xf:group>
+    	</xf:group>
+    </body>
+</html>

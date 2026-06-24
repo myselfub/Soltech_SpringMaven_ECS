@@ -1,0 +1,1530 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/main_ecs_detail.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltBasinMapInfo" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="usrDfnVu1" dataType="text" name="사용자 정의값1"></w2:column>
+						<w2:column id="usrDfnVu2" dataType="text" name="사용자 정의값2"></w2:column>
+						<w2:column id="usrDfnVu3" dataType="text" name="사용자 정의값3"></w2:column>
+						<w2:column id="usrDfnVu4" dataType="text" name="사용자 정의값4"></w2:column>
+						<w2:column id="usrDfnVu5" dataType="text" name="사용자 정의값5"></w2:column>
+						<w2:column id="usrDfnVu6" dataType="text" name="사용자 정의값6"></w2:column>
+						<w2:column id="usrDfnVu7" dataType="text" name="사용자 정의값7"></w2:column>
+						<w2:column id="usrDfnVu8" dataType="text" name="사용자 정의값8"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름"></w2:column>
+						<w2:column id="upperUsrDfnVu1" dataType="text" name="상위 사용자 정의값1"></w2:column>
+						<w2:column id="upperUsrDfnVu2" dataType="text" name="상위 사용자 정의값2"></w2:column>
+						<w2:column id="upperUsrDfnVu3" dataType="text" name="상위 사용자 정의값3"></w2:column>
+						<w2:column id="upperUsrDfnVu4" dataType="text" name="상위 사용자 정의값4"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCyclePData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCycleBData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCycleMData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCycleEData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltElyrsErnData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltEtcErnData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCnstnExcclcData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltPrdctnList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="hqNm" dataType="text" name="유역"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="발전원이름"></w2:column>
+						<w2:column id="cmmnCdNmEn" dataType="text" name="발전원영어명"></w2:column>
+						<w2:column id="prdctnVu" dataType="text" name="생산량"></w2:column>
+						<w2:column id="prdctnExcclcVu" dataType="text" name="생산정산금액"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCnstnList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="hqNm" dataType="text" name="유역"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="시설코드"></w2:column>
+						<w2:column id="cmmnCdKorNm" dataType="text" name="시설한글명"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="시설명"></w2:column>
+						<w2:column id="cnstnVu" dataType="text" name="소비량"></w2:column>
+						<w2:column id="cnstnExcclcVu" dataType="text" name="소비정산금액"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCbnNtrltData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="년월"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltPCData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"title" : {
+			"H" : "한강유역본부",
+			"G" : "금강유역본부",
+			"Y" : "영섬강유역본부",
+			"N" : "낙동강유역본부"
+		},
+		"basinCode" : {
+			"ALL" : "ALL",
+			"H" : "01",
+			"G" : "02",
+			"Y" : "03",
+			"N" : "04"
+		},
+		"chart" : {
+			"prdctnUnit" : 10,
+			"prdctnIntervalCount" : 3,
+			"cnstnUnit" : 10,
+			"cnstnIntervalCount" : 3
+		},
+		"prdctnDisplayData" : {
+			"Lgwtpw" : "대수력",
+			"Smlhp" : "소수력",
+			"GnrlSmlhp" : "소수력",
+			"BoSmlhp" : "보소수력",
+			"Tdpw" : "조력",
+			"Wtht" : "수열",
+			"Snpw" : "태양광",
+			"Wdpw" : "풍력"
+		},
+		"setcscDivCd" : {
+			"대수력" : 10,
+			"소수력" : 21,
+			"보소수력" : 22,
+			"조력" : 30,
+			"수열" : "",
+			"태양광" : 40,
+			"풍력" : 50
+		},
+		"cnstnDisplayData" : {
+			"Itkpl" : "취수시설",
+			"Prnplc" : "가압시설",
+			"Fltplt" : "정수시설",
+			"Buld" : "건물",
+			"Trnsp" : "수송",
+			"Dam" : "댐시설",
+			"Etc" : "기타"
+		},
+		"observeEvent" : false,
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		var basin = $p.getParameter("param").basin;
+		var scrinId = "";
+		switch (basin) {
+			case "H":
+				scrinId = "ECSEC5100000";
+				break;
+			case "G":
+				scrinId = "ECSEC5200000";
+				break;
+			case "N":
+				scrinId = "ECSEC5300000";
+				break;
+			case "Y":
+				scrinId = "ECSEC5400000";
+				break;
+			default:
+				break;
+		}
+		if (!scrinId) {
+			return;
+		}
+		comLib.initForm($p, scrinId);
+
+		// 지도 정보 조회
+		scwin.searchBasinMapInfo();
+
+		// 사이클 데이터 조회
+		scwin.searchDatas();
+
+		// 유역 운영현황 초기 데이터 조회
+		scwin.searchBasinDeptPCSttusData("");
+
+		// 전주기 현황 타이틀 클릭시 이동
+		scwin.setCycleLabelClickEvent();
+
+		spnBasinTitle.setLabel(`(${scwin.initData.title[basin]})`);
+		// 초기 그리드 유역 이름 설정_240305
+		spnBrffcNm.setLabel(`${scwin.initData.title[basin]}`);
+
+		// ecsLib.setChartResizeObserver(this);
+	};
+
+	/**
+	 * 데이터들을 조회한다.
+	 */
+	scwin.searchDatas = function() {
+		// 탄소중립율 데이터 조회 (2024.02.06 김동현 차장님 요청으로 삭제)
+		// scwin.searchCbnNtrltData();
+		// 전주기 현황 계획 데이터 조회
+		scwin.searchRecyclePData();
+		// 전주기 현황 건설 데이터 조회
+		scwin.searchRecycleBData();
+		// 전주기 현황 관리 데이터 조회
+		scwin.searchRecycleMData();
+		// 전주기 현황 폐기 데이터 조회
+		scwin.searchRecycleEData();
+
+		// 전주기 현황 정산-생산, 소비 데이터 조회
+		scwin.searchCyclePC();
+		// 전주기 현황 정산-발전수익 데이터 조회
+		scwin.searchElyrsErnData();
+		// 전주기 현황 정산-기타수익 데이터 조회
+		scwin.searchEtcErnData();
+		// 전주기 현황 정산-소비정산 데이터 조회
+		scwin.searchCnstnExcclcData();
+	};
+
+	//============================================================================================
+	// 차트
+	//============================================================================================
+
+	/**
+	 * 생산, 생산정산 차트 X축 라벨 핸들러
+	 * @param {
+	 	id : ID,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.prdctnCategoryLabelHandler = function(id, value) {
+		return "        " + value;
+	};
+
+	/**
+	 * 생산, 생산정산 차트 Y축 라벨 핸들러
+	 * @param {
+	 	id : ID,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.prdctnLinearLabelHandler = function(id, value) {
+		return "  " + ecsLib.numCommaFrmt(value);
+	};
+
+	/**
+	 * 전력 생산량/전력 소비량 및 정산금액 itemClick 핸들러
+	 * @param {
+	 	seriesID : ID,
+	 	displayText : tooltip display data,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 색상
+	 */
+	scwin.chartItemClickHandler = function(seriesId, displayText, index, data, values) {
+		var targetParentMenuId = "";
+		var targetMenuId = "";
+		var param = {};
+		param.basinCd = scwin.initData.basinCode[$p.getParameter("param").basin];
+
+		if (displayText.includes("생산량")) {
+			targetParentMenuId = "ECSPN000000";
+			targetMenuId = "ECSPN200000";
+			param.setcscDivCd = scwin.initData.setcscDivCd[data.name];
+
+			param.year = utilLib.getCurrentDate("yyyy");
+		} else if (displayText.includes("수익금")) {
+			targetParentMenuId = "ECSCL000000";
+			targetMenuId = "ECSCL110000";
+			param.setcscDivCd = scwin.initData.setcscDivCd[data.name] == 21 ? 20 : scwin.initData.setcscDivCd[data.name];
+			param.year = utilLib.getCurrentDate("yyyy");
+			param.type = "Y";
+		} else if (displayText.includes("소비량") || displayText.includes("정산금")) {
+			targetParentMenuId = "ECSCN000000";
+			targetMenuId = "ECSCN100000";
+			param.year = utilLib.getCurrentDate("yyyy");
+			param.type = "Y";
+		} else {
+			return;
+		}
+
+		ecsLib.chartMenuClickEvent(
+			targetParentMenuId,
+			targetMenuId,
+			param
+		);
+	};
+
+	/**
+	* 생산, 생산정산 차트 설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerPrdctn = function(id) {
+		var prdctnChartData = dltPrdctnList.getAllJSON();
+		var tempObj = {};
+		prdctnChartData.filter(obj => obj.cmmnCdNm.endsWith("소수력")).forEach(obj => {
+			Object.keys(obj).forEach(key => {
+				if (!tempObj[key]) {
+					tempObj[key] = obj[key];
+				} else if (tempObj[key] && key.endsWith("Vu")) {
+					tempObj[key] = Number(tempObj[key]) + Number(obj[key]);
+				}
+			});
+		});
+		/*
+		if (Object.keys(tempObj).length) {
+			tempObj.cmmnCdNm = "소수력";
+			tempObj.cmmnCdNmEn = Object.keys(scwin.initData.prdctnDisplayData).find(key => scwin.initData.prdctnDisplayData[key] == "소수력");
+			prdctnChartData = prdctnChartData.filter(obj => !obj.cmmnCdNm.endsWith("소수력"));
+			prdctnChartData.push(tempObj);
+		}
+		*/
+
+		var chartList = [];
+		Object.keys(scwin.initData.prdctnDisplayData).forEach(source => {
+			var data = prdctnChartData.find(obj => obj.cmmnCdNmEn.toLowerCase() == source.toLowerCase());
+			if (data) {
+				chartList.push({
+					"name" : data.cmmnCdNm,
+					"prdctn" : data.prdctnVu,
+					"prdctnExcclc" : data.prdctnExcclcVu
+				});
+			}
+		});
+
+		var maxPData = chartList.reduce((max, obj) => Math.max(max, obj.prdctn), 0)
+		var maxCpData = chartList.reduce((max, obj) => Math.max(max, obj.prdctnExcclc), 0)
+		var minPData = chartList.reduce((min, obj) => Math.min(min, obj.prdctn), 0)
+		var minCpData = chartList.reduce((min, obj) => Math.min(min, obj.prdctnExcclc), 0)
+		var pInterval = Math.ceil((maxPData / scwin.initData.chart.prdctnIntervalCount) / scwin.initData.chart.prdctnUnit) * scwin.initData.chart.prdctnUnit;
+		var cpInterval = Math.ceil((maxCpData / scwin.initData.chart.prdctnIntervalCount) / 10) * 10;
+		var sumPData = new Intl.NumberFormat("ko-KR").format(chartList.reduce((sum, obj) => sum + Number(obj.prdctn), 0));
+		var sumCpData = new Intl.NumberFormat("ko-KR").format(chartList.reduce((sum, obj) => sum + Number(obj.prdctnExcclc), 0));
+		var titleText = ecsLib.dsplFrmt(sumPData, 2)
+			+ ' &lt;span style=&quot;font-size:0.5em;&quot;&gt;MWh&lt;/span&gt;'
+			+ '&amp;ensp;&lt;span style=&quot;color:#AFAFAF;font-weight:normal;&quot;&gt;|&lt;/span&gt;&amp;ensp;'
+			+ '&lt;span style=&quot;color:#219D9D;&quot;&gt;'
+			+ ecsLib.dsplFrmt(sumCpData, 2)
+			+ ' &lt;span style=&quot;font-size:0.5em;&quot;&gt;백만&lt;/span&gt;'
+			+ '&lt;/span&gt;';
+		var pMinimum = "";
+		if (minPData < 0) {
+			pMinimum = `minimum="${minPData}"`;
+		}
+		var cpMinimum = "";
+		if (minCpData < 0) {
+			cpMinimum = `minimum="${minCpData}"`;
+		}
+
+		var layoutStr = '<rMateChart backgroundColor="" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Caption text="' + titleText + '" textAlign="right" fontSize="0.87rem" fontWeight="bold" color="#83DCCE"'
+			+ '			borderStyle="solid" borderColor="#83DCCE" borderTop="0" borderRight="0" borderBottom="1" borderLeft="0" marginTop="2%" />'
+			+ '		<Legend position="center" vAlign="left" hAlign="top" verticalGap="2" border="0" background="transparent" marginTop="-4%" />'
+			+ '	</Options>'
+			+ '	<Column3DChart showDataTips="true" columnWidthRatio="0.75" type="clustered" maxColumnWidth="25" dataTipDisplayMode="axis" itemClickJsFunction="' + $p.id + 'scwin.chartItemClickHandler">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="name" labelJsFunction="' + $p.id + 'scwin.prdctnCategoryLabelHandler" />'
+			+ '		</horizontalAxis>'
+			+ '		<horizontalAxisRenderers>'
+			+ '			<Axis3DRenderer axis="{hAxis}" visible="true" textAlign="right" canDropLabels="false" />'
+			+ '		</horizontalAxisRenderers>'
+			+ '		<verticalAxis>'
+			+ '		</verticalAxis>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis3DRenderer axis="{vAxisL}" visible="true" placement="left" verticalAxisTitleAlignment="top" titleGap="0" canDropLabels="false" showLine="false" />'
+			+ '			<Axis3DRenderer axis="{vAxisR}" visible="true" placement="right" verticalAxisTitleAlignment="top" titleGap="0" canDropLabels="false" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '		<series>'
+			+ '			<Column3DSeries color="#222222" font-weight="bold" yField="prdctn" displayName="전력 생산량" halfWidthOffset="3">'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxisL" interval="' + pInterval + '" ' + pMinimum + ' labelJsFunction="' + $p.id + 'scwin.prdctnLinearLabelHandler" title="MWh" />'
+			+ '				</verticalAxis>'
+			+ '				<fill>'
+			+ '					<SolidColor color="#83DCCE" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column3DSeries>'
+			+ '			<Column3DSeries color="#222222" font-weight="bold" yField="prdctnExcclc" displayName="발전 수익금" halfWidthOffset="3">'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxisR" interval="' + cpInterval + '" ' + cpMinimum + ' labelJsFunction="' + $p.id + 'scwin.prdctnLinearLabelHandler" title="백만" />'
+			+ '				</verticalAxis>'
+			+ '				<fill>'
+			+ '					<SolidColor color="#219D9D" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column3DSeries>'
+			+ '		</series>'
+			+ '	</Column3DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	};
+
+	// 지도 정보 조회
+	scwin.searchBasinMapInfo = function() {
+		var basin = $p.getParameter("param").basin;
+		var selector = "#" + $p.getFrameId() + " .main-detail-con-box .main-detail-map .main-detail-box-con .detail-map-basin-" + basin.toLowerCase();
+		var basinEmt = document.querySelector(selector);
+		basinEmt.classList.remove("hide");
+
+		var queryString = `?ecsBasinDivCd=${basin.toUpperCase()}`;
+
+		var option = {
+			action : "ec/main/retrieve-basin-map-info.do"
+				+ queryString,
+			method : "get",
+			resData : dltBasinMapInfo,
+			success : "scwin.searchBasinMapInfoCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	// 지도 정보 조회 콜백
+	scwin.searchBasinMapInfoCallBack = function() {
+		// 유역별 지도 클릭 이벤트
+		var basin = $p.getParameter("param").basin;
+		var selector = "#" + $p.getFrameId() + " .main-detail-con-box .main-detail-map .main-detail-box-con .detail-map-basin-" + basin.toLowerCase();
+		var basinEmt = document.querySelector(selector);
+		ecsLib.createDetailMapBasinInfo($p.getComponentById(basinEmt.id), basin, dltBasinMapInfo.getAllJSON(), scwin.setBasinMapLabelClickEvent);
+	};
+
+	/**
+	 * 전력에너지 전주기 현황 생산/소비 데이터를 조회한다.
+	 */
+	scwin.searchCyclePC = function() {
+		var strtDt = utilLib.getCurrentDate("yyyy") - 1;
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var nowInqireDe = utilLib.calcToday(0, 0, -1);
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&inqireDe=${nowInqireDe}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+
+		var option = {
+			action : "ec/main/retrieve-cycle-pc.do"
+				+ queryString,
+			method : "get",
+			resData : dltPCData,
+			success : "scwin.searchCyclePCCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 생산/소비 데이터 조회 콜백
+	 */
+	scwin.searchCyclePCCallBack = function(res) {
+		// 전주기 현황 생산 데이터 설정
+		scwin.setRecyclePrdctnData();
+		// 전주기 현황 소비 데이터 설정
+		scwin.setRecycleCnstnData();
+	};
+
+	/**
+	* 소비, 소비정산 차트 설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerCnstn = function(id) {
+		var cnstnChartData = dltCnstnList.getAllJSON();
+		var chartList = [];
+		var elcpwstnClsNm = {
+			"itkpl" : "취수장",
+			"prnplc" : "가압장",
+			"fltplt" : "정수장",
+			"buld" : "건물",
+			"trnsp" : "수송",
+			"dam" : "댐시설",
+			"etc" : "기타"
+		}
+
+		Object.keys(scwin.initData.cnstnDisplayData).forEach(source => {
+			var data = cnstnChartData.find(obj => obj.cmmnCdNm.toLowerCase() == source.toLowerCase());
+			if (data) {
+				chartList.push({
+					"name" : elcpwstnClsNm[data.cmmnCdNm],
+					"cnstn" : data.cnstnVu,
+					"cnstnExcclc" : data.cnstnExcclcVu
+				});
+			}
+		});
+
+		var maxCData = chartList.reduce((max, obj) => Math.max(max, obj.cnstn), 0);
+		var maxCcData = chartList.reduce((max, obj) => Math.max(max, obj.cnstnExcclc), 0);
+		var minCData = chartList.reduce((min, obj) => Math.min(min, obj.cnstn), 0);
+		var minCcData = chartList.reduce((min, obj) => Math.min(min, obj.cnstnExcclc), 0);
+		var cInterval = Math.ceil((maxCData / scwin.initData.chart.cnstnIntervalCount) / scwin.initData.chart.cnstnUnit) * scwin.initData.chart.cnstnUnit;
+		var ccInterval = Math.ceil((maxCcData / scwin.initData.chart.cnstnIntervalCount) / 10) * 10;
+		var sumCData = new Intl.NumberFormat("ko-KR").format(chartList.reduce((sum, obj) => sum + Number(obj.cnstn), 0));
+		var sumCcData = new Intl.NumberFormat("ko-KR").format(chartList.reduce((sum, obj) => sum + Number(obj.cnstnExcclc), 0));
+		var titleText = ecsLib.dsplFrmt(sumCData, 2)
+			+ ' &lt;span style=&quot;font-size:0.5em;&quot;&gt;MWh&lt;/span&gt;'
+			+ '&amp;ensp;&lt;span style=&quot;color:#AFAFAF;font-weight:normal;&quot;&gt;|&lt;/span&gt;&amp;ensp;'
+			+ '&lt;span style=&quot;color:#C5385A;&quot;&gt;'
+			+ ecsLib.dsplFrmt(sumCcData, 2)
+			+ ' &lt;span style=&quot;font-size:0.5em;&quot;&gt;백만&lt;/span&gt;'
+			+ '&lt;/span&gt;';
+		var cMinimum = "";
+		if (minCData < 0) {
+			cMinimum = `minimum="${minCData}"`;
+		}
+		var ccMinimum = "";
+		if (minCcData < 0) {
+			ccMinimum = `minimum="${minCcData}"`;
+		}
+
+		var layoutStr = '<rMateChart backgroundColor="" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Caption text="' + titleText + '" textAlign="right" fontSize="0.87rem" fontWeight="bold" color="#FD9EA6"'
+			+ '			borderStyle="solid" borderColor="#FD9EA6" borderTop="0" borderRight="0" borderBottom="1" borderLeft="0" marginTop="2%" />'
+			+ '		<Legend position="center" vAlign="left" hAlign="top" verticalGap="2" border="0" background="transparent" marginTop="-4%" />'
+			+ '	</Options>'
+			+ '	<Column3DChart showDataTips="true" columnWidthRatio="0.65" type="clustered" maxColumnWidth="25" dataTipDisplayMode="axis" itemClickJsFunction="' + $p.id + 'scwin.chartItemClickHandler">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="name" />'
+			+ '		</horizontalAxis>'
+			+ '		<horizontalAxisRenderers>'
+			+ '			<Axis3DRenderer axis="{hAxis}" visible="true" textAlign="right" canDropLabels="false" />'
+			+ '		</horizontalAxisRenderers>'
+			+ '		<verticalAxis>'
+			+ '		</verticalAxis>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis3DRenderer axis="{vAxisL}" visible="true" placement="left" verticalAxisTitleAlignment="top" titleGap="0" canDropLabels="false" showLine="false" />'
+			+ '			<Axis3DRenderer axis="{vAxisR}" visible="true" placement="right" verticalAxisTitleAlignment="top" titleGap="0" canDropLabels="false" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '		<series>'
+			+ '			<Column3DSeries color="#222222" font-weight="bold" yField="cnstn" displayName="전력 소비량" halfWidthOffset="3">'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxisL" interval="' + cInterval + '" ' + cMinimum + ' labelJsFunction="' + $p.id + 'scwin.prdctnLinearLabelHandler" title="MWh" />'
+			+ '				</verticalAxis>'
+			+ '				<fill>'
+			+ '					<SolidColor color="#FD9EA6" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column3DSeries>'
+			+ '			<Column3DSeries color="#222222" font-weight="bold" yField="cnstnExcclc" displayName="소비 정산금" halfWidthOffset="3">'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxisR" interval="' + ccInterval + '" ' + ccMinimum + ' labelJsFunction="' + $p.id + 'scwin.prdctnLinearLabelHandler" title="백만" />'
+			+ '				</verticalAxis>'
+			+ '				<fill>'
+			+ '					<SolidColor color="#C5385A" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column3DSeries>'
+			+ '		</series>'
+			+ '	</Column3DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	};
+
+	//============================================================================================
+	// 전주기 현황
+	//============================================================================================
+	/**
+	 * 전주기 현황 계획 데이터를 조회한다.
+	 */
+	scwin.searchRecyclePData = function() {
+		var strtDt = utilLib.getCurrentDate("yyyy");
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+
+		var option = {
+			action : "ec/pbme/retrieve-p-sttus-basin.do"
+				+ queryString,
+			method : "get",
+			resData : dltCyclePData,
+			success : "scwin.searchRecyclePDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전주기 현황 계획 데이터 조회 콜백
+	 */
+	scwin.searchRecyclePDataCallBack = function() {
+		var cycleData = dltCyclePData.getAllJSON();
+		var inqireDe = utilLib.getCurrentDate("yyyy");
+
+		var planCnt = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "planComptCnt") || 0).inqireIemVu;
+		spnCyclePlanCnt.setLabel(ecsLib.dsplFrmt(planCnt));
+		var planCpcty = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "planComptEqpCpcty") || 0).inqireIemVu;
+		spnCyclePlanCpcty.setLabel(ecsLib.dsplFrmt(planCpcty, 2));
+		var planAmt = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "planComptAmt") || 0).inqireIemVu;
+		spnCyclePlanAmt.setLabel(ecsLib.dsplFrmt(planAmt, 2));
+	};
+
+	/**
+	 * 전주기 현황 건설 데이터를 조회한다.
+	 */
+	scwin.searchRecycleBData = function() {
+		var strtDt = utilLib.getCurrentDate("yyyy");
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+
+		var option = {
+			action : "ec/pbme/retrieve-b-sttus-basin.do"
+				+ queryString,
+			method : "get",
+			resData : dltCycleBData,
+			success : "scwin.searchRecycleBDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전주기 현황 건설 데이터 조회 콜백
+	 */
+	scwin.searchRecycleBDataCallBack = function() {
+		var cycleData = dltCycleBData.getAllJSON();
+		var inqireDe = utilLib.getCurrentDate("yyyy");
+
+		var cnstrcCnt = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "cnstrcComptCnt") || 0).inqireIemVu;
+		spnCycleCnstrcCnt.setLabel(ecsLib.dsplFrmt(cnstrcCnt));
+		var cnstrcCpcty = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "cnstrcComptEqpCpcty") || 0).inqireIemVu;
+		spnCycleCnstrcCpcty.setLabel(ecsLib.dsplFrmt(cnstrcCpcty, 2));
+		var cnstrcAmt = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "cnstrcComptAmt") || 0).inqireIemVu;
+		spnCycleCnstrcAmt.setLabel(ecsLib.dsplFrmt(cnstrcAmt, 2));
+	};
+
+	/**
+	 * 전주기 현황 관리 데이터를 조회한다.
+	 */
+	scwin.searchRecycleMData = function() {
+		var strtDt = utilLib.getCurrentDate("yyyy");
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+
+		var option = {
+			action : "ec/pbme/retrieve-m-sttus-basin.do"
+				+ queryString,
+			method : "get",
+			resData : dltCycleMData,
+			success : "scwin.searchRecycleMDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전주기 현황 관리 데이터 조회 콜백
+	 */
+	scwin.searchRecycleMDataCallBack = function() {
+		var cycleData = dltCycleMData.getAllJSON();
+		var inqireDe = utilLib.getCurrentDate("yyyy");
+
+		var mngReprMntnc = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "mngReprMntnc") || 0).inqireIemVu;
+		spnCycleMngReprMntnc.setLabel(ecsLib.dsplFrmt(mngReprMntnc));
+		var mngRemt = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "mngRemt") || 0).inqireIemVu;
+		spnCycleMngRemt.setLabel(ecsLib.dsplFrmt(mngRemt));
+		var mngChckMntnc = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "mngChckMntnc") || 0).inqireIemVu;
+		spnCycleMngChckMntnc.setLabel(ecsLib.dsplFrmt(mngChckMntnc));
+	};
+
+	/**
+	 * 전주기 현황 폐기 데이터를 조회한다.
+	 */
+	scwin.searchRecycleEData = function() {
+		var strtDt = utilLib.getCurrentDate("yyyy");
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+
+		var option = {
+			action : "ec/pbme/retrieve-e-sttus-basin.do"
+				+ queryString,
+			method : "get",
+			resData : dltCycleEData,
+			success : "scwin.searchRecycleEDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전주기 현황 폐기 데이터 조회 콜백
+	 */
+	scwin.searchRecycleEDataCallBack = function() {
+		var cycleData = dltCycleEData.getAllJSON();
+		var inqireDe = utilLib.getCurrentDate("yyyy");
+
+		var dsuseCnt = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "dsuseComptCnt") || 0).inqireIemVu;
+		spnCycleDsuseCnt.setLabel(ecsLib.dsplFrmt(dsuseCnt));
+		var dsuseCpcty = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "dsuseComptEqpCpcty") || 0).inqireIemVu;
+		spnCycleDsuseCpcty.setLabel(ecsLib.dsplFrmt(dsuseCpcty, 2));
+		var dsuseAmt = (cycleData.find(obj => obj.inqireDe == inqireDe && obj.iemDivId == "dsuseComptAmt") || 0).inqireIemVu;
+		spnCycleDsuseAmt.setLabel(ecsLib.dsplFrmt(dsuseAmt, 2));
+	};
+
+	/**
+	 * 전주기 현황 생산 데이터를 설정한다.
+	 */
+	scwin.setRecyclePrdctnData = function() {
+		var prdctnData = dltPCData.getAllJSON();
+		var dData = (prdctnData.find(obj => obj.iemDivId == "dePrdctn") || 0).inqireIemVu;
+		var mData = (prdctnData.reduce((sum, obj) => obj.inqireDe.substr(0, 6) == utilLib.addMonth(utilLib.getCurrentDate("yyyyMM"), -1) && obj.iemDivId == "mtPrdctn" && obj.inqireIemVu ? sum + obj.inqireIemVu : sum, 0) || 0);
+		var pData = (prdctnData.find(obj => obj.inqireDe.substr(0, 4) == utilLib.getCurrentDate("yyyy") && obj.iemDivId == "yyPrdctn") || 0).inqireIemVu;
+
+		spnCycleDePrdctn.setLabel(ecsLib.dsplZeroFrmt(dData, 2));
+		spnCycleMtPrdctn.setLabel(ecsLib.dsplZeroFrmt(mData, 2));
+		spnCycleYyPrdctn.setLabel(ecsLib.dsplZeroFrmt(pData, 2));
+	};
+
+	/**
+	 * 전주기 현황 소비 데이터를 설정한다.
+	 */
+	scwin.setRecycleCnstnData = function() {
+		var cnstnData = dltPCData.getAllJSON();
+		var dData = (cnstnData.find(obj => obj.iemDivId == "deCnstn") || 0).inqireIemVu;
+		var mData = (cnstnData.reduce((sum, obj) => obj.inqireDe.substr(0, 6) == utilLib.addMonth(utilLib.getCurrentDate("yyyyMM"), -1) && obj.iemDivId == "mtCnstn" && obj.inqireIemVu ? sum + obj.inqireIemVu : sum, 0) || 0);
+		var cData = (cnstnData.find(obj => obj.inqireDe.substr(0, 4) == utilLib.getCurrentDate("yyyy") && obj.iemDivId == "yyCnstn") || 0).inqireIemVu;
+
+		spnCycleDeCnstn.setLabel(ecsLib.dsplZeroFrmt(dData, 2));
+		spnCycleMtCnstn.setLabel(ecsLib.dsplZeroFrmt(mData, 2));
+		spnCycleYyCnstn.setLabel(ecsLib.dsplZeroFrmt(cData, 2));
+	};
+
+	/**
+	 * 전주기 현황 정산-발전수익 데이터를 조회한다.
+	 */
+	scwin.searchElyrsErnData = function() {
+		var strtDt = utilLib.getCurrentDate("yyyy");
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+
+		var option = {
+			action : "ec/cl/retrieve-prdctn-excclc.do"
+				+ queryString,
+			method : "get",
+			resData : dltElyrsErnData,
+			success : "scwin.searchElyrsErnDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전주기 현황 정산-발전수익 데이터 조회 콜백
+	 */
+	scwin.searchElyrsErnDataCallBack = function() {
+		var elyrsErnData = dltElyrsErnData.getAllJSON();
+		spnCycleElyrsErn.setLabel(ecsLib.dsplFrmt((elyrsErnData.find(obj => obj.inqireDe == utilLib.getCurrentDate("yyyy") && obj.iemDivId == "total") || 0).inqireIemVu, 2));
+	};
+
+	/**
+	 * 전주기 현황 정산-기타수익 데이터를 조회한다.
+	 */
+	scwin.searchEtcErnData = function() {
+		var strtDt = utilLib.getCurrentDate("yyyy");
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+
+		var option = {
+			action : "ec/cl/retrieve-etc-excclc.do"
+				+ queryString,
+			method : "get",
+			resData : dltEtcErnData,
+			success : "scwin.searchEtcErnDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전주기 현황 정산-기타수익 데이터 조회 콜백
+	 */
+	scwin.searchEtcErnDataCallBack = function() {
+		var etcErnData = dltEtcErnData.getAllJSON();
+		spnCycleEtcErn.setLabel(ecsLib.dsplFrmt((etcErnData.find(obj => obj.inqireDe == utilLib.getCurrentDate("yyyy") && obj.iemDivId == "total") || 0).inqireIemVu, 2));
+	};
+
+	/**
+	 * 전주기 현황 정산-소비정산 데이터를 조회한다.
+	 */
+	scwin.searchCnstnExcclcData = function() {
+		var strtDt = utilLib.getCurrentDate("yyyy");
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+
+		var option = {
+			action : "ec/cl/retrieve-cnstn-excclc.do"
+				+ queryString,
+			method : "get",
+			resData : dltCnstnExcclcData,
+			success : "scwin.searchCnstnExcclcDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전주기 현황 정산-소비정산 데이터 조회 콜백
+	 */
+	scwin.searchCnstnExcclcDataCallBack = function() {
+		var cnstnExcclcData = dltCnstnExcclcData.getAllJSON();
+		spnCycleCnstnExcclc.setLabel(ecsLib.dsplFrmt((cnstnExcclcData.find(obj => obj.inqireDe == utilLib.getCurrentDate("yyyy") && obj.iemDivId == "total") || 0).inqireIemVu, 2));
+	};
+
+	/**
+	 * 전주기 현황 타이틀 클릭시 이동 이벤트 등록
+	 */
+	scwin.setCycleLabelClickEvent = function() {
+		ecsLib.setMenuClickEvent("#" + $p.getFrameId() + " .main-detail-con-box .main-detail-cycle .main-detail-box-con .main-detail-square",
+			"main-detail-square-",
+			"ECSEC000000",
+			$p.main().wdcMain_subWindow0.frame.scope.scwin.initData.titleClickEvent,
+			{
+				"basin" : $p.getParameter("param").basin
+			}
+		);
+	};
+
+	/**
+	 * 그리드 소수점 둘째자리까지 표시 한다.
+	 * @param value
+	 * @return
+	 */
+	scwin.dsplZeroFrmt = function(value) {
+		return ecsLib.dsplZeroFrmt(value, 2);
+	};
+
+	/**
+	 * 그리드 합계 소수점 둘째자리까지 표시 한다.
+	 * @param value
+	 * @return
+	 */
+	scwin.dsplFrmt = function(value) {
+		return ecsLib.dsplFrmt(value, 2);
+	};
+
+	//============================================================================================
+	//유역별 지도
+	//============================================================================================
+	/**
+	 * 탄소중립율 데이터를 조회한다.
+	 */
+	scwin.searchCbnNtrltData = function() {
+		var endDt = utilLib.getCurrentDate("yyyyMM");
+		var strtDt = endDt.substr(0, 4) + "01";
+
+		var basin = scwin.initData.basinCode[$p.getParameter("param").basin];
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=` + basin;
+
+		var option = {
+			action : "ec/pc/retrieve-cbn-ntrlt.do"
+				+ queryString,
+			method : "get",
+			resData : dltCbnNtrltData,
+			success : "scwin.searchCbnNtrltDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 탄소중립율 데이터 조회 콜백
+	 */
+	scwin.searchCbnNtrltDataCallBack = function() {
+		var nowYear = utilLib.getCurrentDate("yyyy");
+		var cbnNtrltData = dltCbnNtrltData.getAllJSON();
+
+		// 지도 탄소중립율 라벨 값 설정
+		spnCbnNtrltData.setLabel(ecsLib.dsplFrmt((cbnNtrltData.find(obj => obj.inqireDe == nowYear && obj.iemDivId == "acmtrt") || 0).inqireIemVu, 0));
+	};
+
+	/**
+	 * 유역별 지도 라벨 클릭 이벤트
+	 */
+	scwin.setBasinMapLabelClickEvent = function() {
+		var basinMapLabel = document.querySelector(`#${$p.getFrameId()} #marker${$p.getParameter("param").basin || "H"}`).childNodes;
+
+		// 초기 유역본부 선택_240305
+		var basinMapMarkerheadOffice = document.querySelector(`#${$p.getFrameId()} .detail-map-marker-${($p.getParameter("param").basin || "H").toLowerCase()} .main-detail-head_office`);
+
+		basinMapMarkerheadOffice.children[0].classList.add("main-detail-basin-map-circle");
+		basinMapMarkerheadOffice.children[1].classList.add("main-detail-basin-map-label");
+
+		for (var idx = 0; idx < basinMapLabel.length; idx++) {
+			// 위탁사업장일 때
+			if (basinMapLabel[idx].classList.contains("main-detail-csmt_bplc")) {
+				continue;
+			}
+			// 마우스 포인터 설정
+			basinMapLabel[idx].classList.add("cursor-pointer");
+
+			// 유역별 지도 라벨 클릭에 따른 class 추가,삭제 이벤트
+			basinMapLabel[idx].addEventListener("click", function(e) {
+				if (this.style.opacity) {
+					return;
+				}
+				var basinMapLabel = document.getElementById(`marker${$p.getParameter("param").basin}`).childNodes;
+				// 초기 유역본부 선택 해제_240305
+				var basinMapMarkerheadOffice = document.querySelector(`#${$p.getFrameId()} .detail-map-marker-${($p.getParameter("param").basin || "H").toLowerCase()} .main-detail-head_office`);
+
+				basinMapMarkerheadOffice.children[0].classList.remove("main-detail-basin-map-circle");
+				basinMapMarkerheadOffice.children[1].classList.remove("main-detail-basin-map-label");
+
+				for (var idx1 = 0; idx1 < basinMapLabel.length; idx1++) {
+					basinMapLabel[idx1].children[0].classList.remove("main-detail-basin-map-circle");
+					basinMapLabel[idx1].children[1].classList.remove("main-detail-basin-map-label");
+
+					if (basinMapLabel[idx1].childElementCount > 2) {
+						basinMapLabel[idx1].children[0].classList.remove("main-detail-basin-map-label");
+						basinMapLabel[idx1].children[1].classList.remove("main-detail-basin-map-square");
+						basinMapLabel[idx1].children[2].classList.remove("main-detail-basin-map-label");
+					}
+				}
+
+				if (this.childElementCount > 2) {
+					this.children[0].classList.add("main-detail-basin-map-label");
+					this.children[1].classList.add("main-detail-basin-map-square");
+					this.children[2].classList.add("main-detail-basin-map-label");
+				} else {
+					this.children[0].classList.add("main-detail-basin-map-circle");
+					this.children[1].classList.add("main-detail-basin-map-label");
+				}
+
+				var brffcLabel = this.textContent;
+				// 그리드 유역 이름 설정
+				spnBrffcNm.setLabel(brffcLabel);
+				// 조건별 그리드 유역 이름 설정_231113
+				if (brffcLabel == "한강유역본부, 경기서남권지사, 수도권지역협력단") {
+					spnBrffcNm.setLabel("한강유역");
+				} else if (brffcLabel == "금강유역본부, 전북지역협력단") {
+					spnBrffcNm.setLabel("금강유역");
+				} else if (brffcLabel == "낙동강유역본부, 경북지역협력단") {
+					spnBrffcNm.setLabel("낙동강유역");
+				} else if (brffcLabel == "영섬유역본부, 전남지역협력단") {
+					spnBrffcNm.setLabel("영섬유역");
+				} else if (brffcLabel == "본사") {
+					spnBrffcNm.setLabel("K-water 전체");
+				}
+
+				// 사이클 데이터 조회
+				scwin.searchDatas();
+				// 부서 운영현황 생산, 소비 데이터 조회
+				scwin.searchBasinDeptPCSttusData(this.id);
+			});
+		}
+
+		var basinMapLegendMarkerGroup = document.querySelectorAll(`#${$p.getFrameId()} .detail-map-legend-marker-group-${($p.getParameter("param").basin || "H").toLowerCase()} .detail-map-legend-marker`);
+		for (legendMarker of basinMapLegendMarkerGroup) {
+			legendMarker.classList.add("cursor-pointer");
+
+			legendMarker.addEventListener("click", function(e) {
+				var isSameMarker = false;
+				if (this.querySelector("text").getAttribute("font-size") == "11.5") {
+					isSameMarker = true;
+				}
+				if (isSameMarker) {
+					var markerGroupFnc = function(emt) {
+						var emtText = emt.querySelector("text");
+						if (!emtText) {
+							return;
+						}
+						emtText.style.fontWeight = "";
+						emtText.style.fill = "";
+						emtText.setAttribute("font-size", "10.5");
+					};
+				} else {
+					var markerGroupFnc = function(emt) {
+						var emtText = emt.querySelector("text");
+						if (!emtText) {
+							return;
+						}
+						var targetEmt = e.target;
+						while(targetEmt.tagName.toLowerCase() != "g") {
+							targetEmt = targetEmt.parentElement;
+							if (targetEmt.tagName.toLowerCase() == "body") {
+								break;
+							}
+						}
+						if (emt != targetEmt) {
+							emtText.style.fontWeight = "";
+							emtText.style.fill = "";
+							emtText.setAttribute("font-size", "10.5");
+						} else {
+							emtText.style.fontWeight = "bold";
+							emtText.style.fill = "blue";
+							emtText.setAttribute("font-size", "11.5");
+						}
+					};
+				}
+				basinMapLegendMarkerGroup.forEach(markerGroupFnc);
+
+				var classNm = [...this.classList].find(item => item.startsWith("detail-map-legend-marker-"));
+				var markers = document.querySelectorAll(`#${$p.getFrameId()} .detail-map-marker-${($p.getParameter("param").basin || "H").toLowerCase()} > g`);
+				for (marker of markers) {
+					if (isSameMarker) {
+						marker.style.opacity = "";
+						if (!marker.classList.contains("main-detail-csmt_bplc")) {
+							marker.classList.add("cursor-pointer");
+						}
+					} else {
+						if (marker.classList.contains(`main-detail-${classNm.split("-").slice(-1)[0]}`)) {
+							marker.style.opacity = "";
+							if (!marker.classList.contains("main-detail-csmt_bplc")) {
+								marker.classList.add("cursor-pointer");
+							}
+						} else {
+							marker.style.transition = "250ms all ease";
+							marker.style.opacity = "0.05";
+							marker.classList.remove("cursor-pointer");
+						}
+					}
+				}
+			});
+		}
+	};
+
+	/**
+	 * 부서 운영현황 생산/소비 그리드, 차트 데이터 조회
+	 */
+	scwin.searchBasinDeptPCSttusData = function(emtId) {
+		var strtDt = utilLib.getCurrentDate("yyyy");
+		var endDt = utilLib.getCurrentDate("yyyy");
+		var basinCd = scwin.initData.basinCode[$p.getParameter("param").basin] || "ALL";
+
+		var dept = emtId.split("_").slice(-1)[0];
+
+		var markerNms = Object.assign({}, scwin.initData.basinCode);
+		delete markerNms["ALL"];
+		if (!dept || !Number(dept)) {
+			if (dept.toUpperCase() == "ALL") {
+				basinCd = "ALL";
+				dept = "";
+			} else if (!dept || Object.keys(markerNms).includes(dept)) {
+				dept = "";
+			}
+		}
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basinCd}`;
+		queryString += `&ecsChrgDeptId=${dept}`;
+
+		var option = {
+			action : "ec/main/retrieve-basin-dept-prdctn-sttus.do"
+				+ queryString,
+			method : "get",
+			resData : dltPrdctnList,
+			success : "scwin.searchBasinDeptPrdctnSttusCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+
+		var option = {
+			action : "ec/main/retrieve-basin-dept-cnstn-sttus.do"
+				+ queryString,
+			method : "get",
+			resData : dltCnstnList,
+			success : "scwin.searchBasinDeptCnstnSttusCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.searchBasinDeptPrdctnSttusCallBack = function() {
+		var dltPrdctn = dltPrdctnList.getAllJSON();
+		spnPrdctnNum.setLabel(dltPrdctn.length);
+		// 차트 데이터 넣기
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerPrdctn";
+		rMateChartH5.create($p.id + "chartPrdctn", grpMainChartPrdctn.getID(), chartVars, "98%", "99%");
+	};
+
+	scwin.searchBasinDeptCnstnSttusCallBack = function() {
+		var dltCnstn = dltCnstnList.getAllJSON();
+		spnCnstnNum.setLabel(dltCnstn.length);
+		// 차트 데이터 넣기
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerCnstn";
+		rMateChartH5.create($p.id + "chartCnstn", grpMainChartCnstn.getID(), chartVars, "98%", "99%");
+	};
+	]]></script>
+	</head>
+	<body>
+		<xf:group class="wrap">
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="main-detail-con-box">
+						<xf:group class="main-detail-list-box-title">
+							<xf:group class="main-detail-title">
+								<w2:span label="유역별 종합현황&amp;ensp;"></w2:span>
+								<w2:span id="spnBasinTitle" class="basin-title"></w2:span>
+								<w2:span class="main-detail-title-info" label="&amp;emsp;* 당해년도 연누계 실적"></w2:span>
+							</xf:group>
+						</xf:group>
+						<xf:group class="main-detail-list-box main-detail-list-box-top">
+							<xf:group class="main-detail-box main-detail-cycle">
+								<xf:group class="main-detail-box-con">
+									<xf:group class="main-detail-square main-detail-square-plan">
+										<xf:group class="main-detail-square-top main-detail-square-top-plan main-detail-box-title-p">계&amp;ensp;획</xf:group>
+										<xf:group class="main-detail-square-con main-detail-square-con-plan" tagname="table">
+											<xf:group tagname="colgroup">
+												<xf:group class="wd-35" tagname="col"></xf:group>
+												<xf:group class="wd-55" tagname="col"></xf:group>
+												<xf:group class="wd-10" tagname="col"></xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="계획완료 건수">
+												<xf:group tagname="td">건수</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCyclePlanCnt" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">건</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="계획완료 용량">
+												<xf:group tagname="td">용량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCyclePlanCpcty" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">MW</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="계획완료 금액">
+												<xf:group tagname="td">금액</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCyclePlanAmt" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">억원</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="main-detail-box-arrow none-drag">
+									<w2:span label="&amp;gt;"></w2:span>
+								</xf:group>
+								<xf:group class="main-detail-box-con">
+									<xf:group class="main-detail-square main-detail-square-plan">
+										<xf:group class="main-detail-square-top main-detail-square-top-cnstrc main-detail-box-title-b">건&amp;ensp;설</xf:group>
+										<xf:group class="main-detail-square-con main-detail-square-con-plan" tagname="table">
+											<xf:group tagname="colgroup">
+												<xf:group class="wd-35" tagname="col"></xf:group>
+												<xf:group class="wd-55" tagname="col"></xf:group>
+												<xf:group class="wd-10" tagname="col"></xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="건설완료 건수">
+												<xf:group tagname="td">건수</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleCnstrcCnt" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">건</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="건설완료 용량">
+												<xf:group tagname="td">용량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleCnstrcCpcty" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">MW</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="건설완료 금액">
+												<xf:group tagname="td">금액</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleCnstrcAmt" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">억원</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="main-detail-box-arrow none-drag">
+									<w2:span label="&amp;gt;"></w2:span>
+								</xf:group>
+								<xf:group class="main-detail-box-con">
+									<xf:group class="main-detail-square main-detail-square-prdctn">
+										<xf:group class="main-detail-square-top main-detail-square-top-prdctn main-detail-box-title-pn">생&amp;ensp;산</xf:group>
+										<xf:group class="main-detail-square-con main-detail-square-con-prdctn" tagname="table">
+											<xf:group tagname="colgroup">
+												<xf:group class="wd-45" tagname="col" style=""></xf:group>
+												<xf:group class="wd-45" tagname="col"></xf:group>
+												<xf:group class="wd-10" tagname="col" style=""></xf:group>
+											</xf:group>
+											<xf:group tagname="tr" style="">
+												<xf:group tagname="td">전일&amp;nbsp;생산량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleDePrdctn" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">GWh</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" style="">
+												<xf:group tagname="td">전월&amp;nbsp;생산량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleMtPrdctn" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">GWh</xf:group>
+											</xf:group>
+											<xf:group tagname="tr">
+												<xf:group tagname="td">연 생산량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleYyPrdctn" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">GWh</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="main-detail-box-arrow none-drag">
+									<w2:span label="&amp;gt;"></w2:span>
+								</xf:group>
+								<xf:group class="main-detail-box-con">
+									<xf:group class="main-detail-square main-detail-square-cnstn">
+										<xf:group class="main-detail-square-top main-detail-square-top-cnstn main-detail-box-title-cn">소&amp;ensp;비</xf:group>
+										<xf:group class="main-detail-square-con main-detail-square-con-cnstn" tagname="table">
+											<xf:group tagname="colgroup">
+												<xf:group class="wd-45" tagname="col" style=""></xf:group>
+												<xf:group class="wd-45" tagname="col"></xf:group>
+												<xf:group class="wd-10" tagname="col" style=""></xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="전일 원격검침 한전 파워플래너 소비량">
+												<xf:group tagname="td">전일&amp;nbsp;소비량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleDeCnstn" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">GWh</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="전월 한전 고지서 기준 소비량 누계">
+												<xf:group tagname="td">전월&amp;nbsp;소비량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleMtCnstn" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">GWh</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="금년 한전 고지서 기준 소비량 누계">
+												<xf:group tagname="td">연 소비량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleYyCnstn" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">GWh</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="main-detail-box-arrow none-drag">
+									<w2:span label="&amp;gt;"></w2:span>
+								</xf:group>
+								<xf:group class="main-detail-box-con">
+									<xf:group class="main-detail-square main-detail-square-mng">
+										<xf:group class="main-detail-square-top main-detail-square-top-mng main-detail-box-title-m">관&amp;ensp;리</xf:group>
+										<xf:group class="main-detail-square-con main-detail-square-con-mng" tagname="table">
+											<xf:group tagname="colgroup">
+												<xf:group class="wd-45" tagname="col"></xf:group>
+												<xf:group class="wd-45" tagname="col"></xf:group>
+												<xf:group class="wd-10" tagname="col"></xf:group>
+											</xf:group>
+											<xf:group tagname="tr">
+												<xf:group tagname="td">수선유지</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleMngReprMntnc" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">건</xf:group>
+											</xf:group>
+											<xf:group tagname="tr">
+												<xf:group tagname="td">개&amp;ensp;대&amp;ensp;체</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleMngRemt" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">건</xf:group>
+											</xf:group>
+											<xf:group tagname="tr">
+												<xf:group tagname="td">점검정비</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleMngChckMntnc" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">건</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="main-detail-box-arrow none-drag">
+									<w2:span label="&amp;gt;"></w2:span>
+								</xf:group>
+								<xf:group class="main-detail-box-con">
+									<xf:group class="main-detail-square main-detail-square-excclc">
+										<xf:group class="main-detail-square-top main-detail-square-top-excclc main-detail-box-title-cl">정&amp;ensp;산</xf:group>
+										<xf:group class="main-detail-square-con main-detail-square-con-excclc" tagname="table">
+											<xf:group tagname="colgroup">
+												<xf:group class="wd-45" tagname="col"></xf:group>
+												<xf:group class="wd-45" tagname="col"></xf:group>
+												<xf:group class="wd-10" tagname="col"></xf:group>
+											</xf:group>
+											<xf:group tagname="tr">
+												<xf:group tagname="td">수익 정산</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleElyrsErn" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">억원</xf:group>
+											</xf:group>
+											<xf:group tagname="tr">
+												<xf:group tagname="td">기타 수익</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleEtcErn" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">억원</xf:group>
+											</xf:group>
+											<xf:group tagname="tr">
+												<xf:group tagname="td">소비 정산</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleCnstnExcclc" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">억원</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="main-detail-box-arrow none-drag">
+									<w2:span label="&amp;gt;"></w2:span>
+								</xf:group>
+								<xf:group class="main-detail-box-con">
+									<xf:group class="main-detail-square main-detail-square-dsuse">
+										<xf:group class="main-detail-square-top main-detail-square-top-dsuse main-detail-box-title-e">폐&amp;ensp;기</xf:group>
+										<xf:group class="main-detail-square-con main-detail-square-con-dsuse" tagname="table">
+											<xf:group tagname="colgroup">
+												<xf:group class="wd-35" tagname="col"></xf:group>
+												<xf:group class="wd-55" tagname="col"></xf:group>
+												<xf:group class="wd-10" tagname="col"></xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="폐기완료 건수">
+												<xf:group tagname="td">건수</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleDsuseCnt" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">건</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="폐기완료 용량">
+												<xf:group tagname="td">용량</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleDsuseCpcty" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">MW</xf:group>
+											</xf:group>
+											<xf:group tagname="tr" toolTip="폐기완료 금액">
+												<xf:group tagname="td">금액</xf:group>
+												<xf:group tagname="td">
+													<w2:span id="spnCycleDsuseAmt" label="-"></w2:span>
+												</xf:group>
+												<xf:group tagname="td">억원</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="main-detail-list-box main-detail-list-box-bottom">
+							<xf:group class="main-detail-box main-detail-map">
+								<xf:group class="main-detail-box-title">
+									<w2:span label="유역별 지도"></w2:span>
+								</xf:group>
+								<!--
+								<xf:group class="main-detail-map-cbn-ntrlt">
+									<w2:span label="탄소중립율"></w2:span>
+									<w2:span id="spnCbnNtrltData" class="main-detail-map-cbn-ntrlt-data" label="-"></w2:span>
+									<w2:span label=" %"></w2:span>
+								</xf:group>
+								-->
+								<xf:group id="grpMapBox" class="main-detail-box-con none-drag">
+									<w2:detail_map_h_basin id="detailMapH" class="hide"></w2:detail_map_h_basin>
+									<w2:detail_map_g_basin id="detailMapG" class="hide"></w2:detail_map_g_basin>
+									<w2:detail_map_y_basin id="detailMapY" class="hide"></w2:detail_map_y_basin>
+									<w2:detail_map_n_basin id="detailMapN" class="hide"></w2:detail_map_n_basin>
+								</xf:group>
+							</xf:group>
+							<xf:group class="main-detail-box main-detail-chart">
+								<xf:group id="grpMainGrid" class="main-detail-box-con main-detail-grid">
+									<xf:group class="main-detail-box-title">
+										<w2:span id="spnBrffcNm" label="유역 "></w2:span>
+										<w2:span label=" 운영현황"></w2:span>
+									</xf:group>
+									<xf:group class="layout-float">
+										<xf:group class="float-con left-area cw10">
+											<xf:group class="con-box">
+												<xf:group class="title-group">
+													<xf:group tagname="h3">
+														<w2:span label="생산"></w2:span>
+														<w2:span id="spnPrdctnNum" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group class="box">
+													<w2:gridView id="grdPrdctn" class="main-detail-grd" dataList="dltPrdctnList" defaultCellHeight="35" visibleRowNum="5"
+														evenRowBackgroundColor="#FFFFFF" rowMouseOverColor="#FFFFFF" rowMouseOver="true" resize="false" readOnly="true" style="min-height:15.5rem;" focusMode="row">
+														<w2:header>
+															<w2:row>
+																<w2:column id="hCmmnCdNm" width="70" inputType="text" value="구분"></w2:column>
+																<w2:column id="hPrdctnVu" width="70" inputType="text" value="전력 생산량(MWh)"></w2:column>
+																<w2:column id="hPrdctnExcclcVu" width="70" inputType="text" value="수익금(백만)"></w2:column>
+															</w2:row>
+														</w2:header>
+														<w2:gBody>
+															<w2:row>
+																<w2:column id="cmmnCdNm" width="70" inputType="text"></w2:column>
+																<w2:column id="prdctnVu" class="grd-right" width="70" inputType="text" displayFormatter="scwin.dsplZeroFrmt" textAlign="right"></w2:column>
+																<w2:column id="prdctnExcclcVu" class="grd-right" width="70" inputType="text" displayFormatter="scwin.dsplZeroFrmt" textAlign="right"></w2:column>
+															</w2:row>
+														</w2:gBody>
+														<w2:footer>
+															<w2:row>
+																<w2:column id="stCmmnCdNm" width="70" inputType="text" value="합계"></w2:column>
+																<w2:column id="stPrdctnVu" class="grd-right" width="70" inputType="expression" expression="sum('prdctnVu')" displayFormatter="scwin.dsplFrmt" textAlign="right"></w2:column>
+																<w2:column id="stPrdctnExcclcVu" class="grd-right" width="70" inputType="expression" expression="sum('prdctnExcclcVu')" displayFormatter="scwin.dsplFrmt" textAlign="right"></w2:column>
+															</w2:row>
+														</w2:footer>
+													</w2:gridView>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="float-con right-area cw10">
+											<xf:group class="con-box">
+												<xf:group class="title-group">
+													<xf:group tagname="h3">
+														<w2:span label="소비"></w2:span>
+														<w2:span id="spnCnstnNum" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+													</xf:group>
+												</xf:group>
+												<xf:group class="box">
+													<w2:gridView id="grdCnstn" class="main-detail-grd" dataList="dltCnstnList" defaultCellHeight="35" visibleRowNum="5"
+														evenRowBackgroundColor="#FFFFFF" rowMouseOverColor="#FFFFFF" rowMouseOver="true" resize="false" readOnly="true" style="min-height:15.5rem;" focusMode="row">
+														<w2:header>
+															<w2:row>
+																<w2:column id="hCmmnCdKorNm" width="70" inputType="text" value="구분"></w2:column>
+																<w2:column id="hCnstnVu" width="70" inputType="text" value="전력 소비량(MWh)"></w2:column>
+																<w2:column id="hCnstnExcclcVu" width="70" inputType="text" value="정산금(백만)"></w2:column>
+															</w2:row>
+														</w2:header>
+														<w2:gBody>
+															<w2:row>
+																<w2:column id="cmmnCdKorNm" width="70" inputType="text"></w2:column>
+																<w2:column id="cnstnVu" class="grd-right" width="70" inputType="text" displayFormatter="scwin.dsplZeroFrmt" textAlign="right"></w2:column>
+																<w2:column id="cnstnExcclcVu" class="grd-right" width="70" inputType="text" displayFormatter="scwin.dsplZeroFrmt" textAlign="right"></w2:column>
+															</w2:row>
+														</w2:gBody>
+														<w2:footer>
+															<w2:row>
+																<w2:column id="stCmmnCdKorNm" width="70" inputType="text" value="합계"></w2:column>
+																<w2:column id="stCnstnVu" class="grd-right" width="70" inputType="expression" expression="sum('cnstnVu')" displayFormatter="scwin.dsplFrmt" textAlign="right"></w2:column>
+																<w2:column id="stCnstnExcclcVu" class="grd-right" width="70" inputType="expression" expression="sum('cnstnExcclcVu')" displayFormatter="scwin.dsplFrmt" textAlign="right"></w2:column>
+															</w2:row>
+														</w2:footer>
+													</w2:gridView>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group id="grpMainChartPcc" class="main-detail-box-con main-detail-chart-pcc">
+									<xf:group class="main-detail-box-title">
+										<w2:span label="전력 생산량 / 전력 소비량 및 정산금액"></w2:span>
+									</xf:group>
+									<xf:group id="grpMainChartPrdctn" class="main-detail-chart-pc">
+									</xf:group>
+									<xf:group id="grpMainChartCnstn" class="main-detail-chart-cpc">
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

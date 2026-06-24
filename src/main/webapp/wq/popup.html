@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml'
+	xmlns:ev='http://www.w3.org/2001/xml-events'
+	xmlns:w2='http://www.inswave.com/websquare'
+	xmlns:xf='http://www.w3.org/2002/xforms'>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<title></title>
+<script type="text/javascript">
+	document.domain = "[BASE_DOMAIN]";
+</script>
+<script type="text/javascript" src="javascript.wq?q=/bootloader"></script>
+<!-- commonJs Start -->
+<script type="text/javascript" src="/resources/js/common/common.js"></script>
+<script type="text/javascript" src="/resources/js/common/common_ajax.js"></script>
+<script type="text/javascript" src="/resources/js/common/common_file.js"></script>
+<script type="text/javascript" src="/resources/js/common/common_util.js"></script>
+<!-- commonJs End -->
+<script type="text/javascript" src="/resources/js/ecs/common_ecs.js"></script>
+<!-- OZ Viewer Start -->
+<script type="text/javascript"
+	src="/resources/ozhviewer8/jquery/jquery-2.0.3.min.js"></script>
+<link rel="stylesheet" href="/resources/ozhviewer/ui.dynatree.css"
+	type="text/css" />
+<script type="text/javascript"
+	src="/resources/ozhviewer8/jquery/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="/resources/ozhviewer/jquery/jquery-ui.css"
+	type="text/css" />
+<script type="text/javascript"
+	src="/resources/ozhviewer8/jquery.dynatree.js"></script>
+<script type="text/javascript" src="/resources/ozhviewer8/OZJSViewer.js"></script>
+<!--
+	<script type="text/javascript" src="/resources/ozhviewer/jquery/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="/resources/ozhviewer/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/resources/ozhviewer/jquery.dynatree.js"></script>
+	<script type="text/javascript" src="/resources/ozhviewer/OZJSViewer.js"></script>
+-->
+<script type="text/javascript"
+	src="/resources/exeviewer/WebContent/js/jQuery.XDomainRequest.js"></script>
+<script type="text/javascript"
+	src="/resources/exeviewer/WebContent/js/MaXHRControl.js"></script>
+<script type="text/javascript"
+	src="/resources/exeviewer/WebContent/js/json2.js"></script>
+<script type="text/javascript" src="/resources/exeviewer/ozexe.js"></script>
+<!-- OZ Viewer End -->
+<style type="text/css">
+.footer .btn-group {
+	position: fixed !important;
+}
+
+.wrap .content-area {
+	padding-bottom: 60px !important;
+}
+</style>
+<!-- 공통 자바스크립트 -->
+<!-- 서버반영 체크2 -->
+<script type="text/javascript" language="javascript">
+	function init() {
+		window.focus();
+		var parentobj = opener || parent;
+		var popupInfo;
+		if (parentobj.WebSquare && parentobj.WebSquare._popupInfo) {
+			popupInfo = parentobj.JSON.parse(parentobj.WebSquare._popupInfo);
+		}
+		if (popupInfo) {
+			WebSquare.net._setParameter(popupInfo);
+		}
+		parentobj.WebSquare._popupInfo = "";
+		try {
+			WebSquare.startPopupApplication();
+		} catch (e) {
+			comLib.onWebsquareError(e.message); // 메세지 조회 후 조치가이드 화면 오픈
+		}
+		$(window).resize(function() {
+			winresize();
+		});
+		setTimeout(function() {
+			winresize();
+		}, 200);
+	};
+	window.onload = init; // 아래로 이동
+	// 윈도우사이즈변경 처리
+	winresize = function() {
+		if ($p.top().scwin) {
+			if (typeof $p.top().scwin.fnResize == 'function') {
+				// console.log("execute scwin.fnResize()");
+				$p.top().scwin.fnResize();
+			} else {
+				if ($p.top().$p.$(".w2grid:visible").length == 1) {
+					// 해당 페이지에 그리드가 1개인경우 자동 높이 조절 정의
+					var gridObjCtrl = $p.top().$p.getComponentById($p.top().$p.$(".w2grid:visible").eq(0).attr("id"));
+					gridObjCtrl.setAttribute("visibleRowNum", "");
+					var gridObj = $p.top().$p.$(".w2grid:visible").eq(0);
+					var conbox = gridObj.parents(".content-area,.float-con");
+					var gridHeight = gridObj.outerHeight(true);
+					var bodyobj = $("body");
+					if (bodyobj.length > 0) {
+						var addOffset = 0;
+						addOffset = parseInt(conbox.css("paddingBottom")); // 위아래 여백 제외
+						addOffset = addOffset + parseInt(conbox.css("paddingTop"));
+						// console.log("addOffset : " + addOffset);
+						var etcHeight = conbox.height() - gridHeight; // 컨박스에서 그리드를 제외한 사이즈 
+						// console.log("etcHeight : " + etcHeight);
+						var bodyHeight = bodyobj.outerHeight(true);
+						// console.log("conbox.offset().top : " + conbox.offset().top); // 컨박스 상위
+						gridHeight = bodyHeight - conbox.offset().top - etcHeight - addOffset;
+						if (gridHeight < 0) {
+							return;
+						}
+						// console.log("gridHeight : " + gridHeight);
+						gridObjCtrl.setGridHeight(gridHeight);
+					}
+				}
+			}
+		}
+	};
+</script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,586 @@
+/*전력에너지 전주기 통합시스템_대시보드_정산*/
+@CHARSET "UTF-8";
+@import "dash_common.css";
+
+.dash-con-box-cl {
+	display: flex;
+	justify-content: space-between;
+	align-content: space-between;
+	width: 100%;
+}
+
+.dash-con-box-cl > .dash-list-box-left {
+	width: var(--dash-box-left-width);
+	height: 100%;
+	background: transparent;
+}
+
+.dash-con-box-cl > .dash-list-box-center {
+	width: var(--dash-box-center-width);
+	height: 100%;
+	background: transparent;
+}
+
+.dash-con-box-cl > .dash-list-box-right {
+	width: var(--dash-box-right-width);
+	height: 100%;
+	background: transparent;
+}
+
+.dash-con-box-cl .dash-box {
+	flex-wrap: wrap;
+	background: transparent;
+	box-shadow: 0 0;
+	border-radius: 0;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	max-width: 11.5rem;
+	height: 48.5%;
+	padding: 0.5% 0.3%;
+	text-align: center;
+	clip-path: polygon(0% 1%, 100% 1%, 100% 98.5%, 0% 98.5%);
+	overflow: hidden;
+}
+
+
+/*
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group > li:nth-child(n+1):nth-child(-n+2),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group > li:nth-child(n+8):nth-child(-n+9) {
+	font-size: 1rem;
+	opacity: 0.8;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group > li:nth-child(3),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group > li:nth-child(7) {
+	font-size: 1.15rem;
+	opacity: 0.85;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group > li:nth-child(4),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group > li:nth-child(6) {
+	font-size: 1.3rem;
+	opacity: 0.9;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group > li:nth-child(5) {
+	font-size: 1.5rem;
+	color: var(--dash-belt-menu-color);
+}
+*/
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear']::-webkit-scrollbar,
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin']::-webkit-scrollbar {
+	display: none;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li.dash-belt-text-color,
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li.dash-belt-text-color {
+	color: var(--dash-belt-menu-color);
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'],
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] {
+	position: absolute;
+	top:0;
+	left:0;
+	width: 100%;
+	height: 100%;
+	/* margin-top: -76%; */
+	margin-top: -140%;
+	font-weight: bold;
+	color: var(--dash-box-shadow-color);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-box {
+	display: inline-block;
+	position: absolute;
+	top: 40%;
+	left: 0;
+	width: 100%;
+	height: 19%;
+	border-radius: var(--dash-square-radius);
+	border: 0.3rem solid var(--dash-text-white-color);
+	background: var(--dash-belt-menu-back-color);
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li,
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li {
+	cursor: pointer;
+	width: 80%;
+	height: 7%;
+	margin: 22% 10%;
+	padding: 10% 0%;
+	line-height: 1.75rem;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:first-child,
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(8),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:first-child,
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(8) {
+	font-size: 0.95rem;
+	opacity: 0;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(3),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(7),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(3),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(7) {
+	font-size: 0.95rem;
+	opacity: 0.85;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(4),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(6),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(4),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(6) {
+	font-size: 1.15rem;
+	opacity: 0.9;
+}
+
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(5),
+.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(5) {
+	font-size: 1.3rem;
+	/* color: var(--dash-belt-menu-color); */
+}
+
+@media (max-width : 1730px) {
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'],
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] {
+		/* margin-top: -54%; */
+		margin-top: -125%;
+	}
+
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:first-child,
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(8),
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:first-child,
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(8) {
+		font-size: 0.85rem;
+	}
+
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(3),
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(7)
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(3),
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(7) {
+		font-size: 0.85rem;
+	}
+
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(4),
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(6)
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(4),
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(6) {
+		font-size: 1rem;
+	}
+
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltYear'] > li:nth-child(5),
+	.dash-con-box-cl > .dash-list-box-left > .dash-box > .dash-box-con > .dash-belt-text-group[id$='grpDashBeltBasin'] > li:nth-child(5) {
+		font-size: 1.1rem;
+	}
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con {
+	width: 28%;
+	height: 32.35%;
+	margin-bottom: 1%;
+	box-shadow: 0.15rem 0.15rem 0.3rem 0.15rem var(--dash-box-shadow-color);
+	border-radius: var(--dash-square-radius);
+	background: var(--dash-box-back-color);
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con-middle {
+	width: 40%;
+	height: 32.35%;
+	margin-bottom: 1%;
+	box-shadow: 0.15rem 0.15rem 0.3rem 0.15rem var(--dash-box-shadow-color);
+	border-radius: var(--dash-square-radius);
+	background: var(--dash-box-back-color);
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con:first-child > .dash-box-title {
+	position: relative;
+ 	font-size: 1.0rem;
+	font-weight: bold;
+	text-align: center;
+	padding: 3.7% 0;
+	background-color: var(--dash-box-1-back-color);
+	color: var(--dash-text-white-color);
+	border-radius: 0.4rem 0.4rem 0 0;
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con-middle:nth-child(2)> .dash-box-title {
+	position: relative;
+ 	font-size: 1.0rem;
+	font-weight: bold;
+	text-align: center;
+	padding: 2.6% 0;
+	background-color: var(--dash-box-2-back-color);
+	color: var(--dash-text-white-color);
+	border-radius: 0.4rem 0.4rem 0 0;
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con:nth-child(3) > .dash-box-title {
+	position: relative;
+	font-size: 1.0rem;
+	font-weight: bold;
+	text-align: center;
+	padding: 3.7% 0;
+	background-color: var(--dash-box-3-back-color);
+	color: var(--dash-text-white-color);
+	border-radius: 0.4rem 0.4rem 0 0;
+}
+
+
+.dash-con-box-cl .dash-box-square {
+	width: 100%;
+	height: 80%;
+	display: inline-flex;
+	padding: 6% 0 0 0;
+	flex-flow: wrap;
+	justify-content: space-evenly;
+}
+
+.dash-con-box-cl .dash-box-con-middle > .dash-box-square {
+	width: 100%;
+	height: 80%;
+	display: inline-flex;
+	padding: 4% 0 0 0;
+	flex-flow: wrap;
+	justify-content: space-evenly;
+}
+
+/*
+.dash-con-box-cl .dash-box-con-middle .dash-box-square {
+	width: 100%;
+	height: 80%;
+	display: inline-flex;
+	padding: 4% 0 0 0;
+	flex-flow: wrap;
+	justify-content: space-evenly;
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con:nth-child(2) > .dash-box-square {
+	width: 100%;
+	display: inline-block;
+	padding: 3.7% 0 0 0;
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con:nth-child(2) > .dash-box-square > .dash-square {
+	width: 42%;
+	display: inline-block;
+	padding: 2% 0 0 0;
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con:nth-child(2) > .dash-box-square > .dash-square:first-child {
+	margin-right: 5%;
+	margin-left: 5.5%;
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con:nth-child(2) > .dash-box-square:nth-child(3) {
+	width: 100%;
+	display: inline-block;
+	padding: 5% 0 0 0;
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con:nth-child(2) > .dash-box-square:nth-child(3) > .dash-square:first-child {
+	margin-right: 5%;
+	margin-left: 5.5%;
+}
+
+.dash-con-box-cl > .dash-list-box-center > .dash-box > .dash-box-con:nth-child(2) > .dash-box-square:nth-child(3) > .dash-square:nth-child(2) {
+	margin-right: 0%;
+}
+*/
+
+.dash-con-box-cl .dash-square {
+	display: inline-block;
+	width: 43%;
+	height: 80px;
+	background: var(--dash-text-white-color);
+	text-align: center;
+	border-radius: 0.4rem;
+	box-shadow: 0.1rem 0.1rem 0.5rem 0.1rem var(--main-box-shadow-color);
+}
+
+.dash-con-box-cl .dash-square:hover {
+	width: 43.3%;
+	cursor: pointer;
+}
+
+.dash-con-box-cl .dash-box-con-left .dash-square {
+	box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem var(--dash-box-1-back-opacity-color);
+}
+
+.dash-con-box-cl .dash-box-con-left .dash-square:hover {
+	box-shadow: 0.15rem 0.15rem 0.3rem 0.15rem var(--dash-box-1-back-opacity-color);
+}
+
+.dash-con-box-cl .dash-box-con-middle .dash-square {
+	display: inline-block;
+	width: 30%;
+	height: 80px;
+	background: var(--dash-text-white-color);
+	text-align: center;
+	border-radius: 0.4rem;
+	box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem var(--dash-box-2-back-opacity-color);
+}
+
+.dash-con-box-cl .dash-box-con-middle .dash-square:hover {
+	width: 30.3%;
+	box-shadow: 0.15rem 0.15rem 0.3rem 0.15rem var(--dash-box-2-back-opacity-color);
+	cursor: pointer;
+}
+
+.dash-con-box-cl .dash-box-con-right .dash-square {
+	box-shadow: 0.1rem 0.1rem 0.25rem 0.1rem var(--dash-box-3-back-opacity-color);
+}
+
+.dash-con-box-cl .dash-box-con-right .dash-square:hover {
+	box-shadow: 0.15rem 0.15rem 0.3rem 0.15rem var(--dash-box-3-back-opacity-color);
+}
+
+.dash-con-box-cl .dash-square > .dash-square-top {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 3.5%;
+	padding: 0.25rem 2.25rem 0.3rem 0.55rem;
+	text-align: left;
+	font-size: 0.9rem;
+	/*
+		230825 김동현 차장님 요청으로 bold 제거
+		font-weight: bold;
+	*/
+}
+
+.dash-con-box-cl .dash-box-con-middle .dash-square > .dash-square-top {
+	display: inline-block;
+	width: 100%;
+	margin-bottom: 3.5%;
+	padding: 0.3rem 2.25rem 0.3rem 0.55rem;
+	text-align: left;
+	font-size: 0.94rem;
+	/*
+		230825 김동현 차장님 요청으로 bold 제거
+		font-weight: bold;
+	*/
+}
+
+.dash-con-box-cl .dash-square .dash-square-box {
+	width: 100%;
+	border: 0.05rem solid var(--dash-box-shadow-color);
+	border-radius: var(--dash-square-radius);
+}
+
+.dash-con-box-cl .dash-square .dash-square-con {
+	width: 100%;
+	border-collapse: collapse;
+	border-radius: var(--dash-square-radius);
+}
+
+.dash-con-box-cl .dash-square .dash-square-con tr > td:last-child {
+	font-size: var(--unit-font-size);
+	text-align: left;
+	vertical-align: bottom;
+	white-space: nowrap;
+}
+
+.dash-con-box-cl .dash-square .dash-square-con {
+	width: 91%;
+	margin-bottom: 7%;
+}
+
+.dash-con-box-cl .dash-square .dash-square-con tr > td {
+	font-size: 0.8rem;
+	/*
+		230825 김동현 차장님 요청으로 bold 제거
+		font-weight: bold;
+	*/
+	text-align: center;/* right; */
+	padding: 1rem 0.2rem 0.4rem 0.2rem;/*
+		230825 김동현 차장님 요청으로 border 얇게
+		border-bottom: 0.125rem solid var(--dash-box-shadow-color);
+	*/
+	border-bottom: 0.1rem solid var(--dash-box-shadow-color);
+	white-space: nowrap;
+}
+
+.dash-con-box-cl .dash-square .dash-square-con tr > td:nth-child(2) {
+	font-size: 0.9rem;
+	font-weight: bold;
+	text-align: right;
+}
+.dash-chart-box {
+	width: 100%; 
+	height: 360px;
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con {
+	width: 100%;
+	height: 19%;
+	padding: 1.5% 1.2%;
+	background: transparent;
+	text-align: center;
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con > .dash-water-drop {
+	display: inline-flex;
+	flex-wrap: wrap;
+	width: 100%;
+	height: 100%;
+	max-width: 10rem;
+	max-height: 10rem;
+	background: linear-gradient(var(--dash-grd-border-white-color) 50%, var(--dash-text-white-color) 50%);
+	box-shadow: 0.15rem 0.15rem 0.3rem 0.15rem var(--dash-box-shadow-color);
+	border: 0.2rem solid var(--dash-box-back-color);
+	border-radius: 3% 50% 50% 50%;
+	font-size: 1.0rem;
+	font-weight: bold;
+	color: var(--dash-text-white-color);
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con > .dash-water-drop > .dash-water-drop-label {
+	padding: 3%;
+	color: var(--default-black-color);
+}
+/* 물방울 타이틀에 span 추가로 인해 주석처리함_231019
+ .dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con > .dash-water-drop > .dash-water-drop-label > span {
+	display: inline-block;
+	margin-top: 25%;
+} */
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con > .dash-water-drop > .dash-water-drop-data {
+	padding: 3%;
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con > .dash-water-drop > .dash-water-drop-data > span {
+	display: inline-block;
+	margin-top: 10%;
+}
+/* 물방울 타이틀에 span 추가로 인해 주석처리함_231019
+ .dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con > .dash-water-drop > .dash-water-drop-data > span:last-child {
+	margin-left: 5%;
+	font-size: var(--unit-font-size);
+} */
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con:first-child > .dash-water-drop {
+	background: linear-gradient(var(--dash-grd-border-white-color) 50%, var(--dash-box-2-back-color) 50%);
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con:nth-child(2) > .dash-water-drop {
+	background: linear-gradient(var(--dash-grd-border-white-color) 50%, var(--dash-box-1-back-color) 50%);
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con:nth-child(3) > .dash-water-drop {
+	background: linear-gradient(var(--dash-grd-border-white-color) 50%, var(--dash-box-3-back-color) 50%);
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con:nth-child(4) > .dash-water-drop {
+	background: linear-gradient(var(--dash-grd-border-white-color) 50%, var(--dash-box-4-back-color) 50%);
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con > .dash-water-drop > .dash-water-drop-label {
+	width: 100%;
+	height: 50%;
+}
+
+.dash-con-box-cl > .dash-list-box-right > .dash-box > .dash-box-con > .dash-water-drop > .dash-water-drop-data {
+	width: 100%;
+	height: 50%;
+}
+
+.dash-con-box-cl .chart-wrap {
+	position: relative;
+	width:100%; 
+	height:100%; 
+	max-width:800px; 
+}
+
+.dash-con-box-cl .slider {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow: hidden;
+	/* slide_button의 position absolute가 컨테이너 안쪽에서 top, left, right offset이 적용될 수 있도록 relative를 준다. (기본값이 static인데, static인 경우 그 상위 컨테이너로 나가면서 현재 코드에선 html을 기준으로 offset을 적용시키기 때문) */
+	position: relative;
+	width: 98%;
+	height: 95%;
+	/* slide drag를 위해 DOM요소가 드래그로 선택되는것을 방지 */
+	user-select: none;
+}
+
+.dash-con-box-cl .slider > .slider-item {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	min-height: 250px;
+	/* flex item의 flex-shrink는 기본값이 1이므로 컨테이너 크기에 맞게 줄어드는데, 슬라이드를 구현할 것이므로 줄어들지 않도록 0을 준다. */
+	flex-shrink: 0;
+	transform-style: preserve-3d;
+	transition: left 0.4s;
+}
+
+.dash-con-box-cl .slider-pagination {
+	display: flex;
+	gap: 0.5rem;
+	position: absolute;
+	bottom: 5%;
+	left: 50%;
+	transform-style: preserve-3d;
+	transform: translateX(-50%);
+	height: 0.21rem;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.dash-con-box-cl .slider-pagination > .pagination-item {
+	cursor: pointer;
+	color: var(--pagination-item-color);
+	font-size: 0.2rem;
+}
+
+.dash-con-box-cl .slider-pagination > .active {
+	color: var(--pagination-item-active-color);
+	font-size: 0.21rem;
+}
+
+.dash-con-box-cl .slider-pagination > .pagination-btn-item {
+	cursor: pointer;
+	color: var(--pagination-item-active-color);
+	font-size: 0.2rem;
+}
+
+.dash-con-box-cl .dash-water-drop-label > .dash-water-drop-title-p {
+	display: block;
+	margin-top: 18%;
+}
+
+.dash-con-box-cl .dash-water-drop-label > .dash-water-drop-sub-title-p {
+	font-size: 0.7rem;
+	display: block;
+}
+
+.dash-con-box-cl .dash-box-title > .dash-box-title-p {
+	font-size: 0.7rem;
+}
+
+.dash-con-box-cl .dash-box-title > .dash-box-title-p-unit {
+	position: absolute;
+	font-size: 0.7rem;
+	font-weight: normal;
+	right: 0.25rem;
+	bottom: 0.25rem;
+}

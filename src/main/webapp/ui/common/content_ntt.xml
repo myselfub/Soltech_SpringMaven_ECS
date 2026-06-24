@@ -1,0 +1,725 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataList baseNode="list" id="dltNttMng" repeatNode="map" saveRemovedData="true" style="">
+					<w2:columnInfo>
+						<w2:column dataType="text" id="sysDivCd" name="시스템구분코드"></w2:column>
+						<w2:column dataType="text" id="bbsId" name="게시판ID"></w2:column>
+						<w2:column dataType="text" id="bbsTyCd" name="게시판유형코드"></w2:column>
+						<w2:column dataType="text" id="bbsAtrbCd" name="게시판속성코드"></w2:column>
+						<w2:column dataType="text" id="bbsNm" name="게시판명"></w2:column>
+						<w2:column dataType="text" id="bbsDc" name="게시판설명"></w2:column>
+						<w2:column dataType="text" id="bbsClsUseYn" name="분류사용여부"></w2:column>
+						<w2:column dataType="text" id="bbsClsCd1" name="분류코드"></w2:column>
+						<w2:column dataType="text" id="bbsClsCd2" name="분류코드2"></w2:column>
+						<w2:column dataType="text" id="prcsStatUseYn" name="처리상태여부"></w2:column>
+						<w2:column dataType="text" id="bbsStatCd" name="처리상태코드"></w2:column>
+						<w2:column dataType="text" id="bbsPopupYn" name="게시판팝업여부"></w2:column>
+						<w2:column dataType="text" id="bbsUrl" name="게시판URL"></w2:column>
+						<w2:column dataType="text" id="answerPsblYn" name="답변가능여부"></w2:column>
+						<w2:column dataType="text" id="useYn" name="사용여부"></w2:column>
+						<w2:column dataType="text" id="usrFrstRegistYn" name=""></w2:column>
+						<w2:column dataType="text" id="frstRegistDt" name="최초등록일시"></w2:column>
+						<w2:column dataType="text" id="frstRgstrId" name="최초등록자ID"></w2:column>
+						<w2:column dataType="text" id="lastUpdtDt" name="최종수정일시"></w2:column>
+						<w2:column dataType="text" id="lastUpdusrId" name="최종수정자ID"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltNttList" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="nttOdrd" name="name33" dataType="text"></w2:column>
+						<w2:column id="nttNo" name="게시물ID" dataType="text"></w2:column>
+						<w2:column id="bbsId" name="게시판ID" dataType="text"></w2:column>
+						<w2:column id="sysDivCd" name="시스템구분코드" dataType="text"></w2:column>
+						<w2:column id="sysDivNm" name="시스템구분명" dataType="text"></w2:column>
+						<w2:column id="ctgryId" name="범주ID" dataType="text"></w2:column>
+						<w2:column id="ntceLocgovCd" name="게시지자체코드" dataType="text"></w2:column>
+						<w2:column id="nttClsCd1" name="게시물분류코드1" dataType="text"></w2:column>
+						<w2:column id="nttClsCd2" name="게시물분류코드2" dataType="text"></w2:column>
+						<w2:column id="nttStatCd" name="게시물상태코드" dataType="text"></w2:column>
+						<w2:column id="nttTit" name="게시물제목" dataType="date"></w2:column>
+						<w2:column id="nttCtnt" name="게시물내용" dataType="text"></w2:column>
+						<w2:column id="nttPwdno" name="게시물비밀번호" dataType="text"></w2:column>
+						<w2:column id="nttRdcnt" name="게시물조회수" dataType="text"></w2:column>
+						<w2:column id="nttNtfFnctYn" name="게시물공지기능여부" dataType="text"></w2:column>
+						<w2:column id="ntfStrtDe" name="공지시작일" dataType="text"></w2:column>
+						<w2:column id="ntfEndDe" name="공지종료일" dataType="text"></w2:column>
+						<w2:column id="answerYn" name="답변여부" dataType="text"></w2:column>
+						<w2:column id="parntsNttNo" name="부모게시물ID" dataType="text"></w2:column>
+						<w2:column id="atchflId" name="첨부파일ID" dataType="text"></w2:column>
+						<w2:column id="useYn" name="사용여부" dataType="text"></w2:column>
+						<w2:column id="sortOrdr" name="정렬순서" dataType="text"></w2:column>
+						<w2:column id="priorNttYn" name="비밀게시물여부" dataType="text"></w2:column>
+						<w2:column id="frstRegistDt" name="최초등록일시" dataType="text"></w2:column>
+						<w2:column id="frstRgstrId" name="최초등록자ID" dataType="text"></w2:column>
+						<w2:column id="lastUpdtDt" name="최종수정일시" dataType="text"></w2:column>
+						<w2:column id="lastUpdusrId" name="최종수정자ID" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="저장경로" dataType="text"></w2:column>
+						<w2:column id="saveFileNm" name="저장파일명" dataType="text"></w2:column>
+						<w2:column id="orginlFileNm" name="원본파일명" dataType="text"></w2:column>
+						<w2:column id="fileSize" name="파일사이즈" dataType="text"></w2:column>
+						<w2:column id="korname" name="name31" dataType="text"></w2:column>
+						<w2:column id="dept" name="name32" dataType="text"></w2:column>
+						<w2:column id="posit" name="name34" dataType="text"></w2:column>
+						<w2:column id="nttClsNm1" name="분류명" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap baseNode="map" id="dmaNttMt">
+					<w2:keyInfo>
+						<w2:key id="nttNo" name="게시물ID" dataType="text"></w2:key>
+						<w2:key id="bbsId" name="게시판ID" dataType="text"></w2:key>
+						<w2:key id="sysDivCd" name="시스템구분코드" dataType="text"></w2:key>
+						<w2:key id="sysDivNm" name="시스템구분명" dataType="text"></w2:key>
+						<w2:key id="ctgryId" name="범주ID" dataType="text"></w2:key>
+						<w2:key id="ntceLocgovCd" name="게시지자체코드" dataType="text"></w2:key>
+						<w2:key id="nttClsCd1" name="게시물분류코드1" dataType="text"></w2:key>
+						<w2:key id="nttClsCd2" name="게시물분류코드2" dataType="text"></w2:key>
+						<w2:key id="nttStatCd" name="게시물상태코드" dataType="text"></w2:key>
+						<w2:key id="nttTit" name="게시물제목" dataType="date"></w2:key>
+						<w2:key id="nttCtnt" name="게시물내용" dataType="text"></w2:key>
+						<w2:key id="nttPwdno" name="게시물비밀번호" dataType="text"></w2:key>
+						<w2:key id="nttRdcnt" name="게시물조회수" dataType="text"></w2:key>
+						<w2:key id="nttNtfFnctYn" name="게시물공지기능여부" dataType="text"></w2:key>
+						<w2:key id="ntfStrtDe" name="공지시작일" dataType="text"></w2:key>
+						<w2:key id="ntfEndDe" name="공지종료일" dataType="text"></w2:key>
+						<w2:key id="answerYn" name="답변여부" dataType="text"></w2:key>
+						<w2:key id="parntsNttNo" name="부모게시물ID" dataType="text"></w2:key>
+						<w2:key id="atchflId" name="첨부파일ID" dataType="text"></w2:key>
+						<w2:key id="useYn" name="사용여부" dataType="text"></w2:key>
+						<w2:key id="sortOrdr" name="정렬순서" dataType="text"></w2:key>
+						<w2:key id="priorNttYn" name="우선게시물여부" dataType="text"></w2:key>
+						<w2:key id="frstRegistDt" name="최초등록일시" dataType="text"></w2:key>
+						<w2:key id="frstRgstrId" name="최초등록자ID" dataType="text"></w2:key>
+						<w2:key id="lastUpdtDt" name="최종수정일시" dataType="text"></w2:key>
+						<w2:key id="lastUpdusrId" name="최종수정자ID" dataType="text"></w2:key>
+						<w2:key id="rowStatus" name="상태값" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltBbsClsCd" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" name="공통분류코드" dataType="text"></w2:column>
+						<w2:column id="clsCdNm" name="공통분류코드명" dataType="text"></w2:column>
+						<w2:column id="cmmnCd" name="공통코드" dataType="text"></w2:column>
+						<w2:column id="cmmnCdNm" name="공통코드명" dataType="text"></w2:column>
+						<w2:column id="cmmnCdDc" name="공통코드설명" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataMap baseNode="map" id="dmaNttMng">
+					<w2:keyInfo>
+						<w2:key id="sysDivCd" name="name1" dataType="text"></w2:key>
+						<w2:key id="bbsAtrbCd" name="name2" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript" lazy="false"><![CDATA[
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		$(".pin").click(
+				function() {
+					comLib.confirm($p, utilLib.getMessage("SCM.INFO.00321"), "scwin.updatePriorNttYnConfirmCallback");
+				});
+		$(".del").click(function() {
+			$("table.creat").removeClass("table-on");
+			$("table.view").removeClass("table-on");
+		});
+
+		$(".modify").click(function() {
+			dmaNttMt.set("rowStatus", "U");
+			$("table.creat").removeClass("table-on");
+			$("table.view").removeClass("table-on");
+			$("table.creat").addClass("table-on");
+			if(dmaNttMt.get( "nttClsCd1" ) != ""){
+				sbxNttClsCd1.setValue( dmaNttMt.get( "nttClsCd1" ) );
+			}
+		});
+
+		$p.$("#nttTrash").click(
+			function() {
+				comLib.confirm($p, utilLib.getMessage("SCM.INFO.00251"), "scwin.deleteNttLeft");
+			}
+		);
+
+		$(".list li a").click(function() {
+			$("table.creat").removeClass("table-on");
+			$("table.view").addClass("table-on");
+			$(".list > ul > li ").removeClass("active");
+			$(this).parent().parent().addClass("active");
+		});
+		$(".nav-title-group .close").click(function() {
+			$(".nav-board").removeClass("board-on");
+			comLib.removeSrc();
+		});
+
+		$p.$("#btn_nttCreate").click(function() {
+			scwin.btnAdd_onclick();
+			$("table.mody").removeClass("table-on");
+			$("table.creat").addClass("table-on");
+			$("table.view").removeClass("table-on");
+		});
+		$p.$("#btnCancel").click(function() {
+			if(dmaNttMt.get("rowStatus") == "C"){
+				$("table.creat").removeClass("table-on");
+				$("table.view").removeClass("table-on");
+			}else{
+				$("table.creat").removeClass("table-on");
+				$("table.view").addClass("table-on");
+			}
+		});
+
+	};
+
+	/**
+	 * 쓰기버튼클릭
+	 * @param 저장할 데이터
+	 * @return 
+	 */ 
+	scwin.btnAdd_onclick = function() {
+		utilLib.clearDcObj(nttAtchfl.getWindow()._dltNttFile);
+		var bbsId = dmaNttMt.get("bbsId");
+		var sysDivCd = dmaNttMt.get("sysDivCd");
+
+		utilLib.clearDcObj(dmaNttMt);
+
+		dmaNttMt.set("rowStatus", "C");
+		dmaNttMt.set("bbsId", bbsId);
+		dmaNttMt.set("sysDivCd", sysDivCd);
+		dmaNttMt.set("ntfStrtDe", utilLib.getCurrentDate());
+		var nttMngData = $p.top().wframeLeft.getWindow().dltNttMng.getMatchedJSON( "bbsId" , bbsId );
+		// 공지팝업인 경우 공지기간 default 1개월, 첨부파일 설명 써놓기
+		if (nttMngData[0].bbsTyCd == "03") {
+			var nttChildren = nttAtchfl.getAllChildren();
+			for (var i = 0 ; i < nttChildren.length ; i++) {
+				if (nttChildren[i].getPluginName() == "span") {
+					nttChildren[i].render.innerHTML = "첨부파일 (1번파일 : 540px * 670px 사이즈의 팝업이미지, 이하파일 : 공지팝업에서 다운로드 될 참고자료)";
+				}
+			}
+			dmaNttMt.set("ntfEndDe", utilLib.addToDay(utilLib.getCurrentDate(),'1'));
+		} else {
+			var nttChildren = nttAtchfl.getAllChildren();
+			for (var i = 0 ; i < nttChildren.length ; i++) {
+				if (nttChildren[i].getPluginName() == "span") {
+					nttChildren[i].render.innerHTML = "첨부파일";
+				}
+			}
+			dmaNttMt.set("ntfEndDe", utilLib.addToDay(utilLib.getCurrentDate(),'120'));		
+		}
+		dmaNttMt.set("priorNttYn", "N");
+	};
+	
+	/**
+	 * 저장버튼클릭
+	 * @param 저장할 데이터
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		// 입력값 셋팅
+		if(ibxNttTit.getValue() == ""){
+			comLib.alert($p,  utilLib.getMessage("SCM.INFO.00004", "제목 "));
+			return false;
+		}
+		if(txaNttCtnt.getValue() == ""){
+			comLib.alert($p,  utilLib.getMessage("SCM.INFO.00004", "내용 "));
+			return false;
+		}
+		if (nttAtchfl.getWindow()._mpdNttMultiAtchFile.getFileCount() > 0) {
+			nttAtchfl.getWindow()._mpdNttMultiAtchFile.startUpload();
+		} else {
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00321"), "scwin.saveNttConfirmCallback");
+		}
+	};
+
+	/**
+	 * 저장처리
+	 */
+	scwin.saveNttConfirmCallback = function() {
+		var requestData = {};
+		requestData.data = dmaNttMt.getJSON();
+		requestData.data1 = nttAtchfl.getWindow()._dltNttFile.getModifiedJSON();
+		var option = {
+			action : "sc/ntt/saveNtt.do",
+			reqData : requestData,
+			resData : dltNttList,
+			success : "scwin.saveCallback" ,
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+	
+	scwin.saveNttCallback = function(resBody) {
+		comLib.NTT_NO = resBody.message.data;
+		utilLib.clearDcObj(dltNttList);
+		scwin.selectNttMng(txtNttNo.getValue() , parseInt(txtCnt.getValue())+1);
+	}
+	scwin.saveCallback = function(resBody) {
+		comLib.NTT_NO = resBody.message.data;
+		utilLib.clearDcObj(dltNttList);
+		scwin.selectNttMng(txtNttNo.getValue() ,txtCnt.getValue());
+	}
+
+	/**
+	 * 글제목클릭시
+	 * @param 글번호
+	 * @return
+	 */
+	scwin.selectNtt = function(nttNo) {
+		$(".nttlist").removeClass("active");
+		eval("nttLi_" + nttNo).classList.add("active");
+
+		comLib.NTT_NO = nttNo;
+		var dltNttListJson = dltNttList.getMatchedJSON("nttNo", comLib.NTT_NO, true, 0, dltNttList.getRowCount());
+
+		$("table.creat").removeClass("table-on");
+		$("table.view").addClass("table-on");
+
+		utilLib.clearDcObj(dmaNttMt);
+		dmaNttMt.set("rowStatus", "U");
+		dmaNttMt.set("nttNo", dltNttListJson[0].nttNo);
+		dmaNttMt.set("bbsId", dltNttListJson[0].bbsId);
+		dmaNttMt.set("sysDivCd", dltNttListJson[0].sysDivCd);
+		dmaNttMt.set("ctgryId", dltNttListJson[0].ctgryId);
+		dmaNttMt.set("ntceLocgovCd", dltNttListJson[0].ntceLocgovCd);
+		dmaNttMt.set("nttClsCd1", dltNttListJson[0].nttClsCd1);
+		dmaNttMt.set("nttClsCd2", dltNttListJson[0].nttClsCd2);
+		dmaNttMt.set("nttStatCd", dltNttListJson[0].nttStatCd);
+		dmaNttMt.set("nttTit", dltNttListJson[0].nttTit);
+		dmaNttMt.set("nttCtnt", dltNttListJson[0].nttCtnt);
+		dmaNttMt.set("nttPwdno", dltNttListJson[0].nttPwdno);
+		dmaNttMt.set("nttRdcnt", dltNttListJson[0].nttRdcnt);
+		dmaNttMt.set("nttNtfFnctYn", dltNttListJson[0].nttNtfFnctYn);
+		dmaNttMt.set("ntfStrtDe", dltNttListJson[0].ntfStrtDe);
+		dmaNttMt.set("ntfEndDe", dltNttListJson[0].ntfEndDe);
+		dmaNttMt.set("answerYn", dltNttListJson[0].answerYn);
+		dmaNttMt.set("priorNttYn", dltNttListJson[0].priorNttYn);
+		dmaNttMt.set("atchflId", dltNttListJson[0].atchflId);
+		dmaNttMt.set("useYn", dltNttListJson[0].useYn);
+		dmaNttMt.set("sortOrdr", dltNttListJson[0].sortOrdr);
+		dmaNttMt.set("lastUpdtDt", dltNttListJson[0].frstRegistDt);
+
+		scwin.updateNttRdcnt();
+
+		$p.$("#nttPin").removeClass("pin-on");
+		if (dltNttListJson[0].priorNttYn == "Y") {
+			$p.$("#nttPin").toggleClass("pin-on");
+		}
+
+		if(dltNttListJson[0].frstRgstrId != comLib.getUsrId()){
+			nttViewGroup.hide();
+		}else{
+			nttViewGroup.show("inline-block");
+		}
+
+		boardUsr.setLabel(dltNttListJson[0].korname + " / " + dltNttListJson[0].dept + " / " + dltNttListJson[0].posit);
+
+		var nttMngData = $p.top().wframeLeft.getWindow().dltNttMng.getMatchedJSON( "bbsId" , dltNttListJson[0].bbsId );
+		// 공지일을 사용하는 경우 공지기간을 표시
+		if (nttMngData[0].bbsStatCd == "01") {
+			txtNtcePd.setLabel("공지기간 : " + utilLib.makeDateFormat(dltNttListJson[0].ntfStrtDe, "-") + " ~ " + utilLib.makeDateFormat(dltNttListJson[0].ntfEndDe, "-"));
+		} else {
+			txtNtcePd.setLabel("");
+		}
+
+		viewFile.render.innerHTML = "";
+		utilLib.clearDcObj(nttAtchfl.getWindow()._dltNttFile);
+		comLib.NTT_NO = "";
+		if (dltNttListJson[0].atchflId != null && dltNttListJson[0].atchflId != "") {
+			var requestData = {};
+			requestData.dmaFileBasic = {
+				atchflId : dltNttListJson[0].atchflId
+			};
+			var option = {
+				action : "sc/file/fileList.do",
+				reqData : requestData,
+				resData : nttAtchfl.getWindow()._dltNttFile,
+				success : "scwin.searchNttMtCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		} else {
+			nttAtchfl.getWindow()._dltNttFile.deleteRow(0);
+		}
+
+	}
+
+	/**
+	 * 상세 첨부 콜백 함수
+	 * @param
+	 * @return
+	 */
+	scwin.searchNttMtCallback = function(resBody) {
+		if (resBody.message.code == 'success') {
+			if (nttAtchfl.getWindow()._dltNttFile.getRowCount() > 0) {
+				var str = [];
+				for (var i = 0; i < nttAtchfl.getWindow()._dltNttFile.getRowCount(); i++) {
+					str.push("<a href=\"javascript:" + comLib.getFrameId($p) + "scwin.fileDownload('" + nttAtchfl.getWindow()._dltNttFile.getCellData(i, "atchflId") + "','" + nttAtchfl.getWindow()._dltNttFile.getCellData(i, "fileSeq") + "');\" class='w2anchor2 '>");
+					str.push(nttAtchfl.getWindow()._dltNttFile.getCellData(i, "orginlFileNm"));
+					str.push("</a>");
+				}
+				viewFile.render.innerHTML = str.join("");
+			} else {
+				viewFile.render.innerHTML = "";
+			}
+		} else {
+			alert("fail");
+		}
+
+	};
+
+	//scwin.saveCallback
+	//저장 후 게시물 목록
+	scwin.selectNttMng = function(bbsId , cnt) {
+		$("table.creat").removeClass("table-on");
+		$("table.view").removeClass("table-on");
+
+		var dltNttMngJson =  $p.top().wframeLeft.getWindow().dltNttMng.getMatchedJSON( "bbsId" , bbsId , true , 0 , $p.top().wframeLeft.getWindow().dltNttMng.getRowCount() );
+
+		if(dltNttMngJson.length > 0){
+			var nttTit = "";
+			var korname = "";
+
+			if (sbxSearchTyCd.getValue() == "01") {
+				nttTit = inputNttSearch.getValue();
+			}
+			if (sbxSearchTyCd.getValue() == "02") {
+				korname = inputNttSearch.getValue();
+			}
+				nttID = dltNttMngJson[0].bbsId;
+				dmaNttMt.set( "bbsId" , dltNttMngJson[0].bbsId );
+				dmaNttMt.set( "sysDivCd" , dltNttMngJson[0].sysDivCd);
+
+				var requestData = {};
+
+				if(cnt < comLib.PAGE_SIZE){
+					cnt = comLib.PAGE_SIZE;
+				}
+				requestData.data = {bbsId:dltNttMngJson[0].bbsId ,"nttTit" : nttTit,"korname" : korname, rnum:0 , totalCount : cnt - comLib.PAGE_SIZE, pageSize : comLib.PAGE_SIZE};
+				var option = {action : "sc/ntt/retrieveNtt.do"
+								, reqData : requestData
+								, resData : ""
+				 				, success : "comLib.selectNttMngCallback"
+								, isShowMeg : false
+							};
+				ajaxLib.executeAjax($p, option);
+		}
+	};
+
+//중요 여부 업데이트
+	scwin.updatePriorNttYnConfirmCallback = function() {
+		$p.$("#nttPin").toggleClass("pin-on");
+		if (dmaNttMt.get("priorNttYn") == "Y") {
+			dmaNttMt.set("priorNttYn", "N");
+		} else {
+			dmaNttMt.set("priorNttYn", "Y");
+		}
+		var requestData = {};
+		requestData.dmaNttMt = dmaNttMt.getJSON();
+		var option = {
+			action : "sc/ntt/updatePriorNttYn.do",
+			reqData : requestData,
+			success : "scwin.saveCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	//조회수 업데이트
+	scwin.updateNttRdcnt = function() {
+		var requestData = {};
+		requestData.dmaNttMt = dmaNttMt.getJSON();
+
+		var option = {
+			action : "sc/ntt/updateNttRdcnt.do",
+			reqData : requestData,
+			success : "",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	}
+
+//삭제 클릭시 
+	scwin.deleteNttLeft = function() {
+		for (var i = 0; i < nttAtchfl.getWindow()._dltNttFile.getRowCount(); i++) {
+			nttAtchfl.getWindow()._dltNttFile.deleteRow(i);
+		}
+		dmaNttMt.set("rowStatus", "D");
+		var requestData = {};
+		requestData.data = dmaNttMt.getJSON();
+		requestData.data1 = nttAtchfl.getWindow()._dltNttFile.getAllJSON();
+
+		var option = {
+			action : "sc/ntt/saveNtt.do",
+			reqData : requestData,
+			success : "scwin.deleteCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+//삭제후 콜백
+	scwin.deleteCallback = function() {
+		comLib.NTT_NO = "";
+		$("table.creat").removeClass("table-on");
+		$("table.view").removeClass("table-on");
+
+		//삭제후 목록조회
+		comLib.selectNttMng(txtNttNo.getValue() , 0);
+
+	}
+	
+	//돋보기 클릭
+	scwin.searchBtn_onclick = function() {
+		comLib.selectNttMng(txtNttNo.getValue() , 0);
+	};
+
+	/**
+	 * 첨부파일 다운로드
+	 * @param event
+	 * @return첨부파일
+	 */
+
+	scwin.fileDownload = function(atchflId, fileSeq) {
+		if (atchflId != null && atchflId != '') {
+			var dmaTest = {
+				"atchflId" : atchflId,
+				"fileSeq" : fileSeq
+			};
+			var xmlValue = JSON.stringify(dmaTest);
+			// $w.download("/sc/file/downloadAtchFileOne.do", xmlValue, "get");
+			comLib.downloadAtchfl("/sc/file/downloadAtchFileOne.do", xmlValue, "get");
+		}
+	};
+
+//신규버튼 클릭시
+	scwin.btnAddList_onclick = function() {
+		comLib.selectNttMng(txtNttNo.getValue() ,txtCnt.getValue());
+	};
+
+	]]></script>
+		<w2:require src="/ui/common/udc/periodCalendar.xml"></w2:require>
+	</head>
+	<body>
+		<xf:group style="" id="" class="nav-board faq">
+			<xf:group class="nav-title-group" id="" style="">
+				<xf:group class="" id="" style="" tagname="h2">
+					<w2:span class="" id="nttType" label="" style=""></w2:span>
+					<xf:input id="txtCnt" label="0" style="display: none;"></xf:input>
+					<xf:input id="txtNttNo" label="0" style="display: none;"></xf:input>
+				</xf:group>
+				<xf:group class="search-group" id="" style="">
+					<xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false" disabledClass=""
+						displayMode="label" id="sbxSearchTyCd" optionOrder="false" selectedData="true" style="" submenuSize="auto">
+						<xf:choices>
+							<xf:item>
+								<xf:label><![CDATA[제목]]></xf:label>
+								<xf:value><![CDATA[01]]></xf:value>
+							</xf:item>
+							<xf:item>
+								<xf:label><![CDATA[작성자]]></xf:label>
+								<xf:value><![CDATA[02]]></xf:value>
+							</xf:item>
+						</xf:choices>
+					</xf:select1>
+					<xf:group class="input_search" id="" pluginName="input_Search" style="">
+						<xf:input id="inputNttSearch" initValue="" readOnly="" style=""></xf:input>
+						<w2:anchor class="fa fa-search" id="searchBtn" outerDiv="false" style="" ev:onclick="scwin.searchBtn_onclick">
+							<xf:label><![CDATA[조회]]></xf:label>
+						</w2:anchor>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group" id="nttAddGroup" style="">
+					<w2:anchor class="creat" id="btn_nttCreate" outerDiv="false" style="">
+						<xf:label><![CDATA[쓰기]]></xf:label>
+					</w2:anchor>
+					<w2:anchor class="close" id="" outerDiv="false" style="">
+						<xf:label><![CDATA[삭제]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="nav-content" id="" style="">
+				<xf:group class="navs" id="grpNavId">
+					<xf:group class="nav" id="navId" style=""></xf:group>
+				</xf:group>
+				<xf:group class="lists" id="grpNttList">
+					<xf:group class="list" id="nttList" style=""></xf:group>
+					<xf:trigger id="btnAddList" style="" type="button" class="m-more-btn" ev:onclick="scwin.btnAddList_onclick"></xf:trigger>
+				</xf:group>
+				<xf:group class="cvs">
+					<xf:group class="cv" id="" style="">
+						<xf:group class="w2tb creat" id="grpDtl" style="" tagname="table">
+							<w2:attributes>
+								<w2:summary></w2:summary>
+							</w2:attributes>
+							<xf:group tagname="caption"></xf:group>
+							<xf:group tagname="colgroup">
+								<xf:group style="width:100.00%" tagname="col"></xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="mix-box" id="" style="">
+										<xf:group class="cw7" id="" style="">
+											<xf:select1 allOption="" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass="w2selectbox_disabled"
+												displayMode="label" id="sbxNttClsCd1" optionOrder="false" selectedData="true" style="" submenuSize="auto" ref="data:dmaNttMt.nttClsCd1"
+												chooseOptionLabel="" class="fl">
+												<xf:choices>
+													<xf:itemset nodeset="data:dltBbsClsCd">
+														<xf:label ref="cmmnCdNm"></xf:label>
+														<xf:value ref="cmmnCd"></xf:value>
+													</xf:itemset>
+												</xf:choices>
+											</xf:select1>
+										</xf:group>
+										<xf:group class="cw10" id="" style="">
+											<!-- <xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false" disabledClass="" displayMode="label" 
+												id=""
+												optionOrder="false" selectedData="true" style="" submenuSize="auto"> <xf:choices> <xf:item> <xf:label><![CDATA[2차 카테고리 선택]]></xf:label> 
+												<xf:value><![CDATA[]]></xf:value>
+												</xf:item> </xf:choices> </xf:select1> -->
+											<w2:period_Cal id="ntfDe" strtDateRef="data:dmaNttMt.ntfStrtDe" endDateRef="data:dmaNttMt.ntfEndDe">
+											</w2:period_Cal>
+										</xf:group>
+										<xf:group class="cw3" id="" style="">
+											<xf:select appearance="full" cols="1" disabled="" displaymessage="true" id="chkPriorNttYn" renderType="checkboxgroup"
+												rows="" selectedindex="-1" style="" ref="data:dmaNttMt.priorNttYn" falseValue="N">
+												<xf:choices>
+													<xf:item>
+														<xf:label><![CDATA[중요]]></xf:label>
+														<xf:value><![CDATA[Y]]>
+														</xf:value>
+													</xf:item>
+												</xf:choices>
+											</xf:select>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:input disabled="" id="ibxNttTit" initValue="" readOnly="" style="" placeholder="제목을 입력하세요." ref="data:dmaNttMt.nttTit"
+										maxlength="" maxByteLength="450">
+									</xf:input>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:textarea id="txaNttCtnt" style="" ref="data:dmaNttMt.nttCtnt"></xf:textarea>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="height: 120px;" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<w2:wframe src="/ui/common/fileUpload/boardMultiAtchfl.xml" id="nttAtchfl" />
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr" style="">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="btn-group" style="" tagname="">
+										<w2:attributes>
+											<w2:headers></w2:headers>
+										</w2:attributes>
+										<w2:anchor class="del" id="btnCancel" outerDiv="false" style="">
+											<xf:label><![CDATA[취소]]></xf:label>
+										</w2:anchor>
+										<w2:anchor class="" id="" outerDiv="false" style="" ev:onclick="scwin.btnSave_onclick">
+											<xf:label><![CDATA[확인]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="w2tb view table-on" id="" style="" tagname="table">
+							<w2:attributes>
+								<w2:summary></w2:summary>
+							</w2:attributes>
+							<xf:group tagname="caption"></xf:group>
+							<xf:group tagname="colgroup">
+								<xf:group style="width:100.00%" tagname="col"></xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="title" id="" style="">
+										<w2:span id="" label="" ref="data:dmaNttMt.nttTit"></w2:span>
+										<xf:group class="btn-group" id="nttViewGroup" style="">
+											<w2:anchor id="nttModify" outerDiv="false" class="modify">
+												<xf:label><![CDATA[수정]]></xf:label>
+											</w2:anchor>
+											<w2:anchor id="nttPin" outerDiv="false" style="" class="pin">
+												<xf:label><![CDATA[중요]]></xf:label>
+											</w2:anchor>
+											<w2:anchor id="nttTrash" outerDiv="false" style="" class="trash">
+												<xf:label><![CDATA[삭제]]></xf:label>
+											</w2:anchor>
+										</xf:group>
+									</xf:group>
+									<xf:group class="user" id="" style="">
+										<xf:image id="" src="/resources/images/common/pic-c-39.png"></xf:image>
+										<w2:span id="boardUsr" label="" class="name"></w2:span>
+										<w2:span id="" label="" style="" class="day" ref="data:dmaNttMt.lastUpdtDt"></w2:span>
+										<w2:span id="txtNtcePd" class="day" style="float:right;"></w2:span>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="view-area">
+										<xf:group style="" id="grpNttCnt">
+											<xf:group class="view-txt" style="">
+												<w2:span id="idNttCnt" label="" ref="data:dmaNttMt.nttCtnt"></w2:span>
+											</xf:group>
+											<xf:group class="view-file" id="viewFile" style=""></xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

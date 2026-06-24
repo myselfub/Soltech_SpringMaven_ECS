@@ -1,0 +1,51 @@
+package kw.ecs.pn.ceriss.service;
+
+import java.util.List;
+import java.util.Map;
+
+import kw.ecs.pn.ceriss.vo.CerIssVo;
+
+/**
+ * CerIssService 서비스 인터페이스
+ * 
+ * @ClassName CerIssService.java
+ * @Description 생산 - CER 발급량 클래스
+ * @Modification_Information
+ * 
+ *                           <pre>
+ *	수정일					수정자						수정내용
+ * ------------		-----------------		-------------------------------
+ * 2023.03.15		Soltech 김유빈			최초생성
+ *                           </pre>
+ * 
+ * @author Soltech 김유빈
+ * @since 2023. 03. 15
+ * @version 1.0
+ * @see
+ * 
+ *      <pre>
+ * Copyright (C) 2023 by Unlimited K-water, All right reserved.
+ *      </pre>
+ */
+@SuppressWarnings("rawtypes")
+public interface CerIssService {
+	/**
+	 * 생산의 CER 발급량 목록을 조회한다.
+	 * 
+	 * @param param
+	 *            : @CerIssVo 의 데이터
+	 * @return list 데이터 맵 리스트 객체
+	 * @throws Exception
+	 */
+	public List<Map> retrieveCerIssList(CerIssVo cerIssVo) throws Exception;
+
+	/**
+	 * 생산의 CER 발급량 목록을 저장/수정/삭제한다.
+	 * 
+	 * @param param
+	 *            : @CerIssVo 의 데이터
+	 * @return Map : { rtnCnt : 결과 개수 }
+	 * @throws Exception
+	 */
+	public Map processCerIssList(List<CerIssVo> cerIssVoList) throws Exception;
+}

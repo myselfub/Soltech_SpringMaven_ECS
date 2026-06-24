@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+		//imports("uiplugin._popup");
+
+		//var pparam = JSON.parse(WebSquare.util.getPopupParam());
+		//var guideVido = pparam.data.guideVido;
+	scwin.guideVidoValue;
+	scwin.tabNo;
+	scwin.emplyrId;
+	scwin.popupParam;
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		scwin.popupParam=comLib.getPopupParam($p,["guideVido"]);
+		var guideVido =scwin.popupParam.guideVido;
+		var guideVidoArr = guideVido.split(",");
+		if(guideVidoArr.length>1){
+			scwin.guideVidoValue = guideVidoArr[0];
+			scwin.tabNo = guideVidoArr[1];
+		}
+		scwin.processUccSso();
+	}
+	scwin.processUccSso = function() {
+		var option = {action : "/processUccSso.do"
+					   , success : "scwin.processUccSsoCallback"
+					   , isShowMeg : false
+						};
+		ajaxLib.executeAjaxSync($p, option);
+	}
+	scwin.processUccSsoCallback = function(resBody) {
+		if (resBody.message.code == "success") {
+				scwin.emplyrId = resBody.emplyrId;
+				scwin.VidoViewer(scwin.guideVidoValue,scwin.tabNo);
+		}
+	}
+	scwin.VidoViewer= function(guideVidoValue,tabNo) {
+		tabControl1.setSelectedTabIndex( tabControl1.getTabIndex("tabs_"+tabNo) );
+		eval($p.id+"helpVido"+"_"+tabControl1.getTabIndex("tabs_"+tabNo)).setSrc("http://ucc.[BASE_DOMAIN]/ucc/ucc/oas/OasUccAuthChk.do?userSe=POTV&uccId=" + guideVidoValue + "&emplyrId=" + scwin.emplyrId);
+		var  tabId= $p.id+"helpVido"+"_"+tabControl1.getTabIndex("tabs_"+tabNo);
+		scwin.tabSelect(tabId);
+	}
+
+	scwin.tabSelect = function(tabId) {
+		$p.$("#"+tabId).on("load", function(e) {
+			$p.$("#"+tabId).attr("style", "width:980px; height:707px; left:auto; display: inline-block;");
+		});
+	}
+
+	//수도운영_수도노선설계
+	scwin.pf5_onclick = function() {
+		scwin.VidoViewer('20190226001944','1');
+	};
+
+	//수도운영_유수율관리
+	scwin.pf7_onclick = function() {
+		scwin.VidoViewer('20190303001949','1');
+	};
+
+	//수도운영_운영시설 매핑
+	scwin.pf9_onclick = function() {
+		scwin.VidoViewer('','1');
+	};
+
+	]]></script>
+	</head>
+	<body>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml" style=""></w2:pageInherit> -->
+		<w2:wframe id="wframe1" src="/ui/common/popup_header.xml"></w2:wframe>
+		<xf:group class="popup-wrap" id="" style="">
+			<xf:group style="" id="" class="online-help-box">
+				<xf:group class="title-box" id="" style="">
+					<w2:span id="" label="동영상 도움말" style=""></w2:span>
+					<xf:image id="" src="/resources/images/ect/logo_kwater.png" style="width:77px !important; height:35px !important; "></xf:image>
+				</xf:group>
+				<w2:tabControl confirmTrueAction="exist" useTabKeyOnly="true" confirmFalseAction="new" useMoveNextTabFocus="false"
+					tabScroll="" useConfirmMessage="false" alwaysDraw="false" style="height:200px;" id="tabControl1">
+					<w2:tabs disabled="false" style="height:45px !important;" label="수도운영" id="tabs_1"></w2:tabs>
+					<w2:content alwaysDraw="false" style="" id="content1">
+						<xf:group style="" id="" class="left_menu">
+							<w2:wframe style="" id="" src="/ui/ecs/zz/guide/guideVido_leftm_01.xml"></w2:wframe>
+						</xf:group>
+						<w2:iframe src="" style="display: none;" id="helpVido_0"></w2:iframe>
+					</w2:content>
+					<!--
+						<w2:content alwaysDraw="false" style="" id="content2">
+						<xf:group class="left_menu" id="" style="">
+						<w2:wframe id="" src="/ui/ecs/zz/guide/guideVido_leftm_02.xml" style=""></w2:wframe>
+						</xf:group>
+						<w2:iframe src="" style="display: none;" id="helpVido_1"></w2:iframe>
+						</w2:content>
+					-->
+				</w2:tabControl>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,20 @@
+#autologin=false일 경우 login uncheck filter list
+#ant style이 적용되지 않는다.
+/sc/cmmn/idLogin.do
+/sc/cmmn/idCertLogin.do
+/sc/cmmn/launchApp.do
+/sc/cmmn/launchAppMenu.do
+/sc/cmmn/launchAppForm.do
+/sc/cmmn/launchDualApp.do
+/sc/cmmn/makeLoginSession.do
+/sc/cmmn/makeAdminLoginSession.do
+/sc/cmmn/logout.do
+/sc/cmmn/logoutXP.xdo
+/sc/cmmn/logoutSession.do
+/mobile/sc/cmmn/makeLoginSession.do
+/mobile/sc/cmmn/logoutSession.do
+#test용
+/test/aaa.do
+/guide/sample/selectSampleList.xdo
+
+#/sc/cmmn/selectLoginInfo.xdo ??

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 관리/폐기 - 에너지 관리-집행금액 -->
+<mapper namespace="TM_ME10002_Dao">
+	<select id="TM_ME10002_Dao_retrieveBudgetExcutList" parameterType="kw.ecs.me.mntmng.vo.BudgetExcutVo" resultType="egovMap">
+		/* TM_ME10002_Dao_retrieveBudgetExcutList */
+		SELECT
+			slip_no,
+			ecs_setcsc_div_cd,
+			ecs_chrg_dept_id,
+			iem_tit_ctnt,
+			entrps_nm,
+			slip_pstde,
+			excut_amt,
+			sum_amt,
+			charger_id,
+			iem_dtl_ctnt
+		FROM
+			tm_me10002
+		WHERE
+			ecs_chrg_dept_id = #{ecsChrgDeptId}
+			AND slip_pstde BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{strtDt}, 0, 4) || '1231'
+	</select>
+
+	<update id="TM_ME10002_Dao_saveBudgetExcut" parameterType="kw.ecs.me.mntmng.vo.BudgetExcutVo">
+		/* TM_ME10002_Dao_saveBudgetExcut */
+		MERGE INTO
+			tm_me10002 A
+		USING (
+			SELECT
+				#{slipNo} AS slip_no,
+				#{ecsSetcscDivCd} AS ecs_setcsc_div_cd,
+				#{ecsChrgDeptId} AS ecs_chrg_dept_id,
+				#{iemTitCtnt} AS iem_tit_ctnt,
+				#{entrpsNm} AS entrps_nm,
+				#{slipPstde} AS slip_pstde,
+				#{excutAmt} AS excut_amt,
+				#{sumAmt} AS sum_amt,
+				#{chargerId} AS charger_id,
+				#{iemDtlCtnt} AS iem_dtl_ctnt,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn,
+				#{lrgeChckAtchflNm} AS lrge_chck_atchfl_nm,
+				#{lrgeChckAtchFlpth} AS lrge_chck_atch_flpth,
+				#{dcompChckAtchflNm} AS dcomp_chck_atchfl_nm,
+				#{dcompChckAtchFlpth} AS dcomp_chck_atch_flpth
+			FROM
+				DUAL
+		) B
+		ON (
+			A.slip_no = B.slip_no
+			AND A.ecs_chrg_dept_id = B.ecs_chrg_dept_id
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.ecs_setcsc_div_cd = B.ecs_setcsc_div_cd,
+				A.iem_tit_ctnt = B.iem_tit_ctnt,
+				A.entrps_nm = B.entrps_nm,
+				A.slip_pstde = B.slip_pstde,
+				A.excut_amt = B.excut_amt,
+				A.sum_amt = B.sum_amt,
+				A.charger_id = B.charger_id,
+				A.iem_dtl_ctnt = B.iem_dtl_ctnt,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn,
+				A.lrge_chck_atchfl_nm = B.lrge_chck_atchfl_nm,
+				A.lrge_chck_atch_flpth = B.lrge_chck_atch_flpth,
+				A.dcomp_chck_atchfl_nm = B.dcomp_chck_atchfl_nm,
+				A.dcomp_chck_atch_flpth = B.dcomp_chck_atch_flpth
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.slip_no,
+				A.ecs_setcsc_div_cd,
+				A.ecs_chrg_dept_id,
+				A.iem_tit_ctnt,
+				A.entrps_nm,
+				A.slip_pstde,
+				A.excut_amt,
+				A.sum_amt,
+				A.charger_id,
+				A.iem_dtl_ctnt,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn,
+				A.lrge_chck_atchfl_nm,
+				A.lrge_chck_atch_flpth,
+				A.dcomp_chck_atchfl_nm,
+				A.dcomp_chck_atch_flpth
+			) VALUES (
+				B.slip_no,
+				B.ecs_setcsc_div_cd,
+				B.ecs_chrg_dept_id,
+				B.iem_tit_ctnt,
+				B.entrps_nm,
+				B.slip_pstde,
+				B.excut_amt,
+				B.sum_amt,
+				B.charger_id,
+				B.iem_dtl_ctnt,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn,
+				B.lrge_chck_atchfl_nm,
+				B.lrge_chck_atch_flpth,
+				B.dcomp_chck_atchfl_nm,
+				B.dcomp_chck_atch_flpth
+			)
+	</update>
+
+	<delete id="TM_ME10002_Dao_deleteBudgetExcut" parameterType="kw.ecs.me.mntmng.vo.BudgetExcutVo">
+		/* TM_ME10002_Dao_deleteBudgetExcut */
+		DELETE FROM
+			tm_me10002
+		WHERE
+			slip_no = #{slipNo}
+			AND ecs_chrg_dept_id = #{ecsChrgDeptId}
+	</delete>
+</mapper>

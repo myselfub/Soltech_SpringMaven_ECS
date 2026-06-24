@@ -1,0 +1,570 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSZZ2100000.xml
+			* 설 명 : 에너지공통_코드관리_공통코드관리
+			* 작성일 : 2023.06.21
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.06.21 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltClsCdList" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="clsCd" name="분류코드" dataType="text"></w2:column>
+						<w2:column id="clsCdNm" name="분류코드명" dataType="text"></w2:column>
+						<w2:column id="clsCdDc" name="분류코드설명" dataType="text"></w2:column>
+						<w2:column id="useYn" name="사용여부" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap id="dmaInqireParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="clsCd" name="분류코드" dataType="text"></w2:key>
+						<w2:key id="clsCdNm" name="분류코드명" dataType="text"></w2:key>
+						<w2:key id="clsCdDc" name="분류코드설명" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap id="dmaInqireParamCmmnCd" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="cmmnCdNm" name="공통코드명" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltCmmnCdList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="분류코드"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="공통코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="공통코드명"></w2:column>
+						<w2:column id="cmmnCdDc" dataType="text" name="공통코드설명"></w2:column>
+						<w2:column id="upperClsCd" name="상위분류코드" dataType="text"></w2:column>
+						<w2:column id="upperCmmnCd" name="상위공통코드" dataType="text"></w2:column>
+						<w2:column id="useYn" name="사용여부" dataType="text"></w2:column>
+						<w2:column id="sortOrdr" name="정렬순서" dataType="text"></w2:column>
+						<w2:column id="sapLnkYn" name="SAP연계여부" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu1" name="사용자정의기타1" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu2" name="사용자정의기타2" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu3" name="사용자정의기타3" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu4" name="사용자정의기타4" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu5" name="사용자정의기타5" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu6" name="사용자정의기타6" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu7" name="사용자정의기타7" dataType="text"></w2:column>
+						<w2:column id="usrDfnVu8" name="사용자정의기타8" dataType="text"></w2:column>
+						<w2:column id="frstYn" name="최초여부" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다. 
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSZZ2100000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 화면 오픈시 자동조회를 한다.
+		comLib.setEnterKeyEvent(grpInqire, scwin.btnInqire_onclick);
+		scwin.btnInqire_onclick();
+
+		ibxClsCdNm.focus();
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var requestData = {};
+
+		dltClsCdList.removeAll();
+		dltCmmnCdList.removeAll();
+
+		txtCnt2.setValue("0");
+
+		dmaInqireParam.set("useYn" , "N");
+		requestData.dmaInqireParam = dmaInqireParam.getJSON();
+
+		var option = {action : "zz/cmmncd/retrieveClsCd.do",
+			reqData : requestData,
+			resData : dltClsCdList,
+			success : "scwin.inqireClsCdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireClsCdCallback = function(resBody) {
+		if (resBody.message.code == 'success') {
+			if (dltClsCdList.getRowCount() > 0) {
+				txtCnt1.setValue(dltClsCdList.getRowCount());
+			}
+			for (var idx = 0; idx < dltClsCdList.getRowCount(); idx++) {
+				grdClsCdList.setCellReadOnly(idx, "clsCd", true);
+			}
+		} else {
+			comLib.alert($p, "fail");
+		}
+	};
+
+	/**
+	 * 선택한 분류코드로 등록된 공통코드를 조회한다.
+	 * @param <Int> row
+	 * @param <Int> col
+	 * @return
+	 */
+	scwin.grdClsCdList_oncellclick = function(row,col) {
+		var clsCd = dltClsCdList.getCellData(row , "clsCd");
+
+		dmaInqireParam.set("clsCd" , clsCd);
+
+		if (clsCd == null || clsCd == "") {
+			dltCmmnCdList.removeAll();
+			return;
+		}
+
+		// 분류코드 셀을 클릭시에만 해당 공통코드를 검색한다.
+		if (col == 0) {
+			scwin.inqireClsCmmnCd();
+		}
+	};
+
+	/**
+	 * 공통코드를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireClsCmmnCd = function () {
+		var requestData = {};
+		requestData.dmaInqireParam = dmaInqireParam.getJSON();
+		requestData.dmaInqireParam.cmmnCdNm = dmaInqireParamCmmnCd.get("cmmnCdNm");
+
+		var option = {
+			action : "zz/cmmncd/retrieveCmmnCd.do",
+			reqData : requestData,
+			resData : dltCmmnCdList,
+			success : "scwin.inqireClCmmnCdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireClCmmnCdCallback = function(resBody) {
+		if (resBody.message.code == 'success'){
+			txtCnt2.setValue(dltCmmnCdList.getRowCount());
+
+			for (var idx = 0; idx < dltCmmnCdList.getRowCount(); idx++) {
+				grdCmmnCdList.setCellReadOnly(idx, "clsCd", true);
+				grdCmmnCdList.setCellReadOnly(idx, "cmmnCd", true);
+			}
+		} else{
+			comLib.alert($p, "fail");
+		}
+	};
+
+	/**
+	 * 공통분류코드 행추가를 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnAddRow1_onclick = function() {
+		var newIndex = dltClsCdList.insertRow();
+
+		// 사용여부는 자동으로 설정되게 한다.
+		dltClsCdList.setCellData(newIndex, "useYn", "Y");
+
+		grdClsCdList.setFocusedCell(newIndex, "clsCd", true);
+	};
+
+	/**
+	 * 공통분류코드 행삭제를 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelRow1_onclick = function() {
+		var rowIndex = grdClsCdList.getFocusedRowIndex();
+		var rowStatus = dltClsCdList.getRowStatus(rowIndex);
+
+		if ( rowStatus != "C") {
+			dltClsCdList.setCellData(rowIndex, "useYn", "N");
+		} else {
+			dltClsCdList.removeRow(rowIndex);
+		}
+	};
+	
+	/**
+	 * 공통코드 행추가를 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnAddRow2_onclick = function() {
+		var newIndex = dltCmmnCdList.insertRow( );
+
+		// 공통코드 추가 시 선택한 분류코드를 자동 설정해 준다.
+		dltCmmnCdList.setCellData(newIndex, "clsCd", dmaInqireParam.get("clsCd"));
+		// 사용여부는 자동으로 설정되게 한다.  
+		dltCmmnCdList.setCellData(newIndex, "useYn", "Y");
+		dltCmmnCdList.setCellData(newIndex, "sortOrdr", dltCmmnCdList.getRowCount());
+		dltCmmnCdList.setCellData(newIndex, "sapLnkYn", "N");
+
+		grdCmmnCdList.setFocusedCell(newIndex, "cmmnCd", true);
+	};
+	
+	/**
+	 * 공통코드 행삭제를 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelRow2_onclick = function() {
+		var rowIndex = grdCmmnCdList.getFocusedRowIndex();
+		var rowStatus = dltCmmnCdList.getRowStatus(rowIndex);
+
+		if (rowStatus != "C") {
+			// 공통코드는 삭제를 할 수 없고 사용여부를 N으로 대체한다. 
+			dltCmmnCdList.setCellData(rowIndex, "useYn", "N");
+            grdCmmnCdList.setRowBackgroundColor(rowIndex, "#F7D9CC");
+            dltCmmnCdList.modifyRowStatus(rowIndex, "D");
+		} else {
+			dltCmmnCdList.removeRow(rowIndex);
+		}
+	};
+
+	/**
+	 * 작업중이던 내용을 무시하고 초기화 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnCancl_onclick = function() {
+		dmaInqireParam.reset();
+
+		dltClsCdList.removeAll();
+		dltCmmnCdList.removeAll();
+
+		scwin.btnInqire_onclick();
+	};
+	
+	/**
+	 * 공통분류코드, 공통코드 데이터를 수정/저장/삭제를 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		if (dltClsCdList.getModifiedData() == "") {
+			if (dltCmmnCdList.getModifiedData() == "") {
+				// 처리할 데이터가 없습니다. 
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+				return;
+			}
+		}
+
+		var cmmncnt = txtCnt2.getValue();
+
+		for(var idx = 0; idx < dltCmmnCdList.getRowCount(); idx++) {
+			if (cmmncnt == "0") { 
+				dltCmmnCdList.setCellData(idx, "frstYn", "Y");
+			} else {
+				dltCmmnCdList.setCellData(idx, "frstYn", "N");
+			}
+		}
+
+		var valInfo1 = [{id : "clsCd",  mandatory : true, minlength : 2}];
+		var valInfo2 = [
+			{id : "clsCd",  mandatory : true, minlength : 2},
+			{id : "cmmnCd",  mandatory : true, minlength : 2, maxlength : 10}
+		];
+
+		if (utilLib.validateGridView(grdClsCdList, valInfo1) || utilLib.validateGridView(grdCmmnCdList, valInfo2)) {
+			// 저장할것인지 confirm
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00239"), "scwin.saveConfirmCallback");
+		}
+	};
+
+	/**
+	 * 데이터 저장을 시행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var requestData = {};
+		requestData.dltClsCdList = dltClsCdList.getModifiedJSON();
+		requestData.dltCmmnCdList = dltCmmnCdList.getModifiedJSON();
+
+		var option = {action : "zz/cmmncd/saveCdList.do",
+		reqData : requestData,
+		success : "scwin.saveCdListCallback",
+		savedToken : true,
+		isShowMeg : false
+	};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 데이터 저장 처리 후 다시 조회를 한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.saveCdListCallback = function(resBody) {
+		//comLib.alert($p, resBody.message.code_name);
+		comLib.alert($p, utilLib.getMessage("SCM.INFO.00327"));
+
+		//scwin.btnSearchonclick();
+		//scwin.inqireClsCmmnCd();
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 그리드의 입력이 끝난 후 이벤트
+	 * @param <Int> row
+	 * @param <Int> col
+	 * @param <String> value
+	 * @return
+	 */	
+	scwin.grdClsCdList_onafteredit = function(row, col, value) {
+		var clsCd = dltClsCdList.getCellData(row, "clsCd");
+
+		if(col == 0) {
+			if (clsCd != "") {
+				// 분류코드에 입력된 문자가 소문자일 경우 소문자는 대문자로 전환
+				dltClsCdList.setCellData(row, "clsCd", clsCd.toUpperCase());
+			}
+		}
+	};]]></script>
+	</head>
+	<body>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group id="grpInqire" class="search-box">
+				<xf:group class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="분류코드명"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:input id="ibxClsCdNm" ref="data:dmaInqireParam.clsCdNm"></xf:input>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="공통코드명"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:input id="ibxCmmnCdNm" ref="data:dmaInqireParamCmmnCd.cmmnCdNm"></xf:input>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" ev:onclick="scwin.btnInqire_onclick" userData1="Q">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="layout-float">
+					<xf:group class="float-con left-area cw7">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="공통분류코드"></w2:span>
+									<w2:span id="txtCnt1" label="0" class="title-num"></w2:span>
+								</xf:group>
+								<xf:group class="com-area">
+									<xf:group class="btn-group">
+										<w2:anchor id="btnAddRow1" class="add_row fa fa-plus" ev:onclick="scwin.btnAddRow1_onclick" outerDiv="false" userData1="S">
+											<xf:label><![CDATA[행추가]]></xf:label>
+										</w2:anchor>
+										<w2:anchor id="btnDelRow1" class="del_row fa fa-minus" ev:onclick="scwin.btnDelRow1_onclick" outerDiv="false" userData1="D">
+											<xf:label><![CDATA[행삭제]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+									<xf:group class="info-box"></xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="list-box box">
+								<w2:gridView id="grdClsCdList" scrollByColumnAdaptive="false" summaryAuto="false" useShiftKey="true" scrollByColumn="false"
+									focusMode="row" fixedColumnWithHidden="true" dataList="dltClsCdList" ignoreCellClick="false" autoFit="allColumn"
+									ignoreToggleOnDisabled="false" sortable="true" tooltipDisplay="true" ev:oncellclick="scwin.grdClsCdList_oncellclick"
+									ev:onbeforeedit="scwin.grdClsCdList_onbeforeedit" ev:onafteredit="scwin.grdClsCdList_onafteredit" defaultCellHeight="35"
+									style="height:45.4rem;" keyMoveEditMode="true">
+									<w2:header>
+										<w2:row>
+											<w2:column id="hClsCd" inputType="text" value="분류코드" width="120">
+											</w2:column>
+											<w2:column id="hClsCdNm" inputType="text" value="분류코드명" width="150">
+											</w2:column>
+											<w2:column id="hClsCdDc" inputType="text" value="분류코드설명" width="*">
+											</w2:column>
+											<w2:column id="hUseYn" inputType="text" value="사용여부" width="80">
+											</w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="clsCd" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="clsCdNm" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="clsCdDc" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="useYn" inputType="checkbox" checkboxLabel="&amp;nbsp" valueType="other" trueValue="Y" falseValue="N">
+											</w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="float-con right-area cw13">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="공통코드"></w2:span>
+									<w2:span id="txtCnt2" class="title-num" label="0"></w2:span>
+								</xf:group>
+								<xf:group class="com-area">
+									<xf:group class="btn-group">
+										<w2:anchor id="btnAddRow2" class="add_row fa fa-plus" outerDiv="false" ev:onclick="scwin.btnAddRow2_onclick" userData1="S">
+											<xf:label><![CDATA[행추가]]></xf:label>
+										</w2:anchor>
+										<w2:anchor id="btnDelRow2" class="del_row fa fa-minus" ev:onclick="scwin.btnDelRow2_onclick" outerDiv="false" userData1="D">
+											<xf:label><![CDATA[행삭제]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+									<xf:group class="info-box"></xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="list-box box">
+								<w2:gridView id="grdCmmnCdList" autoFit="none" dataList="dltCmmnCdList" fixedColumnWithHidden="true" focusMode="row"
+									ignoreCellClick="false" ignoreToggleOnDisabled="false" scrollByColumn="false" scrollByColumnAdaptive="false" sortable="true"
+									summaryAuto="false" tooltipDisplay="true" useShiftKey="true" fixedColumn="3" defaultCellHeight="35" style="height:45.4rem;"
+									keyMoveEditMode="true">
+									<w2:header>
+										<w2:row>
+											<w2:column id="hClsCd" inputType="text" value="분류코드명" width="120">
+											</w2:column>
+											<w2:column id="hCmmnCd" inputType="text" value="공통코드" width="120">
+											</w2:column>
+											<w2:column id="hCmmnCdNm" inputType="text" value="공통코드명" width="150">
+											</w2:column>
+											<w2:column id="hCmmnCdDc" inputType="text" value="공통코드설명" width="200">
+											</w2:column>
+											<w2:column id="hUpperClsCd" inputType="text" value="상위분류코드" width="120">
+											</w2:column>
+											<w2:column id="hUpperCmmnCd" inputType="text" value="상위공통코드" width="120">
+											</w2:column>
+											<w2:column id="hUseYn" inputType="text" value="사용여부" width="80">
+											</w2:column>
+											<w2:column id="hSortOrdr" inputType="text" value="정렬순서" width="70">
+											</w2:column>
+											<w2:column id="hSapLnkYn" inputType="text" value="SAP연계여부" width="80">
+											</w2:column>
+											<w2:column id="hUsrDfnVu1" inputType="text" value="사용자정의기타1" width="120">
+											</w2:column>
+											<w2:column id="hUsrDfnVu2" inputType="text" value="사용자정의기타2" width="120">
+											</w2:column>
+											<w2:column id="hUsrDfnVu3" inputType="text" value="사용자정의기타3" width="120">
+											</w2:column>
+											<w2:column id="hUsrDfnVu4" inputType="text" value="사용자정의기타4" width="120">
+											</w2:column>
+											<w2:column id="hUsrDfnVu5" inputType="text" value="사용자정의기타5" width="120">
+											</w2:column>
+											<w2:column id="hUsrDfnVu6" inputType="text" value="사용자정의기타6" width="120">
+											</w2:column>
+											<w2:column id="hUsrDfnVu7" inputType="text" value="사용자정의기타7" width="120">
+											</w2:column>
+											<w2:column id="hUsrDfnVu8" inputType="text" value="사용자정의기타8" width="120">
+											</w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="clsCd" inputType="text"></w2:column>
+											<w2:column id="cmmnCd" inputType="text"></w2:column>
+											<w2:column id="cmmnCdNm" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="cmmnCdDc" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="upperClsCd" inputType="text"></w2:column>
+											<w2:column id="upperCmmnCd" inputType="text"></w2:column>
+											<w2:column id="useYn" inputType="checkbox" trueValue="Y" valueType="other" checkboxLabel="&amp;nbsp" falseValue="N"></w2:column>
+											<w2:column id="sortOrdr" inputType="text"></w2:column>
+											<w2:column id="sapLnkYn" inputType="checkbox" trueValue="Y" valueType="other" checkboxLabel="&amp;nbsp" falseValue="N"></w2:column>
+											<w2:column id="usrDfnVu1" inputType="text"></w2:column>
+											<w2:column id="usrDfnVu2" inputType="text"></w2:column>
+											<w2:column id="usrDfnVu3" inputType="text"></w2:column>
+											<w2:column id="usrDfnVu4" inputType="text"></w2:column>
+											<w2:column id="usrDfnVu5" inputType="text"></w2:column>
+											<w2:column id="usrDfnVu6" inputType="text"></w2:column>
+											<w2:column id="usrDfnVu7" inputType="text"></w2:column>
+											<w2:column id="usrDfnVu8" inputType="text"></w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnSave" ev:onclick="scwin.btnSave_onclick" outerDiv="false" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnCancl" ev:onclick="scwin.btnCancl_onclick" outerDiv="false" userData1="CC">
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

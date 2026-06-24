@@ -1,0 +1,655 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSEC4100000.xml
+			* 설 명 : 전력에너지실적현황_탄소중립율
+			* 작성일 : 2023.02.02
+			* 담당자 : Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.02 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="strtDt" dataType="number" name="조회시작월"></w2:key>
+						<w2:key id="endDt" dataType="number" name="조회종료월"></w2:key>
+						<w2:key id="basinCd" dataType="text" name="유역코드"></w2:key>
+						<w2:key id="deptCd" dataType="text" name="부서코드"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltAutoCondition1" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition2" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCbnntrltList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="ym" dataType="text" name="년월"></w2:column>
+						<w2:column id="itkpl" dataType="number" name="배출량(tCO2) - 취수시설"></w2:column>
+						<w2:column id="prnplc" dataType="number" name="배출량(tCO2) - 가압시설"></w2:column>
+						<w2:column id="fltplt" dataType="number" name="배출량(tCO2) - 정수시설"></w2:column>
+						<w2:column id="buld" dataType="number" name="배출량(tCO2) - 건물"></w2:column>
+						<w2:column id="dam" dataType="number" name="배출량(tCO2) - 댐시설"></w2:column>
+						<w2:column id="trnsp" dataType="number" name="배출량(tCO2) - 수송"></w2:column>
+						<w2:column id="etc" dataType="number" name="배출량(tCO2) - 기타"></w2:column>
+						<w2:column id="dsqtySum" dataType="number" name="배출량(tCO2) - 합계"></w2:column>
+						<w2:column id="lgwtpw" dataType="number" name="감축량(tCO2) - 대수력"></w2:column>
+						<w2:column id="smlhp" dataType="number" name="감축량(tCO2) - 소수력"></w2:column>
+						<w2:column id="tdpw" dataType="number" name="감축량(tCO2) - 조력"></w2:column>
+						<w2:column id="wdpw" dataType="number" name="감축량(tCO2) - 풍력"></w2:column>
+						<w2:column id="snpw" dataType="number" name="감축량(tCO2) - 태양광"></w2:column>
+						<w2:column id="rqtySum" dataType="number" name="감축량(tCO2) - 합계"></w2:column>
+						<w2:column id="acmtrt" dataType="number" name="중립율(%)"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"chart" : {
+			"chartUnit" : 10,
+			"chartIntervalCount" : 5,
+			"rqtyDisplayLabel" : {
+				"lgwtpw" : "대수력",
+				"smlhp" : "소수력",
+				"tdpw" : "조력",
+				"wdpw" : "풍력",
+				"snpw" : "태양광"
+			},
+			"dsqtyDisplayLabel" : {
+				"itkpl" : "취수시설",
+				"prnplc" : "가압시설",
+				"fltplt" : "정수시설",
+				"buld" : "건물",
+				"dam" : "댐시설",
+				"trnsp" : "수송",
+				"etc" : "기타"
+			}
+		},
+		"observeEvent" : false
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSEC4100000", {"initScreenCallback" : scwin.searchDatas});
+		// ecsLib.setChartResizeObserver(this);
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 조회조건 초기 설정
+		scwin.initSearchParam();
+		// 화면 데이터 조회
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 조회조건 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initSearchParam = function() {
+		var endDt = utilLib.getCurrentDate("yyyyMM");
+		var basinCd = "ALL";
+
+		var params = $p.getParameter("param");
+		if (params) {
+			if (params.ym) {
+				endDt = String(params.ym);
+				//today = String(params.ym) + "1231";
+			}
+			if (params.basinCd) {
+				basinCd = params.basinCd;
+				acbBasin.setValue(basinCd);
+			}
+		}
+		var strtDt = endDt.substr(0, 4) + "01";
+
+		dmaSearchParam.set("strtDt", strtDt);
+		dmaSearchParam.set("endDt", endDt);
+		dmaSearchParam.set("basinCd", basinCd);
+		dmaSearchParam.set("deptCd", "ALL");
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var strtDate = dmaSearchParam.get("strtDt");
+		var endDate = dmaSearchParam.get("endDt");
+		var ecsBasinDivCd = dmaSearchParam.get("basinCd");
+		var ecsChrgDeptId = dmaSearchParam.get("deptCd");
+
+		if (String(strtDate).length != 6 || String(endDate).length != 6) {
+			// 조회기간이 올바르지 않습니다.
+			alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+			return;
+		} else if (utilLib.minusMonths(strtDate, endDate) > 12 ? true : false) {
+			// 조회기간은 {0}을 넘어갈 수 없습니다. 다시 설정해 주세요.
+			alert(utilLib.getMessage("ECS.INFO.00012", "12개월")[0]);
+			return;
+		} else if (parseInt(strtDate) > parseInt(endDate)) {
+			// 시작년월이 종료년월일보다 클수 없습니다.
+			alert(utilLib.getMessage("ECS.INFO.00014")[0]);
+			return;
+		}
+
+		var queryString = `?strtDt=${strtDate}`;
+		queryString += `&endDt=${endDate}`;
+		queryString += `&ecsBasinDivCd=${ecsBasinDivCd}`;
+		queryString += `&ecsChrgDeptId=${ecsChrgDeptId}`;
+
+		var option = {
+			action : "ec/energyacmsltmng/cbnntrlt/retrieve-cbn-ntrlt.do"
+				+ queryString,
+			method : "get",
+			resData : dltCbnntrltList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCallback = function() {
+		spnTotalRow.setValue(dltCbnntrltList.getRowCount());
+		// 탄소 감축량 차트 생성
+		scwin.searchChartRqty();
+		// 탄소 배출량 차트 생성
+		scwin.searchChartDsqty();
+	};
+
+	//============================================================================================
+	// 차트
+	//============================================================================================
+	/**
+	 * 탄소 감축량 차트를 생성
+	 */
+	scwin.searchChartRqty = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerRqty";
+		rMateChartH5.create($p.id + "chartRqty", grpChartRqty.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * 탄소 감축량 차트 설정
+	 */
+	scwin.chartReadyHandlerRqty = function(id) {
+		var rqtyData = dltCbnntrltList.getAllJSON();
+		var titleObj = {};
+		titleObj.lgwtpw = rqtyData.reduce((sum, obj) => sum += Number(obj.lgwtpw), 0);
+		titleObj.smlhp = rqtyData.reduce((sum, obj) => sum += Number(obj.smlhp), 0);
+		titleObj.tdpw = rqtyData.reduce((sum, obj) => sum += Number(obj.tdpw), 0);
+		titleObj.wdpw = rqtyData.reduce((sum, obj) => sum += Number(obj.wdpw), 0);
+		titleObj.snpw = rqtyData.reduce((sum, obj) => sum += Number(obj.snpw), 0);
+
+		var maxData = Math.max(...Object.values(titleObj));
+
+		titleObj.total =  ecsLib.dsplZeroFrmt(rqtyData.reduce((sum, obj) => sum += Number(obj.rqtySum), 0));
+
+		var chartList = [];
+		for (var key in scwin.initData.chart.rqtyDisplayLabel) {
+			var name =  scwin.initData.chart.rqtyDisplayLabel[key];
+			// var rqty =  rqtyData.reduce((sum, obj) => obj.key ? sum + Number(obj.key) : sum, 0) || 0;
+			var rqty =  titleObj[key];
+			chartList.push({
+					"name" : name,
+					"rqty" : rqty
+			});
+		};
+
+		var chartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+		var interval = Math.ceil((maxData / scwin.initData.chart.chartIntervalCount) / chartUnit) * chartUnit;
+
+		var fillColor = "#30A744";
+		var captionSpan = "&lt;span style=&quot;color:" + fillColor + ";&quot;&gt;" + titleObj.total + "&lt;/span&gt;";
+		var captionSpan2 = "&lt;span style=&quot;font-size:0.7rem; color:" + fillColor + "; margin-left: -0.2rem;&quot;&gt;tCO2&lt;/span&gt;";
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Caption text="Total ' + captionSpan + ' ' + captionSpan2 + ' 온실가스 감축량" textAlign="right" paddingTop="8" paddingRight="8" paddingBottom="8" fontWeight="bold" />'
+			+ '		<Legend />'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" />'
+			+ '	<Column2DChart showDataTips="true" dataTipDisplayMode="axis" maxColumnWidth="25">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis categoryField="name" />'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis" interval="' + interval + '" formatter="{numFmt}" title="tCO2"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSeries color="#666666" labelPosition="outside" fontWeight="bold" yField="rqty" displayName="탄소 감축량(tCO2)">'
+			+ '				<fill>'
+			+ '					<SolidColor color="' + fillColor + '"/>'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '			</series>'
+			+'		<verticalAxisRenderers>'
+			+'			<Axis2DRenderer axis="{vAxis}" placement="left" verticalAxisTitleAlignment="vertical" titleGap="0" canDropLabels="false" showLine="false"/>'
+			+'		</verticalAxisRenderers>'
+			+ '	</Column2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	};
+
+	/**
+	 * 탄소 배출량 차트를 생성
+	 */
+	scwin.searchChartDsqty = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerDsqty";
+		rMateChartH5.create($p.id + "chartDsqty", grpChartDsqty.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * 탄소 배출량 차트 설정
+	 */
+	scwin.chartReadyHandlerDsqty = function(id) {
+		var dsqtyData = dltCbnntrltList.getAllJSON();
+		var titleObj = {};
+		titleObj.itkpl = dsqtyData.reduce((sum, obj) => sum += Number(obj.itkpl), 0);
+		titleObj.prnplc = dsqtyData.reduce((sum, obj) => sum += Number(obj.prnplc), 0);
+		titleObj.fltplt = dsqtyData.reduce((sum, obj) => sum += Number(obj.fltplt), 0);
+		titleObj.buld = dsqtyData.reduce((sum, obj) => sum += Number(obj.buld), 0);
+		titleObj.trnsp = dsqtyData.reduce((sum, obj) => sum += Number(obj.trnsp), 0);
+		titleObj.dam = dsqtyData.reduce((sum, obj) => sum += Number(obj.dam), 0);
+		titleObj.etc = dsqtyData.reduce((sum, obj) => sum += Number(obj.etc), 0);
+
+		var maxData = Math.max(...Object.values(titleObj));
+
+		// titleObj.total = new Intl.NumberFormat("ko-KR").format(itkpl + prnplc + fltplt + buld + trnsp + dam + etc);
+		titleObj.total = ecsLib.dsplZeroFrmt(dsqtyData.reduce((sum, obj) => sum += Number(obj.dsqtySum), 0));
+		// var total = chartData[0].dsqtySum + chartData[1].dsqtySum + chartData[2].dsqtySum + chartData[3].dsqtySum + chartData[4].dsqtySum ;
+		var chartList = [];
+		for (var key in scwin.initData.chart.dsqtyDisplayLabel) {
+			var name =  scwin.initData.chart.dsqtyDisplayLabel[key]
+			// var dsqty =  dsqtyData.reduce((sum, obj) => obj.key ? sum + Number(obj.key) : sum, 0) || 0;
+			var dsqty =  titleObj[key];
+			chartList.push({
+					"name" : name,
+					"dsqty" : dsqty
+			});
+		};
+
+		var chartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+		var interval = Math.ceil((maxData / scwin.initData.chart.chartIntervalCount) / chartUnit) * chartUnit;
+
+		var fillColor = "#E67780";
+		var captionSpan = "&lt;span style=&quot;color:" + fillColor + ";&quot;&gt;" + titleObj.total + "&lt;/span&gt;";
+		var captionSpan2 = "&lt;span style=&quot;font-size:0.7rem; color:" + fillColor + "; margin-left: -0.2rem;&quot;&gt;tCO2&lt;/span&gt;";
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Caption text="Total ' + captionSpan + ' ' + captionSpan2 + ' 온실가스 배출량" textAlign="right" paddingTop="8" paddingRight="8" paddingBottom="8" fontWeight="bold" />'
+			+ '		<Legend />'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" />'
+			+ '	<Column2DChart showDataTips="true" dataTipDisplayMode="axis" maxColumnWidth="25">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis categoryField="name" />'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis" interval="' + interval + '" formatter="{numFmt}" title="tCO2"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSeries color="#666666" labelPosition="outside" fontWeight="bold" yField="dsqty" displayName="탄소 배출량(tCO2)">'
+			+ '				<fill>'
+			+ '					<SolidColor color="' + fillColor + '" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '		</series>'
+			+'		<verticalAxisRenderers>'
+			+'			<Axis2DRenderer axis="{vAxis}" placement="left" verticalAxisTitleAlignment="vertical" titleGap="0" canDropLabels="false" showLine="false"/>'
+			+'		</verticalAxisRenderers>'
+			+ '	</Column2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	};
+
+	/**
+	 * 조회박스 선택별 값을 세팅한다.
+	 * @param info
+	 * @return
+	 */
+	scwin.acbBasin_onviewchange = function(info) {
+		var ecsBasinDivCd = info.newValue;
+		dmaSearchParam.set("basinCd", ecsBasinDivCd);
+
+		var queryString = `?ecsBasinDivCd=${ecsBasinDivCd}`;
+		var option = {
+			action : "zz/cmmn/retrieve-cnsmp-cnd-dept.do"
+				+ queryString,
+			method : "get",
+			resData : dltAutoCondition2,
+			success : "",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+		dmaSearchParam.set("deptCd", "ALL");
+	};
+
+	scwin.acbDept_onviewchange = function(info) {
+		dmaSearchParam.set("deptCd", info.newValue);
+	};
+
+	/**
+	 * 그리드 합계 소수점 첫째자리까지 표시 한다.
+	 * @param value
+	 * @return
+	 */
+	scwin.dsplFrmt = function(value) {
+		return ecsLib.dsplFrmt(value, 1);
+	};
+
+	// 중립율 계산_240123
+	scwin.fAcmtrtCalc = function() {
+		var fDsqtySumData = grdCbnntrltList.getFooterData("fDsqtySum");
+		var fRqtySumData = grdCbnntrltList.getFooterData("fRqtySum");
+		return fRqtySumData / fDsqtySumData * 100;
+	};
+
+	//============================================================================================
+	// 엑셀
+	//============================================================================================
+	/**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		// 엑셀 내부 타이틀 추가_240105
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 16,
+			text 		: `${menuNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		comLib.downloadExcel(grdCbnntrltList, {
+			fileName : `${menuNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			useDataFormat : true,
+			applyDataFormat : true,
+			decimal : "auto"
+		}, infoArr);
+	};
+]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회기간"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw3" tagname="td">
+								<!-- <w2:period_Cal strtDateRef="data:dmaSearchParam.strtDt" endDateRef="data:dmaSearchParam.endDt"></w2:period_Cal> -->
+								<w2:period_month_calendar strtDateRef="data:dmaSearchParam.strtDt" endDateRef="data:dmaSearchParam.endDt"></w2:period_month_calendar>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="유역"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="acbBasin" displayMode="label" editType="select" search="contain" submenuSize="auto"
+									useKeywordHighlight="true" visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL"
+									ev:onviewchange="scwin.acbBasin_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition1">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="부서"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete displayMode="label" editType="select" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL" ev:onviewchange="scwin.acbDept_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition2">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" userData1="Q" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" outerDiv="false" userData1="E"
+						ev:onclick="scwin.btnDownExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group class="wd-100" tagname="h3">
+							<w2:span class="inline-block wd-51" label="탄소 배출량"></w2:span>
+							<w2:span class="inline-block wd-49" label="탄소 감축량"></w2:span>
+						</xf:group>
+					</xf:group>
+					<xf:group class="layout-float">
+						<xf:group class="float-con left-area cw10">
+							<xf:group class="con-box">
+								<xf:group id="grpChartDsqty" class="view-box box chart-wrap-padding" style="width:100%; height:300px;"></xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="float-con right-area cw10">
+							<xf:group class="con-box">
+								<xf:group id="grpChartRqty" class="view-box box chart-wrap-padding" style="width:100%; height:300px;"></xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span label="탄소 운영현황"></w2:span>
+							<w2:span id="spnTotalRow" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+							<w2:span class="sub-title-l" label="&amp;emsp;* 산정식 = 전기사용량 × 이산화탄소 환산 배출계수"></w2:span>
+						</xf:group>
+					</xf:group>
+					<xf:group class="list-box box">
+						<w2:gridView id="grdCbnntrltList" class="resized" dataList="dltCbnntrltList" readOnly="true" checkReadOnlyOnPaste="true"
+							checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" sortable="true" tooltipDisplay="true" defaultCellHeight="35"
+							style="height:27.3rem;">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hym" inputType="text" width="40" value="년월" rowSpan="2"></w2:column>
+									<w2:column id="hDsqtySumTitle" class="border-right" inputType="text" width="520" value="배출량(tCO2)" colSpan="8"></w2:column>
+									<w2:column id="hRqtySumTitle" inputType="text" width="390" value="감축량(tCO2)" colSpan="6"></w2:column>
+									<w2:column id="hacmtrt" class="grd-header-back-color" inputType="text" width="50" value="중립율(%)" rowSpan="2"></w2:column>
+								</w2:row>
+								<w2:row>
+									<w2:column id="hItkpl" inputType="text" width="65" value="취수시설"></w2:column>
+									<w2:column id="hPrnplc" inputType="text" width="65" value="가압시설"></w2:column>
+									<w2:column id="hFltplt" inputType="text" width="65" value="정수시설"></w2:column>
+									<w2:column id="hBuld" inputType="text" width="65" value="건물"></w2:column>
+									<w2:column id="hDam" inputType="text" width="65" value="댐시설"></w2:column>
+									<w2:column id="hTrnsp" inputType="text" width="65" value="수송"></w2:column>
+									<w2:column id="hEtc" inputType="text" width="65" value="기타"></w2:column>
+									<w2:column id="hDsqtySum" class="grd-header-back-color border-right" width="65" inputType="text" value="합계"></w2:column>
+									<w2:column id="hLgwtpw" inputType="text" width="65" value="대수력"></w2:column>
+									<w2:column id="hSmlhp" inputType="text" width="65" value="소수력"></w2:column>
+									<w2:column id="hTdpw" inputType="text" width="65" value="조력"></w2:column>
+									<w2:column id="hWdpw" inputType="text" width="65" value="풍력"></w2:column>
+									<w2:column id="hSnpw" inputType="text" width="65" value="태양광"></w2:column>
+									<w2:column id="hRqtySum" class="grd-header-back-color" inputType="text" width="65" value="합계"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="ym" inputType="text" maxByteLength="16" displayFormat="####-##"></w2:column>
+									<w2:column id="itkpl" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="prnplc" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fltplt" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="buld" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="dam" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="trnsp" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="etc" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="dsqtySum" class="grd-right border-right" inputType="text" maxByteLength="16" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="lgwtpw" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="smlhp" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="tdpw" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="wdpw" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="snpw" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="rqtySum" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="acmtrt" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+								</w2:row>
+							</w2:gBody>
+							<w2:footer>
+								<w2:row>
+									<w2:column id="fYm" inputType="text" value="합계"></w2:column>
+									<w2:column id="fItkpl" class="grd-right" displayFormat="#,###" expression="sum('itkpl')" inputType="expression"
+										textAlign="right"></w2:column>
+									<w2:column id="fPrnplc" class="grd-right" displayFormat="#,###" expression="sum('prnplc')" inputType="expression"
+										textAlign="right"></w2:column>
+									<w2:column id="fFltplt" class="grd-right" displayFormat="#,###" expression="sum('fltplt')" inputType="expression"
+										textAlign="right"></w2:column>
+									<w2:column id="fBuld" class="grd-right" displayFormat="#,###" expression="sum('buld')" inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fDam" class="grd-right" displayFormat="#,###" expression="sum('dam')" inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fTrnsp" class="grd-right" displayFormat="#,###" expression="sum('trnsp')" inputType="expression"
+										textAlign="right"></w2:column>
+									<w2:column id="fEtc" class="grd-right" displayFormat="#,###" expression="sum('etc')" inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fDsqtySum" class="grd-right" displayFormat="#,###" expression="sum('dsqtySum')" inputType="expression"
+										textAlign="right"></w2:column>
+									<w2:column id="fLgwtpw" class="grd-right" displayFormat="#,###" expression="sum('lgwtpw')" inputType="expression"
+										textAlign="right"></w2:column>
+									<w2:column id="fSmlhp" class="grd-right" displayFormat="#,###" expression="sum('smlhp')" inputType="expression"
+										textAlign="right"></w2:column>
+									<w2:column id="fTdpw" class="grd-right" displayFormat="#,###" expression="sum('tdpw')" inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fWdpw" class="grd-right" displayFormat="#,###" expression="sum('wdpw')" inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fSnpw" class="grd-right" displayFormat="#,###" expression="sum('snpw')" inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fRqtySum" class="grd-right" displayFormat="#,###" expression="sum('rqtySum')" inputType="expression"
+										textAlign="right"></w2:column>
+									<w2:column id="fAcmtrt" class="grd-right" displayFormat="#,###" expression="scwin.fAcmtrtCalc()" inputType="expression"
+										displayFormatter="scwin.dsplFrmt" textAlign="right"></w2:column>
+								</w2:row>
+							</w2:footer>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

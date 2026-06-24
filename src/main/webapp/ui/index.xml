@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Context Root + resources/css/*.css 로 include -->
+<?xml-stylesheet href="/resources/css/common.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/layout.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/animate.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content-layout.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/font-awesome.min.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/jquery.mCustomScrollbar.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataList baseNode="list" repeatNode="map" id="_dltRestdeList" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="mngStdrDe" name="mngStdrDe" dataType="text"></w2:column>
+						<w2:column id="restdeSeq" name="restdeSeq" dataType="text"></w2:column>
+						<w2:column id="restdeNm" name="restdeNm" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false">
+					</w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="javascript"><![CDATA[
+		// var status = "MDI";
+
+		/**
+		 * 화면 초기화에 필요한 로직을 수행한다.
+		 */
+		scwin.initScreen = function() {
+			if(utilLib.getDomainFromUrl(window.location.href) == "http://tecs.[BASE_DOMAIN]" ||
+				utilLib.getDomainFromUrl(window.location.href) == "http://ecs.[BASE_DOMAIN]"
+			) {
+				$('<object id="kwaterretireembed" classid="clsid:90AD833E-2B48-4D2D-B282-B47DDD3F25C0" codebase="/resources/js/ecs/wd/module/KwaterRSMS.ocx#version=1,0,0,0" width="0" height="0" align="center" hspace="0" vspace="0"></object>').prependTo("body");
+			}
+
+			wfm_left.getWindow().scwin.navHeight();
+			scwin.usermenu();
+			wfm_left.getWindow().scwin.usermenu();
+			scwin.navBoard();
+			$(window).resize(function() {
+				scwin.winresize();
+			});
+
+			window.onresize();
+			// 화면초기화 공통 함수 호출
+			// comLib.initForm($p, "MENU0001");
+
+			// wdcMain.createWindow("01_List_normal", null, "/ui/sc/01_List_normal.xml", null, null, null, null, null, null, null, "wframe");
+			// onloadJS();
+
+			// wdcMain.createWindow("webgui", null, "https://imdevsapap.[BASE_DOMAIN]:8443/sap/bc/webdynpro/sap/zkctwd0020?sap-client=310&sap-language=EN#", null, "webgui01", null, null, null, null, null, "wframe");
+
+			// wdcMain.createWindow("sap_ex02", null, "/ui/sample/sap/sap_ex02.xml", null, "sap_ex02", null, null, null, null, null, "wframe");
+			// wdcMain.createWindow("sap_ex03", null, "/ui/sample/sap/sap_ex03.xml", null, "sap_ex03", null, null, null, null, null, "wframe");
+
+			// wdcMain.createWindow("another_domain", null, "http://[INTERNAL_IP]:[PORT]/da/websquare/websquare.jsp?w2xPath=/da/ui/sample/sample.xml", null, "another_domain1", null, null, null, null, null, "wframe");
+
+			// 사용자 메뉴, 버튼 권한 조회
+			scwin.initMenu();
+
+			// SAP 통화 조회
+			// scwin.initCurrShift();
+
+			// 휴일 데이터 조회
+			scwin.inqireRestde();
+
+			// 모든 messag data list 조회
+			comLib.retrieveAllMsg($p);
+
+			var targetMenuId = $p.getParameter("menuId");
+
+			// menuId 파라메터가 있을 경우 화면 호출
+			if (!utilLib.isNull(targetMenuId)) {
+				// 메뉴가 박혀 있는 곳 (scwin.initMenu() 를 호출하지 않을 경우 사용)
+				scwin.createWinOasisFav(targetMenuId);
+			} else {
+				// wdcMain.createWindow("에너지전주기", null, "/ui/main/main_ecs.xml", "에너지전주기", "main_ecs", null, "scwin.mainEcsClose", null, null, null, "wframe");
+				// wdcMain.getWindowByWindowId("main_ecs").scwin.initScreen();
+				setTimeout(function() { 
+					wdcMain.createWindow("에너지전주기", null, "/ui/main/main_ecs.xml", "에너지전주기", "main_ecs", null, "scwin.mainEcsClose", null, null, null, "wframe");
+				}, 200);
+			}
+
+			// 메뉴가 박혀 있는 곳 (scwin.initMenu() 를 호출하지 않을 경우 사용)
+			// scwin.createWinOasisFav();
+
+			// 공지팝업 띄우기.
+			scwin.openNoticePopup();
+			$(document).keydown(function(e) {
+				// 백스페이스 뒤로가기
+				if (e.keyCode == 8) {
+					$(window).unbind("beforeunload", scwin.logoutFunction);
+				}
+				// Alt + 왼쪽 또는 오른쪽 뒤로가기 / 앞으로가기
+				if (e.altKey && (e.keyCode == 37 || e.keyCode == 39)) {
+					$(window).unbind("beforeunload", scwin.logoutFunction);
+				}
+
+				// Ctrl + R 새로고침
+				if (e.ctrlKey && e.keyCode == 82) {
+					$(window).unbind("beforeunload", scwin.logoutFunction);
+				}
+				// F5 새로고침
+				if (e.keyCode == 116) {
+					$(window).unbind("beforeunload", scwin.logoutFunction);
+				}
+			});
+		};
+
+		// 메인화면 닫기 금지
+		scwin.mainEcsClose = function() {
+			return false;
+		};
+
+		// 휴일 데이터 조회
+		scwin.inqireRestde = function() {
+			var requestData = {};
+			requestData.dmaInqireParam = {
+				stdrYear : ""
+			};
+
+			var option = {
+				action : "sc/restdemng/retrieveRestdeList.do",
+				reqData : requestData,
+				resData : _dltRestdeList,
+				success : "",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		};
+
+		scwin.logoutFunction = function(e) {
+			var requestData = {} ;
+			requestData.dmaReqInfo = {
+				sysDivCd : comLib.getSysDivCd(),
+				usrId : comLib.getUsrId()
+			};
+			var option = {
+				action : "sc/login/logoutIntnUsr.do",
+				reqData : requestData,
+				success : "scwin.callBackLogoutFunction",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjaxSync($p, option);
+		};
+
+		scwin.callBackLogoutFunction = function(resBody) {
+			alert(resBody.message.code_name);
+		};
+
+		// $(window).bind("beforeunload", logoutFunction);
+
+		// 사용자 메뉴, 버튼 권한 조회
+		scwin.initMenu = function() {
+			var requestData = {
+				"usrId" : comLib.getUsrId()
+			};
+			/*
+			var option = {
+				action : "sc/menuMng/getPersonMenuList.do",
+				reqData : requestData,
+				resData : dlt_LeftMenuList,
+				success : "scwin.initMenuCallback",
+				isShowMeg : false
+			};
+			*/
+			var option = {
+				action : "zz/menumng/retrieveUsrMenu.do",
+				reqData : requestData,
+				resData : wfm_left.getWindow().dltLeftMenuList,
+				success : "scwin.initMenuCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjaxSync($p, option);
+		};
+
+		// 사용자 메뉴, 버튼 권한 조회 콜백
+		scwin.initMenuCallback = function() {
+			// 전체메뉴 초기화
+			comLib.initAllMenu();
+			// trvMenu.expandNode(1, true);
+			// wfm_left.getWindow().trvMenu.expandNode(1, true);
+
+			// scwin.createWinOasisFav();
+		};
+
+		/**
+		 * 오아시스에서 즐겨찾기로 들어올 경우 화면 직접 호출.
+		 * menuId 파라메터가 있을 경우 호출.
+		 */
+		scwin.createWinOasisFav = function(targetMenuId) {
+			// var targetMenuId = $p.getParameter("menuId"); //이미넘겨받았음 ㅠㅠ
+
+			// menuId 파라메터가 있을 경우 화면 호출
+			if (!utilLib.isNull(targetMenuId)) {
+				// Daon 결재
+				var aprvRequstNo = $p.getParameter("aprvRequstNo");
+				var docCd = $p.getParameter("docCd");
+				var docTit = decodeURI($p.getParameter("docTit"));
+				var docNo = $p.getParameter("docNo");
+				var sanctnParam = {
+					aprvRequstNo : aprvRequstNo,
+					docCd : docCd,
+					docTit : docTit,
+					docNo : docNo
+				};
+
+				if (typeof Storage === "function" || typeof Storage === "object") {
+					sessionStorage.setItem("sanctnParam", JSON.stringify(sanctnParam));
+				}
+
+				// 화면 호출
+				var menuList =$p.top().wfm_left.getWindow().dltLeftMenuList.getMatchedJSON("menuId", targetMenuId, true);
+
+				if (menuList.length == 0) {
+					return;
+				}
+
+				var menu = menuList[0];
+				var scrinId = menu.scrinId;
+				var menuNm = menu.menuNm;
+				var scrinUrl = menu.scrinUrl;
+
+				var menuInfo = {
+					"menuId" : menu.menuId,
+					"menuNm" : menuNm,
+					"scrinId" : scrinId,
+					"usrId" : comLib.getUsrId(),
+					"sysDivCd" : comLib.getSysDivCd(),
+					"conectIp" : comLib.getConectIp()
+				};
+
+				// 화면뜨는 시간 딜레이를 왜주는지 모르겠지만 준다 ㅠㅠ 않줄경우 해당 화면 initScreen 함수가 않먹는다
+				comLib.createWindow(menuNm, null, scrinUrl, null, scrinId, null, null, null, null, null, "wframe");
+
+				comLib.insertMenuLog($p,menuInfo);
+			}
+		};
+
+		//SAP 통화 조회
+		scwin.initCurrShift = function() {
+			var requestData = {
+				"RFC_NAME" : "ZKCC_CURR_SHIFT",
+				"EXPORT_TABLE" : ["TT_CURR_SHIFT"]
+			};
+			var option = {
+				action : "sc/sap/getCurrShiftList.do",
+				reqData : requestData,
+				resData : "",
+				success : "scwin.initCurrShiftCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		};
+
+		// SAP 통화 조회 콜백
+		scwin.initCurrShiftCallback = function(resBody) {
+			dltCurrShift.setJSON(resBody.data.data1);
+		};
+
+		scwin.btnMenu_onclick = function() {
+			var btnIDArr = this.getID().split("_");
+			var s = btnIDArr[1];
+			// btnMenu_01
+			fn_addTab(s);
+		};
+
+		scwin.side_wide_toggle_onclick = function() {
+			container.removeClass("sd_slide");
+			container.toggleClass("sd_wide");
+		};
+
+		scwin.menu_bar_toggle_onclick = function() {
+			this.toggleClass("open");
+		};
+
+		scwin.header_toggle_onclick = function() {
+			if($p.top().wdcMain.currentWindowNum > 0){
+				wrap.toggleClass("header_hide");
+			}
+		};
+
+		scwin.navBoard = function() {
+			$(".list li a").click(function() {
+				$("table.creat").removeClass("table-on");
+				$("table.mody").removeClass("table-on");
+				$("table.view").addClass("table-on");
+				$(".list > ul > li").removeClass("active");
+				$(this).parent().parent().addClass("active");
+			});
+
+			// 질문답변
+			$(".btn_m_icon4").click(function() {
+				// wframeLeft.setSrc("/ui/common/content_board.xml");
+				wframeLeft.setSrc("/ui/common/content_qna.xml");
+				$(".nav-board.qna").addClass("board-on");
+				comLib.initQan($p);
+			});
+
+			// 공지사항
+			$(".btn_m_icon2").click(function() {
+				wframeLeft.setSrc("/ui/common/content_ntt.xml");
+				$(".nav-board.faq").addClass("board-on");
+				comLib.initNtt($p, "01");
+			});
+
+			// 자료실
+			$(".btn_m_icon3").click(function() {
+				wframeLeft.setSrc("/ui/common/content_ntt.xml");
+				$(".nav-board.faq").addClass("board-on");
+				comLib.initNtt($p, "02");
+			});
+
+			// faq
+			$(".btn_m_icon5").click(function() {
+				wframeLeft.setSrc("/ui/common/content_ntt.xml");
+				$(".nav-board.faq").addClass("board-on");
+				comLib.initNtt($p, "04");
+			});
+
+			// 관리자
+			$(".btn_m_icon6").click(function() {
+				wframeLeft.setSrc("/ui/common/content_admin.xml");
+				comLib.initAdmin($p);
+				$(".nav-board.admin").addClass("board-on");
+			});
+		};
+
+		scwin.usermenu = function() {
+			$(".usermenu ul li a").click(function() {
+				$(".usermenu ul li").removeClass("m-on");
+				$(this).parent().addClass("m-on");
+			});
+			$(".bottom-group .btn_m_icon1").click(function() {
+				$(".bottom-group .palette").fadeIn();
+			});
+			$(".bottom-group .palette .w2anchor2").click(function(event) {
+				var target = $(event.target)
+				// 기본, 그린, 보라, 회색, 청록
+				utilLib.setSkin(target.index());
+				utilLib.changeSkin(window);
+				/*
+				for(var i = 0; i < $p.top().wdcMain.currentWindowNum; i++){
+					var winObj = $p.top().wdcMain.windows[i].window.frame.getWindow();
+					utilLib.changeSkin(winObj);
+				}
+				*/
+				$(".bottom-group .palette").hide();
+				$(".usermenu ul li").removeClass("m-on");
+			});
+			$(".btn_m_star").click(function() {
+				$(".navi-tree").css("display", "none");
+				$(".member").css("display", "none");
+				$(".favorate").css("display", "block");
+				$p.$("header .search").css("display", "none");
+				$p.$("#wrap").removeClass("header_hide");
+			});
+			$(".btn_m_menu").click(function() {
+				$(".navi-tree").css("display", "block");
+				$(".favorate").css("display", "none");
+				$(".member").css("display", "none");
+				$p.$("header .search").css("display","block");
+				$p.$("#wrap").removeClass("header_hide");
+			});
+			$(".btn_m_user").click(function() {
+				$(".member").css("display", "block");
+				$(".navi-tree").css("display", "none");
+				$(".favorate").css("display", "none");
+				$p.$("header .search").css("display", "none");
+				$p.$("#wrap").removeClass("header_hide");
+			});
+			$(".m-close").click(function() {
+				$(this).parent().css("display", "none");
+			});
+		};
+
+	scwin.wdcMain_onclosewindow = function(event) {
+		comLib.destoryOZViewer(wdcMain.getWindowByUniqueId(event.id).$p);
+		comLib.destoryRMateChart(wdcMain.getWindowByUniqueId(event.id).$p);
+		if (wdcMain.currentWindowNum == 1) {
+			wrap.removeClass("header_hide");
+		}
+	};
+
+	scwin.wdcMain_onbeforecloseall = function() {
+		wrap.removeClass("header_hide");
+	};
+
+	scwin.wdcMain_onwindowchange = function(oldScreenId, newScreenId) {
+		if (wdcMain.getSelectedIndex() < 0) {
+			return;
+		}
+		var tmpWin = wdcMain.getWindowByWindowId(wdcMain.getSelectedWindowId());
+		if (tmpWin) {
+			if (tmpWin.$p.$(".content-area").length > 0) {
+				var btnheight = tmpWin.$p.$(".footer .btn-group").outerHeight(true);
+				if (btnheight > 0) {
+					tmpWin.$p.$(".content-area").eq(0).css("padding-bottom", "50px")
+					// tmpWin.$p.$(".content-area").padd
+				} else {
+					tmpWin.$p.$(".content-area").eq(0).css("padding-bottom", "10px")
+				}
+			}
+		}
+		setTimeout(function() {
+			scwin.winresize();
+		}, 200);
+
+		// 차트 다시 그리기
+		if (newScreenId) {
+			var frameId = wdcMain.getWindowByWindowId(newScreenId).$p.getFrameId();
+			var target = document.querySelector("#" + frameId);
+			var tabControl = target.querySelector(".w2tabcontrol");
+			if (tabControl) {
+				target.querySelectorAll(".w2tabcontrol_contents_wrapper_selected .rMateH5__Root").forEach(emt => {
+					emt.resize();
+				});
+			} else {
+				target.querySelectorAll(".rMateH5__Root").forEach(emt => {
+					emt.resize();
+				});
+			}
+		}
+	};
+
+	// 공지팝업 띄우기.
+	scwin.openNoticePopup = function() {
+		var requestData = {
+			sysDivCd : comLib.getSysDivCd()
+		};
+
+		// 공지팝업 대상 조회
+		var option = {
+			action : "/zz/ntt/retrieveNttPopup.do",
+			reqData : requestData,
+			success : "scwin.openNoticePopupCalback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	// 공지팝업 띄우기 콜백
+	scwin.openNoticePopupCalback = function(resBody) {
+		var cntPop = 0;
+		var bTop = 50;
+		var bLeft = 50;
+
+		if (resBody.message.code == "success") {
+			var noticeList = resBody.data;
+			if (noticeList != undefined && noticeList != null) {
+				for (var i = 0; i < noticeList.length; i++) {
+					var param = {
+						noticeId : noticeList[i].bbsId + "_" + noticeList[i].nttNo,
+						atchflId : noticeList[i].atchflId
+					};
+					if (comLib.getCookie(param.noticeId) != "Y") {
+						var options = {
+							type : "window",
+							top : bTop,
+							left : bLeft,
+							width : "540",
+							height : "710",
+							resizable : false,
+							status : false,
+							menubar : false,
+							scrollbars : false,
+							title : noticeList[i].nttTit,
+							useMaximize : false,
+							xml : utilLib.serialize(param),
+							id : "notice_popup_" + noticeList[i].atchflId
+						};
+						WebSquare.util.openPopup("/ui/common/popup_ntf.xml", options);
+						/*
+						window.open(
+							"/sc/ntt/popup_ntf.do?noticeId=" + param.noticeId + "&atchflId=" + param.atchflId,
+							"popup_ntf" + param.noticeId,
+							"width=540, height=710, top=" + bTop + ", left=" + bLeft + ", fullscreen=no, menubar=no, status=no, toolbar=no, titlebar=yes, location=no, scrollbar=no"
+						);
+						*/
+
+						// 팝업 위치 변경
+						cntPop++;
+						bLeft += 565;
+						if(cntPop % 3 == 0) {
+							bTop += 50;
+							bLeft -= 1645;
+						}
+					}
+				}
+			}
+		}
+	};
+
+	// 윈도우사이즈변경 처리
+	scwin.winresize = function() {
+		//console.log("index.xml scwin.winresize"); 
+		if (wdcMain.getSelectedIndex() < 0) {
+			return;
+		}
+		var tmpWin = wdcMain.getWindowByWindowId(wdcMain.getSelectedWindowId());
+		if (tmpWin.scwin) {
+			if (typeof tmpWin.scwin.fnResize == "function") {
+				//console.log("execute scwin.fnResize()");
+				tmpWin.scwin.fnResize();
+			} else {
+				if (tmpWin.$p.$(".w2grid:visible").length == 1) {
+					// 해당 페이지에 그리드가 1개인경우 자동 높이 조절 정의
+
+					scwin.isResize = false;
+					if (tmpWin.$p.$(".w2grid:visible").hasClass("resized")) {
+						//if (scwin.windowHeight && scwin.windowHeight == window.outerHeight) {}
+						if (!scwin.windowHeight || scwin.windowHeight == window.outerHeight) {
+							scwin.isResize = true;
+						}
+					}
+					// scwin.windowWidth = window.outerWidth;
+					scwin.windowHeight = window.outerHeight;
+
+					/*
+					var inFooterCont = gridObj.parents(".w2tabcontrol_contents, .content-area").first();
+					if (tmpWin.$p.$(".footer .btn-group", inFooterCont).is("div")) {
+						addOffset = tmpWin.$p.$(".footer .btn-group").outerHeight(true);
+					}
+					addOffset += 10; // tech.css 에서 .con-box{margin-bottom: 10px;} 줌
+					addOffset += 31; // layout.css 에서 .w2windowContainer.main .w2window_content 에 bottom:31px 줌
+					addOffset += 6; // 이유는 모름
+					*/
+					var bodyobj = {};
+					if (tmpWin.$p.id.length < 8) {
+						bodyobj = $("body");
+					} else {
+						bodyobj = $("#" + tmpWin.$p.id.substring(0, tmpWin.$p.id.length - 8) + "_body");
+					}
+					if (bodyobj.length > 0) {
+						var bodyHeight = bodyobj.outerHeight(true);
+						var gridObjCtrl = tmpWin.$p.getComponentById(tmpWin.$p.$(".w2grid:visible").eq(0).attr("id"));
+						gridObjCtrl.setAttribute("visibleRowNum", "");
+						var gridObj = tmpWin.$p.$(".w2grid:visible").eq(0);
+						var conbox = gridObj.parents(".content-area, .float-con");
+						var addOffset = 0;
+						addOffset = parseInt(conbox.css("paddingBottom")); // 위아래 여백 제외
+						addOffset = addOffset + parseInt(conbox.css("paddingTop"));
+						addOffset = addOffset + 31; // toolbar영역 높이 31픽셀 제외
+						var conboxHeight = conbox.height();
+						var gridHeight = gridObj.outerHeight(true);
+						var etcHeight = conboxHeight - gridHeight; // 컨박스에서 그리드를 제외한 사이즈
+						if (etcHeight < 0) {
+							etcHeight = 0;
+							console.error("content-area 스타일에서 높이를 지워 주세요.");
+						}
+						gridHeight = bodyHeight - conbox.offset().top - etcHeight - addOffset;
+						if (gridHeight < 0) {
+							return;
+						}
+						var bodyAddHeight = bodyobj.prop("scrollHeight") - bodyobj.outerHeight(true);
+						if (bodyAddHeight > 0) {
+							gridObjCtrl.setGridHeight(gridHeight - bodyAddHeight);
+						} else {
+							var maxHeight = 850 - 20 - 60 - 40;
+							if (tmpWin.$p.$(".w2grid:visible").hasClass("resized") && gridHeight > maxHeight) {
+								gridHeight = maxHeight;
+							}
+							if (!scwin.isResize) {
+								gridObjCtrl.setGridHeight(gridHeight);
+							}
+						}
+						// gridObjCtrl.addClass("resized");
+
+						/*
+						gridHeight = gridHeight + addHeight;
+						gridObjCtrl.setGridHeight(gridHeight);
+						var bodyAddHeight = bodyobj.prop("scrollHeight") - bodyobj.outerHeight(true);
+						if (bodyAddHeight > 0) {
+							gridObjCtrl.setGridHeight(gridHeight - bodyAddHeight);
+						}
+						*/
+					}
+					/*
+					if (tmpWin.$p.$(".w2tabcontrol").is("div")) {
+						var grids = tmpWin.$p.$(".w2tabcontrol_container>.w2tabcontrol_contents").eq(0).find(".w2grid:visible");
+						if (grids.length == 1) {
+							var gridObj = tmpWin.$p.getComponentById(tmpWin.$p.$(".w2tabcontrol_container>.w2tabcontrol_contents").eq(0).find(".w2grid").eq(0).attr("id"));
+							ecsLib.setGridAutoHeight($p, gridObj);
+						}
+						var tabControl = tmpWin.$p.getComponentById(tmpWin.$p.$(".w2tabcontrol").attr("id"));
+						tabControl.bind("change", function(tabId, idx) {
+							if ($p.$(".w2tabcontrol_container>.w2tabcontrol_contents").eq(idx).find(".w2grid:visible").length == 1) {
+								var gridObj =  $p.getComponentById($p.$(".w2tabcontrol_container>.w2tabcontrol_contents").eq(idx).find(".w2grid").eq(0).attr("id"));
+								ecsLib.setGridAutoHeight($p, gridObj);
+							}
+						});
+					} else if ($p.$(".w2grid:visible").length == 1) {
+						var gridObj = $p.getComponentById($p.$(".w2grid").eq(0).attr("id"));
+						ecsLib.setGridAutoHeight($p, gridObj);
+					}
+					*/
+				}
+			}
+		}
+		//console.log("select win" + tmpWin.$p.id);
+	};]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wframeLeft" src="/ui/common/content_board.xml"></w2:wframe>
+		<xf:group id="wrap">
+			<xf:group id="container">
+				<w2:wframe id="wfm_left" src="/ui/common/left.xml"></w2:wframe>
+			</xf:group>
+			<xf:group id="contents">
+				<xf:group class="ctr_box">
+					<w2:anchor class="expand" ev:onclick="scwin.header_toggle_onclick" outerDiv="false">
+						<xf:label></xf:label>
+					</w2:anchor>
+				</xf:group>
+				<w2:windowContainer id="wdcMain" class="main" fixArrangeFullScreen="false" hideTitleOnMaximize="true"
+					horizontalArrangeNum="2" sequentialArrangeColNum="2" sequentialArrangeRowNum="2" spaInitCount="0" stopToggleOnLast="false"
+					toolbarPosition="top" tooltipDisplay="true" tooltipGroupClass="false" useCloseButton="true" useControlIconTitle="false" useCustomMsg="false"
+					useFixButton="false" useStatusMsg="true" verticalArrangeNum="2" windowAutoResize="false" windowMaxNum="11" windowMaximizeAll="false"
+					windowTooltipDisplay="true" ev:onclosewindow="scwin.wdcMain_onclosewindow" ev:onbeforecloseall="scwin.wdcMain_onbeforecloseall"
+					ev:onwindowchange="scwin.wdcMain_onwindowchange">
+					<w2:windowToolbar>
+						<w2:nameLayer></w2:nameLayer>
+						<w2:controlIconLayer>
+							<w2:controlIcon></w2:controlIcon>
+							<w2:controlIcon></w2:controlIcon>
+							<w2:controlIcon></w2:controlIcon>
+							<w2:controlIcon></w2:controlIcon>
+							<w2:controlIcon></w2:controlIcon>
+						</w2:controlIconLayer>
+						<w2:selectedNameLayer></w2:selectedNameLayer>
+					</w2:windowToolbar>
+				</w2:windowContainer>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

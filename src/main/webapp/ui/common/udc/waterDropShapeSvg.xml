@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "물방울 모양",
+			"version": "",
+			"apis": [],
+			"pluginName": "water_drop_shape",
+			"width": "182px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "water_drop_shape",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "219px"
+			}
+		-->
+		<xf:group class="water-drop-shape" tagname="svg" pluginName="water_drop_shape">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initWaterDropShape = function() {
+					// fill 설정
+					var fillTop = "";
+					var fillBottom = "";
+					if (options.fill && options.fill != "") {
+						fillTop = options.fill;
+						fillBottom = options.fill;
+						fillLine = options.fill;
+					} else {
+						fillTop = "#FAFAFA";
+						//fillBottom = "#79A7ED";
+						fillBottom = "var(--dash-water-drop-shape-back-color)";
+						fillLine = "#D4D4DA"
+					}
+					document.getElementById(grpTopShapeFill.getID()).setAttribute("fill", fillTop);
+					document.getElementById(grpBottomShapeFill.getID()).setAttribute("fill", fillBottom);
+
+					// stroke 설정
+					var strokeLine = "";
+					if (options.stroke && options.stroke != "") {
+						strokeLine = options.fill;
+					} else {
+						strokeLine = "#D4D4DA"
+					}
+					document.getElementById(grpLineShapeStroke.getID()).setAttribute("stroke", strokeLine);
+
+					// filter 설정
+					var filterTop = "";
+					var filterBottom = "";
+					if (options.filter && options.filter != "") {
+						filterTop = options.filter;
+						filterBottom = options.filter;
+					} else {
+						filterTop = "url(#" + grpTopShapeShadow.getID() + ")";
+						filterBottom = "url(#" + grpBottomShapeShadow.getID() + ")";
+					}
+					document.getElementById(grpTopShapeFilter.getID()).setAttribute("filter", filterTop);
+					//document.getElementById(grpBottomShapeFilter.getID()).setAttribute("filter", filterBottom);
+				};
+
+				// 초기 실행함수 수행
+				this.initWaterDropShape();
+				]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>182</w2:width>
+				<w2:viewBox>0 0 182 219</w2:viewBox>
+				<w2:preserveAspectRatio>xMidYMid meet</w2:preserveAspectRatio>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="defs">
+				<xf:group id="grpTopShapeShadow" tagname="filter">
+					<w2:attributes>
+						<w2:x>0</w2:x>
+						<w2:y>0</w2:y>
+						<w2:width>182</w2:width>
+						<w2:height>219</w2:height>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+						<w2:color-interpolation-filters>sRGB</w2:color-interpolation-filters>
+					</w2:attributes>
+					<xf:group tagname="feFlood">
+						<w2:attributes>
+							<w2:flood-opacity>0</w2:flood-opacity>
+							<w2:result>BackgroundImageFix</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feColorMatrix">
+						<w2:attributes>
+							<w2:in>SourceAlpha</w2:in>
+							<w2:type>matrix</w2:type>
+							<w2:value>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0</w2:value>
+							<w2:result>hardAlpha</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feMorphology">
+						<w2:attributes>
+							<w2:radius>2</w2:radius>
+							<w2:operator>dilate</w2:operator>
+							<w2:in>SourceAlpha</w2:in>
+							<w2:result>effect1_dropShadow_317_9</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feOffset">
+						<w2:attributes>
+							<w2:dx>1</w2:dx>
+							<w2:dy>4</w2:dy>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feGaussianBlur">
+						<w2:attributes>
+							<w2:stdDeviation>5</w2:stdDeviation>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feComposite">
+						<w2:attributes>
+							<w2:in2>hardAlpha</w2:in2>
+							<w2:operator>out</w2:operator>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feColorMatrix">
+						<w2:attributes>
+							<w2:type>matrix</w2:type>
+							<w2:values>0 0 0 0 0.570833 0 0 0 0 0.570833 0 0 0 0 0.570833 0 0 0 0.2 0</w2:values>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feBlend">
+						<w2:attributes>
+							<w2:mode>normal</w2:mode>
+							<w2:in2>BackgroundImageFix</w2:in2>
+							<w2:result>effect1_dropShadow_317_9</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feBlend">
+						<w2:attributes>
+							<w2:mode>normal</w2:mode>
+							<w2:in>SourceGraphic</w2:in>
+							<w2:in2>effect1_dropShadow_317_9</w2:in2>
+							<w2:result>shape</w2:result>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpBottomShapeShadow" tagname="filter">
+					<w2:attributes>
+						<w2:x>3.37695</w2:x>
+						<w2:y>117.929</w2:y>
+						<w2:width>177.219</w2:width>
+						<w2:height>94</w2:height>
+					</w2:attributes>
+					<xf:group tagname="feFlood">
+						<w2:attributes>
+							<w2:flood-opacity>0</w2:flood-opacity>
+							<w2:result>BackgroundImageFix</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feColorMatrix">
+						<w2:attributes>
+							<w2:in>SourceAlpha</w2:in>
+							<w2:type>matrix</w2:type>
+							<w2:value>0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0</w2:value>
+							<w2:result>hardAlpha</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feOffset">
+						<w2:attributes>
+							<w2:dx>2</w2:dx>
+							<w2:dy>-2</w2:dy>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feGaussianBlur">
+						<w2:attributes>
+							<w2:stdDeviation>5</w2:stdDeviation>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feComposite">
+						<w2:attributes>
+							<w2:in2>hardAlpha</w2:in2>
+							<w2:operator>out</w2:operator>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feColorMatrix">
+						<w2:attributes>
+							<w2:type>matrix</w2:type>
+							<w2:values>0 0 0 0 0.570833 0 0 0 0 0.570833 0 0 0 0 0.570833 0 0 0 0.4 0</w2:values>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feBlend">
+						<w2:attributes>
+							<w2:mode>normal</w2:mode>
+							<w2:in2>BackgroundImageFix</w2:in2>
+							<w2:result>effect1_dropShadow_317_9</w2:result>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="feBlend">
+						<w2:attributes>
+							<w2:mode>normal</w2:mode>
+							<w2:in>SourceGraphic</w2:in>
+							<w2:in2>effect1_dropShadow_317_9</w2:in2>
+							<w2:result>shape</w2:result>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group id="grpTopShapeFilter" tagname="g">
+				<w2:attributes>
+					<w2:filter></w2:filter>
+				</w2:attributes>
+				<xf:group id="grpTopShapeFill" tagname="path">
+					<w2:attributes>
+						<w2:d>
+							M86.5941 9.45764C88.4751 7.51412 91.5249 7.51412 93.4059 9.45764L145.861 63.6565C176.713 95.5333 176.713 147.216 145.861
+							179.092C115.01
+							210.969 64.99 210.969 34.1386 179.092C3.28716 147.216 3.28714 95.5333 34.1386 63.6566L86.5941 9.45764Z
+						</w2:d>
+						<w2:fill></w2:fill>
+					</w2:attributes>
+				</xf:group>
+			</xf:group>
+			<xf:group id="grpBottomShapeFilter" tagname="g">
+				<w2:attributes>
+					<w2:filter></w2:filter>
+				</w2:attributes>
+				<xf:group id="grpBottomShapeFill" tagname="path">
+					<w2:attributes>
+						<w2:fill-rule>evenodd</w2:fill-rule>
+						<w2:crip-rule>evenodd</w2:crip-rule>
+						<w2:d>
+							M11.377 129.929C13.0977 148.17 20.6832 165.926 34.1333 179.897C65.0957 212.06 115.337 211.921 146.134 179.589C159.4 165.662
+							166.887 148.034
+							168.595 129.929H11.377Z
+						</w2:d>
+						<w2:fill></w2:fill>
+					</w2:attributes>
+				</xf:group>
+			</xf:group>
+			<xf:group id="grpLineShapeStroke" tagname="path">
+				<w2:attributes>
+					<w2:d>M91 53.4587L91 123.459</w2:d>
+					<w2:stroke></w2:stroke>
+				</w2:attributes>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

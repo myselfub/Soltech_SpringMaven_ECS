@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 계획/건설 - 계획/건설 목록 -->
+<mapper namespace="TM_PB10002_Dao">
+	<update id="TM_PB10002_Dao_saveCnstrc" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo">
+		/* TM_PB10002_Dao_saveCnstrc */
+		<choose>
+			<when test='null != cmsBsnsCd and "" neq cmsBsnsCd and null != cmsPrjctCd and "" neq cmsPrjctCd and null != cmsPrjctSqncIdtfr and "" neq cmsPrjctSqncIdtfr'>
+			MERGE INTO
+				tm_pb10002 A
+			USING (
+				SELECT
+					#{cnstrcEsntlId} AS cnstrc_esntl_id,
+					#{planEsntlId} AS plan_esntl_id,
+					#{cnstrcEqpCpcty} AS cnstrc_eqp_cpcty,
+					#{cmsBsnsCd} AS cms_bsns_cd,
+					#{cmsPrjctCd} AS cms_prjct_cd,
+					#{cmsPrjctSqncIdtfr} AS cms_prjct_sqnc_idtfr,
+					#{frstRgstrId} AS frst_rgstr_id,
+					#{lastUpdusrId} AS last_updusr_id,
+					#{updtRsn} AS updt_rsn
+				FROM
+					DUAL
+			) B
+			ON (
+				A.cnstrc_esntl_id = B.cnstrc_esntl_id AND
+				A.plan_esntl_id = B.plan_esntl_id
+			)
+			WHEN MATCHED THEN
+				UPDATE SET
+					--A.cnstrc_eqp_cpcty = B.cnstrc_eqp_cpcty,
+					A.cms_bsns_cd = B.cms_bsns_cd,
+					A.cms_prjct_cd = B.cms_prjct_cd,
+					A.cms_prjct_sqnc_idtfr = B.cms_prjct_sqnc_idtfr,
+					A.last_updt_dt = SYSDATE,
+					A.last_updusr_id = B.last_updusr_id,
+					A.updt_rsn = B.updt_rsn
+			WHEN NOT MATCHED THEN
+				INSERT (
+					A.cnstrc_esntl_id,
+					A.plan_esntl_id,
+					A.cnstrc_eqp_cpcty,
+					A.cms_bsns_cd,
+					A.cms_prjct_cd,
+					A.cms_prjct_sqnc_idtfr,
+					A.frst_regist_dt,
+					A.frst_rgstr_id,
+					A.last_updt_dt,
+					A.last_updusr_id,
+					A.updt_rsn
+				) VALUES (
+					B.cnstrc_esntl_id,
+					B.plan_esntl_id,
+					B.cnstrc_eqp_cpcty,
+					B.cms_bsns_cd,
+					B.cms_prjct_cd,
+					B.cms_prjct_sqnc_idtfr,
+					SYSDATE,
+					B.frst_rgstr_id,
+					SYSDATE,
+					B.last_updusr_id,
+					B.updt_rsn
+				)
+			</when>
+			<otherwise>
+			MERGE INTO
+				tm_pb10002 A
+			USING (
+				SELECT
+					#{cnstrcEsntlId} AS cnstrc_esntl_id,
+					#{planEsntlId} AS plan_esntl_id,
+					#{cnstrcEqpCpcty} AS cnstrc_eqp_cpcty,
+					#{ordgTit} AS prjct_nm,
+					#{competam} AS competam,
+					#{lnrtrDivNm} AS lnrtr_div_cd,
+					#{bsnsDivNm} AS bsns_div_cd,
+					#{ntntrsSportYn} AS ntntrs_sport_yn,
+					#{bsnsMngdeptNm} AS mngdept_cd,
+					#{edptNm} AS edpt_cd,
+					#{edptChargerNm} AS edpt_charger_id,
+					#{strwrkDe} AS strwrk_de,
+					#{lastCompetDe} AS last_compet_de,
+					#{absltCntrwkPdInfo} AS abslt_cntrwk_pd_info,
+					#{lastCntrwkPdInfo} AS last_cntrwk_pd_info,
+					#{cntrctEntrpsNm} AS entrps_nm,
+					#{entrpsRprsrNm} AS entrps_rprsr_nm,
+					#{sptAddr} AS spt_addr,
+					#{frstRgstrId} AS frst_rgstr_id,
+					#{lastUpdusrId} AS last_updusr_id,
+					#{updtRsn} AS updt_rsn
+				FROM
+					DUAL
+			) B
+			ON (
+				A.cnstrc_esntl_id = B.cnstrc_esntl_id
+			)
+			WHEN MATCHED THEN
+				UPDATE SET
+					A.cnstrc_eqp_cpcty = B.cnstrc_eqp_cpcty,
+					A.prjct_nm = B.prjct_nm,
+					A.competam = B.competam,
+					A.lnrtr_div_cd = B.lnrtr_div_cd,
+					A.bsns_div_cd = B.bsns_div_cd,
+					A.ntntrs_sport_yn = B.ntntrs_sport_yn,
+					A.mngdept_cd = B.mngdept_cd,
+					A.edpt_cd = B.edpt_cd,
+					A.edpt_charger_id = B.edpt_charger_id,
+					A.strwrk_de = B.strwrk_de,
+					A.last_compet_de = B.last_compet_de,
+					A.abslt_cntrwk_pd_info = B.abslt_cntrwk_pd_info,
+					A.last_cntrwk_pd_info = B.last_cntrwk_pd_info,
+					A.entrps_nm = B.entrps_nm,
+					A.entrps_rprsr_nm = B.entrps_rprsr_nm,
+					A.spt_addr = B.spt_addr,
+					A.last_updt_dt = SYSDATE,
+					A.last_updusr_id = B.last_updusr_id,
+					A.updt_rsn = B.updt_rsn
+			WHEN NOT MATCHED THEN
+				INSERT (
+					A.cnstrc_esntl_id,
+					A.plan_esntl_id,
+					A.cnstrc_eqp_cpcty,
+					A.prjct_nm,
+					A.competam,
+					A.lnrtr_div_cd,
+					A.bsns_div_cd,
+					A.ntntrs_sport_yn,
+					A.mngdept_cd,
+					A.edpt_cd,
+					A.edpt_charger_id,
+					A.strwrk_de,
+					A.last_compet_de,
+					A.abslt_cntrwk_pd_info,
+					A.last_cntrwk_pd_info,
+					A.entrps_nm,
+					A.entrps_rprsr_nm,
+					A.spt_addr,
+					A.frst_regist_dt,
+					A.frst_rgstr_id,
+					A.last_updt_dt,
+					A.last_updusr_id,
+					A.updt_rsn
+				) VALUES (
+					B.cnstrc_esntl_id,
+					B.plan_esntl_id,
+					B.cnstrc_eqp_cpcty,
+					B.prjct_nm,
+					B.competam,
+					B.lnrtr_div_cd,
+					B.bsns_div_cd,
+					B.ntntrs_sport_yn,
+					B.mngdept_cd,
+					B.edpt_cd,
+					B.edpt_charger_id,
+					B.strwrk_de,
+					B.last_compet_de,
+					B.abslt_cntrwk_pd_info,
+					B.last_cntrwk_pd_info,
+					B.entrps_nm,
+					B.entrps_rprsr_nm,
+					B.spt_addr,
+					SYSDATE,
+					B.frst_rgstr_id,
+					SYSDATE,
+					B.last_updusr_id,
+					B.updt_rsn
+				)
+			</otherwise>
+		</choose>
+	</update>
+
+	<select id="TM_PB10002_Dao_selectCnstrcCount" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo" resultType="Int">
+		/* TM_PB10002_Dao_selectCnstrcCount */
+		SELECT
+			COUNT(plan_esntl_id)
+		FROM
+			tm_pb10002
+		WHERE
+			plan_esntl_id = #{planEsntlId}
+	</select>
+
+	<delete id="TM_PB10002_Dao_deleteCnstrc" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo">
+		/* TM_PB10002_Dao_deleteCnstrc */
+		DELETE FROM
+			tm_pb10002
+		WHERE
+			1 = 2
+			OR (
+				cnstrc_esntl_id = #{cnstrcEsntlId}
+				AND plan_esntl_id = #{planEsntlId}
+			)
+	</delete>
+</mapper>

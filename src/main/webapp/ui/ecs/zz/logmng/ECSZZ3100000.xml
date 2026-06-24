@@ -1,0 +1,763 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSZZ3100000.xml
+			* 설 명 : 에너지공통_시스템 관리_로그 관리
+			* 작성일 : 2023.06.21
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.06.21 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaInqireParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="sysDivCd" name="시스템구분" dataType="text"></w2:key>
+						<w2:key id="strtDt" name="검색시작일자" dataType="text"></w2:key>
+						<w2:key id="endDt" name="검색종료일자" dataType="text"></w2:key>
+						<w2:key id="usrId" name="사용자ID" dataType="text"></w2:key>
+						<w2:key id="usrNm" name="사용자명" dataType="text"></w2:key>
+						<w2:key id="deptCd" name="부서코드" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltLoginHistList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:data use="false"></w2:data>
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" name="시스템구분" dataType="text"></w2:column>
+						<w2:column id="deptNm" name="부서명" dataType="text"></w2:column>
+						<w2:column id="jgrdNm" name="직급명" dataType="text"></w2:column>
+						<w2:column id="usrId" name="사용자ID" dataType="text"></w2:column>
+						<w2:column id="usrNm" name="사용자명" dataType="text"></w2:column>
+						<w2:column id="loginIp" name="로그인IP" dataType="text"></w2:column>
+						<w2:column id="loginDttm" name="로그인일시" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltMenuConectList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" name="시스템구분" dataType="text"></w2:column>
+						<w2:column id="menuId" name="메뉴ID" dataType="text"></w2:column>
+						<w2:column id="menuNm" name="메뉴명" dataType="text"></w2:column>
+						<w2:column id="menuDc" name="메뉴설명" dataType="text"></w2:column>
+						<w2:column id="scrinId" name="화면ID" dataType="text"></w2:column>
+						<w2:column id="scrinNm" name="화면명" dataType="text"></w2:column>
+						<w2:column id="usrId" name="사용자ID" dataType="text"></w2:column>
+						<w2:column id="usrNm" name="사용자명" dataType="text"></w2:column>
+						<w2:column id="deptNm" name="부서명" dataType="text"></w2:column>
+						<w2:column id="jgrdNm" name="직급명" dataType="text"></w2:column>
+						<w2:column id="conctrIp" name="접속IP" dataType="text"></w2:column>
+						<w2:column id="conectDttm" name="접속일시" dataType="text"></w2:column>
+						<w2:column id="conectParmCtnt" name="접속파라미터" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltIdvinfoInqireList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" name="시스템구분" dataType="text"></w2:column>
+						<w2:column id="scrinNm" name="화면명" dataType="text"></w2:column>
+						<w2:column id="inqireDivNm" name="조회구분" dataType="text"></w2:column>
+						<w2:column id="idvinfoDivCtnt" name="개인정보구분내용" dataType="text"></w2:column>
+						<w2:column id="usrId" name="사용자ID" dataType="text"></w2:column>
+						<w2:column id="deptNm" name="부서명" dataType="text"></w2:column>
+						<w2:column id="jgrdNm" name="직급명" dataType="text"></w2:column>
+						<w2:column id="usrNm" name="사용자명" dataType="text"></w2:column>
+						<w2:column id="iqrrsnIp" name="조회자IP" dataType="text"></w2:column>
+						<w2:column id="inqireDttm" name="조회일시" dataType="text"></w2:column>
+						<w2:column id="inqireSqlCtnt" name="조회쿼리내용" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltDeptCdList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="objid" dataType="text" name="부서코드"></w2:column>
+						<w2:column id="stext" dataType="text" name="부서명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltSysDivCdList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" dataType="text" name="시스템구분코드"></w2:column>
+						<w2:column id="sysDivCdNm" dataType="text" name="시스템구분코드명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltDeptNmFilterList" baseNode="list" repeatNode="map" saveRemovedData="false">
+					<w2:columnInfo>
+						<w2:column id="deptNm" dataType="text" name="부서명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltSysDivCdFilterList" baseNode="list" repeatNode="map" saveRemovedData="false">
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" dataType="text" name="시스템구분코드"></w2:column>
+						<w2:column id="sysDivCdNm" dataType="text" name="시스템구분코드명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSZZ3100000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 작업일자 설정한다.
+		scwin.today = utilLib.getCurrentDate();
+
+		dmaInqireParam.set("strtDt", scwin.today);
+		dmaInqireParam.set("endDt", scwin.today);
+
+		// 로그인한 사용자 ID 변수설정
+		scwin.usrId = comLib.getUsrId();
+
+		// 사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+		scwin.setAthrSysDivCd();
+	};
+
+	/**
+	 * 사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.setAthrSysDivCd = function () {
+		var requestData = {};
+		requestData.data = {
+			"usrId" : scwin.usrId,
+			"sysDivCd" : "SCM_0000"
+		};
+
+		var option = {
+			action : "sc/authmng/retrieveAthrSysDivCd.do",
+			reqData : requestData,
+			resData : dltSysDivCdList,
+			success : "scwin.retrieveAthrSysDivCdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.requestAjaxSyncCode($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.retrieveAthrSysDivCdCallback = function (resBody, e) {
+		if (dltSysDivCdList.getRowCount() == 0) {
+			// 시스템관리자만 접근이 가능합니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00343"), "utilLib.winContainerClose");
+			return;
+		}
+
+		// 부서코드 조회
+		scwin.setDeptCd();
+	};
+
+	/**
+	 * 부서코드 조회
+	 * @param
+	 * @return
+	 */
+	scwin.setDeptCd = function() {
+		var requestData = {};
+
+		var option = {
+			action : "sc/cmmncd/retrieveDept2Inqire.do",
+			reqData : requestData,
+			resData : dltDeptCdList,
+			success : "scwin.setCdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 초기코드 설정 CallBack 실행
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.setCdCallback = function(resBody, e) {
+		if (comLib.getSysDivCd() != "SCM") {
+			dmaInqireParam.set("sysDivCd" , comLib.getSysDivCd());
+			dmaInqireParam.set("deptCd" , comLib.getUsrDeptCd());
+			actIntnSysdivCd.setDisabled(true);
+		}
+
+		// 화면 오픈시 자동조회를 한다.
+		comLib.setEnterKeyEvent(grpInqire , scwin.btnInqire_onclick);
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	* 이력 조회를 한다.
+	 * @param
+	 * @return
+	*/
+	scwin.btnInqire_onclick = function() {
+		var requestData = {};
+		requestData.dmaInqireParam = dmaInqireParam.getJSON();
+		// 전체조회 Y(내부적으로 페이징처리)
+		requestData.dmaInqireParam.selectAllYn = "Y";
+
+		var action = "";
+		var resData;
+
+		if (tabControl.getSelectedTabIndex() == 0) {
+			action = "sc/logmng/retrieveUsrLogin.do";
+			resData = dltLoginHistList;
+		} else if (tabControl.getSelectedTabIndex() == 1) {
+			action = "sc/logmng/retrieveMenuConect.do";
+			resData = dltMenuConectList;
+		} else {
+			action = "sc/logmng/retrieveIdvinfoInqire.do";
+			resData = dltIdvinfoInqireList;
+		}
+
+		var option = {
+			action : action,
+			reqData : requestData,
+			resData : resData,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	* 이력 조회 콜백 실행
+	 * @param <Object> rewsBody
+	 * @return
+	*/
+	scwin.inqireCallback = function (resBody, e) {
+		var histList;
+
+		if (tabControl.getSelectedTabIndex() == 0) {
+			histList = dltLoginHistList;
+		} else if (tabControl.getSelectedTabIndex() == 1) {
+			histList = dltMenuConectList;
+		} else {
+			histList = dltIdvinfoInqireList;
+		}
+
+		dltSysDivCdFilterList.removeAll();
+		dltDeptNmFilterList.removeAll();
+
+		for (var idx = 0; idx < histList.getRowCount(); idx++) {
+			var sysDivCdObj = dltSysDivCdList.getMatchedJSON("sysDivCd" , histList.getCellData(idx, "sysDivCd"));
+			var deptNm = histList.getCellData(idx, "deptNm");
+
+			if (sysDivCdObj.length > 0) {
+				var sysDivCd = sysDivCdObj[0].sysDivCd;
+				if (sysDivCd != "" && dltSysDivCdFilterList.getMatchedJSON("sysDivCd", sysDivCd).length == 0) {
+					dltSysDivCdFilterList.insertData(dltSysDivCdFilterList.getRowCount(), [sysDivCd, sysDivCdObj[0].sysDivCdNm]);
+				}
+			}
+
+			if (deptNm != "" && dltDeptNmFilterList.getMatchedJSON("deptNm", deptNm).length == 0) {
+				dltDeptNmFilterList.insertData(dltDeptNmFilterList.getRowCount(), [deptNm]);
+			}
+		}
+	};
+
+	/**
+	* 탭 변경시 이력 Type도 이동하면서 조회를 한다.
+ 	* @param <Object> info
+	* @return
+	*/
+	scwin.tabControl_onchange = function(tabID, idx, userTabID) {
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 사용자 조회
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqireUsr_onclick = function() {
+		var url = comLib.HRM_POP_URL + "/ui/hrm/zz/searchmng/HRMZZ20000001.xml";
+
+		// 팝업창 옵션
+		var option = {
+			popupID : "HRMZZ20000001",
+			width : 800,
+			height : 500,
+			title : "사용자 검색"
+		};
+
+		var strEnc = comLib.dataDecEnc(utilLib.getDate(), "E"); // 암호화 키값
+		var usrInfo; // 세션정보 및 윈도우 타이틀
+		usrInfo = JSON.stringify(comLib.getUserInfo4Param(strEnc, encodeURI(option.title)));
+
+		// 필수값
+		var jsonObj = {
+			userInfo : usrInfo,
+			closeCallbackFncName : "scwin.inqireUsrCallback",
+			popupId : option.popupID
+		};
+
+		comLib.openPostWinPopup($p, url, option, jsonObj);
+	};
+
+	/**
+	* 사용자 검색 CallBack 실행
+	* @param <Object> retirnValue
+	* @param <String> popupId
+	* @return
+	*/
+	scwin.inqireUsrCallback = function(returnValue, popupId) {
+		var selectedOrg = returnValue;
+
+		dmaInqireParam.set("usrId", selectedOrg.usrId);
+		dmaInqireParam.set("usrNm", selectedOrg.usrNm);
+
+		ibxUsrNm.setReadOnly(false);
+	};
+
+	/**
+	* 사용자 검색 키보드 입력시
+	* @param
+	* @return
+	*/
+	scwin.ibxUsrNm_onkeydown = function(e) {
+		scwin.btnInqireUsr_onclick();
+	};
+
+	/**
+	* 사용자 검색 후 빈값으로 변경시
+	* @param
+	* @return
+	*/
+	scwin.ibxUsrNm_onviewchange = function(info) {
+		var newValue = info.newValue;
+
+		if (newValue == "") {
+			dmaInqireParam.set("usrId", newValue);
+			ibxUsrNm.setReadOnly(true);
+		}
+	};
+
+	scwin.btnDownExcel_onclick = function() {
+		var selectIndex = tabControl.getSelectedTabIndex();
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm1 = document.getElementById($p.id + "tabControl_tab_tabLogin_tabHTML").title;
+		var subTitleNm2 = document.getElementById($p.id + "tabControl_tab_tabMenu_tabHTML").title;
+		var subTitleNm3 = document.getElementById($p.id + "tabControl_tab_tabIdvinfo_tabHTML").title;
+
+		switch (selectIndex) {
+		case 0:
+			// 엑셀 내부 타이틀 추가_240108
+			var infoArr = [];
+			var infoObj = {
+				rowIndex 	: 0,
+				colIndex 	: 0,
+				rowSpan 	: 0,
+				colSpan 	: 7,
+				text 		: `${menuNm}_` + `${subTitleNm1}`,
+				textAlign 	: "left"
+			};
+			infoArr.push(infoObj);
+
+			comLib.downloadExcel(grdLoginHist, {
+				fileName : `${menuNm}_` + `${subTitleNm1}.xlsx`,
+				type : 1,
+				autoSizeColumn : true,
+				startRowIndex : 1,
+				startColumnIndex : 0,
+				useDataFormat: true,
+				applyDataFormat : true
+			}, infoArr);
+			break;
+
+		case 1:
+			// 엑셀 내부 타이틀 추가_240108
+			var infoArr = [];
+			var infoObj = {
+				rowIndex 	: 0,
+				colIndex 	: 0,
+				rowSpan 	: 0,
+				colSpan 	: 10,
+				text 		: `${menuNm}_` + `${subTitleNm2}`,
+				textAlign 	: "left"
+			};
+			infoArr.push(infoObj);
+
+			comLib.downloadExcel(grdMenuConect, {
+				fileName : `${menuNm}_` + `${subTitleNm2}.xlsx`,
+				type : 1,
+				autoSizeColumn : true,
+				startRowIndex : 1,
+				startColumnIndex : 0,
+				useDataFormat: true,
+				applyDataFormat : true,
+			}, infoArr);
+			break;
+
+		case 2:
+			// 엑셀 내부 타이틀 추가_240108
+			var infoArr = [];
+			var infoObj = {
+				rowIndex 	: 0,
+				colIndex 	: 0,
+				rowSpan 	: 0,
+				colSpan 	: 11,
+				text 		: `${menuNm}_` + `${subTitleNm3}`,
+				textAlign 	: "left"
+			};
+			infoArr.push(infoObj);
+
+			comLib.downloadExcel(grdIdvinfoInqire, {
+				fileName : `${menuNm}_` + `${subTitleNm3}.xlsx`,
+				type : 1,
+				autoSizeColumn : true,
+				startRowIndex : 1,
+				startColumnIndex : 0,
+				useDataFormat: true,
+				applyDataFormat : true
+			}, infoArr);
+		}
+	};
+
+	/**
+	 * 로그목록 필터링
+	 */
+	scwin.filterChange = function(value, colId) {
+		if (tabControl.getSelectedTabIndex() == 0) {
+			dltLoginHistList.removeColumnFilter(colId);
+			if (value != "") {
+				dltLoginHistList.setColumnFilter(colId, value, "and", true);
+			}
+		} else if (tabControl.getSelectedTabIndex() == 1) {
+			dltMenuConectList.removeColumnFilter(colId);
+			if (value != "") {
+				dltMenuConectList.setColumnFilter(colId, value, "and", true);
+			}
+		} else if (tabControl.getSelectedTabIndex() == 2) {
+			dltIdvinfoInqireList.removeColumnFilter(colId);
+			if (value != "") {
+				dltIdvinfoInqireList.setColumnFilter(colId, value, "and", true);
+			}
+		}
+	};
+]]></script>
+	</head>
+	<body>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group id="grpInqire" class="search-box">
+				<xf:group class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="시스템구분"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="actIntnSysdivCd" chooseOption="true" chooseOptionLabel="- 전체 -" displayMode="label" editType="select"
+									ev:onviewchange="scwin.actIntnSysdivCd1_onviewchange" ref="data:dmaInqireParam.sysDivCd" search="contain" submenuSize="auto"
+									useKeywordHighlight="false" visibleRowNum="15">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltSysDivCdList">
+											<w2:label ref="sysDivCdNm"></w2:label>
+											<w2:value ref="sysDivCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="부서"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="atcUsrDeptCd" chooseOption="true" chooseOptionLabel="- 전체 -" displayMode="label" editType="select"
+									ref="data:dmaInqireParam.deptCd" search="contain" submenuSize="auto" useKeywordHighlight="false" visibleRowNum="15">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltDeptCdList">
+											<w2:label ref="stext"></w2:label>
+											<w2:value ref="objid"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="사용자"></w2:span>
+							</xf:group>
+							<xf:group tagname="td" class="w2tb_td cw2">
+								<xf:group class="input_search" pluginName="input_Search">
+									<xf:input id="ibxUsrNm" readOnly="true" ref="data:dmaInqireParam.usrNm" ev:onviewchange="scwin.ibxUsrNm_onviewchange"
+										ev:onkeydown="scwin.ibxUsrNm_onkeydown"></xf:input>
+									<w2:anchor id="btnInqireUsr" class="fa fa-search" ev:onclick="scwin.btnInqireUsr_onclick" outerDiv="false" userData1="Q">
+										<xf:label><![CDATA[조회]]></xf:label>
+									</w2:anchor>
+								</xf:group>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="기간"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw3" tagname="td">
+								<w2:attributes>
+									<w2:colspan>3</w2:colspan>
+								</w2:attributes>
+								<w2:period_Cal id="calDt" strtDateRef="data:dmaInqireParam.strtDt" endDateRef="data:dmaInqireParam.endDt"></w2:period_Cal>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td">
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" ev:onclick="scwin.btnInqire_onclick" userData1="Q">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area footer-none">
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span label="이력목록"></w2:span>
+						</xf:group>
+						<xf:group class="com-area">
+							<xf:group class="btn-group">
+								<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down" ev:onclick="scwin.btnDownExcel_onclick" outerDiv="false"
+									userData1="E">
+									<xf:label><![CDATA[엑셀]]></xf:label>
+								</w2:anchor>
+							</xf:group>
+							<xf:group class="info-box"></xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="tab-box">
+						<w2:tabControl id="tabControl" alwaysDraw="false" confirmFalseAction="new" confirmTrueAction="exist" useConfirmMessage="false"
+							useMoveNextTabFocus="false" useTabKeyOnly="true" ev:onchange="scwin.tabControl_onchange">
+							<w2:tabs id="tabLogin" disabled="false" label="로그인 이력" ev:onclick="scwin.tabs4_onclick"></w2:tabs>
+							<w2:tabs id="tabMenu" disabled="false" label="메뉴접속 이력"></w2:tabs>
+							<w2:tabs id="tabIdvinfo" disabled="false" label="개인정보조회 이력"></w2:tabs>
+							<w2:content id="conLoginHist" alwaysDraw="false">
+								<w2:gridView id="grdLoginHist" ignoreToggleOnDisabled="false" useShiftKey="true" useFilterList="false" sortable="true"
+									scrollByColumn="false" showSortableUseFilter="false" scrollByColumnAdaptive="false" summaryAuto="false" fixedColumnWithHidden="true"
+									summaryOnlyAuto="false" dataList="dltLoginHistList" ignoreCellClick="false" tooltipDisplay="true" readOnly="true"
+									showSortableImage="true" defaultCellHeight="35" style="height:45.4rem;" focusMode="row">
+									<w2:header>
+										<w2:row>
+											<!-- <w2:column id="hSysDivCd" width="120" inputType="select" value="sysDivCd" allOption="false"
+												chooseOption="true" onChangeFunction="scwin.filterChange" chooseOptionLabel="시스템구분">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdFilterList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="hDeptNm" width="150" inputType="select" value="deptNm" allOption="false"
+												chooseOption="true" onChangeFunction="scwin.filterChange" chooseOptionLabel="부서명">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltDeptNmFilterList">
+														<w2:label ref="deptNm"></w2:label>
+														<w2:value ref="deptNm"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column> -->
+											<w2:column id="hSysDivCd" width="120" inputType="text" value="시스템구분"></w2:column>
+											<w2:column id="hDeptNm" width="150" inputType="text" value="부서명"></w2:column>
+											<w2:column id="hUsrId" width="120" inputType="text" value="사번"></w2:column>
+											<w2:column id="hJgrdNm" width="120" inputType="text" value="직급"></w2:column>
+											<w2:column id="hUsrNm" width="120" inputType="text" value="성명"></w2:column>
+											<w2:column id="hLoginIp" width="150" inputType="text" value="로그인IP"></w2:column>
+											<w2:column id="hLoginDttm" width="150" inputType="text" value="로그인일시"></w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="sysDivCd" width="120" inputType="select">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="deptNm" width="150" inputType="text"></w2:column>
+											<w2:column id="usrId" width="120" inputType="text"></w2:column>
+											<w2:column id="jgrdNm" width="120" inputType="text"></w2:column>
+											<w2:column id="usrNm" width="120" inputType="text"></w2:column>
+											<w2:column id="loginIp" width="150" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="loginDttm" width="150" inputType="text" displayFormat="####-##-## ##:##:##"></w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</w2:content>
+							<w2:content id="conMenuConect" alwaysDraw="false">
+								<w2:gridView id="grdMenuConect" dataList="dltMenuConectList" fixedColumnWithHidden="true" ignoreCellClick="false"
+									sortable="true" ignoreToggleOnDisabled="false" scrollByColumn="false" scrollByColumnAdaptive="false" showSortableUseFilter="false"
+									summaryAuto="false" summaryOnlyAuto="false" useFilterList="false" useShiftKey="true" fixedColumn="3"
+									tooltipDisplay="true" readOnly="true" showSortableImage="true" defaultCellHeight="35" style="height:45.4rem;" focusMode="row">
+									<w2:header>
+										<w2:row>
+											<!-- <w2:column id="hSysDivCd" width="140" inputType="select" value="sysDivCd" allOption="false"
+												chooseOption="true" onChangeFunction="scwin.filterChange" chooseOptionLabel="시스템구분">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdFilterList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column> -->
+											<w2:column id="hSysDivCd" width="140" inputType="text" value="시스템구분"></w2:column>
+											<w2:column id="hMenuNm" width="160" inputType="text" value="메뉴명"></w2:column>
+											<w2:column id="hMenuId" width="130" inputType="text" value="메뉴ID"></w2:column>
+											<!-- <w2:column id="hDeptNm" width="110" inputType="select" value="deptNm" allOption="false"
+												chooseOption="true" onChangeFunction="scwin.filterChange" chooseOptionLabel="부서명">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltDeptNmFilterList">
+														<w2:label ref="deptNm"></w2:label>
+														<w2:value ref="deptNm"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column> -->
+											<w2:column id="hDeptNm" inputType="text" width="110" value="부서명"></w2:column>
+											<w2:column id="hUsrId" inputType="text" width="90" value="사번"></w2:column>
+											<w2:column id="hJgrdId" width="80" inputType="text" value="직급"></w2:column>
+											<w2:column id="hUsrNm" inputType="text" width="80" value="성명"></w2:column>
+											<w2:column id="HConctrIp" inputType="text" width="120" value="접속IP"></w2:column>
+											<w2:column id="hConectDttm" inputType="text" width="160" value="접속일시"></w2:column>
+											<w2:column id="hConectParmCtnt" width="150" inputType="text" value="접속파라미터"></w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="sysDivCd" inputType="select" width="140">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="menuNm" width="160" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="menuId" width="130" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="deptNm" inputType="text" width="110"></w2:column>
+											<w2:column id="usrId" inputType="text" width="90"></w2:column>
+											<w2:column id="jgrdNm" width="80" inputType="text"></w2:column>
+											<w2:column id="usrNm" inputType="text" width="80"></w2:column>
+											<w2:column id="conctrIp" inputType="text" width="120" textAlign="left"></w2:column>
+											<w2:column id="conectDttm" displayFormat="####-##-## ##:##:##" displayMode="label" inputType="text"
+												width="160"></w2:column>
+											<w2:column id="conectParmCtnt" width="150" inputType="text"></w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</w2:content>
+							<w2:content id="conIdvinfoInqire" alwaysDraw="false">
+								<w2:gridView id="grdIdvinfoInqire" ignoreToggleOnDisabled="false" useShiftKey="true" scrollByColumn="false" sortable="true"
+									scrollByColumnAdaptive="false" summaryAuto="false" fixedColumnWithHidden="true" summaryOnlyAuto="false" dataList="dltIdvinfoInqireList"
+									ignoreCellClick="false" fixedColumn="3" tooltipDisplay="true" readOnly="true" showSortableImage="true"
+									tooltipDisplayColumn="sysDivCd,scrinNm,idvinfoDivCtnt" defaultCellHeight="35" style="height:45.4rem;" focusMode="row">
+									<w2:header id="header1">
+										<w2:row id="row1">
+											<w2:column id="hSysDivCd" width="140" inputType="select" value="sysDivCd" allOption="false"
+												chooseOption="true" chooseOptionLabel="시스템구분" onChangeFunction="scwin.filterChange">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdFilterList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="hScrinNm" width="140" inputType="text" value="화면명"></w2:column>
+											<w2:column id="hInqireDivNm" width="80" inputType="text" value="조회구분"></w2:column>
+											<w2:column id="hIdvinfoDivCtnt" width="100" inputType="text" value="조회정보"></w2:column>
+											<w2:column id="hDeptNm" width="110" inputType="select" value="deptNm" allOption="false"
+												chooseOption="true" onChangeFunction="scwin.filterChange" chooseOptionLabel="부서명">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltDeptNmFilterList">
+														<w2:label ref="deptNm"></w2:label>
+														<w2:value ref="deptNm"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="hUsrId" inputType="text" value="사번" width="90"></w2:column>
+											<w2:column id="hJgrdId" width="70" inputType="text" value="직급"></w2:column>
+											<w2:column id="hUsrNm" inputType="text" value="성명" width="70"></w2:column>
+											<w2:column id="hInqireIp" width="120" inputType="text" value="조회IP"></w2:column>
+											<w2:column id="hInqireDttm" width="160" inputType="text" value="조회일시"></w2:column>
+											<w2:column id="hInqireSqlCtnt" width="130" inputType="text" value="조회쿼리내용"></w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody id="gBody1">
+										<w2:row id="row2">
+											<w2:column id="sysDivCd" width="140" inputType="select">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="scrinNm" width="140" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="inqireDivNm" width="80" inputType="text"></w2:column>
+											<w2:column id="idvinfoDivCtnt" width="100" inputType="text"></w2:column>
+											<w2:column id="deptNm" width="110" inputType="text"></w2:column>
+											<w2:column id="usrId" width="90" inputType="text"></w2:column>
+											<w2:column id="jgrdNm" width="70" inputType="text"></w2:column>
+											<w2:column id="usrNm" width="70" inputType="text"></w2:column>
+											<w2:column id="iqrrsnIp" width="120" inputType="text"></w2:column>
+											<w2:column id="inqireDttm" width="160" inputType="text" displayFormat="####-##-## ##:##:##"></w2:column>
+											<w2:column id="inqireSqlCtnt" width="130" inputType="text"></w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</w2:content>
+						</w2:tabControl>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

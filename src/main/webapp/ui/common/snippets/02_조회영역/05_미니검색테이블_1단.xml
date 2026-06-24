@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <w2:userPalette defaultIcon="mix.png" desc=""/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[ ]]></script>
+    </head>
+    <body><xf:group class="search-box" id="" style="">
+	<xf:group class="list" id="" style="">
+		<xf:group class="w2tb" id="" style="" tagname="table">
+			<w2:attributes>
+				<w2:summary>
+				</w2:summary>
+</w2:attributes>
+			<xf:group tagname="colgroup">
+				<xf:group class="cw3" style="" tagname="col">
+</xf:group>
+				<xf:group style="" tagname="col">
+				</xf:group>
+				<xf:group class="cw3" style="" tagname="col">
+</xf:group>
+				<xf:group style="" tagname="col">
+				</xf:group>
+</xf:group>
+			<xf:group style="" tagname="tr">
+				<xf:group class="w2tb_th" style="" tagname="th">
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<xf:input id="" style="">
+					</xf:input>
+</xf:group>
+				<xf:group class="w2tb_th" style="" tagname="th">
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<xf:input id="" style="">
+					</xf:input>
+</xf:group>
+</xf:group>
+</xf:group>
+</xf:group>
+	<xf:group class="btn-group" id="" style="">
+		<w2:anchor class="fa fa-search btn_sh" ev:onclick="" id="" outerDiv="false" style="">
+			<xf:label>
+<![CDATA[조회]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<script type="text/javascript">
+	function popclose(){
+		var today = new Date();
+		today.setDate(today.getDate() + 7);
+		document.cookie="tmpPOPUP=Y;path=/;expires="+today.toGMTString()+";";
+		/*
+		var cook = document.cookie + ";";
+		debugger;
+		var idx = cook.indexOf("tmpPOPUP", 0);
+		var val = "";
+		if (idx != -1) {
+		       cook = cook.substring(idx, cook.length);
+		        begin = cook.indexOf("=", 0) + 1;
+		        end = cook.indexOf(";", begin);
+		        val = unescape(cook.substring(begin, end));
+		}
+		alert( val);
+//		comLib.setCookie($p, "NOTICE_POPUP_" + scwin.popupParam.noticeId, "Y", 1 );
+*/
+		close();
+		
+	}
+	</script>
+</head>
+<body>
+ <img src="tmpPopup.png">
+<div>
+   <input name="DayClose_input" type="checkbox" onclick='popclose()'>
+   <label onclick='popclose()'>앞으로 표시하지 않음</label>
+</div>
+</body>
+</html>

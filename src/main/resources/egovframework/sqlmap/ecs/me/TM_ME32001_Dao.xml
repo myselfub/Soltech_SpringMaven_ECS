@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 관리/폐기 - 수전 전력량계 관리 -->
+<mapper namespace="TM_ME32001_Dao">
+	<select id="TM_ME32001_Dao_retrieveWtwkEltengMsrinsCndItslfFcltyNmList" parameterType="kw.ecs.me.wtwkeltengmsrins.vo.WtwkEltengMsrinsVo" resultType="egovMap">
+		/* TM_ME32001_Dao_retrieveWtwkEltengMsrinsCndItslfFcltyNmList */
+		SELECT
+			itslf_fclty_nm AS cmmn_cd,
+			itslf_fclty_nm AS cmmn_cd_nm
+		FROM
+			tm_me32001
+		WHERE
+			1 = 1
+			<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+			AND ecs_chrg_dept_id = #{ecsChrgDeptId}
+			</if>
+		GROUP BY
+			itslf_fclty_nm
+	</select>
+
+	<select id="TM_ME32001_Dao_retrieveWtwkEltengMsrinsList" parameterType="kw.ecs.me.wtwkeltengmsrins.vo.WtwkEltengMsrinsVo" resultType="egovMap">
+		/* TM_ME32001_Dao_retrieveWtwkEltengMsrinsList */
+		SELECT
+			(
+				SELECT
+					stext
+				FROM
+					HRM.vm_hr01a01
+				WHERE
+					SYSDATE BETWEEN strdt AND enddt
+					AND objid = ecs_chrg_dept_id
+			) AS dept_nm,
+			ecs_chrg_dept_id,
+			itslf_fclty_nm,
+			mnfctr_ym,
+			mrnr_chck_hist_ym,
+			mrnr_chck_plan_ym,
+			elteng_msrins_idnum,
+			mrnr_chg_need_ym,
+			rm_ctnt,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id,
+			updt_rsn
+		FROM
+			tm_me32001
+		WHERE
+			1 = 1
+			<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+			AND ecs_chrg_dept_id = #{ecsChrgDeptId}
+			</if>
+			<if test='null != itslfFcltyNm and "" neq itslfFcltyNm and "ALL" neq itslfFcltyNm'>
+			AND itslf_fclty_nm = #{itslfFcltyNm}
+			</if>
+		ORDER BY
+			ecs_chrg_dept_id,
+			itslf_fclty_nm
+	</select>
+
+	<update id="TM_ME32001_Dao_saveWtwkEltengMsrinsList" parameterType="kw.ecs.me.wtwkeltengmsrins.vo.WtwkEltengMsrinsVo">
+		/* TM_ME32001_Dao_saveWtwkEltengMsrinsList */
+		MERGE INTO
+			tm_me32001 A
+		USING (
+			SELECT
+				#{ecsChrgDeptId} AS ecs_chrg_dept_id,
+				#{itslfFcltyNm} AS itslf_fclty_nm,
+				#{mnfctrYm} AS mnfctr_ym,
+				#{mrnrChckHistYm} AS mrnr_chck_hist_ym,
+				#{mrnrChckPlanYm} AS mrnr_chck_plan_ym,
+				#{eltengMsrinsIdnum} AS elteng_msrins_idnum,
+				#{mrnrChgNeedYm} AS mrnr_chg_need_ym,
+				#{rmCtnt} AS rm_ctnt,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.elteng_msrins_idnum = B.elteng_msrins_idnum
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.ecs_chrg_dept_id = B.ecs_chrg_dept_id,
+				A.itslf_fclty_nm = B.itslf_fclty_nm,
+				A.mnfctr_ym = B.mnfctr_ym,
+				A.mrnr_chck_hist_ym = B.mrnr_chck_hist_ym,
+				A.mrnr_chck_plan_ym = B.mrnr_chck_plan_ym,
+				A.mrnr_chg_need_ym = B.mrnr_chg_need_ym,
+				A.rm_ctnt = B.rm_ctnt,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.ecs_chrg_dept_id,
+				A.itslf_fclty_nm,
+				A.mnfctr_ym,
+				A.mrnr_chck_hist_ym,
+				A.mrnr_chck_plan_ym,
+				A.elteng_msrins_idnum,
+				A.mrnr_chg_need_ym,
+				A.rm_ctnt,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.ecs_chrg_dept_id,
+				B.itslf_fclty_nm,
+				B.mnfctr_ym,
+				B.mrnr_chck_hist_ym,
+				B.mrnr_chck_plan_ym,
+				B.elteng_msrins_idnum,
+				B.mrnr_chg_need_ym,
+				B.rm_ctnt,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<delete id="TM_ME32001_Dao_deleteWtwkEltengMsrinsList" parameterType="kw.ecs.me.wtwkeltengmsrins.vo.WtwkEltengMsrinsVo">
+		/* TM_ME32001_Dao_deleteWtwkEltengMsrinsList */
+		DELETE FROM
+			tm_me32001
+		WHERE
+			elteng_msrins_idnum = #{eltengMsrinsIdnum}
+	</delete>
+</mapper>

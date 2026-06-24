@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VM_HR01A01_Dao">
+
+	<select id="VM_HR01A01_Dao_retrieveDeptInqire" parameterType="kw.ecs.zz.cmmncd.vo.DeptCdVo" resultType="egovMap">
+		/* VM_HR01A01_Dao_retrieveDeptInqire */
+		SELECT
+			LEVEL AS LEV,
+			OBJID,
+			STEXT,
+			REGDT,
+			UPDDT,
+			ZFCOD,
+			STRDT,
+			ENDDT,
+			UPOBJ,
+			DEPTH,
+			SEQNO,
+			PARTS,
+			DIVI1,
+			DIVI2,
+			PERNR,
+			KOSTL
+		FROM
+			HRM.VM_HR01A01 A
+		CONNECT BY
+			NOCYCLE PRIOR OBJID = UPOBJ
+			AND SYSDATE BETWEEN STRDT AND ENDDT
+		START WITH
+			SEQNO = 1
+	</select>
+
+	<select id="VM_HR01A01_Dao_retrieveDept2Inqire" parameterType="kw.ecs.zz.cmmncd.vo.DeptCdVo" resultType="egovMap">
+		/* VM_HR01A01_Dao_retrieveDept2Inqire */
+		SELECT
+			OBJID,
+			STEXT,
+			REGDT,
+			UPDDT,
+			ZFCOD,
+			STRDT,
+			ENDDT,
+			UPOBJ,
+			DEPTH,
+			SEQNO,
+			PARTS,
+			DIVI1,
+			DIVI2,
+			PERNR,
+			KOSTL
+		FROM
+			HRM.VM_HR01A01 A
+		WHERE
+			OBJID IN (
+				SELECT
+					OBJID
+				FROM
+					VC_HR01001
+			)
+			AND SYSDATE BETWEEN STRDT AND ENDDT
+	</select>
+
+	<!-- 계층형 부서조회 -->
+	<select id="VM_HR01A01_Dao_retrieveDeptCd" parameterType="kw.ecs.zz.cmmncd.vo.DeptCdVo" resultType="egovMap">
+		/* VM_HR01A01_Dao_retrieveDeptCd */
+		WITH CONDITION_DEPT AS (
+			SELECT
+				*
+			FROM (
+				SELECT
+					*
+				FROM
+					HRM.VM_HR01A01
+				WHERE
+					SYSDATE BETWEEN STRDT AND ENDDT
+			)
+			CONNECT BY
+				NOCYCLE PRIOR OBJID = UPOBJ
+				<choose>
+					<when test="topDeptCd != null and topDeptCd != ''">
+				START WITH OBJID = #{topDeptCd}
+					</when>
+					<otherwise>
+				START WITH SEQNO = 1
+					</otherwise>
+				</choose>
+			UNION
+			SELECT
+				*
+			FROM (
+				SELECT
+					*
+				FROM
+					HRM.VM_HR01A01
+				WHERE
+					SYSDATE BETWEEN STRDT AND ENDDT
+			)
+			CONNECT BY
+				NOCYCLE PRIOR UPOBJ = OBJID
+				<choose>
+					<when test="topDeptCd != null and topDeptCd != ''">
+				START WITH OBJID = #{topDeptCd}
+					</when>
+					<otherwise>
+				START WITH SEQNO = 1
+					</otherwise>
+				</choose>
+		)
+		SELECT
+			LEVEL AS LEV,
+			OBJID,
+			STEXT,
+			REGDT,
+			UPDDT,
+			ZFCOD,
+			STRDT,
+			ENDDT,
+			UPOBJ,
+			DEPTH,
+			SEQNO,
+			PARTS,
+			DIVI1,
+			DIVI2,
+			PERNR,
+			KOSTL
+		FROM
+			CONDITION_DEPT
+			<where>
+				<if test="orgchtDp != null and orgchtDp != ''">
+			AND LEVEL &lt;= #{orgchtDp}
+			</if>
+		</where>
+		CONNECT BY
+			NOCYCLE PRIOR OBJID = UPOBJ
+			START WITH SEQNO = 1
+	</select>
+
+	<!-- 검색어로 부서조회 -->
+	<select id="VM_HR01A01_Dao_retrieveDeptList" parameterType="kw.ecs.zz.cmmncd.vo.DeptCdVo" resultType="egovMap">
+		/* VM_HR01A01_Dao_retrieveDeptList */
+		WITH CONDITION_DEPT AS (
+			SELECT
+				*
+			FROM (
+				SELECT
+					*
+				FROM
+					HRM.VM_HR01A01
+				WHERE
+					SYSDATE BETWEEN STRDT AND ENDDT
+			)
+			CONNECT BY
+				NOCYCLE PRIOR OBJID = UPOBJ
+				<choose>
+					<when test="tplvlObjid != null and tplvlObjid != ''">
+				START WITH OBJID = #{tplvlObjid}
+					</when>
+					<when test="topDeptCd != null and topDeptCd != ''">
+				START WITH OBJID = #{topDeptCd}
+					</when>
+					<otherwise>
+				START WITH SEQNO = 1
+					</otherwise>
+				</choose>
+			UNION
+			SELECT
+				*
+			FROM (
+				SELECT
+					*
+				FROM
+					HRM.VM_HR01A01
+				WHERE
+					SYSDATE BETWEEN STRDT AND ENDDT
+			)
+			CONNECT BY
+				NOCYCLE PRIOR UPOBJ = OBJID
+				<choose>
+					<when test="tplvlObjid != null and tplvlObjid != ''">
+				START WITH OBJID = #{tplvlObjid}
+					</when>
+					<when test="topDeptCd != null and topDeptCd != ''">
+				START WITH OBJID = #{topDeptCd}
+					</when>
+					<otherwise>
+				START WITH SEQNO = 1
+					</otherwise>
+				</choose>
+		)
+		SELECT 
+			OBJID,
+			STEXT,
+			REGDT,
+			UPDDT,
+			ZFCOD,
+			STRDT,
+			ENDDT,
+			UPOBJ,
+			DEPTH,
+			SEQNO,
+			PARTS,
+			DIVI1,
+			DIVI2,
+			PERNR,
+			KOSTL
+		FROM
+			CONDITION_DEPT
+		<where>
+			<if test="orgchtDp != null and orgchtDp != ''">
+				AND LEVEL &lt;= #{orgchtDp}
+			</if>
+			<if test="objid != null and objid != ''">
+			AND OBJID = #{objid}
+			</if>
+			<if test="tplvlObjid != null and tplvlObjid != ''">
+			<!-- 하위부서까지 조회 -->
+			AND OBJID IN (
+				SELECT
+					OBJID
+				FROM
+					CONDITION_DEPT
+				CONNECT BY NOCYCLE
+					PRIOR OBJID= UPOBJ
+					START WITH OBJID = #{tplvlObjid}
+			)
+			</if>
+			<if test="stext != null and stext !=''">
+			AND STEXT LIKE '%' || #{stext} || '%'
+			</if>
+		</where>
+		CONNECT BY
+			NOCYCLE PRIOR OBJID = UPOBJ
+			START WITH SEQNO = 1
+		-- ORDER BY STEXT
+	</select>
+</mapper>

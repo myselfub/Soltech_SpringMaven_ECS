@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : popup_ntf.xml
+			* 설 명 : 공지팝업
+			* 작성일 : 2018.07.03
+			* 작성자 : 강만석
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2018.07.03 60003256 강만석 최초 작성
+			*
+			* Copyright (C) 2017 by Unlimited K-water, All right reserved.
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.referDtaCnt = 0; // 참고자료개수
+
+	scwin.popupParam;
+
+	/**
+	 * 로딩시 화면 설정
+	 */
+	scwin.initScreen = function() {
+		scwin.popupParam=comLib.getPopupParam($p);
+		scwin.searchImgFile();
+		scwin.searchReferDta();
+		$p.$("#imgPop").on("load", function() {
+			var width = $(this).width() + 15;
+			var height = $(this).height() + 105;
+			window.resizeTo(width, height);
+		});
+	};
+
+	/**
+	 * 첨부파일 조회
+	 * 게시물 첨부파일 중 첫번째 첨부파일만 화면에 뿌려준다.
+	 */
+	scwin.searchImgFile = function() {
+		var requestData = { };
+		requestData.dltFile = { };
+		requestData.dltFile.atchflId = scwin.popupParam.atchflId;
+		requestData.dltFile.fileSeq = 1;
+
+		var option = {
+			action : "sc/file/imgFileView.do",
+			reqData : requestData,
+			success : "scwin.searchImgFileCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 첨부파일 조회 Callback
+	 */
+	scwin.searchImgFileCallback = function(resBody) {
+		if (resBody.message.code == "success") {
+			imgPop.setSrc(resBody.data.imgData);
+		}
+	};
+
+	/**
+	 * 참고자료 조회
+	 * 1번 첨부파일은 팝업이미지이고
+	 * 나머지 파일들이 참고자료
+	 */
+	scwin.searchReferDta = function() {
+		var requestData = { };
+		requestData.dmaFileBasic = { };
+		requestData.dmaFileBasic.atchflId = scwin.popupParam.atchflId;
+
+		var option = {
+			action : "sc/file/fileList.do",
+			reqData : requestData,
+			success : "scwin.searchReferDtaCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 참고자료 조회 Callback
+	 */
+	scwin.searchReferDtaCallback = function(resBody) {
+		if (resBody.message.code == "success") {
+			scwin.referDtaCnt = resBody.data.length;
+			if (scwin.referDtaCnt > 1) {
+				btnReferDta.setStyle("display", "");
+			}
+		}
+	};
+
+	/**
+	 * 참고자료 다운로드
+	 */
+	scwin.btnReferDta_onclick = function() {
+		// 단건 파일은 일반 다운로드
+		if (scwin.referDtaCnt == 2) {
+			var referDtaOne = {
+				"atchflId" : scwin.popupParam.atchflId,
+				"fileSeq" : 2
+			};
+			var xmlValue = JSON.stringify(referDtaOne);
+			// $w.download("/sc/file/downloadAtchFileOne.do", xmlValue, "post");
+			comLib.downloadAtchfl("/sc/file/downloadAtchFileOne.do", xmlValue, "post");
+		// 다건 파일은 일괄 다운로드 로직
+		} else {
+			var referDtaMulti = [];
+			for (i = 2 ; i <= scwin.referDtaCnt ; i++) {
+				var referDtaOne = {
+					"atchflId" : scwin.popupParam.atchflId,
+					"fileSeq" : i
+				};
+				referDtaMulti.push(referDtaOne);
+			}
+			var xmlValue = JSON.stringify(referDtaMulti);
+			// $w.download( "/sc/file/downloadAtchFile.do", xmlValue, "post");
+			comLib.downloadAtchfl("/sc/file/downloadAtchFileOne.do", xmlValue, "post");
+			
+		}
+	};
+
+	/**
+	 * 하루동안 보이지 않음
+	 */
+	scwin.btnPoupDayClose_onchange = function() {
+		comLib.setCookie($p, "NOTICE_POPUP_" + scwin.popupParam.noticeId, "Y", 1);
+		close();
+	};
+	]]></script>
+	</head>
+	<body style="overflow-x:hidden;">
+		<w2:wframe id="wframe1" src="/ui/common/popup_header.xml"></w2:wframe>
+		<xf:group class="surbay_wrap">
+			<xf:group id="grpSurbay">
+				<xf:group class="w2tb" tagname="table" style="width:100%; display:none;">
+					<w2:attributes>
+						<w2:summary></w2:summary>
+					</w2:attributes>
+					<xf:group tagname="caption"></xf:group>
+					<xf:group tagname="colgroup">
+						<xf:group class="cw4" tagname="col"></xf:group>
+						<xf:group class="cw5" tagname="col"></xf:group>
+						<xf:group class="cw5" tagname="col"></xf:group>
+						<xf:group class="cw6" tagname="col"></xf:group>
+					</xf:group>
+					<xf:group tagname="tr">
+						<xf:group class="w2tb_td" tagname="td">
+							<w2:attributes>
+								<w2:colspan>4</w2:colspan>
+								<w2:rowspan>1</w2:rowspan>
+							</w2:attributes>
+							<xf:group style="height:484px; line-height:25px; font-size:15px;">
+								<w2:span id="subContents">
+								</w2:span>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:image id="imgPop">
+				</xf:image>
+			</xf:group>
+			<xf:group class="title-group" style="margin-left:10px; margin-right:10px;">
+				<xf:group tagname="h4">
+					<xf:select appearance="full" ev:onchange="scwin.btnPoupDayClose_onchange" id="btnPoupDayClose" selectedindex="-1" renderType="checkboxgroup">
+						<xf:choices>
+							<xf:item>
+								<xf:label><![CDATA[하루동안 보이지 않음]]></xf:label>
+								<xf:value><![CDATA[Y]]></xf:value>
+							</xf:item>
+						</xf:choices>
+					</xf:select>
+				</xf:group>
+				<xf:group class="com-area">
+					<xf:group class="btn-group">
+						<w2:anchor id="btnReferDta" ev:onclick="scwin.btnReferDta_onclick" outerDiv="false" style="width:65%; margin-top:8px; display:none;">
+							<xf:label><![CDATA[참고자료]]></xf:label>
+						</w2:anchor>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

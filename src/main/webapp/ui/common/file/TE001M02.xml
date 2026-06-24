@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/sc/resources/css/common1.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataList baseNode="list" id="dma_FileBasic" style="" firstSet="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="rowStatus" name="상태" dataType="text"></w2:column>
+						<w2:column id="atchFileId" name="파일ID" dataType="text"></w2:column>
+						<w2:column id="fileSn" name="파일순번" dataType="number"></w2:column>
+						<w2:column id="orginlFileNm" name="원본파일명" dataType="text"></w2:column>
+						<w2:column id="fileSize" name="파일사이즈" dataType="number"></w2:column>
+						<w2:column id="saveFileNm" name="물리파일명" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="파일경로" dataType="text"></w2:column>
+						<w2:column id="fileTempPath" name="임시저장경로" dataType="text"></w2:column>
+						<w2:column id="idvdinfoInclsYn" name="개인정보포함여부" dataType="text"></w2:column>
+						<w2:column id="tempFileNm" name="임시저장소 저장된 파일명" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data>
+						<w2:row></w2:row>
+					</w2:data>
+				</w2:dataList>
+
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_file">
+					<w2:columnInfo>
+						<w2:column id="orginlFileNm" name="파일명" dataType="text"></w2:column>
+						<w2:column id="fileEventn" name="파일확장자명" dataType="text"></w2:column>
+						<w2:column id="fileSize" name="파일사이즈" dataType="number"></w2:column>
+						<w2:column id="saveFileNm" name="물리파일명" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="파일경로" dataType="text"></w2:column>
+						<w2:column id="idvdinfoInclsYn" name="개인정보포함여부" dataType="text"></w2:column>
+						<w2:column id="atchFileId" name="파일ID" dataType="text"></w2:column>
+						<w2:column id="fileSn" name="파일순번" dataType="number"></w2:column>
+						<w2:column id="tempFileNm" name="임시저장소 저장된 파일명" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+		</xf:model>
+		<script lazy="false" type="javascript"><![CDATA[
+		
+		/**
+		 * 화면 초기화에 필요한 로직을 수행한다.
+		 */
+		scwin.initScreen = function() {
+			scwin.search();
+		};
+		
+		/**
+		 * 조직 기본 정보를 조회한다.
+		 */
+		scwin.search = function() {
+			var requestData = {};
+			var option = {action : "file/fileList.do"
+		               , reqData : requestData
+		               , resData : dlt_file
+			           , success : "scwin.searchCallback"
+			           , isShowMeg : false
+		                 };			
+			ajaxLib.executeAjax($p, option);	
+		};
+		
+		/**
+		 * 메뉴 조회후 콜백 로직을 수행한다.
+		 */
+		scwin.searchCallback = function(resBody) {
+			if (dlt_file.getRowCount() > 0) {
+				grd_file.setFocusedCell(0, "orginlFileNm");
+			}
+		};
+		
+		//파일업로드 버튼 클릭
+//		scwin.btn_Upload_onclick = function(){
+//			var options = {
+//				title : "첨부파일 업로드", width : 480, height : 200, 
+//				popupParam : { closeCallbackFncName : "scwin.uploadFileCallback" }
+//			};
+//			comLib.openPopup($p, "fileUpload", "/ui/common/te/TE001P01.xml", options);
+//		};
+		
+
+		
+		//첨부파일다운로드버튼		
+		scwin.btn_Download_onclick = function(filePath, saveFileName, fileName){
+			//다운로드 경로
+			var sendUrl = filePath + "/" + saveFileName;
+			fileLib.fileDownload(sendUrl, fileName);
+		};
+		
+		// 다운로드버튼 클릭
+//		scwin.btn_Download_onclick = function(attchFileId){
+//			var sendUrl = "file/downloadAtchFile.do";
+//			var sendMethod = "post";		//default값은 post임.
+//			var XML = {"attchFileId" : "2017104", "fileSn" :  1 };
+//			$w.download(sendUrl, XML, sendMethod);
+//		}; 
+		
+		// 셀 더블클릭 	
+		scwin.grd_file_oncelldblclick  = function(row, col) {
+			var atchFileId = dlt_file.getCellData( row, "atchFileId" );       	//첨부파일 ID
+			var fileSn = dlt_file.getCellData( row, "fileSn" );       	//첨부파일 ID
+			var filePath = dlt_file.getCellData(row, "fileSavePath");				//서버에 저장된 파일 경로
+			var saveFileName = dlt_file.getCellData( row , "saveFileNm" );			//서버에 저장된 파일명
+			var fileName = dlt_file.getCellData(row, "orginlFileNm");		//저장할 파일명
+			
+			if (atchFileId != null) {
+//				scwin.btn_Download_onclick(attchFileId);
+				// filePath : 서버에 저장된 파일 경로
+				// saveFileName : 서버에 저장된 파일명
+				// fileName : 원본파일명
+				scwin.btn_Download_onclick(filePath, saveFileName, fileName);
+			}
+		};
+		
+		/**
+		 * 파일등록
+		 */
+		scwin.btn_Insert_onclick = function() {
+			var options = {
+					title : "멀티파일 업로드", width : 800, height : 250, 
+					popupParam : { closeCallbackFncName : "mutiFileUploadCallback" }
+				};
+			comLib.openPopup($p, "mutiFileUpload", "/ui/common/te/TE001P02.xml", options);
+			/*		
+			var insertedIndex = dlt_file.insertRow( );
+			grd_file.setFocusedCell( insertedIndex , 0 );
+			
+			if ( dlt_file.getRowStatus( insertedIndex ) == "C") {
+				var options = {
+					title : "첨부파일 업로드", width : 480, height : 200, 
+					popupParam : { closeCallbackFncName : "uploadFileCallback" }
+				};
+				comLib.openPopup($p, "fileUpload", "/ui/common/te/TE001P02.xml", options);
+			}
+			*/
+		};
+		
+		scwin.mutiFileUploadCallback = function(fileInfo) {
+			console.log ( "upload file Data : " + JSON.stringify(fileInfo));
+			var insertedIndex;
+			for (var i=0; i<fileInfo.length; i++) {
+				insertedIndex = dlt_file.insertRow( );
+				
+//				dma_FileBasic.set(insertedIndex, dlt_file.getColumnIndex("orginlFileNm"), fileInfo[i].localFile);
+//				dma_FileBasic.set(insertedIndex, dlt_file.getColumnIndex("fileTempPath"), "[UPLOAD_PATH]" +file);
+//				dma_FileBasic.setCellData( insertedIndex , dlt_file.getColumnIndex( "idvdinfoInclsYn" ) , "N" );
+//				dma_FileBasic.setCellData( insertedIndex , dlt_file.getColumnIndex( "idvdinfoInclsYn" ) , "N" );
+				
+				dlt_file.setCellData( insertedIndex , dlt_file.getColumnIndex( "orginlFileNm" ) , fileInfo[i].localFile );
+				dlt_file.setCellData( insertedIndex , dlt_file.getColumnIndex( "idvdinfoInclsYn" ) , "N" );
+//				dlt_file.setCellData( insertedIndex , dlt_file.getColumnIndex( "rowStatus" ) , "C" );
+				dlt_file.setCellData(insertedIndex, dlt_file.getColumnIndex("tempFileNm"), "[UPLOAD_PATH]" +fileInfo[i].file);
+			}
+		};
+		
+		scwin.btn_Save_onclick = function() {
+			comLib.confirm($p, "첨부파일을 저장하시겠습니까?", "saveFileBasicConfirmCallback");
+		};
+		
+		scwin.saveFileBasicConfirmCallback = function() {
+/*
+			dma_FileBasic.set("rowStatus", "C");
+			var idvdinfoInclsYn = dlt_file.getCellData( grd_file.getFocusedRowIndex() , "idvdinfoInclsYn" );
+			dma_FileBasic.set("idvdinfoInclsYn", idvdinfoInclsYn);  
+			var option = {id : "sbm_SaveFileInfo"
+						, action : "file/uploadAtchFile.do"
+						, ref : "data:json,[{'id':'dma_FileBasic','action':'modified','key':'dataFileBasic'}]"
+						, submitDoneHandler : "saveFileBasicCallback"
+						, isShowMeg : true };
+			ajaxLib.executeSubmission($p, option);
+*/
+			var requestData = {"dlt_file" : dlt_file.getModifiedJSON() };
+			var option = {action : "file/insertAtchFile.do"
+			               , reqData : requestData
+			               , resData : dlt_file
+			               , success : "scwin.saveFileBasicCallback"
+			               , isShowMeg : false
+				            };			
+			ajaxLib.executeAjax($p, option);
+		};
+		
+		scwin.saveFileBasicCallback  = function(resBody) {
+			comLib.alert($p, resBody.message.code_name);
+			scwin.search();
+		};
+		
+		/**
+		 * 엑셀다운로드	
+		 */
+		scwin.btn_Excel_onclick = function(){
+			comLib.downloadExcel(grd_file, {fileName : "AtchFileList_Data.xlsx"}, []);
+		};
+	
+	scwin.btn_FileCrypto_onclick = function() {
+			var requestData = {};
+			var option = {action : "test/testEncDecFile.do"
+		               , reqData : requestData
+		               , resData : dlt_file
+			           , success : "scwin.fileCryptoCallback"
+			           , isShowMeg : false
+		                 };			
+			ajaxLib.executeAjax($p, option);	
+	};
+	
+	scwin.fileCryptoCallback = function(resBody) {
+		comLib.alert($p, resBody.message.code_name);
+	}
+
+	]]></script>
+	</head>
+	<body>
+		<xf:group id="content_gp" style="" class="">
+			<xf:group class="mt5 clearfix" id="group8" style="">
+				<xf:group id="group10" style="margin-right:21px;" class="fr">
+					<!-- <w2:anchor id="btn_Download" style="" ev:onclick="scwin.btn_Download_onclick" class="btn_com" outerDiv="" toolTip="파일다운로드">
+						<xf:label><![CDATA[파일다운로드]]></xf:label>
+						</w2:anchor> -->
+					<!--<w2:anchor id="btn_Upload" style=""
+						ev:onclick="scwin.btn_Upload_onclick" class="btn_com" visiable="true"
+						outerDiv="" toolTip="파일업로드">
+						<xf:label><![CDATA[파일업로드]]></xf:label>
+						</w2:anchor> -->
+					<w2:anchor id="btn_Insert" style="" ev:onclick="scwin.btn_Insert_onclick" class="btn_com" outerDiv="">
+						<xf:label><![CDATA[등록]]></xf:label>
+					</w2:anchor>
+					<!-- <w2:anchor id="btn_Remove" style=""
+						ev:onclick="scwin.btn_Remove_onclick" class="btn_com" outerDiv=""
+						disabled="true">
+						<xf:label><![CDATA[삭제]]></xf:label>
+						</w2:anchor> -->
+					<w2:anchor id="btn_Save" style="" ev:onclick="scwin.btn_Save_onclick" class="btn_com" outerDiv="">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<!-- <w2:anchor id="btn_Cancel" style=""
+						ev:onclick="scwin.btn_Cancel_onclick" class="btn_com" outerDiv=""
+						disabled="true">
+						<xf:label><![CDATA[취소]]></xf:label>
+						</w2:anchor> -->
+					<w2:anchor id="btn_Excel" style="" ev:onclick="scwin.btn_Excel_onclick" class="btn_com" outerDiv="">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+					<!-- <w2:anchor id="btn_FileCrypto" style=""  class="btn_com" outerDiv="" ev:onclick="scwin.btn_FileCrypto_onclick">
+						<xf:label><![CDATA[파일암호화]]></xf:label>
+						</w2:anchor> -->
+				</xf:group>
+
+			</xf:group>
+			<xf:group id="group5" style="" class=""></xf:group>
+			<xf:group style="width:80%;float:left;left:0px;top:0px;" id="group9">
+				<w2:gridView rowNumVisible="" rowStatusWidth="40" useShiftKey="false" scrollByColumn="false" rowNumHeaderValue=""
+					keepDefaultColumnWidth="true" readOnly="false" rowStatusHeaderValue="상태" drilldownRealRowIndex="true" rowStatusVisible="false"
+					fixedColumnWithHidden="true" dataList="dlt_file" ev:oncelldblclick="scwin.grd_file_oncelldblclick"
+					style="height:381px;margin-right:10px;left:34px;top:0px;margin-left:-34px;" id="grd_file" autoFit="allColumn">
+					<w2:header style="" id="header1">
+						<w2:row style="" id="row1">
+							<w2:column width="260" style="height:20px" inputType="text" id="column21" value="원본파일명" blockSelect="false"></w2:column>
+							<w2:column width="90" style="height:20px" inputType="text" id="column22" value="확장자명" blockSelect="false"></w2:column>
+							<w2:column width="90" style="height:20px" inputType="text" id="column23" value="파일사이즈" blockSelect="false"></w2:column>
+							<w2:column width="240" style="height:20px" inputType="text" id="column24" value="저장파일명" blockSelect="false"></w2:column>
+							<w2:column width="262" style="height:20px" inputType="text" id="column25" value="저장첨부경로" blockSelect="false"></w2:column>
+							<w2:column width="90" style="height:20px" inputType="text" id="column26" value="개인정보포함" blockSelect="false"></w2:column>
+						</w2:row>
+					</w2:header>
+					<w2:gBody style="" id="gBody1">
+						<w2:row style="" id="row2">
+							<w2:column textAlign="left" width="260" style="height:20px" inputType="text" id="orginlFileNm" blockSelect="false">
+							</w2:column>
+							<w2:column textAlign="left" width="90" style="height:20px" inputType="text" id="fileEventn" blockSelect="false"></w2:column>
+							<w2:column textAlign="right" defaultValue="0" dataType="number" width="90" style="height:20px" inputType="text" id="fileSize"
+								blockSelect="false">
+							</w2:column>
+							<w2:column textAlign="left" width="240" style="height:20px" inputType="text" id="saveFileNm" blockSelect="false"></w2:column>
+							<w2:column textAlign="left" width="262" style="height:20px;text-align:left;" inputType="text" id="fileSavePath"
+								blockSelect="false">
+							</w2:column>
+							<w2:column textAlign="center" width="90" style="height:20px;text-align:left;" inputType="text" id="idvdinfoInclsYn"
+								blockSelect="false" editType="" editModeEvent="onclick">
+							</w2:column>
+						</w2:row>
+					</w2:gBody>
+				</w2:gridView>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 정산 - CER 정산 -->
+<mapper namespace="TM_CL23001_Dao">
+	<select id="TM_CL23001_Dao_retrieveCerExcclcList" parameterType="kw.ecs.cl.cerexcclc.vo.CerExcclcVo" resultType="egovMap">
+		/* TM_CL23001_Dao_retrieveCerExcclcList */
+		SELECT
+			cer_delng_de,
+			ecs_elcpwstn_div_cd,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM
+					tc_ecs_cd
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_9002'
+					AND cmmn_cd = ecs_elcpwstn_div_cd
+			) AS elcpwstn_nm,
+			cer_delng_div_nm,
+			item_nm,
+			cer_delng_upc,
+			cer_delng_qy,
+			cer_amt,
+			mrkt_div_nm,
+			rm_ctnt,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id,
+			updt_rsn
+		FROM
+			tm_cl23001
+		WHERE
+			cer_delng_de LIKE SUBSTR(#{strtDt}, 0, 4) || '%'
+			<if test='null != ecsElcpwstnDivCd and "" neq ecsElcpwstnDivCd and "ALL" neq ecsElcpwstnDivCd'>
+			AND ecs_elcpwstn_div_cd = #{ecsElcpwstnDivCd}
+			</if>
+		ORDER BY
+			cer_delng_de,
+			ecs_elcpwstn_div_cd,
+			cer_delng_div_nm,
+			item_nm,
+			cer_delng_upc,
+			cer_delng_qy
+	</select>
+
+	<update id="TM_CL23001_Dao_saveCerExcclcList" parameterType="kw.ecs.cl.cerexcclc.vo.CerExcclcVo">
+		/* TM_CL23001_Dao_saveCerExcclcList */
+		MERGE INTO
+			tm_cl23001 A
+		USING (
+			SELECT
+				#{cerDelngDe} AS cer_delng_de,
+				#{ecsElcpwstnDivCd} AS ecs_elcpwstn_div_cd,
+				#{cerDelngDivNm} AS cer_delng_div_nm,
+				#{itemNm} AS item_nm,
+				#{cerDelngUpc} AS cer_delng_upc,
+				#{cerDelngQy} AS cer_delng_qy,
+				#{cerAmt} AS cer_amt,
+				#{mrktDivNm} AS mrkt_div_nm,
+				#{rmCtnt} AS rm_ctnt,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.cer_delng_de = B.cer_delng_de
+			AND A.ecs_elcpwstn_div_cd = B.ecs_elcpwstn_div_cd
+			AND A.cer_delng_div_nm = B.cer_delng_div_nm
+			AND A.item_nm = B.item_nm
+			AND A.cer_delng_upc = B.cer_delng_upc
+			AND A.cer_delng_qy = B.cer_delng_qy
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.cer_amt = B.cer_amt,
+				A.mrkt_div_nm = B.mrkt_div_nm,
+				A.rm_ctnt = B.rm_ctnt,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.cer_delng_de,
+				A.ecs_elcpwstn_div_cd,
+				A.cer_delng_div_nm,
+				A.item_nm,
+				A.cer_delng_upc,
+				A.cer_delng_qy,
+				A.cer_amt,
+				A.mrkt_div_nm,
+				A.rm_ctnt,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.cer_delng_de,
+				B.ecs_elcpwstn_div_cd,
+				B.cer_delng_div_nm,
+				B.item_nm,
+				B.cer_delng_upc,
+				B.cer_delng_qy,
+				B.cer_amt,
+				B.mrkt_div_nm,
+				B.rm_ctnt,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<delete id="TM_CL23001_Dao_deleteCerExcclcList" parameterType="kw.ecs.cl.cerexcclc.vo.CerExcclcVo">
+		/* TM_CL23001_Dao_deleteCerExcclcList */
+		DELETE FROM
+			tm_cl23001
+		WHERE
+			cer_delng_de = #{cerDelngDe}
+			AND ecs_elcpwstn_div_cd = #{ecsElcpwstnDivCd}
+			AND cer_delng_div_nm = #{cerDelngDivNm}
+			AND item_nm = #{itemNm}
+			AND cer_delng_upc = #{cerDelngUpc}
+			AND cer_delng_qy = #{cerDelngQy}
+	</delete>
+</mapper>

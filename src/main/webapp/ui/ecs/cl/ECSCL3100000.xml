@@ -1,0 +1,878 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSCL3100000.xml
+			* 설 명 : 정산_소비정산_소비원별 정산현황
+			* 작성일 : 2024.02.22
+			* 담당자 : Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2024.02.22 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map" ev:onmodelchange="scwin.dmaSearchParam_onmodelchange">
+					<w2:keyInfo>
+						<w2:key id="strtDtM" dataType="number" name="월별조회시작월"></w2:key>
+						<w2:key id="endDtM" dataType="number" name="월별조회종료월"></w2:key>
+						<w2:key id="strtDtY" dataType="number" name="연별조회시작년"></w2:key>
+						<w2:key id="endDtY" dataType="number" name="연별조회종료년"></w2:key>
+						<w2:key id="basinCd" dataType="text" name="유역코드"></w2:key>
+						<w2:key id="lastBasinCd" dataType="text" name="검색유역코드"></w2:key>
+						<w2:key id="deptCd" dataType="text" name="부서코드"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltAutoCondition1" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition2" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltItslfCnstnExcclcSttus" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="dscfcLclhqCd" dataType="number" name="배출시설지역본부코드"></w2:column>
+						<w2:column id="dscfcLclhqNm" dataType="number" name="배출시설지역본부명"></w2:column>
+						<w2:column id="dscfcBplcCd" dataType="number" name="배출시설사업장코드"></w2:column>
+						<w2:column id="dscfcBplcNm" dataType="number" name="배출시설사업장명"></w2:column>
+						<w2:column id="usgqty" dataType="number" name="사용량"></w2:column>
+						<w2:column id="amt" dataType="number" name="금액"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCsmtCnstnExcclcSttus" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="dscfcId" dataType="number" name="배출시설코드"></w2:column>
+						<w2:column id="dscfcNm" dataType="number" name="배출시설명"></w2:column>
+						<w2:column id="dscfcProcsTyCd" dataType="number" name="배출시설공정유형코드"></w2:column>
+						<w2:column id="cnsmpDiv" dataType="number" name="소비구분"></w2:column>
+						<w2:column id="usgqty" dataType="number" name="사용량"></w2:column>
+						<w2:column id="amt" dataType="number" name="금액"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltChartList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="nm" dataType="number" name="이름"></w2:column>
+						<w2:column id="usgqty" dataType="number" name="사용량(kWh)"></w2:column>
+						<w2:column id="amt" dataType="number" name="금액(원)"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"observeEvent" : false,
+		"chart" : {
+			"chartUnit" : 10,
+			"chartIntervalCount" : 4,
+		}
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSCL3100000", {"initScreenCallback" : scwin.searchDatas});
+		// ecsLib.setChartResizeObserver(this);
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 조회조건 초기 설정
+		scwin.initSearchParam();
+		// 화면 데이터 조회
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 조회조건 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initSearchParam = function() {
+		dmaSearchParam.set("endDtM", utilLib.getCurrentDate("yyyyMM"));
+		//dmaSearchParam.set("strtDtM", utilLib.addMonth(dmaSearchParam.get("endDtM"), -1));
+		dmaSearchParam.set("strtDtM", dmaSearchParam.get("endDtM"));
+		dmaSearchParam.set("endDtY", utilLib.getCurrentDate("yyyy"));
+		//dmaSearchParam.set("strtDtY", String(Number(dmaSearchParam.get("endDtY")) - 1));
+		dmaSearchParam.set("strtDtY", dmaSearchParam.get("endDtY"));
+		dmaSearchParam.set("basinCd", "ALL");
+		dmaSearchParam.set("deptCd", "ALL");
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var ecsBasinDivCd = dmaSearchParam.get("basinCd");
+		var ecsChrgDeptId = dmaSearchParam.get("deptCd");
+		dmaSearchParam.set("lastBasinCd", ecsBasinDivCd);
+
+		var cnd = radYmBy.getValue();
+
+		if (cnd == "M") {
+			var strtDate = dmaSearchParam.get("strtDtM");
+			var endDate = strtDate
+
+			if (String(strtDate).length != 6) {
+				// 조회기간이 올바르지 않습니다.
+				alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+				return;
+			}
+		} else if (cnd == "Y") {
+			var strtDate = dmaSearchParam.get("strtDtY");
+			var endDate = strtDate
+
+			if (String(strtDate).length != 4) {
+				// 조회기간이 올바르지 않습니다.
+				alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+				return;
+			}
+		}
+		cnd = cnd == "M" ? "mnby" : "yyby";
+
+		scwin.queryString = `?strtDt=${strtDate}`;
+		scwin.queryString += `&endDt=${endDate}`;
+		scwin.queryString += `&ecsBasinDivCd=${ecsBasinDivCd}`;
+		scwin.queryString += `&ecsChrgDeptId=${ecsChrgDeptId}`;
+		scwin.queryString += `&cnd=${cnd}`;
+
+		var option = {
+			action : "cl/cnstscexcclc/retrieve-cnstsc-excclc.do" +
+				scwin.queryString,
+			method : "get",
+			resData : dltItslfCnstnExcclcSttus,
+			success : "scwin.inqireItslfCnstnExcclcSttusChart",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+
+		scwin.inqireCsmtCnstnExcclcSttus();
+	};
+
+	/**
+	 * 조회조건에 맞게 차트 데이터를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireItslfCnstnExcclcSttusChart = function() {
+		var option = {
+			action : "cl/cnstscexcclc/retrieve-cnstsc-excclc-chart.do" +
+				scwin.queryString,
+			method : "get",
+			resData : dltChartList,
+			success : "scwin.inqireItslfCnstnExcclcSttusChartCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireItslfCnstnExcclcSttusChartCallback = function() {
+		spnGridTotal.setValue(dltItslfCnstnExcclcSttus.getRowCount());
+
+		// 자체 소비정산 현황 차트 생성
+		scwin.setChartItslfCnstnExcclcSttus();
+	};
+
+	/**
+	 * 조회조건에 맞게 위탁사업장 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCsmtCnstnExcclcSttus = function() {
+		var ecsBasinDivCd = dmaSearchParam.get("basinCd");
+		var ecsChrgDeptId = dmaSearchParam.get("deptCd");
+		var cnd = radYmBy.getValue();
+
+		if (cnd == "M") {
+			var strtDate = dmaSearchParam.get("strtDtM");
+			var endDate = strtDate
+
+			if (String(strtDate).length != 6) {
+				// 조회기간이 올바르지 않습니다.
+				alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+				return;
+			}
+		} else if (cnd == "Y") {
+			var strtDate = dmaSearchParam.get("strtDtY");
+			var endDate = strtDate
+
+			if (String(strtDate).length != 4) {
+				// 조회기간이 올바르지 않습니다.
+				alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+				return;
+			}
+		}
+		cnd = cnd == "M" ? "mnby" : "yyby";
+
+		scwin.queryString = `?strtDt=${strtDate}`;
+		scwin.queryString += `&endDt=${endDate}`;
+		scwin.queryString += `&ecsBasinDivCd=${ecsBasinDivCd}`;
+		scwin.queryString += `&ecsChrgDeptId=${ecsChrgDeptId}`;
+		scwin.queryString += `&cnd=${cnd}`;
+
+		var option = {
+			action : "cl/cnstscexcclc/retrieve-cnstsc-excclc-csmt-bplc.do" +
+				scwin.queryString,
+			method : "get",
+			resData : dltCsmtCnstnExcclcSttus,
+			success : "scwin.inqireCsmtCnstnExcclcSttusCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 위탁사업장 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCsmtCnstnExcclcSttusCallback = function() {
+		spnGridTotal2.setValue(dltCsmtCnstnExcclcSttus.getRowCount());
+
+		// 위탁 소비정산 현황 차트 생성
+		scwin.setChartCsmtCnstnExcclcSttus();
+	};
+
+	/**
+	 * 조회조건 재조회
+	 * @param info
+	 * @return
+	 */
+	scwin.inqireCnsmpSttusCnd = function() {
+		var ecsBasinDivCd = dmaSearchParam.get("basinCd");
+		var cnd = radYmBy.getValue();
+
+		if (cnd == "M") {
+			var strtDate = dmaSearchParam.get("strtDtM");
+			var endDate = dmaSearchParam.get("endDtM");
+		} else if (cnd == "Y") {
+			var strtDate = dmaSearchParam.get("strtDtY");
+			var endDate = dmaSearchParam.get("endDtY");
+		}
+		var queryString = `?strtDt=${strtDate}`;
+		queryString += `&endDt=${endDate}`;
+		queryString += `&ecsBasinDivCd=${ecsBasinDivCd}`;
+
+		var option = {
+			action : "cn/cnsmpsttus/retrieve-cnsmp-sttus-cnd.do"
+				+ queryString,
+			method : "get",
+			resData : dltAutoCondition2,
+			success : "",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.dmaSearchParam_onmodelchange = function(info) {
+		if ((info.key.startsWith("strtDt") || info.key.startsWith("endDt")) && info.oldValue) {
+			var newYear = String(info.newValue).substr(0, 4);
+			var oldYear = String(info.oldValue).substr(0, 4);
+			if (newYear != oldYear) {
+				scwin.inqireCnsmpSttusCnd();
+			}
+		}
+	};
+
+	/**
+	 * 라디오버튼 선택에 따라 조회연도를 변경한다.
+	 * @param
+	 * @return
+	 */
+	scwin.radYmBy_onviewchange = function() {
+		var cnd = radYmBy.getValue();
+
+		if (cnd == "M") {
+			grpCalMNm.setStyle("display", "");
+			grpCalMBox.setStyle("display", "");
+			grpCalYNm.setStyle("display", "none");
+			grpCalYBox.setStyle("display", "none");
+		} else if (cnd == "Y") {
+			grpCalYNm.setStyle("display", "");
+			grpCalYBox.setStyle("display", "");
+			grpCalMNm.setStyle("display", "none");
+			grpCalMBox.setStyle("display", "none");
+		} else {
+			return;
+		}
+	};
+
+	scwin.acbBasin_onviewchange = function(info) {
+		dmaSearchParam.set("basinCd", info.newValue);
+		scwin.inqireCnsmpSttusCnd();
+	};
+
+	scwin.acbDept_onviewchange = function(info) {
+		dmaSearchParam.set("deptCd", info.newValue);
+	};
+
+	//============================================================================================
+	// 차트
+	//============================================================================================
+	/**
+	 * 자체 소비정산 현황 차트 생성
+	 */
+	scwin.setChartItslfCnstnExcclcSttus = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerItslfCnstnExcclcSttus";
+		rMateChartH5.create($p.id + "ChartItslfCnstnExcclcSttus", grpChartItslfCnstnExcclcSttus.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	* 자체 소비정산 현황 차트 설정
+	*/
+	scwin.chartReadyHandlerItslfCnstnExcclcSttus = function(id) {
+		var cnstscChartsData = dltChartList.getAllJSON();
+		var nameList = dltAutoCondition1.getAllJSON();
+		var ecsBasinDivCd = dmaSearchParam.get("basinCd");
+		var ecsChrgDeptId = dmaSearchParam.get("deptCd");
+
+		if (ecsBasinDivCd == "ALL" && ecsChrgDeptId == "ALL") {
+			/*
+			var name = nameList.map(obj => obj.cmmnCdNm);
+			name.forEach(prefix => {
+				cnstscChartsData.forEach(obj => obj["nm"] = prefix);
+			});
+			*/
+			 cnstscChartsData.forEach(obj => obj["nm"] = obj.nm.slice(0, -4));
+		}
+
+		var maxData = cnstscChartsData.reduce((max, obj) => Math.max(max, obj.usgqty), 0);
+		var chartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+		var interval = Math.ceil((maxData / scwin.initData.chart.chartIntervalCount) / chartUnit) * chartUnit;
+
+		var amtMaxData = cnstscChartsData.reduce((max, obj) => Math.max(max, obj.amt), 0);
+		var amtChartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(amtMaxData.toFixed(0)).length - 2));
+		var amtInterval = Math.ceil((amtMaxData / scwin.initData.chart.chartIntervalCount) / amtChartUnit) * amtChartUnit;
+		var solidColor = ecsLib.getSkinColors().chartSolidColor2;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" cornerRadius="12">'
+			+'	<Options>'
+			+ '		<Legend defaultMouseOverAction="false" />'
+			+'	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true"/>'
+			+ '	<Combination2DChart showDataTips="true" dataTipDisplayMode="axis">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="nm" padding="0.7"/>'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + interval + '" formatter="{numFmt}" title="사용량(kWh)"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSet type="clustered" maxColumnWidth="25">'
+			+ '				<series>'
+			+ '					<Column2DSeries color="#666666" yField="usgqty" displayName="사용량(kWh)">'
+			+'						<fill>'
+			+'							<SolidColor color="' + solidColor + '"/>'
+			+'						</fill>'
+			+ '						<showDataEffect>'
+			+ '							<SeriesInterpolate />'
+			+ '						</showDataEffect>'
+			+ '					</Column2DSeries>'
+			+ '				</series>'
+			+ '			</Column2DSet>'
+			+ '			<Line2DSeries yField="amt" radius="4.5" itemRenderer="CircleItemRenderer" displayName="금액(원)">' // labelPosition="up"
+			+ '				<stroke>'
+			+ '					<Stroke color="#F9BD03" weight="3"/>'
+			+ '				</stroke>'
+			+ '				<lineStroke>'
+			+ '					<Stroke color="#F9BD03" weight="3"/>'
+			+ '				</lineStroke>'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxis2" interval="' + amtInterval + '" formatter="{numFmt}" title="금액(원)"/>'
+			+ '				</verticalAxis>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate/>'
+			+ '				</showDataEffect>'
+			+ '			</Line2DSeries>'
+			+ '		</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false" />'
+			+ '			<Axis2DRenderer axis="{vAxis2}" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+'		<horizontalAxisRenderers>'
+			+'			<Axis2DRenderer axis="{hAxis}" showLine="true" labelRotation="45" canDropLabels="false" canStagger="true"/>'
+			+'		</horizontalAxisRenderers>'
+			+ '	</Combination2DChart>'
+			+'</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(cnstscChartsData);
+	};
+
+	/**
+	 * 위탁 소비정산 현황 차트 생성
+	 */
+	scwin.setChartCsmtCnstnExcclcSttus = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerCsmtCnstnExcclcSttus";
+		rMateChartH5.create($p.id + "ChartCsmtCnstnExcclcSttus", grpChartCsmtCnstnExcclcSttus.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * 위탁 소비정산 현황 차트설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerCsmtCnstnExcclcSttus = function(id) {
+		var cnstscChartsData = dltCsmtCnstnExcclcSttus.getAllJSON();
+		var chartData = [];
+
+		var nmObj = {
+			"취수시설" : "01",
+			"가압시설" : "02",
+			"정수시설" : "03",
+			"건물" : "04",
+			"수송" : "05",
+			"댐시설" : "06",
+			"기타" : "99"
+		};
+
+		Object.keys(nmObj).forEach(key => {
+			var usgqtySum = 0;
+			var amtSum = 0;
+			cnstscChartsData.forEach(obj => {
+				if (obj.dscfcProcsTyCd == nmObj[key]) {
+					usgqtySum += Number(obj.usgqty);
+					amtSum += Number(obj.amt);
+				}
+			}, 0);
+			chartData.push({
+				"nm" : key,
+				"usgqty" : usgqtySum,
+				"amt" : amtSum
+			});
+		});
+
+		var maxData = chartData.reduce((max, obj) => Math.max(max, obj.usgqty), 0);
+		var chartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+		var interval = Math.ceil((maxData / scwin.initData.chart.chartIntervalCount) / chartUnit) * chartUnit;
+
+		var amtMaxData = chartData.reduce((max, obj) => Math.max(max, obj.amt), 0);
+		var amtChartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(amtMaxData.toFixed(0)).length - 2));
+		var amtInterval = Math.ceil((amtMaxData / scwin.initData.chart.chartIntervalCount) / amtChartUnit) * amtChartUnit;
+		var solidColor = ecsLib.getSkinColors().chartSolidColor2;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" cornerRadius="12">'
+			+'	<Options>'
+			+ '		<Legend defaultMouseOverAction="false" />'
+			+'	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true"/>'
+			+ '	<Combination2DChart showDataTips="true" dataTipDisplayMode="axis">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="nm" padding="0.7"/>'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + interval + '" formatter="{numFmt}" title="사용량(kWh)"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSet type="clustered" maxColumnWidth="25">'
+			+ '				<series>'
+			+ '					<Column2DSeries color="#666666" yField="usgqty" displayName="사용량(kWh)">'
+			+'						<fill>'
+			+'							<SolidColor color="' + solidColor + '"/>'
+			+'						</fill>'
+			+ '						<showDataEffect>'
+			+ '							<SeriesInterpolate />'
+			+ '						</showDataEffect>'
+			+ '					</Column2DSeries>'
+			+ '				</series>'
+			+ '			</Column2DSet>'
+			+ '			<Line2DSeries yField="amt" radius="4.5" itemRenderer="CircleItemRenderer" displayName="금액(원)">' // labelPosition="up"
+			+ '				<stroke>'
+			+ '					<Stroke color="#F9BD03" weight="3"/>'
+			+ '				</stroke>'
+			+ '				<lineStroke>'
+			+ '					<Stroke color="#F9BD03" weight="3"/>'
+			+ '				</lineStroke>'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxis2" interval="' + amtInterval + '" formatter="{numFmt}" title="금액(원)"/>'
+			+ '				</verticalAxis>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate/>'
+			+ '				</showDataEffect>'
+			+ '			</Line2DSeries>'
+			+ '		</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false" />'
+			+ '			<Axis2DRenderer axis="{vAxis2}" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '	</Combination2DChart>'
+			+'</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartData);
+	};
+
+	/**
+	 * 그리드 소수점 첫째자리까지 표시 한다.
+	 * @param value
+	 * @return
+	 */
+	scwin.dsplZeroFrmt = function(value) {
+		return ecsLib.dsplZeroFrmt(value, 1);
+	};
+
+	/**
+	 * 그리드 합계 소수점 첫째자리까지 표시 한다.
+	 * @param value
+	 * @return
+	 */
+	scwin.dsplFrmt = function(value) {
+		return ecsLib.dsplFrmt(value, 1);
+	};
+
+	//============================================================================================
+	// 엑셀
+	//============================================================================================
+	/**
+	 * 자체 소비정산 현황 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm = spnGridTitle.getValue();
+		// 엑셀 내부 타이틀 추가_240105
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 10,
+			text 		: `${menuNm}_` + `${subTitleNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		// 데이터가 없어도 탬플릿만 다운받을 수 있게 comLib.downloadExcel 말고 grdID.advancedExcelDownload 적용_231113
+		options = {
+			fileName : `${menuNm}_` + `${subTitleNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			useDataFormat: true,
+			applyDataFormat : true,
+			rowHeight : 40,
+			useStyle: true,
+			hidden: 1
+		}
+		grdItslfCnstnExcclcSttus.advancedExcelDownload(options, infoArr);
+	};
+
+	/**
+	 * 위탁 소비정산 현황 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel2_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm = spnGridTitle2.getValue();
+		// 엑셀 내부 타이틀 추가_240105
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 10,
+			text 		: `${menuNm}_` + `${subTitleNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		// 데이터가 없어도 탬플릿만 다운받을 수 있게 comLib.downloadExcel 말고 grdID.advancedExcelDownload 적용_231113
+		options = {
+			fileName : `${menuNm}_` + `${subTitleNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			useDataFormat: true,
+			applyDataFormat : true,
+			rowHeight : 40,
+			useStyle: true,
+			hidden: 1
+		}
+		grdCsmtCnstnExcclcSttu.advancedExcelDownload(options, infoArr);
+	};
+]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group class="list" id="grpInqire">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:select1 id="radYmBy" appearance="full" cols="3" ev:onviewchange="scwin.radYmBy_onviewchange" renderType="radiogroup"
+									selectedIndex="0">
+									<xf:choices>
+										<xf:item>
+											<xf:label><![CDATA[월별]]></xf:label>
+											<xf:value><![CDATA[M]]></xf:value>
+										</xf:item>
+										<xf:item>
+											<xf:label><![CDATA[연별]]></xf:label>
+											<xf:value><![CDATA[Y]]></xf:value>
+										</xf:item>
+									</xf:choices>
+								</xf:select1>
+							</xf:group>
+							<xf:group id="grpCalMNm" class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회기간"></w2:span>
+							</xf:group>
+							<xf:group id="grpCalMBox" class="w2tb_td cw3" tagname="td">
+								<w2:period_month_calendar strtDateRef="data:dmaSearchParam.strtDtM" endDateRef="data:dmaSearchParam.endDtM"></w2:period_month_calendar>
+							</xf:group>
+							<xf:group id="grpCalYNm" class="w2tb_th cw1" style="display:none;" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회기간"></w2:span>
+							</xf:group>
+							<xf:group id="grpCalYBox" class="w2tb_td cw3" tagname="td" style="display:none;">
+								<w2:period_year_calendar strtDateRef="data:dmaSearchParam.strtDtY" endDateRef="data:dmaSearchParam.endDtY"></w2:period_year_calendar>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="spnBasin" label="유역"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="acbBasin" chooseOption="true" chooseOptionLabel="- 전체 -" chooseOptionValue="ALL" displayMode="label"
+									editType="select" ev:onviewchange="scwin.acbBasin_onviewchange" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition1">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="spnCndDept" label="부서"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="acbDept" chooseOption="true" chooseOptionLabel="- 전체 -" chooseOptionValue="ALL" displayMode="label"
+									editType="select" ev:onviewchange="scwin.acbDept_onviewchange" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition2">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" ev:onclick="scwin.btnInqire_onclick" outerDiv="false" userData1="Q">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="layout-float">
+						<xf:group class="float-con left-area cw8">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span id="spnGridTitle" label="자체 소비정산 현황"></w2:span>
+									<w2:span id="spnGridTotal" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+								</xf:group>
+								<xf:group class="com-area">
+									<xf:group class="btn-group">
+										<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" ev:onclick="scwin.btnDownExcel_onclick"
+											outerDiv="false" userData1="E">
+											<xf:label><![CDATA[엑셀]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="list-box box">
+								<w2:gridView id="grdItslfCnstnExcclcSttus" class="resized" dataList="dltItslfCnstnExcclcSttus" readOnly="true"
+									checkReadOnlyOnPaste="true" checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" sortable="true" tooltipDisplay="true"
+									defaultCellHeight="35" style="height:22.75rem;">
+									<w2:header>
+										<w2:row>
+											<w2:column id="hDscfcLclhqNm" inputType="text" width="120" value="유역"></w2:column>
+											<w2:column id="hDscfcBplcNm" inputType="text" width="400" value="부서"></w2:column>
+											<w2:column id="hUsgqty" inputType="text" width="200" value="사용량(kWh)"></w2:column>
+											<w2:column id="hAmt" inputType="text" width="280" value="금액(원)"></w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="dscfcLclhqNm" inputType="text"></w2:column>
+											<w2:column id="dscfcBplcNm" inputType="text"></w2:column>
+											<w2:column id="usgqty" inputType="text" displayFormat="#,###" displayFormatter="scwin.dsplZeroFrmt" textAlign="right"></w2:column>
+											<w2:column id="amt" inputType="text" displayFormat="#,###" displayFormatter="scwin.dsplZeroFrmt" textAlign="right"></w2:column>
+										</w2:row>
+									</w2:gBody>
+									<w2:footer>
+										<w2:row>
+											<w2:column id="fDscfcLclhqNm" inputType="text" value="합계"></w2:column>
+											<w2:column id="fDscfcBplcNm" inputType="text"></w2:column>
+											<w2:column id="fUsgqty" class="grd-right" displayFormat="#,###" displayFormatter="scwin.dsplFrmt" expression="sum('usgqty')"
+												inputType="expression" textAlign="right"></w2:column>
+											<w2:column id="fAmt" class="grd-right" displayFormat="#,###" displayFormatter="scwin.dsplFrmt" expression="sum('amt')"
+												inputType="expression" textAlign="right"></w2:column>
+										</w2:row>
+									</w2:footer>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+						<xf:group class="float-con right-area cw12">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="자체 소비정산 현황 차트"></w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group class="con-box">
+								<xf:group id="grpChartItslfCnstnExcclcSttus" class="view-box box chart-wrap-padding" style="width:100%; height:22.7rem">
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="con-box">
+					<xf:group class="layout-float">
+						<xf:group class="float-con left-area cw8">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span id="spnGridTitle2" label="위탁 소비정산 현황"></w2:span>
+									<w2:span id="spnGridTotal2" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+								</xf:group>
+								<xf:group class="com-area">
+									<xf:group class="btn-group">
+										<w2:anchor id="btnDownExcel2" class="excel-btn fa fa-long-arrow-down btn_sh" ev:onclick="scwin.btnDownExcel2_onclick"
+											outerDiv="false" userData1="E">
+											<xf:label><![CDATA[엑셀]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="list-box box">
+								<w2:gridView id="grdCsmtCnstnExcclcSttus" class="resized" dataList="dltCsmtCnstnExcclcSttus" readOnly="true"
+									checkReadOnlyOnPaste="true" checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" sortable="true" tooltipDisplay="true"
+									defaultCellHeight="35" style="height:22.75rem;">
+									<w2:header>
+										<w2:row>
+											<w2:column id="hCnsmpDiv" inputType="text" width="120" value="소비구분"></w2:column>
+											<w2:column id="hDscfcNm" inputType="text" width="400" value="배출시설"></w2:column>
+											<w2:column id="hUsgqty" inputType="text" width="200" value="사용량(kWh)"></w2:column>
+											<w2:column id="hAmt" inputType="text" width="280" value="금액(원)"></w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="cnsmpDiv" inputType="text"></w2:column>
+											<w2:column id="dscfcNm" inputType="text" textAlign="left"></w2:column>
+											<w2:column id="usgqty" inputType="text" displayFormat="#,###" displayFormatter="scwin.dsplZeroFrmt" textAlign="right"></w2:column>
+											<w2:column id="amt" inputType="text" displayFormat="#,###" displayFormatter="scwin.dsplZeroFrmt" textAlign="right">
+											</w2:column>
+										</w2:row>
+									</w2:gBody>
+									<w2:footer>
+										<w2:row>
+											<w2:column id="fCnsmpDiv" inputType="text" value="합계"></w2:column>
+											<w2:column id="fDscfcNm" inputType="text"></w2:column>
+											<w2:column id="fUsgqty" class="grd-right" displayFormat="#,###" displayFormatter="scwin.dsplFrmt" expression="sum('usgqty')"
+												inputType="expression" textAlign="right"></w2:column>
+											<w2:column id="fAmt" class="grd-right" displayFormat="#,###" displayFormatter="scwin.dsplFrmt" expression="sum('amt')"
+												inputType="expression" textAlign="right"></w2:column>
+										</w2:row>
+									</w2:footer>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+						<xf:group class="float-con right-area cw12">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="위탁 소비정산 현황 차트"></w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group class="con-box">
+								<xf:group id="grpChartCsmtCnstnExcclcSttus" class="view-box box chart-wrap-padding" style="width:100%; height:22.7rem"></xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VM_HR01601_Dao">
+	<select id="VM_HR01601_Dao_retrieveUsrList" parameterType="kw.scm.sc.cmmncd.vo.HrmVmHr01601Vo" resultType="egovMap">
+		/* VM_HR01601_Dao_retrieveUsrList */
+		SELECT
+			A.empno AS usr_id,
+			A.boncd AS usr_hq_cd,
+			A.buscd AS usr_dept_cd,
+			A.timcd AS usr_sect_cd,
+			A.kwacd AS usr_team_cd,
+			A.zgrcd AS usr_jgrd_cd,
+			B.kostl AS cstct_cd /* 코스트센터 */
+		FROM
+			HRM.vm_hr01601 A,
+			HRM.vm_hr01a01 B /* 인사부서조직 */
+		WHERE
+			A.buscd = B.objid /* 조직코드 */
+			AND TRUNC(SYSDATE) BETWEEN B.strdt AND B.enddt 
+			AND A.empno = #{usrEmpno}
+	</select>
+</mapper>

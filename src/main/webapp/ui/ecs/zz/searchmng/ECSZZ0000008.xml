@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/content.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content-layout.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/animate.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/font-awesome.min.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSZZ0000008.xml
+			* 설 명 : 조직도를 이용한 부서정보 검색을 위한 팝업화면
+			* 작성일 : 2023.11.30
+			* 담당자 : Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.11.30 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltDeptList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="chk" name="선택" dataType="text" ignoreStatus="true"></w2:column>
+						<w2:column id="objid" name="부서코드" dataType="text"></w2:column>
+						<w2:column id="stext" name="부서명" dataType="text"></w2:column>
+						<w2:column id="regdt" name="등록일" dataType="text"></w2:column>
+						<w2:column id="upddt" name="수정일" dataType="text"></w2:column>
+						<w2:column id="zfcod" name="재무부서코드" dataType="text"></w2:column>
+						<w2:column id="strdt" name="시작일자" dataType="text"></w2:column>
+						<w2:column id="enddt" name="종료일자" dataType="text"></w2:column>
+						<w2:column id="upobj" name="상위조직코드" dataType="text"></w2:column>
+						<w2:column id="depth" name="깊이" dataType="text"></w2:column>
+						<w2:column id="seqno" name="순서" dataType="text"></w2:column>
+						<w2:column id="parts" name="현장구분" dataType="text"></w2:column>
+						<w2:column id="divi1" name="수시전보그룹1" dataType="text"></w2:column>
+						<w2:column id="divi2" name="수시전보그룹2" dataType="text"></w2:column>
+						<w2:column id="pernr" name="부서장 사번" dataType="text"></w2:column>
+						<w2:column id="kostl" name="코스트센터" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataList id="dltDeptCd" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="lev" name="레벨" dataType="text"></w2:column>
+						<w2:column id="objid" name="부서코드" dataType="text"></w2:column>
+						<w2:column id="stext" name="부서명" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	/**
+	 * 조직도 검색 화면 초기화 작업을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.popupParam;
+	scwin.initScreen = function() {
+		scwin.popupParam=comLib.getPopupParam($p,["topDeptCd", "selectedDeptCd", "defaultDeptYn", "multiCheckYn", "orgchtDp", "searchDeptNm"]);
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, scwin.popupParam.popupID);
+		if (scwin.popupParam.orgchtDp == null || scwin.popupParam.orgchtDp == "") {
+			scwin.popupParam.orgchtDp = "999";
+		}
+
+		// TreeView / GridView 높이 초기화
+		window.addEventListener("resize", scwin.initComponentSize, false);
+		scwin.initComponentSize();
+
+		// 다건 선택 가능시 checkbox 컬럼 보여주기
+		if (scwin.popupParam.multiCheckYn == "Y") {
+			grdUsrList.setColumnVisible(0, true);
+		}
+
+		// 부서코드 조회
+		scwin.setDeptCd();	
+	};
+
+	/**
+	 * TreeView / GridView 높이 초기화
+	 * @param
+	 * @return
+	 */
+	scwin.initComponentSize = function() {
+		var componentSize = innerHeight - 205;
+		trvDeptCd.setStyle("height", componentSize + "px");
+		grdUsrList.setStyle("height", componentSize + "px");
+	}
+
+	/**
+	 * 부서코드 조회
+	 * @param
+	 * @return
+	 */
+	scwin.setDeptCd = function() {
+		var requestData = {};
+		requestData.topDeptCd = scwin.popupParam.topDeptCd; // 최상위부서
+		requestData.orgchtDp = scwin.popupParam.orgchtDp; // 조직도 Depth
+
+		var option = {action : "sc/searchmng/retrieveDeptTree.do",
+			reqData : requestData,
+			resData : dltDeptCd,
+			success : "scwin.initCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.initCallback = function() {
+		if (scwin.popupParam.searchDeptNm != null && scwin.popupParam.searchDeptNm != "") {
+			ibxSearchTxt.setValue(scwin.popupParam.searchDeptNm);
+			scwin.btnSearch_onclick();
+		} else {
+			// 파라미터를 통한 부서 자동선택
+			if (scwin.popupParam.selectedDeptCd != null && scwin.popupParam.selectedDeptCd != "") {
+				trvDeptCd.findNodeByValue(scwin.popupParam.selectedDeptCd, true);
+				scwin.trvDeptInfo_onlabelclick(scwin.popupParam.selectedDeptCd, null, scwin.popupParam.selectedDeptCd);
+			} else {
+				// 로그인한 사용자 부서 자동 선택
+				if (scwin.popupParam.defaultDeptYn == "Y") {
+					var currentUsrDeptCd  = "";
+					if (scwin.popupParam.orgchtDp >= 5) {
+						comLib.getUsrTeamCd();
+					}
+					if (scwin.popupParam.orgchtDp >= 4 && (currentUsrDeptCd == null || currentUsrDeptCd == "")) {
+						currentUsrDeptCd = comLib.getUsrSectCd();
+					}
+					if (scwin.popupParam.orgchtDp >= 3 && (currentUsrDeptCd == null || currentUsrDeptCd == "")) {
+						currentUsrDeptCd = comLib.getUsrDeptCd();
+					}
+					if (scwin.popupParam.orgchtDp >= 2 && (currentUsrDeptCd == null || currentUsrDeptCd == "")) {
+						currentUsrDeptCd = comLib.getUsrHqCd();
+					}
+					trvDeptCd.findNodeByValue(currentUsrDeptCd, true);
+					scwin.trvDeptInfo_onlabelclick(currentUsrDeptCd, null, currentUsrDeptCd);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 조회 버튼 클릭 시 부서명을 조회조건으로 부서 정보를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSearch_onclick = function() {
+		var searchTxt = utilLib.trim(ibxSearchTxt.getValue());
+		if (searchTxt != "") {
+			var requestData = {};
+			requestData.stext = searchTxt;
+			requestData.topDeptCd = scwin.popupParam.topDeptCd;
+			requestData.orgchtDp = scwin.popupParam.orgchtDp;
+
+			var option = {action : "sc/searchmng/retrieveDeptList.do",
+				reqData : requestData,
+				resData : dltDeptList,
+				success : "scwin.retrieveCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		} else {
+			// 부서명을(를) 입력하세요
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00147", "부서명"));
+		}
+	};
+
+	/**
+	 * 부서트리 선택시 해당 부서 하위 목록을 자동으로 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.trvDeptInfo_onlabelclick = function(value, nodeElement, index) {
+		// 최상위 트리는 별도 조회 안함 (데이터가 너무 많다)
+		if (index > 1) {
+			var requestData = {};
+			requestData.tplvlObjid = value;
+			requestData.orgchtDp = scwin.popupParam.orgchtDp;
+
+			var option = {action : "sc/searchmng/retrieveDeptList.do",
+				reqData : requestData,
+				resData : dltDeptList,
+				success : "scwin.retrieveCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		}
+	};
+
+	/**
+	 * 부서 정보를 조회 후 콜백 로직을 수행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.retrieveCallback = function(resBody) {
+		txtCnt.setValue(dltDeptList.getRowCount());
+		// 단건 선택일 때는 트리에서 클릭한 녀석을 자동으로 선택하게 해주자
+		if (scwin.popupParam.multiCheckYn != "Y") {
+			var rowIndex = dltDeptList.getMatchedIndex("objid", trvDeptCd.getSelectedValue());
+			grdUsrList.setFocusedCell(rowIndex, "objid");
+		}
+	};
+
+	/**
+	 * 부서 선택 정보를 메인으로 전달한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnCnfirm_onclick = function() {
+		var jsonList = "";
+
+		// 선택된 항목 받아오기
+		if (scwin.popupParam.multiCheckYn == "Y") {
+			jsonList = grdUsrList.getCheckedJSON("chk");
+		} else {
+			var focusedIndex = grdUsrList.getFocusedRowIndex();
+			if (focusedIndex >= 0) {
+				jsonList = dltDeptList.getRangeJSON(focusedIndex, focusedIndex);
+			}
+		}
+
+		// 부모창으로 전달
+		if (jsonList != undefined && jsonList != "") {
+			comLib.closePopupCall($p,scwin.popupParam,true,jsonList);
+		} else {
+			// 선택된 자료가 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00258"));
+		}
+	};
+
+	/**
+	 * 조회조건에서 엔터로도 조회할 수 있도록 처리
+	 * @param
+	 * @return
+	 */
+	scwin.ibxSearchTxt_onkeydown = function(e) {
+		if (e.keyCode == 13) {
+			scwin.btnSearch_onclick();
+		}
+	};
+
+	// 단건선택인 경우 더블클릭으로도 선택 가능토록 처리
+	scwin.grdUsrList_oncelldblclick = function(row, col) {
+		if (scwin.popupParam.multiCheckYn != "Y") {
+			scwin.btnCnfirm_onclick();
+		}
+	};
+]]></script>
+	</head>
+	<body>
+		<xf:group id="grpPopupWrap" class="popup-wrap">
+			<xf:group id="grpInqire" class="search-box">
+				<xf:group class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="부서명"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw8" tagname="td">
+								<xf:input id="ibxSearchTxt" ev:onkeydown="scwin.ibxSearchTxt_onkeydown"></xf:input>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnSearch" class="fa fa-search btn_sh" ev:onclick="scwin.btnSearch_onclick" outerDiv="false" userData1="Q">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="layout-float">
+					<xf:group class="float-con left-area cw8">
+						<xf:group class="con-box">
+							<xf:group class="tree-box box">
+								<xf:group class="title-group">
+									<xf:group tagname="h4">
+										<w2:span label="조직도">
+										</w2:span>
+									</xf:group>
+								</xf:group>
+								<w2:treeview id="trvDeptCd" dataType="listed" ev:onlabelclick="scwin.trvDeptInfo_onlabelclick" hierarchy="true"
+									showCheckbox="true" showTreeDepth="1" toggleEvent="onclick">
+									<w2:itemset nodeset="data:dltDeptCd">
+										<w2:label ref="stext"></w2:label>
+										<w2:value ref="objid"></w2:value>
+										<w2:depth ref="lev"></w2:depth>
+										<w2:folder></w2:folder>
+										<w2:checkbox></w2:checkbox>
+										<w2:checkboxDisabled></w2:checkboxDisabled>
+										<w2:image></w2:image>
+										<w2:iconImage></w2:iconImage>
+										<w2:selectedImage></w2:selectedImage>
+										<w2:expandedImage></w2:expandedImage>
+										<w2:leafImage></w2:leafImage>
+									</w2:itemset>
+								</w2:treeview>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="float-con right-area cw12">
+						<xf:group class="con-box">
+							<xf:group class="list-box box">
+								<xf:group class="title-group">
+									<xf:group tagname="h4">
+										<w2:span label="부서">
+										</w2:span>
+										<w2:span id="txtCnt" class="title-num" displayFormat="###,###,###" label="0">
+										</w2:span>
+									</xf:group>
+								</xf:group>
+								<w2:gridView id="grdUsrList" autoFit="allColumn" dataList="dltDeptList" editModeEvent="onclick"
+									ev:oncellclick="scwin.grdScrinBtnList_oncellclick" fixedColumnWithHidden="true" focusMode="row" ignoreCellClick="false"
+									ignoreToggleOnDisabled="false" scrollByColumn="false" scrollByColumnAdaptive="false" sortable="true" summaryAuto="false"
+									tooltipDisplay="true" useShiftKey="true" ev:oncelldblclick="scwin.grdUsrList_oncelldblclick">
+									<w2:header>
+										<w2:row>
+											<w2:column id="hChk" dataType="boolean" falseValue="N" inputType="checkbox" style="height:20px;" trueValue="Y"
+												sortable="false" width="50" checkboxLabel="&amp;nbsp;" hidden="true">
+											</w2:column>
+											<w2:column id="hDeptCd" width="70" inputType="text" style="height:20px;" value="부서코드">
+											</w2:column>
+											<w2:column id="hDeptNm" inputType="text" style="height:20px;" value="부서명" width="100">
+											</w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="chk" checkboxLabel="&amp;nbsp;" dataType="boolean" defaultValue="N" falseValue="N" inputType="checkbox"
+												style="height:20px" trueValue="Y" width="50">
+											</w2:column>
+											<w2:column id="objid" width="70" inputType="text" style="height:20px" readOnly="true">
+											</w2:column>
+											<w2:column id="stext" inputType="text" width="100" readOnly="true">
+											</w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnCnfirm" ev:onclick="scwin.btnCnfirm_onclick" outerDiv="false">
+						<xf:label><![CDATA[확인]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

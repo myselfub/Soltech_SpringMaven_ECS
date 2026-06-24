@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltLeftMenuInfo" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="menuId" name="menuId" dataType="text"></w2:column>
+						<w2:column id="menuNm" name="menuNm" dataType="text"></w2:column>
+						<w2:column id="scrinId" name="scrinId" dataType="text"></w2:column>
+						<w2:column id="hpcmFileNm" name="hpcmFileNm" dataType="text"></w2:column>
+						<w2:column id="pgeNo" name="pgeNo" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataMap id="dmaLeftMenuTit">
+					<w2:keyInfo>
+						<w2:key id="ECSEC000000" name="ECSEC000000" dataType="text"></w2:key>
+						<w2:key id="ECSPB000000" name="ECSPB000000" dataType="text"></w2:key>
+						<w2:key id="ECSME000000" name="ECSME000000" dataType="text"></w2:key>
+						<w2:key id="ECSPN000000" name="ECSPN000000" dataType="text"></w2:key>
+						<w2:key id="ECSCN000000" name="ECSCN000000" dataType="text"></w2:key>
+						<w2:key id="ECSCL000000" name="ECSCL000000" dataType="text"></w2:key>
+						<w2:key id="ECSZZ000000" name="ECSZZ000000" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	//imports("uiplugin._popup");
+	scwin.hpcmFileNm = "";
+	scwin.pgeNo = "";
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		scwin.inqireHpcm();
+	};
+
+	scwin.inqireHpcm = function() {
+		var requestData = {};
+		var option = {
+			action : "zz/authmng/retrieveHpcm.do",
+			reqData : requestData,
+			resData : dltLeftMenuInfo,
+			success : "scwin.inqireHpcmCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.inqireHpcmCallback = function() {
+		// 예외처리 및 데이터 바인딩
+		var leftMenuInfo = dltLeftMenuInfo.getAllJSON();
+		var targetMenuId = "ECSEC510000";
+		leftMenuInfo = leftMenuInfo.filter(obj => !obj.menuId.startsWith("ECSEC5") || obj.menuId == targetMenuId);
+		leftMenuInfo[leftMenuInfo.findIndex(obj => obj.menuId == targetMenuId)].menuNm = "유역별 종합현황";
+		dltLeftMenuInfo.setJSON(leftMenuInfo);
+		var upperMenu = dltLeftMenuInfo.getAllJSON().filter(obj => !obj.scrinId);
+		Object.keys(mf_dmaLeftMenuTit.getJSON()).forEach(item => {
+			dmaLeftMenuTit.set(item, (upperMenu.find(obj => obj.menuId == item) || 0).menuNm);
+		});
+
+		var pparam;
+		if($p.getPopupParam()){
+			pparam = JSON.parse($p.getPopupParam());
+		} else{
+			pparam = JSON.parse($w.getPopupParam());
+		}
+		scwin.hpcmFileNm = pparam.data.guideHtml;
+		scwin.pgeNo = pparam.data.pageNo;
+
+		if (scwin.hpcmFileNm == "") {
+			scwin.hpcmFileNm = $p.getParameter("guideHtml");
+		}
+
+		if (scwin.pgeNo == "") {
+			scwin.pgeNo = $p.getParameter("pageNo");
+		}
+		$(document).ready(function() {
+			tabControl1.trigger("onchange", [$p.$("#tabControl1>ul>li:eq(0)").attr("id"), 0, tabControl1.getTabID(0)]);
+			scwin.HpcmViewer(scwin.hpcmFileNm, scwin.pgeNo);
+		});
+	};
+
+	scwin.HpcmViewer = function (hpcmFileNm, pgeNo) {
+		var idx = tabControl1.getTabIndex(hpcmFileNm);
+		if (idx < 0) {
+			return;
+		}
+		tabControl1.setSelectedTabIndex(idx);
+
+		var iframe = tabControl1.getChildren()[idx].getChildren()[1];
+		iframe.setSrc("/hpcm/" + hpcmFileNm + ".html?#" + pgeNo);
+	};
+
+	scwin.HpcmViewer2 = function (str, str1) {
+		tabControl1.setSelectedTabIndex(tabControl1.getTabIndex(str));
+		eval($p.id+"helpHtml" + "_" + tabControl1.getTabIndex(str)).setSrc("/hpcm/" + str + ".html?#" + str1);
+	};
+
+	scwin.tabControl1_onchange = function(tabId, idx, userTabID) {
+		var leftMenuTit = dmaLeftMenuTit.get(userTabID);
+		if (!leftMenuTit) {
+			return;
+		}
+
+		var leftMenuList = dltLeftMenuInfo.getMatchedJSON("hpcmFileNm", userTabID, true);
+		var contentId = this.getChildren()[idx].id;
+		var obj = $p.$('#'+ contentId);
+		var leftMenu= obj.find(".sub_title>span").text(leftMenuTit).next();
+		leftMenu.empty();
+		$.each(leftMenuList, function(i,o) {
+			var item = $('<li class="w2group"><a class="w2anchor2 " href="javascript:void(null);">' + o.menuNm + '</a></li>');
+			item.on("click", function(){
+				scwin.HpcmViewer(o.hpcmFileNm, o.pgeNo);
+			});
+			leftMenu.append(item);
+		});
+		if (leftMenuList.length > 0) {
+			scwin.HpcmViewer(leftMenuList[0].hpcmFileNm, "pf01");
+		}
+	};
+	]]></script>
+	</head>
+	<body>
+		<xf:group class="popup-wrap" style="min-width:900px;">
+			<xf:group class="online-help-box">
+				<w2:tabControl id="tabControl1" confirmTrueAction="exist" useTabKeyOnly="true" confirmFalseAction="new" useMoveNextTabFocus="false"
+					useConfirmMessage="false" alwaysDraw="false" style="height:100%;" ev:onchange="scwin.tabControl1_onchange">
+
+					<w2:tabs disabled="false" label="에너지전주기" id="ECSEC000000"></w2:tabs>
+					<w2:tabs disabled="false" label="계획/건설" id="ECSPB000000"></w2:tabs>
+					<w2:tabs disabled="false" label="관리/폐기" id="ECSME000000"></w2:tabs>
+					<w2:tabs disabled="false" label="생산" id="ECSPN000000"></w2:tabs>
+					<w2:tabs disabled="false" label="소비" id="ECSCN000000"></w2:tabs>
+					<w2:tabs disabled="false" label="정산" id="ECSCL000000"></w2:tabs>
+					<w2:tabs disabled="false" label="에너지공통" id="ECSZZ000000"></w2:tabs>
+
+					<w2:content alwaysDraw="false">
+						<xf:group class="left_menu">
+							<w2:wframe src="/ui/ecs/zz/guide/guide_leftm.xml"></w2:wframe>
+						</xf:group>
+						<w2:iframe></w2:iframe>
+					</w2:content>
+					<w2:content alwaysDraw="false">
+						<xf:group class="left_menu">
+							<w2:wframe src="/ui/ecs/zz/guide/guide_leftm.xml"></w2:wframe>
+						</xf:group>
+						<w2:iframe></w2:iframe>
+					</w2:content>
+					<w2:content alwaysDraw="false">
+						<xf:group class="left_menu">
+							<w2:wframe src="/ui/ecs/zz/guide/guide_leftm.xml"></w2:wframe>
+						</xf:group>
+						<w2:iframe></w2:iframe>
+					</w2:content>
+					<w2:content alwaysDraw="false">
+						<xf:group class="left_menu">
+							<w2:wframe src="/ui/ecs/zz/guide/guide_leftm.xml"></w2:wframe>
+						</xf:group>
+						<w2:iframe></w2:iframe>
+					</w2:content>
+					<w2:content alwaysDraw="false">
+						<xf:group class="left_menu">
+							<w2:wframe src="/ui/ecs/zz/guide/guide_leftm.xml"></w2:wframe>
+						</xf:group>
+						<w2:iframe></w2:iframe>
+					</w2:content>
+					<w2:content alwaysDraw="false">
+						<xf:group class="left_menu">
+							<w2:wframe src="/ui/ecs/zz/guide/guide_leftm.xml"></w2:wframe>
+						</xf:group>
+						<w2:iframe></w2:iframe>
+					</w2:content>
+					<w2:content alwaysDraw="false">
+						<xf:group class="left_menu">
+							<w2:wframe src="/ui/ecs/zz/guide/guide_leftm.xml"></w2:wframe>
+						</xf:group>
+						<w2:iframe></w2:iframe>
+					</w2:content>
+
+				</w2:tabControl>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

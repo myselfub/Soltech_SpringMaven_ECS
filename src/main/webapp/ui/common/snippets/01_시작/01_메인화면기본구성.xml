@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <w2:userPalette defaultIcon="mix.png" desc=""/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[ ]]></script>
+    </head>
+    <body>
+    <w2:wframe class="wfm_title" id="wfm_title" src="/ui/common/navigator.xml" style=""></w2:wframe>
+<xf:group style="" id="" class="wrap">
+	<w2:textbox id="" label="본 회색 영역은 삭제 후 사용합니다." ref="" style="background:#dddddd;  text-align:center; padding:30px 0; ">
+</w2:textbox>
+</xf:group>
+</body>
+</html>

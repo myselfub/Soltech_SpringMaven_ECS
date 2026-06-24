@@ -1,0 +1,693 @@
+@charset "utf-8";
+
+:root {
+}
+
+@font-face {
+	font-family:'NanumGothic';
+	font-style:nomal;
+	font-weight:400; 
+	src:url('../font/NanumGothic.eot');
+	src:url('../font/NanumGothic.eot?#iefix') format('embedden-opentype'),
+		url('../font/NanumGothic.woff2') format('woff2'),
+		url('../font/NanumGothic.woff') format('woff'),
+		url('../font/NanumGothic.ttf') format('truetype');
+};
+
+/**********************************************************
+	CSS 초기화, 공통클래스, 웹스퀘어 컴포넌트
+***********************************************************/
+
+/**********************************************************
+	01_ CSS 초기화
+***********************************************************/
+html,body {margin:0; padding:0; height:100%;}
+body {color:#333333; font-style:normal; -webkit-text-size-adjust:none; background-color:#ECEEF0; overflow:hidden;}
+p,h1,h2,h3,h4,h5,h6,ul,ol,li,dl,table,form,fieldset {margin:0; padding:0;}
+body,input,textarea,select,button,table {font-size:13px; font-family:'NanumGothic', Verdana, Sans-serif !important;}
+table {empty-cells:show;}
+caption,legend {display:none;}
+a img,img {vertical-align:top; cursor:pointer;}
+img,fieldset {border:0;}
+ul,ol,dl,li,dd {list-style:none;}
+ul li img {vertical-align:top;}
+em,address {font-style:normal;}
+a {text-decoration:none;}
+a:hover,a:active,a:focus {text-decoration:none;}
+
+div,a {box-sizing:border-box;}
+
+/* float버그 높이값 사라짐 처리 */
+.cb:after {display:block; visibility:hidden; clear:both; height:0; font-size:0; line-height:0; content:'.';}
+*:first-child+html .cb {min-height:0}/* ie7/8 min-height 해결 */
+
+/* websquare common */
+*:focus {outline:none;} /* focus 라인 없음 */
+/* .w2group{background-color:transparent} */
+.w2trigger {display:-moz-inline-stack; overflow:visible;}/* firefox padding 버그 및 ie padding 버그 */
+.w2textarea {display:block; margin:0;}/* 브라우저 margin */
+.w2tb .w2selectbox {line-height:normal;}
+.w2selectbox_label {padding-top:0;}
+
+/***********************************************************
+	02_ Common Class : 01. 레이아웃
+***********************************************************/
+
+/* margin */
+.mt0 {margin-top:0 !important;}
+.mt5 {margin-top:5px !important;}
+.mt10 {margin-top:10px !important;}
+.mt15 {margin-top:15px !important;}
+.mt20 {margin-top:20px !important;}
+.mt25 {margin-top:25px !important;}
+.mt30 {margin-top:30px !important;}
+.mt40 {margin-top:40px !important;}
+.mt50 {margin-top:50px !important;}
+
+.mr0 {margin-right:0 !important;}
+.mr5 {margin-right:5px !important;}
+.mr10 {margin-right:10px !important;}
+.mr15 {margin-right:15px !important;}
+.mr20 {margin-right:20px !important;}
+.mr25 {margin-right:25px !important;}
+.mr30 {margin-right:30px !important;}
+.mr40 {margin-right:40px !important;}
+.mr50 {margin-right:50px !important;}
+
+.mb0 {margin-bottom:0 !important;}
+.mb3 {margin-bottom:3px !important;}
+.mb5 {margin-bottom:5px !important;}
+.mb10 {margin-bottom:10px !important;}
+.mb15 {margin-bottom:15px !important;}
+.mb20 {margin-bottom:20px !important;}
+.mb25 {margin-bottom:25px !important;}
+.mb30 {margin-bottom:30px !important;}
+.mb40 {margin-bottom:40px !important;}
+.mb50 {margin-bottom:50px !important;}
+
+.ml0 {margin-left:0 !important;}
+.ml5 {margin-left:5px !important;}
+.ml10 {margin-left:10px !important;}
+.ml15 {margin-left:15px !important;}
+.ml20 {margin-left:20px !important;}
+.ml25 {margin-left:25px !important;}
+.ml30 {margin-left:30px !important;}
+.ml40 {margin-left:40px !important;}
+.ml50 {margin-left:50px !important;}
+
+/* padding */
+.pt0 {padding-top:0 !important;}
+.pt5 {padding-top:5px !important;}
+.pt10 {padding-top:10px !important;}
+.pt15 {padding-top:15px !important;}
+.pt20 {padding-top:20px !important;}
+.pt25 {padding-top:25px !important;}
+.pt30 {padding-top:30px !important;}
+.pt40 {padding-top:40px !important;}
+.pt50 {padding-top:50px !important;}
+
+.pr0 {padding-right:0 !important;}
+.pr5 {padding-right:5px !important;}
+.pr10 {padding-right:10px !important;}
+.pr15 {padding-right:15px !important;}
+.pr20 {padding-right:20px !important;}
+.pr25 {padding-right:25px !important;}
+.pr30 {padding-right:30px !important;}
+.pr40 {padding-right:40px !important;}
+.pr50 {padding-right:50px !important;}
+
+.pb0 {padding-bottom:0 !important;}
+.pb5 {padding-bottom:5px !important;}
+.pb10 {padding-bottom:10px !important;}
+.pb15 {padding-bottom:15px !important;}
+.pb20 {padding-bottom:20px !important;}
+.pb25 {padding-bottom:25px !important;}
+.pb30 {padding-bottom:30px !important;}
+.pb40 {padding-bottom:40px !important;}
+.pb50 {padding-bottom:50px !important;}
+
+.pl0 {padding-left:0 !important;}
+.pl5 {padding-left:5px !important;}
+.pl10 {padding-left:10px !important;}
+.pl15 {padding-left:15px !important;}
+.pl20 {padding-left:20px !important;}
+.pl25 {padding-left:25px !important;}
+.ml30 {padding-left:30px !important;}
+.pl40 {padding-left:40px !important;}
+.pl50 {padding-left:50px !important;}
+
+/* float */
+.fl {float:left !important;}
+.fr {float:right !important;}
+
+/* float 해제 */
+.clearfix:after {content:''; display:block; clear:both;}
+
+/* inline_block */
+.block {display:block !important;}
+.inline_block {display:inline-block !important;}
+
+/* display */
+.hide {display:none !important;}
+.show {display:block !important;}
+.table_cell {display:table-row !important;}
+
+/***********************************************************
+	02_ Common Class : 02. 텍스트 및 정렬
+***********************************************************/
+
+/* text-align */
+.ar {text-align:right !important;}
+.al {text-align:left !important;}
+.ac {text-align:center !important;}
+
+/* text-color */
+.fc_blue {color:#015FBA !important;}
+.fc_red {color:#CF1913 !important;}
+.fc_orange {color:orange !important;}
+.fc_gray {color:#666666 !important;}
+
+/* text-style */
+.txt_bold {font-weight:bold !important;}
+.txt_normal {font-weight:normal !important;}
+.txt_italic {font-style:italic !important;}
+.txt_underline {text-decoration:underline !important;}
+.txt_unit {padding:0 0px 0 0; display:inline-block;}
+
+/* 테이블 td 내 single 라벨 */
+.single_label {padding-left:8px; margin-right:8px; background:url(../images/common/ico_single_label.png) no-repeat left center; display:inline-block;}
+
+/***********************************************************
+	02_ Common Class : 03. 보더
+***********************************************************/
+
+/* border */
+.bl0 {border-left:0 !important;}
+.br0 {border-right:0 !important;}
+.bt0 {border-top:0 !important;}
+.bb0 {border-bottom:0 !important;}
+
+
+/***********************************************************
+	03_ 웹스퀘어 컴포넌트
+***********************************************************/
+
+/* InputBox */
+.w2input {border:1px solid #C4C4C4; padding:0 6px; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.w2input:hover {border:1px solid #5EA8E3;}
+.w2input_focus {border:1px solid #5EA8E3; background:#FFFFFF;}
+.w2input_disabled {background:#F7F7F7; border:1px solid #DBD9D9; color:#999999;}
+.w2input_disabled:hover {border:1px solid #DBD9D9;}
+.w2input_readonly {background:#F7F7F7; border:1px solid #DBD9D9;}
+.w2input_readonly:hover {border:1px solid #DBD9D9;}
+.w2input.req {border:1px solid #DC9670; background:#FFFBE6;}
+.w2input.req:hover {border:1px solid #E76A3F;}
+.w2input_focus.req {border:1px solid #E76A3F;}
+.w2input.err {border:1px solid #DC9670; background:#FFFBE6; color:#FF0000;}
+.w2input.err:hover {border:1px solid #E76A3F;}
+.w2input_focus.err {border:1px solid #E76A3F;}
+.w2tb .w2input {margin-right:2px; height:25px} /* 달력 날짜 텍스트 위치 조정으로 height:21px -> 25px로 수정 함_230620 */
+.w2grid .w2input, .w2grid .w2input_focus {border:1px solid #5EA8E3 !important; margin:0; box-sizing:content-box; -webkit-box-sizing:content-box; -moz-box-sizing:content-box; padding:0 2px;}
+.w2tb .w2tb_td > :last-child {margin-right:0px;}
+
+/* SelectBox */
+.w2selectbox {border:1px solid #C4C4C4; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.w2selectbox .w2selectbox_col_label {font-size:13px;}
+.w2selectbox:hover, .w2selectbox:focus {}
+.w2selectbox:active {box-shadow:#89D8EF 0 0 7px; border:1px solid #89D8EF;}
+.w2selectbox .w2selectbox_label {text-align:left; padding:0 6px;}
+.w2selectbox_focus .w2selectbox_col_label {background-color:transparent; font-size:13px;}
+.w2selectbox_over .w2selectbox_col_label {background-color:transparent;}
+/*.w2selectbox .w2selectbox_col_button {background:url(../images/common/bg_select.png) no-repeat 10px 13px; width:32px;}*/ 
+.w2selectbox_over .w2selectbox_col_button {}
+.w2selectbox_focus .w2selectbox_col_button {}
+.w2selectbox_disabled {color:#999999; border:1px solid #DBD9D9; background:#F7F7F7;}
+.w2selectbox_disabled:hover, .w2selectbox_disabled:focus {border:1px solid #DBD9D9;}
+.w2selectbox_disabled .w2selectbox_col_button {background:url(../images/common/bg_select_ds.png) no-repeat center center;}
+.w2selectbox.req {border:1px solid #DC9670; background:#FFFBE6;}
+.w2selectbox.req:hover, .w2selectbox.req:focus, .w2selectbox.req:active {border:1px solid #E76A3F}
+.w2selectbox.err {border:1px solid #DC9670; background:#FFFBE6; color:#FF0000;}
+.w2selectbox.err:hover, .w2selectbox.err:focus, .w2selectbox.err:active {border:1px solid #E76A3F}
+.w2tb .w2selectbox {height:32px; box-sizing:border-box; border-radius:3px;}
+.w2grid .w2selectbox {border:1px solid #5EA8E3 !important; box-sizing:content-box; -webkit-box-sizing:content-box; -moz-box-sizing:content-box;}
+
+/* SelectBox > ListBox */
+.w2table_sb {border:1px solid #C5C5C5; box-sizing:border-box;}
+.w2table_sb .w2table_sb_main {margin-top:-1px;}
+.w2table_sb td {text-align:left; border:0; padding-left:6px; height:34px; box-sizing:border-box;}
+.w2table_sb .w2table_sb_col_over {background-color:#CDE3EC;}
+
+/* CheckCombobox */
+.w2checkcombobox {border:1px solid #C4C4C4; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.w2checkcombobox:hover, .w2checkcombobox:focus, .w2checkcombobox:active {border:1px solid #5EA8E3;}
+.w2checkcombobox .w2checkcombobox_label {text-align:left; padding:0 6px;}
+.w2checkcombobox_focus .w2checkcombobox_col_label {background-color:transparent;}
+.w2checkcombobox_over .w2checkcombobox_col_label {background-color:transparent;}
+.w2checkcombobox .w2checkcombobox_col_button {background:url(../images/common/bg_select.png) no-repeat 0 50%;}
+.w2checkcombobox_over .w2checkcombobox_col_button {background:url(../images/common/bg_select.png) no-repeat 0 50%;}
+.w2checkcombobox_focus .w2checkcombobox_col_button {background:url(../images/common/bg_select.png) no-repeat 0 50%;}
+.w2checkcombobox_disabled {color:#999999; border:1px solid #DBD9D9; background:#F7F7F7;}
+.w2checkcombobox_disabled:hover, .w2checkcombobox_disabled:focus, .w2selectbox_disabled:active {border:1px solid #DBD9D9;}
+.w2checkcombobox_disabled .w2checkcombobox_col_button {background:url(../images/common/bg_select_ds.png) no-repeat 0 0;}
+.w2checkcombobox.req {border:1px solid #DC9670; background:#FFFBE6;}
+.w2checkcombobox.req:hover, .w2checkcombobox.req:focus, .w2checkcombobox.req:active {border:1px solid #E76A3F;}
+.w2checkcombobox.err {border:1px solid #DC9670; background:#FFFBE6; color:#FF0000;}
+.w2checkcombobox.err:hover, .w2checkcombobox.err:focus, .w2checkcombobox.err:active {border:1px solid #E76A3F;}
+.w2tb .w2checkcombobox {margin-right:2px; height:32px !important;}
+.w2grid .w2checkcombobox {border:1px solid #5EA8E3 !important; box-sizing:content-box; -webkit-box-sizing:content-box; -moz-box-sizing:content-box;}
+
+/* CheckCombobox > ListBox */
+.w2table_ccb {outline:none; border:1px solid #C5C5C5;}
+.w2table_ccb td {text-align:left; border:0;}
+.w2table_ccb .w2table_ccb_col_over {background-color:#CDE3EC;}
+
+/* Spinner : type1*/
+.w2spinner {position:relative; overflow:hidden; height:32px !important; padding:3px 0 0 6px; border:1px solid #DEDEDE;}
+.w2spinner.w2_horizon.type1 .w2input {height:100% !important; width:100% !important; z-index:-1; text-align:left; border:1px solid #C5C5C5; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.w2spinner.w2_horizon.type1:hover .w2input, .w2spinner.w2_horizon.type1 .w2input:focus {border:1px solid #5EA8E3;}
+.w2spinner.w2_horizon.type1 .w2spinner_up {width:17px;}
+.w2spinner.w2_horizon.type1 .w2spinner_up .w2spinner_up_image {background:url(../images/common/ico_spin_up.png) no-repeat center center; width:17px; height:100%;}
+.w2spinner.w2_horizon.type1 .w2spinner_down {width:17px;}
+.w2spinner.w2_horizon.type1 .w2spinner_down .w2spinner_down_image {background:url(../images/common/ico_spin_dn.png) no-repeat center center; width:17px; height:100%;}
+.w2spinner_disabled.w2_horizon.type1 .w2input {background:#F7F7F7; border:1px solid #DBD9D9;}
+.w2spinner_disabled.w2_horizon.type1:hover .w2input, .w2spinner_disabled.w2_horizon.type1 .w2input:focus {border:1px solid #DBD9D9;}
+.w2spinner_disabled.w2_horizon.type1 .w2spinner_up .w2spinner_up_image {background-image:url(../images/common/ico_spin_up_D.png); cursor:default;}
+.w2spinner_disabled.w2_horizon.type1 .w2spinner_down .w2spinner_down_image {background-image:url(../images/common/ico_spin_dn_D.png); cursor:default;}
+.w2spinner.req.w2_horizon.type1 .w2input {border:1px solid #DC9670;}
+.w2spinner.req.w2_horizon.type1:hover .w2input, .w2spinner.req.w2_horizon.type1 .w2input:focus {border:1px solid #E76A3F;}
+.w2spinner.err.w2_horizon.type1 .w2input {border:1px solid #DC9670;}
+.w2spinner.err.w2_horizon.type1:hover .w2input, .w2spinner.err.w2_horizon.type1 .w2input:focus {border:1px solid #E76A3F;}
+.w2tb .w2spinner {margin-right:2px; height:32px !important;}
+
+/* Spinner : type2 : 버튼이 input 내부에 있는 형태 : focus 및 active 수도가 적용되지 않음 */
+.w2spinner.w2_horizon.type2 {border:1px solid #C5C5C5; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; background:#FFFFFF;}
+.w2spinner.w2_horizon.type2:hover, .w2spinner.w2_horizon.type2:focus, .w2spinner.w2_horizon.type2:active {border:1px solid #5EA8E3;}
+.w2spinner.w2_horizon.type2 .w2input {height:100% !important; left:21px; border:none; background:none;}
+.w2spinner.w2_horizon.type2 .w2spinner_up {width:18px;}
+.w2spinner.w2_horizon.type2 .w2spinner_up .w2spinner_up_image {background:url(../images/common/ico_spin2_up.png) no-repeat center center; width:18px;}
+.w2spinner.w2_horizon.type2 .w2spinner_down {width:18px;}
+.w2spinner.w2_horizon.type2 .w2spinner_down .w2spinner_down_image {background:url(../images/common/ico_spin2_dn.png) no-repeat center center; width:18px;}
+.w2spinner_disabled.w2_horizon.type2 {background:#F7F7F7; border:1px solid #DBD9D9;}
+.w2spinner_disabled.w2_horizon.type2:hover, .w2spinner_disabled.w2_horizon.type2:focus, .w2spinner_disabled.w2_horizon.type2:active {border:1px solid #DBD9D9;}
+.w2spinner_disabled.w2_horizon.type2 .w2spinner_up .w2spinner_up_image {background-image:url(../images/common/ico_spin2_up_D.png); cursor:default;}
+.w2spinner_disabled.w2_horizon.type2 .w2spinner_down .w2spinner_down_image {background-image:url(../images/common/ico_spin2_dn_D.png); cursor:default;}
+.w2spinner.req.w2_horizon.type2 {border:1px solid #DC9670; background:#FFFBE6;}
+.w2spinner.req.w2_horizon.type2:hover, .w2spinner.req.w2_horizon.type2:focus {border:1px solid #E76A3F;}
+.w2spinner.err.w2_horizon.type2{border:1px solid #DC9670; background:#FFFBE6;}
+.w2spinner.err.w2_horizon.type2:hover, .w2spinner.err.w2_horizon.type2:focus {border:1px solid #E76A3F;}
+
+/*
+Spinner : spin type2 : 버튼이 input 외부에 있는 형태 : focus 및 active 수도가 적용됨
+.w2spinner.w2_horizon.type2 .w2input {height:100% !important; left:22px; border:1px solid #C5C5C5; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.w2spinner.w2_horizon.type2:hover .w2input, .w2spinner.w2_horizon.type2 .w2input:focus {border:1px solid #5EA8E3;}
+.w2spinner.w2_horizon.type2 .w2spinner_up {width:18px; border:1px solid #C5C5C5; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.w2spinner.w2_horizon.type2 .w2spinner_up .w2spinner_up_image {background:url(../images/common/ico_spin2_up.png) no-repeat center center; width:18px;}
+.w2spinner.w2_horizon.type2 .w2spinner_down {width:18px; border:1px solid #C5C5C5; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;}
+.w2spinner.w2_horizon.type2 .w2spinner_down .w2spinner_down_image {background:url(../images/common/ico_spin2_dn.png) no-repeat center center; width:18px;}
+.w2spinner_disabled.w2_horizon.type2 .w2input {background:#F7F7F7; border:1px solid #DBD9D9;}
+.w2spinner_disabled.w2_horizon.type2:hover .w2input, .w2spinner_disabled.w2_horizon.type2 .w2input:focus {border:1px solid #DBD9D9;}
+.w2spinner_disabled.w2_horizon.type2 .w2spinner_up .w2spinner_up_image {background-image:url(../images/common/ico_spin2_up_D.png);}
+.w2spinner_disabled.w2_horizon.type2 .w2spinner_down .w2spinner_down_image {background-image:url(../images/common/ico_spin2_dn_D.png);}
+.w2spinner.req.w2_horizon.type2 .w2input {border:1px solid #DC9670;}
+.w2spinner.req.w2_horizon.type2:hover .w2input, .w2spinner.req.w2_horizon.type2 .w2input:focus {border:1px solid #E76A3F;}
+.w2spinner.err.w2_horizon.type2 .w2input {border:1px solid #DC9670;}
+.w2spinner.err.w2_horizon.type2:hover .w2input, .w2spinner.err.w2_horizon.type2 .w2input:focus {border:1px solid #E76A3F;}
+ */
+
+/* Textarea */
+/* .w2textarea {width:100%; padding:3px 0 0 6px; height:50px; border:1px solid #dedede; border-radius:3px; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;} */
+/* .w2textarea:hover, .w2textarea:focus {border:1px solid #5EA8E3;} */
+/* .w2textarea.req {border:1px solid #DC9670; background:#FFFBE6;} */
+/* .w2textarea.req:hover, .w2textarea.req:focus {border-color:#E76A3F; background:#FFFBE6;} */
+/* .w2textarea.err {border:1px solid #FF5252; background:#FFFBE6; color:#FF0000;} */
+/* .w2textarea_disabled, .w2textarea_disabled:hover {border:1px solid #DBD9D9; color:#999999; background:#F7F7F7;} */
+
+/* /* InputCalendar */ */
+/* .w2inputCalendar_div{} */
+/* .w2inputCalendar_div_input {padding-right:0px;} */
+/* .w2inputCalendar_divInput {border:1px solid #C4C4C4; text-indent:3px; height:21px !important; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;} */
+/* .w2inputCalendar_divInput.w2inputCalendar_focus {} */
+/* .w2inputCalendar_divInput:hover {;} */
+/* .w2inputCalendar_div_img {width:21px; float:none;} */
+/* .w2inputCalendar_button { width:21px; height:21px; background:url(../images/common/btn_ip_cal.png) no-repeat 0 2px !important;} */
+/* .w2inputCalendar_button.w2inputCalendar_img_over, .w2inputCalendar_button:focus {background:url(../images/common/btn_ip_cal.png) no-repeat 0 -21px !important;} */
+/* .w2inputCalendar_button.w2inputCalendar_img_over:focus, .w2inputCalendar_img_over:active {background:url(../images/common/btn_ip_cal.png) no-repeat 0 -42px !important;} */
+/* .w2inputCalendar_div[readonly="readonly"] .w2inputCalendar_button {background:url(../images/common/btn_ip_cal.png) no-repeat 0 bottom !important;} */
+/* .w2inputCalendar_readOnly, .w2inputCalendar_readOnly:hover {border-color:#DBD9D9; background:#F7F7F7; color:#999999;} */
+/* .w2inputCalendar_div.req .w2inputCalendar_divInput {border:1px solid #DC9670; background:#FFFBE6;} */
+/* .w2inputCalendar_div.req .w2inputCalendar_divInput:hover, .w2inputCalendar_div.req .w2inputCalendar_divInput:focus {border:1px solid #E76A3F;} */
+/* .w2inputCalendar_div.err .w2inputCalendar_divInput {border:1px solid #DC9670; background:#fffbe6;color:#FF0000;} */
+/* .w2inputCalendar_div.err .w2inputCalendar_divInput:hover, .w2inputCalendar_div.err .w2inputCalendar_divInput:focus {border:1px solid #E76A3F;} */
+/* .w2inputCalendar_td{white-space:nowrap;} */
+/* .w2inputCalendar_td .txt_unit{width:18px; padding:0; text-align:center;} */
+/* .w2tb .w2inputCalendar_div {} */
+/* .w2grid .w2inputCalendar_div {border:0 !important; height:auto !important; right:-4px; overflow:visible} */
+/* .w2grid .w2inputCalendar_div .w2inputCalendar_divInput {height:100% !important; padding:0 1px 0 1px;border:1px solid #5EA8E3; width:100% !important;box-sizing:content-box; -webkit-box-sizing:content-box; -moz-box-sizing:content-box;} */
+/* .w2grid .w2inputCalendar_div .w2inputCalendar_div_img {right:-4px;} */
+/* .w2grid .w2inputCalendar_div .w2inputCalendar_img_over {background:url(../images/common/ico_grd_cal_O.png) no-repeat center center !important;} */
+/* .w2grid .w2inputCalendar_button {background:url(../images/common/ico_grd_cal_O.png) no-repeat center center !important; margin-top:1px;} */
+/* .w2grid td.gridBodyDefault_calendar {background:url(../images/common/ico_grd_cal.png) no-repeat right 5px center;} */
+/* .w2grid td.gridBodyDefault_calendar nobr {padding-right:23px;} */
+
+/* Calendar */
+/* .w2calendar {border:0; width:204px; margin-top:-4px;} */
+/* .w2calendar_class1 {height:auto;} */
+/* .w2calendar .w2calendar_header {height:28px; background:#535B71;} */
+/* .w2calendar_selectbox_year .w2selectbox_col_button, .w2calendar_selectbox_month .w2selectbox_col_button {display:none;} */
+/* .w2calendar .w2calendar_content {padding:0;} */
+/* .w2table_sb.w2table.w2calendar_selectbox_year, .w2table_sb.w2table.w2calendar_selectbox_month {display:none !important;} */
+/* .w2calendar .w2selectbox_table_main .w2selectbox_over .w2selectbox_col_label, .w2calendar .w2selectbox_table_main .w2selectbox_focus .w2selectbox_col_label {background:#535B71;} */
+/* .w2calendar .w2selectbox .w2selectbox_label {padding:0; text-overflow:initial; text-align:center;} */
+/* .w2calendar_selectbox_year {font-size:13px; width:40px; position:absolute; top:4px; left:48px; font-weight:bold; border:0; background:#535b71 !important; color:#FFFFFF !important;} */
+/* .w2calendar_selectbox_year:hover, .w2calendar_selectbox_year:focus {border:none;} */
+/* .w2calendar_header_last_year {position:absolute; top:6px; left:31px; width:16px; height:16px; background:url(../images/common/bg_cal_btn_pre.png) no-repeat 0 bottom;} */
+/* .w2calendar_header_last_year:focus {position:absolute; top:6px; left:31px; width:16px; height:16px; background:url(../images/common/bg_cal_btn_pre.png) no-repeat 0 top;} */
+/* .w2calendar_header_next_year {position:absolute; top:6px; left:90px; width:16px; height:16px; background:url(../images/common/bg_cal_btn_next.png) no-repeat 0 bottom;} */
+/* .w2calendar_header_next_year:focus {position:absolute; top:6px; left:90px; width:16px; height:16px; background:url(../images/common/bg_cal_btn_next.png) no-repeat 0 top;} */
+/* .w2calendar_selectbox_month {font-size:13px; position:absolute; top:4px; left:128px; width:30px; font-weight:bold; border:0; background:#535B71 !important; color:#FFFFFF !important;} */
+/* .w2calendar_selectbox_month:hover, .w2calendar_selectbox_month:focus {border:none} */
+/* .w2calendar_header_last_month {position:absolute; top:6px; left:112px; width:16px; height:16px; background:url(../images/common/bg_cal_btn_pre.png) no-repeat 0 bottom;} */
+/* .w2calendar_header_last_month:focus {position:absolute; top:6px; left:112px; width:16px; height:16px; background:url(../images/common/bg_cal_btn_pre.png) no-repeat 0 top;} */
+/* .w2calendar_header_next_month {position:absolute; top:6px; left:156px; width:16px; height:16px; background:url(../images/common/bg_cal_btn_next.png) no-repeat 0 bottom;} */
+/* .w2calendar_header_next_month:focus {position:absolute; top:6px; left:156px; width:16px; height:16px; background:url(../images/common/bg_cal_btn_next.png) no-repeat 0 top;} */
+/* .w2calendar .w2calendar_content {border:0; background:#FFFFFF;} */
+/* .w2calendar .w2calendar_content_table {border:1px solid #6FA5E5; border-top:0; background:#FFFFFF;} */
+/* .w2calendar .w2calendar_content_table tbody td {background:#FFFFFF; border:1px solid #BDC6D6;} */
+/* .w2calendar .w2calendar_content_table tbody td:first-child {border-left:1px solid #ABABAB} */
+/* .w2calendar .w2calendar_content_table tbody td:last-child {border-right:1px solid #ABABAB} */
+/* .w2calendar .w2calendar_content_table tbody tr:first-child td {border-top:0;} */
+/* .w2calendar .w2calendar_content_table tbody tr:last-child td {border-bottom:1px solid #ABABAB} */
+/* .w2calendar_class1 .w2calendar_selected, .w2calendar_class1 .w2calendar_selected button {background:#AC997E !important;} */
+/* .w2calendar_class1 .w2calendar_day_0, .w2calendar_class1 .w2calendar_day_0 button {color:#DC4E4E !important; font-weight:normal} */
+/* .w2calendar_class1 .w2calendar_day_6, .w2calendar_class1 .w2calendar_day_6 button {color:#1A6ECD !important; font-weight:normal} */
+/* .w2calendar .w2calendar_content_table tbody td.w2calendar_date_over {color:#333333; background:#EAEAEA !important;} */
+/* .w2calendar_footer {display:none;} */
+/* .w2calendar_classYearMonth_class1 {width:260px;} */
+
+ /* Radio */
+.w2radio {min-height:21px; vertical-align:middle;}
+.w2radio_label {vertical-align:middle; margin-right:15px;}
+.w2radio_td_input {text-align:left; width:17px; vertical-align:middle; height:21px; margin:0;}
+input[type="radio" i] {margin:3px 2px 0px 5px;}
+
+/* Checkbox */
+.w2checkbox {min-height:21px; vertical-align:middle;}
+.w2checkbox{margin-left:4px;}
+/* .w2checkbox_label {vertical-align:middle; margin-right:15px;} */
+.w2checkbox_td_input {text-align:left; width:17px; vertical-align:middle; height:21px; margin:0;}
+
+/* ToolTip : balloonTip */
+.w2balloonTip {margin-top:0; background:none; font-size: 0.8rem;}
+.w2balloonTip .w2balloonTip_col_centerleft, .w2balloonTip .w2balloonTip_col_centerright {display:none;}
+.w2balloonTip .w2balloonTip_col_centercenter {padding:0; background:none; color:#555555;}
+.w2balloonTip .w2balloonTip_label {padding:3px 6px; background:#FFFBE6; border:1px solid #B2B0A1; border-radius:3px; font-size: 0.8rem;}
+
+/* PageList : table */
+.w2pageList {height:21px; text-align:center;}
+.w2pageList_table {border-collapse:separate; border-spacing:2px 0;}
+.w2pageList_label {color:#333333;}
+.w2pageList_label_over {color:#1787E6;}
+.w2pageList_label_selected {color:#1787E6;}
+.w2pageList_col_prevPage,
+.w2pageList_col_nextPage,
+.w2pageList_col_prev,
+.w2pageList_col_next {width:19px;height:19px; background-repeat:no-repeat; background-position:center; border:1px solid #959CB1}
+.w2pageList_col_prevPage:hover, .w2pageList_col_prevPage:focus,
+.w2pageList_col_nextPage:hover, .w2pageList_col_nextPage:focus,
+.w2pageList_col_prev:hover, .w2pageList_col_prev:focus,
+w2pageList_col_next:hover, .w2pageList_col_next:focus{border:1px solid #1787E6;}
+.w2pageList_col_prevPage:active,
+.w2pageList_col_nextPage:active,
+.w2pageList_col_prev:active,
+.w2pageList_col_next:active {border:1px solid #6998BF; background-color:#D0DEEA; background-position:center 7px;}
+.w2pageList_col_prevPage {background-image:url(../images/common/ico_pagelist_firstpage.png);}
+.w2pageList_col_nextPage {background-image:url(../images/common/ico_pagelist_lastpage.png);}
+.w2pageList_col_prev {background-image:url(../images/common/ico_pagelist_prevpage.png);}
+.w2pageList_col_next {background-image:url(../images/common/ico_pagelist_nextpage.png);}
+
+/* PageList : ul */
+.w2pageList_ul li {display:inline-block; vertical-align:middle;}
+.w2pageList_ul li a {width:19px;height:19px;margin:0 1px; display:block; line-height:19px;}
+.w2pageList_ul .w2pageList_col_prevPage a img, .w2pageList_ul .w2pageList_col_nextPage a img {margin-top:3px;}
+.w2pageList_ul .w2pageList_col_prev a img, .w2pageList_ul .w2pageList_col_next a img {margin-top:1px;}
+.w2pageList_ul .w2pageList_col_prev {margin:0 2px;}
+.w2pageList_ul .w2pageList_col_next {margin:0 2px;}
+.w2pageList_ul .w2pageList_li_label{padding:0;}
+
+/* PageControl */
+.w2pageControl {display:block; height:21px; text-align:center; margin:0 auto; width:95px;}
+.w2pageControl button{width:20px;}
+.w2pageControl_left {width:21px;}
+.w2pageControl_left_button {width:21px; height:21px; border:1px solid #959CB1; border-radius:0; background:#FFFFFF;}
+.w2pageControl_left_button:hover, .w2pageControl_left_button:focus {border:1px solid #1787E6;}
+.w2pageControl_left_button:active {border:1px solid #6998BF; background-color:#D0DEEA;}
+.w2pageControl_left_icon {background-image:url(../images/common/ico_pagelist_prevpage.png);}
+.w2pageControl_left_icon:active {background-position:center 6px;}
+.w2pageControl_right {width:21px; float:right;}
+.w2pageControl_right_button {width:21px;height:21px; border:1px solid #959CB1; border-radius:0; background:#FFFFFF;}
+.w2pageControl_right_button:hover, .w2pageControl_right_button:focus {border:1px solid #1787E6;}
+.w2pageControl_right_button:active {border:1px solid #6998bf; background-color:#D0DEEA;}
+.w2pageControl_right_icon {background-image:url(../images/common/ico_pagelist_nextpage.png);}
+.w2pageControl_right_icon:active {background-position:center 6px;}
+.w2pageControl_center {width:50px;}
+
+/* TabControl */
+/* .w2table_tabControl {left:auto !important; right:10px;} */
+/* .w2tabcontrol.cm_tab {margin-bottom:15px;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost {height:48px; background:#FFFFFF url(../images/common/bg_tab_border.png) repeat-x bottom;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_li {margin-right:0; overflow:hidden; background:transparent; height:47px;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_li:last-child .w2tabcontrol_tab_center{border-right:0px none;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_tab_center {padding:0; border:0px none;border-right:0; background:transparent;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_tab_center a {top:0; margin:0; padding:0 15px 0 14px; display:block; color:#666666; font-weight:bold; line-height:48px; font-size:15px;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_over .w2tabcontrol_tab_center {border-color:#AAA9A9; background:#E0E6EE;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center {border-color:#FFFFFF; background:#FFFFFF; border-bottom:3px solid #54CBED; color:#208DAC;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center a {color:#208DAC; font-size:15px; line-height:48px; cursor:default;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_active + .w2tabcontrol_li .w2tabcontrol_tab_center {border-left:1px solid #FFFFFF;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_disabled {opacity:1;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_disabled .w2tabcontrol_tab_center{border-color:#DBD9D9; background:#F7F7F7;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tabhost .w2tabcontrol_disabled .w2tabcontrol_tab_center a {color:#888888; line-height:48px;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_tab_right, .w2tabcontrol_tab_left {display:none;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_container {border:0; padding-bottom:0;} */
+/* .w2tabcontrol.cm_tab .w2tabcontrol_container > * {margin-top:10px;} */
+
+.w2tabcontrol.cm_tab .map {margin-top:0px;}
+.w2tabcontrol.cm_tab .map .w2tabcontrol_container>div{margin-top:0px;}
+
+/* TabControl 1Depth : 탭 버튼이 스크롤 될 경우 */
+.w2tabcontrol.cm_tab .w2tabcontrol_control.mask {left:0; right:65px; margin-left:0;}
+.w2tabcontrol.cm_tab .w2tabcontrol_control {height:48px; background:#FFFFFF; border-bottom:1px solid #CCCCCC;}
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollLeft,
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollRight,
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_submenu {width:19px; height:19px; border:1px solid #959CB1; margin:0; top:3px; background-position:center; background-repeat:no-repeat;}
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollLeft_over,
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollRight_over,
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_submenu_over {background-color:#F0F4F7; border-color:#1787E6;}
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollLeft_over:active,
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollRight_over:active,
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_submenu_over:active {background-color:#AEC8DE; border-color:#6998BF; background-position:center 5px;}
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_submenu_over:active {background-position:center 7px;}
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollLeft {background-image:url(../images/common/btn_tab_left.png); right:46px;}
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollLeft_over{background-image:url(../images/common/btn_tab_left_H.png);}
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollRight {background-image:url(../images/common/btn_tab_right.png) }
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_scrollRight_over{background-image:url(../images/common/btn_tab_right_H.png);}
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_submenu {background-image:url(../images/common/btn_tab_list.png) }
+.w2tabcontrol.cm_tab .w2tabcontrol_control .btn_submenu_over {background-image:url(../images/common/btn_tab_list_H.png);}
+
+/* TabControl : 열린화면목록 submenu table 스타일 */
+.w2table_tabControl_main {background-color:#FFFFFF;}
+.w2table_tabControl_col {height:22px; border-top:0; background-color:#FFFFFF; padding-left:10px; background:none;}
+.w2table_tabControl_col_over {background-color:#CDE3EC;}
+
+/* TabControl : second */
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost {height:25px;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost .w2tabcontrol_li {height:23px;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost .w2tabcontrol_li:last-child .w2tabcontrol_tab_center{border-right:1px solid #CCCCCC;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tab_center a {line-height:25px; font-weight:normal; color:#666666;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost .w2tabcontrol_tab_center {border:1px solid #CCCCCC; border-bottom:1px solid #779DC1;border-right:0;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost .w2tabcontrol_over .w2tabcontrol_tab_center a {color:#0B5FBD; background:#FFFFFF;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center {background:#FFFFFF;border:1px solid #779DC1; border-bottom:1px solid #FFFFFF;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center a {color:#444444;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost .w2tabcontrol_active + .w2tabcontrol_li .w2tabcontrol_tab_center {border-left:0;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_tabhost .w2tabcontrol_disabled .w2tabcontrol_tab_center a {color:#999999;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_container {margin-top:-1px; border-top:1px solid #779DC1;}
+
+/* TabControl 2Depth : 탭 버튼이 스크롤 될 경우 */
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control {height:25px;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollLeft,
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollRight,
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_submenu {width:19px; height:19px; border:0; margin:0; top:0; opacity:0.8;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollLeft_over,
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollRight_over,
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_submenu_over {background-color:transparent; opacity:1;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollLeft_over:active,
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollRight_over:active,
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_submenu_over:active {background-color:none; border-color:none; background-position:center 5px;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_submenu_over:active { background-position:center 7px;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollLeft {background-image:url(../images/common/btn_tab_left.png); right:46px;}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollLeft_over{background-image:url(../images/common/btn_tab_left_H.png);}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollRight {background-image:url(../images/common/btn_tab_right.png);}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_scrollRight_over{background-image:url(../images/common/btn_tab_right_H.png);}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_submenu {background-image:url(../images/common/btn_tab_list.png);}
+.w2tabcontrol.cm_tab.second .w2tabcontrol_control .btn_submenu_over {background-image:url(../images/common/btn_tab_list_H.png);}
+
+/* GridView */
+.w2grid {background:#FFFFFF; margin-bottom:0; border-top:1px solid #DADADA; border-left:0px none;}
+.gridHeaderTableDefault {border-left:0px none;}
+.w2grid th.gridHeaderTDDefault {background:#F5F8FD; border:0 none; border-left:0px none; border-bottom:1px solid #CCCCCC; color:#505050; height:40px;}
+.w2grid thead tr:last-child {background:#F5F8FD; border:0 none; border-left:0px none; border-bottom:2px solid #CCCCCC; color:#505050;}
+.w2grid th.gridHeaderTDDefault.req {/*background-image:url(../images/common/ico_grd_req.png);*/ background-position:6px 50%; background-repeat:no-repeat;}
+.w2grid th.gridHeaderTDDefault.req nobr:before{content:'* '; color:#FF0024; font-size:13px;}
+.w2grid td.gridBodyDefault {border-top:1px solid #DADADA; border-right:1px solid #DADADA; height:24px; color:#333333; height:30px;}
+.w2grid .gridSubtotalDefault {background:#E2EEF7; border-color:#DADADA;}
+.w2grid .gridFooterTDDefault {background:#EBE2CB; border-color:#BCB092; color:#755C3B; font-weight:bold;}
+.w2grid a {color:#2C5BC7; text-decoration:underline;}
+
+/* GridView : Anchor : 텍스트형 링크 */
+.w2grid a {color:#338FFF; padding:2px; outline:0; text-decoration:underline; display:inline-block;}
+.w2grid a:active {color:#104C94; padding:3px 2px 1px 2px;}
+
+/*GridView : Button - 일반버튼*/
+.w2grid .gridBodyDefault button{padding:0; border:1px solid #979CAB; background-color:#979CAB; background-repeat:no-repeat; border-radius:0; color:#FFFFFF; height:20px !important; width:auto !important; min-width:44px; cursor:pointer; box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box;} 
+.w2grid .gridBodyDefault button:hover {background-color:#F0F4F7; border:1px solid #1787e6; color:#0B5FBD}
+.w2grid .gridBodyDefault button:active {background-color:#AEC8DE; border:1px solid #6998BF; color:#333333; padding-top:1px;}
+.w2grid .gridBodyDefault[disabled="true"] button {background-color:#F7F7F7; border:1px solid #DBD9D9; color:#999999; cursor:default;}
+
+/*GridView : Button - 조회버튼 */
+.w2grid .gridBodyDefault.cell_src button {background-image:url(../images/common/btn_tcm_src.png); background-position:center 2px; min-width:20px; width:20px; background-color:#FFFFFF; border:1px solid #959CB1;}
+.w2grid .gridBodyDefault.cell_src button:hover {background-image:url(../images/common/btn_tcm_src_H.png); background-color:#F0F4F7; border:1px solid #1787E6; color:#0B5FBD;}
+.w2grid .gridBodyDefault.cell_src button:active {background-color:#AEC8DE; border:1px solid #6998BF; color:#333333; background-position:center 3px;}
+.w2grid .gridBodyDefault.cell_src[disabled="true"] button {background-image:url(../images/common/btn_tcm_src_D.png); background-color:#F7F7F7; border:1px solid #DBD9D9; color:#999999; cursor:default;}
+
+/*GridView : Button - 삭제버튼 */
+.w2grid .gridBodyDefault.cell_del button {background-image:url(../images/common/btn_tcm_clear.png); background-position:center 3px; min-width:20px; width:20px; background-color:#FFFFFF; border:1px solid #959CB1;}
+.w2grid .gridBodyDefault.cell_del button:hover {background-image:url(../images/common/btn_tcm_clear_H.png); background-color:#F0F4F7; border:1px solid #1787E6; color:#0B5FBD}
+.w2grid .gridBodyDefault.cell_del button:active {background-color:#aec8de; border:1px solid #6998BF; color:#333333; background-position:center 4px;}
+.w2grid .gridBodyDefault.cell_del[disabled="true"] button {background-image:url(../images/common/btn_tcm_clear_D.png); background-color:#F7F7F7; border:1px solid #DBD9D9; color:#999999; cursor:default;}
+
+/*GridView : Button - 엑셀버튼 */
+.w2grid .gridBodyDefault.cell_excel button {background-image:url(../images/common/ico_excel.png); background-position:center 3px; min-width:20px; width:20px; background-color:transparent; border:0;}
+.w2grid .gridBodyDefault.cell_excel button:hover {background-image:url(../images/common/ico_excel_H.png); background-color:transparent;}
+.w2grid .gridBodyDefault.cell_excel button:active {background-image:url(../images/common/ico_excel_H.png); background-color:transparent; border:0; background-position:center 4px;}
+.w2grid .gridBodyDefault.cell_excel[disabled="true"] button {background-image:url(../images/common/ico_excel_D.png); background-color:transparent; border:0; cursor:default;}
+
+/*GridView : Button - 파일업로드 */
+.w2grid .gridBodyDefault.cell_fileUp button {background-image:url(../images/common/ico_fileUp.png); background-position:center 5px; min-width:20px; width:20px; background-color:transparent; border:0;}
+.w2grid .gridBodyDefault.cell_fileUp button:hover {background-image:url(../images/common/ico_fileUp_H.png); background-color:transparent;}
+.w2grid .gridBodyDefault.cell_fileUp button:active {background-image:url(../images/common/ico_fileUp_H.png); background-color:transparent; border:0; background-position:center 6px;}
+.w2grid .gridBodyDefault.cell_fileUp[disabled="true"] button {background-image:url(../images/common/ico_fileUp_D.png); background-color:transparent; border:0; cursor:default;}
+
+/*GridView : Button - 파일다운로드 */
+.w2grid .gridBodyDefault.cell_fileDn button {background-image:url(../images/common/ico_fileDn.png); background-position:center 5px; min-width:20px; width:20px; background-color:transparent; border:0}
+.w2grid .gridBodyDefault.cell_fileDn button:hover {background-image:url(../images/common/ico_fileDn_H.png); background-color:transparent;}
+.w2grid .gridBodyDefault.cell_fileDn button:active {background-image:url(../images/common/ico_fileDn_H.png); background-color:transparent; border:0; background-position:center 6px;}
+.w2grid .gridBodyDefault.cell_fileDn[disabled="true"] button {background-image:url(../images/common/ico_fileDn_D.png); background-color:transparent; border:0; cursor:default;}
+
+/*그리드 뷰 줄바꿈*/
+.wordwrap nobr {white-space:normal !important; word-wrap:break-word; overflow:hidden; text-overflow:ellipsis; display:block; font-size:1em; line-height:1.4em; text-align:left; min-width:50px;}
+.wordwrap.row2 nobr{max-height:2.8em;;}
+.wordwrap.row3 nobr{max-height:4.2em;}
+.wordwrap.row4 nobr{max-height:5.6em;}
+.wordwrap.row5 nobr{max-height:6.8em;}
+.wordwrap.row6 nobr{max-height:8.2em;}
+.wordwrap {min-width:150px;}
+
+/* grid */
+.w2grid .cell_bg_01 {background-color:#E9F4F3 !important;}
+.w2grid .cell_bg_02 {background-color:#E7E7F4 !important;}
+.w2grid .cell_bg_03 {background-color:#FFEAEA !important;}
+.w2grid .cell_subtotal {background-color:#E2EEF7 !important; font-weight:bold;}
+.w2grid .cell_total {background-color:#EBE2CB !important; font-weight:bold; border:1px solid #CCCCCC; color:#755C3B;}
+.w2grid .cell_header {background-color:#F5F5F5 !important;}
+
+/* TableLayout : w2tb
+.w2tb {border-collapse:collapse; width:100%;}
+.w2tb .w2tb_th, .w2tb .w2tb_td {border:0px none; height:34px; }
+.w2tb .w2tb_th {background-color:#FFF; border:0px solid #DADADA; font-weight:normal; text-align:right; padding:3px 5px;}
+.w2tb .w2tb_th.req span{font-weight:normal;}
+.w2tb .w2tb_th.req span:before{content:"* "; color:#FF0024;}
+.w2tb .w2tb_th.req b{color:#FF0024; font-weight:normal;}
+.w2tb thead .w2tb_th {background:;}
+.w2tb thead {}
+.w2tb tbody {}
+.w2tb .w2tb_td {padding:3px; background:white;}
+*/
+
+.cvs .w2tb{width:100%! important;}
+.cvs .w2tb .w2tb_th, .cvs .w2tb .w2tb_td{border:none! important;}
+
+/*포인트 bg*/
+.w2tb .cell_bg_01 {background-color:#E9F4F3 !important;}
+.w2tb .cell_bg_02 {background-color:#E7E7F4 !important;}
+.w2tb .cell_bg_03 {background-color:#FFEAEA !important;}
+.w2tb .cell_header1 {background-color:#D9EEFF !important;}
+.w2tb .cell_header2 {background-color:#9EC2DF !important;}
+.w2tb .cell_subtotal {background-color:#E2EEF7 !important; font-weight:bold;}
+.w2tb .cell_total {background-color:#EBE2CB !important; font-weight:bold;}
+.w2tb .cell_subheader {background-color:#F4F9FF !important;}
+
+/*예외*/
+.w2tb.w2tb_adaptive_layout .w2tb_td:before {background:#E3E8F1; font-weight:normal;}
+span.req{font-weight:bold; margin-right:5px; font-size:16px; color:red;}
+
+.w2spinner.w2_horizon.type2 .w2input{height:32px;}
+
+/*여기*/
+.disableWin {pointer-events:none;}
+
+/*그리드뷰 합계 노란색*/
+.grd-header-back-color {background-color:#E5F0F9 !important;}
+
+.inline-block {display: inline-block;}
+.float-r {float: right;}
+.float-l {float: left;}
+.clear-both {clear: both;}
+.text-r {text-align: right;}
+.text-l {text-align: left;}
+
+.none-drag {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
+.wd-100 {width: 100%}
+.wd-99 {width: 99%}
+.wd-95 {width: 95%}
+.wd-90 {width: 90%}
+.wd-80 {width: 80%}
+.wd-75 {width: 75%}
+.wd-70 {width: 70%}
+.wd-65 {width: 65%}
+.wd-62 {width: 62%}
+.wd-60 {width: 60%}
+.wd-55 {width: 55%}
+.wd-51 {width: 51%}
+.wd-50 {width: 50%}
+.wd-49 {width: 49%}
+.wd-45 {width: 45%}
+.wd-40 {width: 40%}
+.wd-35 {width: 35%}
+.wd-38 {width: 38%}
+.wd-33 {width: 33%}
+.wd-30 {width: 30%}
+.wd-28 {width: 28%}
+.wd-25 {width: 25%}
+.wd-24 {width: 24%}
+.wd-23 {width: 23%}
+.wd-22 {width: 22%}
+.wd-20 {width: 20%}
+.wd-15 {width: 15%}
+.wd-13 {width: 13%}
+.wd-12 {width: 12%}
+.wd-11 {width: 11%}
+.wd-10 {width: 10%}
+.wd-8 {width: 8%}
+.wd-5 {width: 5%}
+.wd-3 {width: 3%}
+
+.hg-100 {height: 100%}

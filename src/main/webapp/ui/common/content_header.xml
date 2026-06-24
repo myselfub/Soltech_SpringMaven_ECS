@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="text/javascript" lazy="false"><![CDATA[ 
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		if (scwin.initStatus) {
+			if (typeof scwin.initScreen === "function") {
+				scwin.initScreen();
+			}
+			
+			if (typeof scwin.initContent === "function") {
+				scwin.initContent();
+			}
+		}
+	};
+
+	scwin.initContent = function() {
+		if (typeof parent.trv_LeftMenu !== "undefined") {
+			tbx_ScreenTitle.setLabel(parent.trv_LeftMenu.getSelectedLabel());
+		}
+	};
+]]></script>
+	</head>
+	<body>
+		<xf:group class="cnt_title_grp" id="group1">
+			<w2:textbox id="tbx_ScreenTitle" tagname="h1"></w2:textbox>
+		</xf:group>
+	</body>
+</html>

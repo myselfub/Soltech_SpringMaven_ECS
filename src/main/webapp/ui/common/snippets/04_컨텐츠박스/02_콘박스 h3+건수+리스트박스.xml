@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <w2:userPalette defaultIcon="mix.png" desc=""/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[ ]]></script>
+    </head>
+    <body><xf:group class="con-box" id="" style="">
+	<xf:group class="title-group" id="" style="">
+		<xf:group class="" id="" style="" tagname="h3">
+			<w2:span id="" label="타이틀" style="">
+</w2:span>
+			<w2:span class="title-num" displayFormat="###,###,###" id="" label="1" style="">
+</w2:span>
+</xf:group>
+		<xf:group class="com-area" id="" style="">
+			<xf:group class="info-box" id="" style="">
+</xf:group>
+			<xf:group class="btn-group" id="" style="">
+				<w2:anchor id="" outerDiv="false" style="">
+					<xf:label>
+<![CDATA[버튼명입력]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+</xf:group>
+	<xf:group class="list-box box" id="" style="">
+		<w2:gridView dataList="" fixedColumnWithHidden="true" id="" ignoreCellClick="false" ignoreToggleOnDisabled="false" scrollByColumn="false" scrollByColumnAdaptive="false" style="height: 150px;" summaryAuto="false" useShiftKey="true">
+</w2:gridView>
+</xf:group>
+</xf:group>
+</body>
+</html>

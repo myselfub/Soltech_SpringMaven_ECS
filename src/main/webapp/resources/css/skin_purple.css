@@ -1,0 +1,126 @@
+
+.btn-group .w2anchor2{background:#8c69b8;}
+.btn-group a.add_row, .btn-group a.del_row{background:#8c69b8;}
+
+.title-group h4, .title-group h5{color:#7652a7;}
+.title-group .com-area .info-box > span:nth-child(1):before{color:#8c69b8;}
+.box > .search-box a.btn_sh {background: #c199d0;}
+.box .title-group .com-area .btn-group a {color:#925fb3; border:1px solid #8c69b8;}
+.box .title-group .com-area .btn-group a.add_row:before, .box .title-group .com-area .btn-group a.del_row:before, .comp a.add_row:before, 
+.comp a.del_row:before, .comp a.del_row .box .title-group .com-area .btn-group a.del_row:before{color:#b282d1;}
+.w2group.view-box > .w2tb .w2tb_th{background:#f7f4f8;}
+.view-box .info-box > span:nth-child(1):before{color:#8c69b8;}
+.view-box table td> a.w2anchor2, .list-box table td > a.w2anchor2, .view-box table td .mix-box >div> a.w2anchor2, 
+.list-box table td > div > a.w2anchor2 {color: #a471b7;background-color: #f6eef9;border: 1px solid #c4a4d0;}
+
+/*레이아웃*/
+#header{background:#8c69b8;}
+#header .usermenu{background:#53337b;}
+#header .usermenu li.m-on{background-color:#8c69b8;}
+#header .search .input_search input{color:#501666;}
+#header .search .input_search input::placeholder{color:#501666;}
+#header .search .input_search a:before{color:#784e9b !important;}
+#header .nav .w2treeview{background:#8c69b8;}
+#header .nav .w2treeview .w2treeview_open_child {border-bottom: 1px solid #885da3;}
+#header .nav .w2treeview .w2treeview_row_child{background:#7e4e9d;}
+#header .nav .w2treeview_table_node .w2treeview_table_node .w2treeview_child.w2treeview_none{background:#30124c;}
+#header .nav .w2treeview_open_child .w2treeview_row_parent.w2treeview_row_depth1{background:#784e9b;}
+#header .nav .w2treeview_row_depth2 .w2treeview_col_label span{background:#5e2284;}
+#header .nav .w2treeview_row_depth2 .w2treeview_col_label span.w2treeview_select_node{background:#501666;}
+#header .nav .w2treeview_row_depth3{background-color:#30124c;}
+#header .nav .w2treeview_row_depth3 .w2treeview_col_label span.w2treeview_select_node{background:#30124c; border-left: 3px solid #f32dff;}
+#header .nav .w2treeview_row_parent.w2treeview_row_depth4{background:#30124c;}
+#header .nav .w2treeview_open_child .w2treeview_row_depth4 .w2treeview_col_label span.w2treeview_select_node{background:#784e9b;}
+#header .nav .w2treeview_row_parent.w2treeview_row_depth5{background:#30124c;}
+#header .nav .w2treeview_row_parent.w2treeview_row_depth6{background:#30124c;}
+#header .nav .w2treeview_row_depth6 .w2treeview_col_label span.w2treeview_select_node {background:#30124c; color:#f32dff;}
+
+#contents .ctr_box > a {background: url(../images/frame/bg_ctrbox_purple.png) no-repeat;}
+
+/*조회영역*/
+/* .search-box{background: #d4d3ec url(../images/common/bg_search_purple.png) repeat-x left top;} */
+.search-box{background: #d4d3ec;}
+.search-box .list td> .w2anchor2{background:#a58ec2;}
+.search-box .w2anchor2.btn_sh{background:#8c69b8;}
+.toggle-btn, .toggle-btn2{background: url(../images/common/btn_toggle_search.png) center no-repeat #b895e5 !important;}
+
+
+/*그리드*/
+.view-box td .w2grid th.gridHeaderTDDefault {color: #666768 !important;}
+.w2grid .gridHeaderTableDefault th.gridHeaderTDDefault{background:#f7f4f8;}
+.w2grid_plus{background-image: url(../images/common/grid-plus_purple.png) !important;}
+.w2grid_minus{background-image: url(../images/common/grid-minus_purple.png) !important;}
+.view-box .w2tb .mix-box >a, .gridBodyDefault button{color:#9430cc;}
+.view-box td .w2grid {border: 1px solid #e8d3ec;}
+.view-box td .w2grid .gridBodyDefault {border-color: #e8d3ec !important;}
+.gridBodyDefault button {color: #a471b7;background: #f6eef9;border: 1px solid #c4a4d0;}
+/* .w2grid .gridHeaderTableDefault input[type=checkbox]:checked + label:before {background: url(../images/common/checkbox_checked_purple.png) no-repeat;} */
+/* .w2grid .gridBodyDefault input[type=checkbox]:checked + label:before {background: url(../images/common/checkbox_checked_purple.png) no-repeat;} */
+
+/*컴포넌트*/
+.input_search a:before{color:#9430cc;}
+.w2inputCalendar_button:before{color:#9430cc;}
+.w2selectbox .w2selectbox_col_button, 
+/* .w2checkcombobox .w2checkcombobox_col_button {background: url(../images/common/bg_select_purple.png) no-repeat 10px center;} */
+.w2checkcombobox .w2checkcombobox_col_button {background: url(../images/common/bg_select_ds.png) no-repeat 10px center;}
+.w2table_sb_col_over,.w2table_sb_col_focus{background:#f0e9f1; color:#61108b;}
+.w2input_table_sb_col_over{background:#f0e9f1; color:#61108b;}
+.w2input_table_sb{border:1px solid #cbcbcb}
+.w2table_ccb_col_checkbox:checked + label {background: url(../images/common/checkbox_checked_purple.png) no-repeat;}
+.w2table_ccb_col_over{background:#f0e9f1;}
+.w2table_ccb_col_focus .w2table_ccb_col_label,.w2table_ccb_col_over .w2table_ccb_col_label{color:#61108b;}
+/* .w2autoComplete .w2autoComplete_col_button {background: url(../images/common/bg_select_purple.png) no-repeat 10px center;} */
+.w2autoComplete .w2autoComplete_col_button {background: url(../images/common/bg_select_ds.png) no-repeat 10px center;}
+/* .w2radio_item input[type=radio]:checked + label {background: url(../images/common/radio_checked_purple.png) no-repeat;} */
+/* .w2checkbox_item input[type=checkbox]:checked + label {background: url(../images/common/checkbox_checked_purple.png) no-repeat;} */
+/* .w2treeview_open_child .w2treeview_icon_navi {background: url(../images/websquare/treeview/images/minus_purple.png) no-repeat center center;} */
+.w2spinner.w2_horizon.type1 .w2spinner_down:BEFORE{color:#b282d1;}
+.w2spinner.w2_horizon.type1 .w2spinner_up:BEFORE{color:#b282d1;}
+
+/* UDC */
+.gb_udc_cal .cal_to_wrap .btn_cal:before, .gb_udc_cal .month_wrap .btn_cal:before{color:#9430cc;}
+.gb_udc_cal .quarter_wrap .btn_cal:before{color:#9430cc;}
+.gb_udc_cal .year_wrap .btn_cal:before{color:#9430cc;}
+.gb_udc_cal .time_wrap .btn_cal:before{color:#9430cc;}
+
+/* 탭 */
+.w2tabcontrol > .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center{background:#8c69b8 !important;}
+.w2tabcontrol > .w2tabcontrol_tabhost{border-bottom:2px solid #8c69b8;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control.mask .w2tabcontrol_control.scroll > ul.w2tabcontrol_tabhost li.w2tabcontrol_active {border: 1px solid #8c69b8;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center a{color:#8c69b8 !important;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control{border-bottom:1px solid #8c69b8 !important;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control .w2tabcontrol_control.btn_scrollLeft{background: url(../images/common/tab_tab_arrow_prev_purple.png) no-repeat center center transparent;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control .w2tabcontrol_control.btn_scrollRight{background: url(../images/common/tab_tab_arrow_next_purple.png) no-repeat center center transparent;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control .w2tabcontrol_control.btn_submenu {background: url(../images/common/tab_tab_list_purple.png) no-repeat center center transparent;}
+
+/* ECS */
+:root {
+	--wrap-ecs-top-back-color: #61339A;
+	--wrap-ecs-top-info-back-color: #4D2580;
+	--content-default-btn-back: #5A2D92;
+	--dash-grd-header-back-color: #8A3DEA;
+	--dash-grd-subtotal-back-color: #D6BFF3;
+	--dash-box-con-title-back-color: #A572E4;
+	--dash-water-drop-shape-back-color: #AC79ED;
+	--dash-belt-menu-back-color: #E7D4FF;
+	--dash-belt-menu-color: #7B28E4;
+	--dash-cbn-ntrlt-sign-color: #A863FF;
+	--dash-cbn-ntrlt-box-shadow-color: #AF70FF9E;
+	--pagination-item-active-color: #B87FFF;
+	--pagination-item-color: #B87FFF88;
+
+	--dash-square-top-plan-back-color: #65ADEC;
+	--dash-square-top-plan-back-color-hover: #65ADEC78;
+	--dash-square-top-cnstrc-back-color: #5EAAEF;
+	--dash-square-top-cnstrc-back-color-hover: #5EAAEF7D;
+	--dash-square-top-prdctn-back-color: #4BD8EF;
+	--dash-square-top-prdctn-back-color-hover: #4BD8EF7D;
+	--dash-square-top-cnstn-back-color: #4AD3E9;
+	--dash-square-top-cnstn-back-color-hover: #4AD3E982;
+	--dash-square-top-mng-back-color: #2C8EE6;
+	--dash-square-top-mng-back-color-hover: #2C8EE682;
+	--dash-square-top-excclc-back-color: #17B6CF;
+	--dash-square-top-excclc-back-color-hover: #17B6CF87;
+	--dash-square-top-dsuse-back-color: #0674D4;
+	--dash-square-top-dsuse-back-color-hover: #0674D487;
+}

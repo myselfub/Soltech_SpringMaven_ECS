@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/modal.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSPB1200000.xml
+			* 설 명 : 에너지 계획/건설 등록_전자문서등록(관련문서)
+			* 작성일 : 2023.08.09
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.08.09 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="strtDt" dataType="number" name="조회시작일"></w2:key>
+						<w2:key id="endDt" dataType="number" name="조회종료일"></w2:key>
+						<w2:key id="ordgTit" dataType="text" name="문서제목"></w2:key>
+						<w2:key id="planChargerNm" dataType="text" name="기안자 이름"></w2:key>
+						<w2:key id="planChargerEmpno" dataType="text" name="기안자 사번"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltAutoCondition1" baseNode="list" repeatNode="map" saveRemovedData="true" ev:ondataload="scwin.dltAutoCondition1_ondataload">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+						<w2:column id="empno" dataType="text" name="사원번호"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltEctccList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="CHK" dataType="text" name="check" defaultValue="N"></w2:column>
+						<w2:column id="lnkEsntlId" dataType="text" name="연계고유ID"></w2:column>
+						<w2:column id="ecsBsnsPrgsDivCd" dataType="text" name="ECS사업진행구분코드"></w2:column>
+						<w2:column id="APPRID" dataType="text" name="전자문서ID"></w2:column> <!-- ectccId -->
+						<w2:column id="TITLE" dataType="text" name="전자문서명"></w2:column> <!-- ectccTit -->
+						<w2:column id="reltDocNo" dataType="text" name="관련문서번호"></w2:column>
+						<w2:column id="DRAFTDEPTID" dataType="text" name="계획 담당부서ID"></w2:column> <!-- ecsChrgDeptId -->
+						<w2:column id="DOCREGNO" dataType="text" name="계획 담당부서"></w2:column> <!-- planChrgDeptNm -->
+						<w2:column id="planChargerEmpno" dataType="text" name="계획 담당자 사원번호"></w2:column>
+						<w2:column id="DRAFTERNAME" dataType="text" name="계획 담당자"></w2:column> <!-- planChargerNm -->
+						<w2:column id="DRAFTDATE" dataType="text" name="계획수립일"></w2:column> <!-- planFoundngDe -->
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		JSONData : {}
+	}
+
+	/**
+	 * 팝업 클로즈시 화면 회색처리를 해제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.onpageunload = function() {
+		if (document.getElementById("_modal").style.display == "block") {
+			document.getElementById("_modal").style.display = "none";
+		}
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		//comLib.initForm($p, "ECSPB1200000", {"initScreenCallback" : scwin.searchDatas});
+		comLib.initForm($p, "ECSPB1200000");
+		scwin.searchDatas();
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		scwin.param = JSON.parse($p.getPopupParam());
+		// 조회조건 초기화 및 데이터 조회
+		scwin.initSearchParam();
+		// 데이터 조회
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 조회조건 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initSearchParam = function() {
+		dmaSearchParam.set("strtDt", utilLib.addDay(utilLib.getCurrentDate("yyyyMMdd"), -30));
+		dmaSearchParam.set("endDt", utilLib.getCurrentDate());
+		dmaSearchParam.set("ordgTit", "");
+		dmaSearchParam.set("planChargerNm", "");
+		dmaSearchParam.set("planChargerEmpno", WebSquare.session.getAttribute("usrEmpno"));
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var strtDate = dmaSearchParam.get("strtDt");
+		var endDate = dmaSearchParam.get("endDt");
+
+		if (utilLib.minusDates(strtDate, endDate) > 365 ? true : false) {
+			alert("조회기간은 1년을 넘어갈 수 없습니다. 다시 설정해 주세요.");
+			return;
+		}
+
+		// 해당 부서의 사원번호를 조회한다.
+		var dept = acbDept.getValue() || WebSquare.session.getAttribute("usrDeptCd");
+		var empNo = (dltAutoCondition1.getAllJSON().find(obj => obj.cmmnCd == dept) || 0).empno;
+		if (empNo) {
+			var res = {
+				"data" : [{"empno" : empNo}]
+			};
+			scwin.inqireUserCallback(res);
+			return;
+		}
+
+		var queryString = `?ecsChrgDeptId=${dept}`;
+
+		var option = {
+			action : "zz/cmmn/retrieve-oasis-elctrn-doc-hrm-user.do"
+				+ queryString,
+			method : "get",
+			resData : "",
+			success : "scwin.inqireUserCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	// 해당 부서의 사원번호를 조회한다.
+	scwin.inqireUserCallback = function(res) {
+		var datas = res.data;
+		if (datas.length > 1) {
+			var empNo = datas.filter(obj => obj.empno < 30000000).reduce((max, obj) => obj.empno > max ? obj.empno : max, 0);
+		} else {
+			var empNo = datas[0].empno;
+		}
+		dmaSearchParam.set("planChargerEmpno", empNo);
+
+		var strtDate = dmaSearchParam.get("strtDt");
+		var endDate = dmaSearchParam.get("endDt");
+		var ordgTit = dmaSearchParam.get("ordgTit");
+		var planChargerEmpno = dmaSearchParam.get("planChargerEmpno");
+
+		// 관련문서를 조회한다.
+		var queryString = `?strtDt=${strtDate}`;
+		queryString += `&endDt=${endDate}`;
+		queryString += `&title=${ordgTit}`;
+		queryString += `&empCode=${planChargerEmpno}`;
+		queryString += '&lnkEsntlId=' + scwin.param.lnkEsntlId;
+		queryString += '&ecsBsnsPrgsDivCd=' + scwin.param.ecsBsnsPrgsDivCd;
+
+		var option = {
+			action : "zz/cmmn/retrieve-oasis-elctrn-doc.do"
+				+ queryString,
+			method : "get",
+			resData : dltEctccList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	}
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCallback = function() {
+		var ectccData = dltEctccList.getAllJSON();
+
+		if (scwin.param.dltData.length > 0) {
+			for (data of scwin.param.dltData) {
+				for (var idx = 0; idx < ectccData.length; idx++) {
+					if (data.ectccId == ectccData[idx].APPRID) {
+						grdEctccList.setCellDisabled(idx, 0, true);
+						break;
+					}
+				}
+			}
+		}
+
+		spnTotalRow.setValue(dltEctccList.getRowCount());
+	};
+
+	/**
+	 * 셀을 선택 후 선택 버튼 클릭시 해당 내용을 등록 및 상세내역으로 표출한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnEdit_onclick = function() {
+		if (btnEdit.hasClass("hide")) {
+			return;
+		}
+		if (grdEctccList.getModifiedJSON().length > 0) {
+			// 등록 하시겠습니까?
+			comLib.confirm($p, utilLib.getMessage("ECS.INFO.00100")[0], "scwin.addConfirmCallback");
+		} else {
+			// 선택된 자료가 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00258")[0]);
+		}
+
+		/*
+		if (grdEctccList.getFocusedRowIndex() >= 0) {
+			// 등록 하시겠습니까?
+			comLib.confirm($p, utilLib.getMessage("ECS.INFO.00100")[0], "scwin.addConfirmCallback");
+		}
+		*/
+	};
+
+	/**
+	 * 등록 ComfirmCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.addConfirmCallback = function() {
+		var ectccData = grdEctccList.getModifiedJSON();
+		scwin.initData.ectccDataLen = ectccData.length;
+		scwin.initData.ectccDataCount = 0;
+
+		for (data of ectccData) {
+			var ecsChrgDeptId = data.DRAFTDEPTID;
+			var usrNm = data.DRAFTERNAME;
+
+			// kor_name으로 사번 조회 후 문서등록 
+			var queryString = `?ecsChrgDeptId=${ecsChrgDeptId}`;
+			queryString += `&usrNm=${usrNm}`;
+
+			var option = {
+				action : "zz/cmmn/retrieve-oasis-elctrn-doc-hrm-user.do"
+					+ queryString,
+				method : "get",
+				resData : "",
+				success : "scwin.addDataCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		}
+	};
+
+	scwin.addDataCallback = function(res) {
+		var ectccData = grdEctccList.getModifiedJSON();
+		var parentDlt = $p.parent().$p.getComponentById("dltEctccLnk" + scwin.param.ecsBsnsPrgsDivCd + "List");
+		var data = parentDlt.getAllJSON();
+
+		/*
+		var lnk = scwin.param.ecsBsnsPrgsDivCd;
+		if (lnk.substr(0, 1) != "P" && lnk.substr(1) == "0310") {
+		if (lnk.substr(1) == "0310") {
+			data = parentDlt.getAllJSON();
+			for (var idx = 0; idx < data.length; idx++) {
+				if (data[idx].ectccId == " ") {
+					parentDlt.removeRow(idx);
+					break;
+				}
+			}
+		}
+		*/
+
+		for (var idx = 0; idx < data.length; idx++) {
+			if (data[idx].ectccId == " ") {
+				parentDlt.removeRow(idx);
+				break;
+			}
+		}
+
+		data = ectccData[scwin.initData.ectccDataCount];
+		var obj = data;
+		obj.ectccId = data.APPRID;
+		obj.ectccTit = data.TITLE;
+		obj.drftDeptCd = data.DRAFTDEPTID;
+		obj.drftDe = data.DRAFTDATE.replaceAll(".", "").substr(0, 8);
+		obj.drafterEmpno = res.data[0]?.empno;
+
+		var newIdx = parentDlt.insertRow();
+		parentDlt.setRowJSON(newIdx, obj, true);
+
+		/*
+		// 상세 사업추진절차 체크박스를 해제한다.
+		var chkIdx = $p.parent().scwin.initData.ecctcList.indexOf(scwin.param.ecsBsnsPrgsDivCd);
+		if (chkIdx) {
+			$p.parent().$p.getComponentById("chkPassYn" + (chkIdx)).setValue("N");
+			$p.parent().$p.getComponentById("chkPassYn" + (chkIdx)).setDisabled(false);
+		}
+		*/
+
+		scwin.initData.ectccDataCount++;
+		if (scwin.initData.ectccDataLen == scwin.initData.ectccDataCount) {
+			 // 모달 창 닫기
+			setTimeout(() => {
+				$p.parent().scwin.ecctcDraftDeSelectorAll(scwin.param.ecsBsnsPrgsDivCd);
+				$p.closePopup();
+			}, 100);
+		}
+
+		/*
+		var rowIndex = grdEctccList.getFocusedRowIndex();
+
+		var rowData = dltEctccList.getRowJSON(rowIndex);
+		rowData.ectccId = rowData.APPRID;
+		rowData.ectccTit = rowData.TITLE;
+		rowData.ecsChrgDeptId = rowData.DRAFTDEPTID;
+		rowData.planChrgDeptNm = rowData.DOCREGNO;
+		rowData.planChargerNm = rowData.DRAFTERNAME;
+		rowData.planFoundngDe = rowData.DRAFTDATE.replaceAll(".","").substr(0,8);
+
+		delete rowData.APPRID;
+		delete rowData.TITLE;
+		delete rowData.DRAFTDEPTID;
+		delete rowData.DOCREGNO;;
+		delete rowData.DRAFTERNAME;
+		delete rowData.DRAFTDATE;
+
+		scwin.initData.JSONData = rowData;
+
+		// 수립일이 없을 시 수립일 update
+		if (scwin.param.idx == 0 && !$p.parent().grdPlanCnstrcList.getRowData($p.parent().scwin.grdFocusedRowIndex)[4]) {
+			var requestData = {};
+			requestData.dmaEctcc = {
+				planEsntlId : scwin.param.planEsntlId,
+				ecsChrgDeptId : rowData.ecsChrgDeptId,
+				planChargerEmpno : rowData.planChargerEmpno,
+				planFoundngDe : rowData.planFoundngDe 
+			};
+			var option = {
+				action : "pb/plancnstrc/update-plan.do",
+				reqData : requestData,
+				success : "",
+				savedToken : false,
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		}
+
+		var requestData = {};
+		requestData.dmaEctcc = scwin.initData.JSONData;
+
+		var option = {
+			action : "zz/cmmn/save-ectcc.do",
+			reqData : requestData,
+			success : scwin.addMsgCallback,
+			error : "scwin.addMsgErrorCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+		*/
+	};
+
+	/**
+	 * 등록 Error CallBack 실행한다.
+	 */
+	scwin.addMsgErrorCallback = function() {
+		alert("이미 등록된 문서입니다.");
+	};
+
+	/**
+	 * 등록 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.addMsgCallback = function() {
+		var pRowIndex = $p.parent().scwin.grdFocusedRowIndex;
+
+		if (scwin.param.lnkEsntlId.substr(0, 1) != "D") {
+			// 계획/건설 grd 변경
+			$p.parent().dmaPlanCnstrc.setJSON(scwin.initData.JSONData);
+
+			var dltList = $p.parent().dltPlanCnstrcList.getAllJSON();
+			var dma = {};
+			dma.ecsChrgDeptId = scwin.initData.JSONData.ecsChrgDeptId;
+			dma.planChrgDeptNm = scwin.initData.JSONData.planChrgDeptNm;
+			dma.planChargerNm = scwin.initData.JSONData.planChargerNm;
+			dma.planFoundngDe = scwin.initData.JSONData.planFoundngDe;
+
+			for (var idx = 0; idx < dltList.length; idx++) {
+				if (dltList[idx].planEsntlId == scwin.initData.JSONData.lnkEsntlId) $p.parent().dltPlanCnstrcList.setRowJSON(idx, dma, true);
+			}
+
+			$p.parent().scwin.grdPlanCnstrcList_onrowindexchange($p.parent().scwin.grdFocusedRowIndex);
+		} else {
+			$p.parent().scwin.grdSetcscDsusePrcsDtlHistList_onrowindexchange($p.parent().scwin.grdFocusedRowIndex);
+		}
+
+		// 모달 창 닫기
+		$p.closePopup();
+	};
+
+	/**
+	 * 클릭시 사원번호 조회 모달을 띄운다.
+	 * @param
+	 * @return
+	 */
+	scwin.ibxEdptNm_onclick = function(e) {
+		if ($p.getPopupWindowList().length < 1) {
+			var url = "/ui/ecs/zz/ECSUserSearchPopup.xml";
+			var dataObj = {
+				"dataMap" : dmaPlanCnstrc.getID()
+			};
+
+			var options = {
+				id : "ECSUserSearchPopup",
+				title : "사용자 검색",
+				popupName : "사용자 검색",
+				width : 800,
+				height : 600,
+				top : 0,
+				left : 0,
+				modal : true,
+				closeAction : "",
+				popupParam : dataObj
+			};
+			comLib.openPopup($p, "ECSUserSearchPopup", url, options);
+			$p.getComponentById($p.getPopupId()).setDisabled(true);
+			$p.getComponentById($p.getFrameId()).setDisabled(true);
+		}
+	};
+
+	scwin.grdEctccList_oncelldblclick = function(row, col, colId) {
+		// 더블 클릭 시 해당 체크박스 체크
+		if (!grdEctccList.getCellDisabled(row, 0)) {
+			grdEctccList.setCellChecked(row, 0, true);
+			scwin.btnEdit_onclick();
+		}
+	};
+
+	scwin.dltAutoCondition1_ondataload = function() {
+		acbDept.setValue(WebSquare.session.getAttribute("usrDeptCd"));
+	};]]></script>
+	</head>
+	<body ev:onpageunload="scwin.onpageunload">
+		<!-- <w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe> -->
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<w2:wframe id="wframeLeft" src="/ui/common/content_board.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group id="grpInqire" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1_9" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="*" style="color:red;"></w2:span>
+								<w2:span label="기안일시"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw4_5" tagname="td">
+								<w2:period_Cal id="calDt" strtDateRef="data:dmaSearchParam.strtDt" endDateRef="data:dmaSearchParam.endDt">
+								</w2:period_Cal>
+							</xf:group>
+							<xf:group class="w2tb_th cw1_9" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="*" style="color:red;" />
+								<w2:span label="부서" />
+							</xf:group>
+							<xf:group class="w2tb_td cw3" tagname="td">
+								<!-- <xf:input id="ibxEdptNm" ref="data:dmaSearchParam.planChargerNm" readOnly="true" ev:onclick="scwin.ibxEdptNm_onclick"></xf:input> -->
+								<w2:autoComplete id="acbDept" displayMode="label" editType="select" search="contain" submenuSize="auto"
+									useKeywordHighlight="true" visibleRowNum="15">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition1">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1_9" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="문서제목"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<xf:input id="ibxOrdgTit" ref="data:dmaSearchParam.ordgTit" ev:onkeydown="ecsLib.ibxEnterEvent"></xf:input>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th"></xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<!-- userData1="Q" -->
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="popup-content-area">
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span label="관련문서목록"></w2:span>
+							<w2:span id="spnTotalRow" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+						</xf:group>
+					</xf:group>
+					<xf:group class="list-box box">
+						<w2:gridView id="grdEctccList" class="resized" dataList="dltEctccList" readOnly="true" checkReadOnlyOnPaste="true"
+							checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" sortable="true" tooltipDisplay="true" defaultCellHeight="35"
+							visibleRowNum="13" rowNumVisible="true" rowNumHeaderValue="순번" rowNumWidth="40" style="min-height:31rem;" ev:oncelldblclick="scwin.grdEctccList_oncelldblclick">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hCHK" inputType="text" width="40"></w2:column>
+									<w2:column id="hAPPRID" inputType="text" value="문서번호" width="0" hidden="true"></w2:column>
+									<w2:column id="hTITLE" inputType="text" value="문서명" width="560"></w2:column>
+									<w2:column id="hDOCREGNO" inputType="text" value="기안부서" width="140"></w2:column>
+									<w2:column id="hDRAFTERNAME" inputType="text" value="기안자" width="80"></w2:column>
+									<w2:column id="hDRAFTDATE" inputType="text" value="기안일시" width="140"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="CHK" inputType="checkbox" checkboxLabel="&amp;nbsp;" valueType="other" trueValue="Y" falseValue="N"
+										readOnly="false"></w2:column>
+									<w2:column id="APPRID" inputType="text"></w2:column>
+									<w2:column id="TITLE" inputType="text" textAlign="left"></w2:column>
+									<w2:column id="DOCREGNO" inputType="text"></w2:column>
+									<w2:column id="DRAFTERNAME" inputType="text"></w2:column>
+									<w2:column id="DRAFTDATE" inputType="text"></w2:column>
+								</w2:row>
+							</w2:gBody>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<!-- userData1="S" -->
+					<w2:anchor id="btnEdit" ev:onclick="scwin.btnEdit_onclick" outerDiv="false">
+						<xf:label><![CDATA[선택]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

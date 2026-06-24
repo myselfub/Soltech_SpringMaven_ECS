@@ -1,0 +1,588 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 소비 - 사업장 소비패턴 분석현황 -->
+<mapper namespace="CNSMP_PTTRN_Dao">
+	<select id="CNSMP_PTTRN_Dao_retrieveCnsmpPttrnList" parameterType="kw.ecs.cn.cnsmppttrn.vo.CnsmpPttrnVo" resultType="egovMap">
+		/* CNSMP_PTTRN_Dao_retrieveCnsmpPttrnList */
+		WITH USWTR_SQTY_MAPPING_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(BASIN DEPT BPLC USWTR_SQTY) */
+				BASIN.cmmn_cd AS basin_cd,
+				BASIN.cmmn_cd_nm AS basin_nm,
+				BASIN.sort_ordr AS basin_sort,
+				DEPT.cmmn_cd AS dept_cd,
+				DEPT.cmmn_cd_nm AS dept_nm,
+				DEPT.sort_ordr AS dept_sort,
+				BPLC.cmmn_cd AS bplc_cd,
+				BPLC.cmmn_cd_nm AS bplc_nm,
+				BPLC.sort_ordr AS bplc_sort,
+				USWTR_SQTY.cmmn_cd AS uswtr_sqty_cd,
+				USWTR_SQTY.cmmn_cd_nm AS uswtr_sqty_nm,
+				USWTR_SQTY.cmmn_cd_dc AS uswtr_sqty_dc,
+				USWTR_SQTY.sort_ordr AS uswtr_sqty_sort
+			FROM (
+					SELECT
+						cls_cd,
+						cmmn_cd,
+						cmmn_cd_nm,
+						upper_cls_cd,
+						upper_cmmn_cd,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1000'
+				) BASIN, (
+					SELECT
+						cls_cd,
+						cmmn_cd,
+						cmmn_cd_nm,
+						upper_cls_cd,
+						upper_cmmn_cd,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2001'
+				) DEPT, (
+					SELECT
+						cls_cd,
+						cmmn_cd,
+						cmmn_cd_nm,
+						upper_cls_cd,
+						upper_cmmn_cd,
+						usr_dfn_vu1,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2002'
+				) BPLC, (
+					SELECT
+						cls_cd,
+						cmmn_cd,
+						cmmn_cd_nm,
+						cmmn_cd_dc,
+						upper_cls_cd,
+						upper_cmmn_cd,
+						usr_dfn_vu1,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2009'
+				) USWTR_SQTY
+			WHERE
+				USWTR_SQTY.upper_cls_cd(+) = BPLC.cls_cd
+				AND USWTR_SQTY.upper_cmmn_cd(+) = BPLC.cmmn_cd
+				AND BPLC.upper_cls_cd = DEPT.cls_cd
+				AND BPLC.upper_cmmn_cd = DEPT.cmmn_cd
+				AND DEPT.upper_cls_cd = BASIN.cls_cd
+				AND DEPT.upper_cmmn_cd = BASIN.cmmn_cd
+				<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+				AND BASIN.cmmn_cd = #{ecsBasinDivCd}
+				</if>
+				<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+				AND DEPT.cmmn_cd = #{ecsChrgDeptId}
+				</if>
+				<if test='null != ecsCnstscDivCd and "" neq ecsCnstscDivCd and "ALL" neq ecsCnstscDivCd'>
+				AND BPLC.cmmn_cd = #{ecsCnstscDivCd}
+				</if>
+			ORDER BY
+				basin_sort,
+				dept_sort,
+				bplc_sort,
+				uswtr_sqty_sort
+		), MAPPING_LIST AS (
+			SELECT
+				MAX(basin_cd) AS basin_cd,
+				MAX(basin_nm) AS basin_nm,
+				MAX(basin_sort) AS basin_sort,
+				MAX(dept_cd) AS dept_cd,
+				MAX(dept_nm) AS dept_nm,
+				MAX(dept_sort) AS dept_sort,
+				bplc_cd,
+				MAX(bplc_nm) AS bplc_nm,
+				MAX(bplc_sort) AS bplc_sort
+			FROM
+				USWTR_SQTY_MAPPING_LIST
+			GROUP BY
+				bplc_cd
+			ORDER BY
+				basin_sort,
+				dept_sort,
+				bplc_sort
+		),
+		<!--
+		<choose>
+			<when test='null != cnd and "mnby" eq cnd'>
+			MONTH_LIST AS (
+				SELECT /*+ MATERIALZE */
+					TO_CHAR(ADD_MONTHS(TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM'), LEVEL - 1), 'yyyyMM') AS mt
+				FROM
+					DUAL
+				CONNECT BY
+					LEVEL &lt;= MONTHS_BETWEEN(TO_DATE(SUBSTR(#{endDt}, 0, 4) || '12', 'yyyyMM'), TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM')) + 1
+			), RWIS_DD_LIST AS (
+				SELECT
+					obsr_de,
+					tag_seq,
+					msmt_vu
+				FROM
+					WRO.ti_rwis_dd
+				WHERE
+					tag_seq IN (
+						SELECT
+							uswtr_sqty_cd
+						FROM
+							USWTR_SQTY_MAPPING_LIST
+					)
+					AND obsr_de BETWEEN TO_CHAR(TO_DATE(
+						(
+							SELECT
+								MIN(mt)
+							FROM
+								MONTH_LIST
+						) || '01', 'yyyyMMdd') - 1, 'yyyyMMdd')
+					AND (
+							SELECT
+								MAX(mt)
+							FROM
+								MONTH_LIST
+						) || '31'
+			), USWTR_SQTY_DATA_LIST AS (
+				SELECT /*+ MATERIALZE LEADING(USWTR_SQTY_MAPPING_LIST A) */
+					SUBSTR(A.obsr_de, 0, 6) AS mt,
+					USWTR_SQTY_MAPPING_LIST.bplc_cd,
+					NVL(SUM(A.uswtr_sqty), 0) AS uswtr_sqty
+				FROM
+					USWTR_SQTY_MAPPING_LIST, (
+						SELECT
+							obsr_de,
+							tag_seq,
+							SUM(
+								CASE
+									WHEN uswtr_sqty &lt; 0
+									THEN uswtr_sqty /* msmt_vu */
+									ELSE uswtr_sqty
+								END
+							) AS uswtr_sqty
+						FROM (
+								SELECT
+									obsr_de,
+									tag_seq,
+									msmt_vu,
+									msmt_vu - (
+										CASE
+											WHEN LAG(tag_seq) OVER (ORDER BY tag_seq, obsr_de) = tag_seq
+											THEN LAG(msmt_vu) OVER (ORDER BY tag_seq, obsr_de)
+											ELSE (
+												SELECT
+													NVL(msmt_vu, 0)
+												FROM
+													RWIS_DD_LIST
+												WHERE
+													obsr_de = TO_CHAR(TO_DATE(A.obsr_de, 'yyyyMMdd') - 1, 'yyyyMMdd')
+													AND tag_seq = A.tag_seq
+											)
+										END
+									) AS uswtr_sqty
+								FROM
+									RWIS_DD_LIST A
+							)
+						GROUP BY
+							obsr_de,
+							tag_seq
+					) A
+				WHERE
+					USWTR_SQTY_MAPPING_LIST.uswtr_sqty_cd = A.tag_seq
+				GROUP BY
+					SUBSTR(A.obsr_de, 0, 6),
+					USWTR_SQTY_MAPPING_LIST.bplc_cd
+			), GHG_CNSTN_DATA_INIT_LIST AS (
+				SELECT /*+ MATERIALZE LEADING(MAPPING_LIST BBB AAA) */
+					MAPPING_LIST.basin_cd,
+					MAPPING_LIST.basin_nm,
+					MAPPING_LIST.basin_sort,
+					MAPPING_LIST.dept_cd,
+					MAPPING_LIST.dept_nm,
+					MAPPING_LIST.dept_sort,
+					MAPPING_LIST.bplc_cd,
+					MAPPING_LIST.bplc_nm,
+					MAPPING_LIST.bplc_sort,
+					BBB.dscfc_id,
+					BBB.dscfc_procs_ty_cd,
+					(
+						SELECT
+							cmmn_cd_nm
+						FROM
+							SCM.tc_sc_unif_cmmn_cd
+						WHERE
+							sys_div_cd = 'SC'
+							AND cls_cd = 'GHG_0024'
+							AND cmmn_cd = BBB.dscfc_procs_ty_cd
+					) AS dscfc_procs_ty_nm,
+					BBB.dscfc_use_fuel_div_cd,
+					(
+						SELECT
+							cmmn_cd_nm
+						FROM
+							SCM.tc_sc_unif_cmmn_cd
+						WHERE
+							sys_div_cd = 'SC'
+							AND cls_cd = 'GHG_0005'
+							AND cmmn_cd = BBB.dscfc_use_fuel_div_cd
+					) AS dscfc_use_fuel_div_nm,
+					AAA.dscfc_use_de,
+					AAA.sum_dscfc_usgqty
+				FROM
+					GHG.tm_gg01101 BBB,
+					(
+						SELECT
+							ABC.dscfc_id,
+							ABC.dscfc_use_de,
+							MAX(ABC.usgqty) AS sum_dscfc_usgqty
+						FROM (
+							SELECT
+								AA.dscfc_id,
+								AA.dscfc_use_de,
+								CASE
+									WHEN AA.dsqty_cfrml_parm_id IN ('2005', '2001')
+									THEN MAX(AA.dscfc_usgqty)
+								END AS usgqty
+							FROM (
+								SELECT /*+ LEADING(B A) */
+									A.dscfc_id,
+									A.dscfc_use_de,
+									B.dsqty_cfrml_parm_id,
+									B.dsqty_cfrml_parm_nm,
+									A.dscfc_usgqty
+								FROM
+									GHG.tm_rq01103 A,
+									GHG.tm_gg01104 B
+								WHERE
+									(
+										(A.dscfc_use_slip_no IS NOT NULL
+										AND A.dscfc_use_slip_no NOT LIKE 'TMP%')
+										OR A.dscfc_use_slip_prcs_ty_cd = '1'
+									)
+									AND A.dscfc_use_de BETWEEN (
+											SELECT
+												MIN(mt)
+											FROM
+												MONTH_LIST
+										) || '01'
+									AND (
+											SELECT
+												MAX(mt)
+											FROM
+												MONTH_LIST
+										) || '31'
+									AND A.dsqty_cfrml_parm_id IN ('2005', '2001')
+									AND A.dsqty_cfrml_parm_id = B.dsqty_cfrml_parm_id
+							) AA
+							GROUP BY
+								AA.dscfc_id,
+								AA.dscfc_use_de,
+								AA.dsqty_cfrml_parm_id,
+								AA.dsqty_cfrml_parm_nm
+						) ABC
+						GROUP BY
+							ABC.dscfc_id,
+							ABC.dscfc_use_de
+					) AAA,
+					MAPPING_LIST
+				WHERE
+					BBB.dscfc_id = AAA.dscfc_id(+)
+					AND BBB.dscfc_nm LIKE '%' || MAPPING_LIST.bplc_nm || '%'
+					AND BBB.dscfc_use_yn = '1'
+					AND BBB.dscfc_regist_stat_div_cd = '1'
+					AND BBB.dscfc_use_fuel_div_cd = '61' /* 전기 */
+					AND BBB.dscfc_procs_ty_cd IN ('01', '02', '03') /* 취수시설, 가압시설, 정수시설 */
+					AND BBB.dscfc_bplc_cd != '88888889' /* 위탁 */
+					AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin"></include> IN (
+						SELECT
+							objid
+						FROM (
+							<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+						)
+						WHERE
+							1 = 1
+							<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+							AND cmmn_cd = #{ecsBasinDivCd}
+							</if>
+					)
+			), GHG_CNSTN_GROUPING_DATA_LIST AS (
+				SELECT /*+ MATERIALZE */
+					SUBSTR(dscfc_use_de, 0, 6) AS dscfc_use_de,
+					MAX(basin_nm) AS basin_nm,
+					MAX(basin_cd) AS basin_cd,
+					MAX(basin_sort) AS basin_sort,
+					MAX(dept_nm) AS dept_nm,
+					MAX(dept_cd) AS dept_cd,
+					MAX(dept_sort) AS dept_sort,
+					MAX(bplc_nm) AS bplc_nm,
+					bplc_cd,
+					MAX(bplc_sort) AS bplc_sort,
+					MAX(dscfc_procs_ty_nm) AS dscfc_procs_ty_nm,
+					MAX(dscfc_procs_ty_cd) AS dscfc_procs_ty_cd,
+					SUM(sum_dscfc_usgqty) AS sum_dscfc_usgqty
+				FROM
+					GHG_CNSTN_DATA_INIT_LIST
+				GROUP BY
+					SUBSTR(dscfc_use_de, 0, 6),
+					bplc_cd
+			), GHG_CNSTN_DATA_LIST AS (
+				SELECT /*+ MATERIALZE */
+					GHG_CNSTN_GROUPING_DATA_LIST.dscfc_use_de AS ymd,
+					GHG_CNSTN_GROUPING_DATA_LIST.basin_nm,
+					GHG_CNSTN_GROUPING_DATA_LIST.dept_nm,
+					GHG_CNSTN_GROUPING_DATA_LIST.bplc_nm,
+					GHG_CNSTN_GROUPING_DATA_LIST.sum_dscfc_usgqty AS cnstqy_acmtl,
+					(
+						SELECT
+							NVL(SUM(A.sum_dscfc_usgqty), 0)
+						FROM
+							GHG_CNSTN_GROUPING_DATA_LIST A
+						WHERE
+							A.bplc_cd = GHG_CNSTN_GROUPING_DATA_LIST.bplc_cd
+							AND A.dscfc_use_de BETWEEN SUBSTR(GHG_CNSTN_GROUPING_DATA_LIST.dscfc_use_de, 0, 4) || '01'
+							AND GHG_CNSTN_GROUPING_DATA_LIST.dscfc_use_de
+					) AS cnstqy_yy_acmtl,
+					USWTR_SQTY_DATA_LIST.uswtr_sqty AS uswtr_sqty_acmtl,
+					(
+						SELECT
+							NVL(SUM(A.uswtr_sqty), 0)
+						FROM
+							USWTR_SQTY_DATA_LIST A
+						WHERE
+							A.bplc_cd = USWTR_SQTY_DATA_LIST.bplc_cd
+							AND A.mt BETWEEN SUBSTR(USWTR_SQTY_DATA_LIST.mt, 0, 4) || '01'
+							AND USWTR_SQTY_DATA_LIST.mt
+					) AS uswtr_sqty_yy_acmtl
+				FROM
+					GHG_CNSTN_GROUPING_DATA_LIST,
+					USWTR_SQTY_DATA_LIST
+				WHERE
+					GHG_CNSTN_GROUPING_DATA_LIST.dscfc_use_de BETWEEN SUBSTR(#{strtDt}, 0, 6) AND SUBSTR(#{endDt}, 0, 6)
+					AND USWTR_SQTY_DATA_LIST.mt BETWEEN SUBSTR(#{strtDt}, 0, 6) AND SUBSTR(#{endDt}, 0, 6)
+					AND GHG_CNSTN_GROUPING_DATA_LIST.dscfc_use_de = USWTR_SQTY_DATA_LIST.mt
+					AND GHG_CNSTN_GROUPING_DATA_LIST.bplc_cd = USWTR_SQTY_DATA_LIST.bplc_cd
+				ORDER BY
+					dscfc_use_de,
+					basin_sort,
+					dept_sort,
+					bplc_sort
+			)
+			SELECT
+				ymd,
+				basin_nm,
+				dept_nm,
+				bplc_nm,
+				cnstqy_acmtl,
+				CASE
+					WHEN NVL(uswtr_sqty_acmtl, 0) &gt; 0
+					THEN ROUND(NVL(cnstqy_acmtl, 0) / uswtr_sqty_acmtl, 4)
+					ELSE 0
+				END AS epbu_acmtl,
+				uswtr_sqty_acmtl,
+				cnstqy_yy_acmtl,
+				uswtr_sqty_yy_acmtl,
+				CASE
+					WHEN NVL(uswtr_sqty_yy_acmtl, 0) &gt; 0
+					THEN ROUND(NVL(cnstqy_yy_acmtl, 0) / uswtr_sqty_yy_acmtl, 4)
+					ELSE 0
+				END AS epbu_yy_acmtl
+			FROM
+				GHG_CNSTN_DATA_LIST
+			</when>
+			<otherwise>
+			-->
+			MONTH_LIST AS (
+				SELECT /*+ MATERIALZE */
+					TO_CHAR(ADD_MONTHS(TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM'), LEVEL - 1), 'yyyyMM') AS mt
+				FROM
+					DUAL
+				CONNECT BY
+					LEVEL &lt;= MONTHS_BETWEEN(TO_DATE(SUBSTR(#{endDt}, 0, 6), 'yyyyMM'), TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM')) + 1
+			), RWIS_DD_LIST AS (
+				SELECT
+					obsr_de,
+					tag_seq,
+					msmt_vu
+				FROM
+					WRO.ti_rwis_dd
+				WHERE
+					tag_seq IN (
+						SELECT
+							uswtr_sqty_cd
+						FROM
+							USWTR_SQTY_MAPPING_LIST
+					)
+					AND obsr_de BETWEEN TO_CHAR(TO_DATE(
+						(
+							SELECT
+								MIN(mt)
+							FROM
+								MONTH_LIST
+						) || '01', 'yyyyMMdd') - 1, 'yyyyMMdd')
+					AND (
+							SELECT
+								MAX(mt)
+							FROM
+								MONTH_LIST
+						) || '31'
+			), USWTR_SQTY_DATA_LIST AS (
+				SELECT /*+ MATERIALZE LEADING(USWTR_SQTY_MAPPING_LIST A) */
+					A.obsr_de,
+					USWTR_SQTY_MAPPING_LIST.bplc_cd,
+					NVL(SUM(A.uswtr_sqty), 0) AS uswtr_sqty
+				FROM
+					USWTR_SQTY_MAPPING_LIST, (
+						SELECT
+							obsr_de,
+							tag_seq,
+							SUM(
+								CASE
+									WHEN uswtr_sqty &lt; 0
+									THEN uswtr_sqty /* msmt_vu */
+									ELSE uswtr_sqty
+								END
+							) AS uswtr_sqty
+						FROM (
+								SELECT
+									obsr_de,
+									tag_seq,
+									msmt_vu,
+									msmt_vu - (
+										CASE
+											WHEN LAG(tag_seq) OVER (ORDER BY tag_seq, obsr_de) = tag_seq
+											THEN LAG(msmt_vu) OVER (ORDER BY tag_seq, obsr_de)
+											ELSE (
+												SELECT
+													NVL(msmt_vu, 0)
+												FROM
+													RWIS_DD_LIST
+												WHERE
+													obsr_de = TO_CHAR(TO_DATE(A.obsr_de, 'yyyyMMdd') - 1, 'yyyyMMdd')
+													AND tag_seq = A.tag_seq
+											)
+										END
+									) AS uswtr_sqty
+								FROM
+									RWIS_DD_LIST A
+							)
+						GROUP BY
+							obsr_de,
+							tag_seq
+					) A
+				WHERE
+					USWTR_SQTY_MAPPING_LIST.uswtr_sqty_cd = A.tag_seq
+				GROUP BY
+					A.obsr_de,
+					USWTR_SQTY_MAPPING_LIST.bplc_cd
+			), KEPCO_CNSTN_DATA_INIT_LIST AS (
+				SELECT /*+ MATERIALZE LEADING(MAPPING_LIST A) */
+					MAX(MAPPING_LIST.basin_cd) AS basin_cd,
+					MAX(MAPPING_LIST.basin_nm) AS basin_nm,
+					MAX(MAPPING_LIST.basin_sort) AS basin_sort,
+					MAX(MAPPING_LIST.dept_cd) AS dept_cd,
+					MAX(MAPPING_LIST.dept_nm) AS dept_nm,
+					MAX(MAPPING_LIST.dept_sort) AS dept_sort,
+					MAPPING_LIST.bplc_cd,
+					MAX(MAPPING_LIST.bplc_nm) AS bplc_nm,
+					MAX(MAPPING_LIST.bplc_sort) AS bplc_sort,
+					A.kepco_inqire_de,
+					SUM(A.epwr_usgqty) AS epwr_usgqty
+				FROM
+					MAPPING_LIST,
+					ti_ecs_kepco_cnsmp A
+				WHERE
+					MAPPING_LIST.bplc_cd = A.kepco_cstmr_no
+					AND A.kepco_inqire_de BETWEEN (
+							SELECT
+								MIN(mt)
+							FROM
+								MONTH_LIST
+						) || '01'
+					AND (
+							SELECT
+								MAX(mt)
+							FROM
+								MONTH_LIST
+						) || '31'
+				GROUP BY
+					kepco_inqire_de,
+					bplc_cd
+			), KEPCO_CNSTN_DATA_LIST AS (
+				SELECT /*+ MATERIALZE LEADING(KEPCO_CNSTN_DATA_INIT_LIST USWTR_SQTY_DATA_LIST) */
+					KEPCO_CNSTN_DATA_INIT_LIST.kepco_inqire_de AS ymd,
+					KEPCO_CNSTN_DATA_INIT_LIST.basin_nm,
+					KEPCO_CNSTN_DATA_INIT_LIST.dept_nm,
+					KEPCO_CNSTN_DATA_INIT_LIST.bplc_nm,
+					KEPCO_CNSTN_DATA_INIT_LIST.epwr_usgqty AS cnstqy_acmtl,
+					(
+						SELECT
+							NVL(SUM(A.epwr_usgqty), 0)
+						FROM
+							KEPCO_CNSTN_DATA_INIT_LIST A
+						WHERE
+							A.bplc_cd = KEPCO_CNSTN_DATA_INIT_LIST.bplc_cd
+							AND A.kepco_inqire_de BETWEEN SUBSTR(KEPCO_CNSTN_DATA_INIT_LIST.kepco_inqire_de, 0, 4) || '0101'
+							AND KEPCO_CNSTN_DATA_INIT_LIST.kepco_inqire_de
+					) AS cnstqy_yy_acmtl,
+					USWTR_SQTY_DATA_LIST.uswtr_sqty AS uswtr_sqty_acmtl,
+					(
+						SELECT
+							NVL(SUM(A.uswtr_sqty), 0)
+						FROM
+							USWTR_SQTY_DATA_LIST A
+						WHERE
+							A.bplc_cd = USWTR_SQTY_DATA_LIST.bplc_cd
+							AND A.obsr_de BETWEEN SUBSTR(USWTR_SQTY_DATA_LIST.obsr_de, 0, 4) || '0101'
+							AND USWTR_SQTY_DATA_LIST.obsr_de
+					) AS uswtr_sqty_yy_acmtl
+				FROM
+					KEPCO_CNSTN_DATA_INIT_LIST,
+					USWTR_SQTY_DATA_LIST
+				WHERE
+					KEPCO_CNSTN_DATA_INIT_LIST.kepco_inqire_de BETWEEN SUBSTR(#{strtDt}, 0, 8) AND SUBSTR(#{endDt}, 0, 8)
+					AND USWTR_SQTY_DATA_LIST.obsr_de BETWEEN SUBSTR(#{strtDt}, 0, 8) AND SUBSTR(#{endDt}, 0, 8)
+					AND KEPCO_CNSTN_DATA_INIT_LIST.kepco_inqire_de = USWTR_SQTY_DATA_LIST.obsr_de
+					AND KEPCO_CNSTN_DATA_INIT_LIST.bplc_cd = USWTR_SQTY_DATA_LIST.bplc_cd
+				ORDER BY
+					ymd,
+					basin_sort,
+					dept_sort,
+					bplc_sort
+			)
+			SELECT
+				ymd,
+				basin_nm,
+				dept_nm,
+				bplc_nm,
+				cnstqy_acmtl,
+				uswtr_sqty_acmtl,
+				CASE
+					WHEN NVL(uswtr_sqty_acmtl, 0) &gt; 0
+					THEN ROUND(NVL(cnstqy_acmtl, 0) / uswtr_sqty_acmtl, 4)
+					ELSE 0
+				END AS epbu_acmtl,
+				cnstqy_yy_acmtl,
+				uswtr_sqty_yy_acmtl,
+				CASE
+					WHEN NVL(uswtr_sqty_yy_acmtl, 0) &gt; 0
+					THEN ROUND(NVL(cnstqy_yy_acmtl, 0) / uswtr_sqty_yy_acmtl, 4)
+					ELSE 0
+				END AS epbu_yy_acmtl
+			FROM
+				KEPCO_CNSTN_DATA_LIST
+		<!--
+			</otherwise>
+		</choose>
+		-->
+	</select>
+</mapper>

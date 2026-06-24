@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "지도 울릉도",
+			"version": "",
+			"apis": [],
+			"pluginName": "map_ulleung_basin",
+			"width": "22px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "map_ulleung_basin",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "25px"
+			}
+		-->
+		<xf:group class="map-basin-ulleung" tagname="svg" pluginName="map_ulleung_basin">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initUlleungBasin = function() {
+					// fill 설정
+					var selector = "#" + this.getID() + " .map-basin";
+					if (options.fill && options.fill != "") {
+						document.querySelectorAll(selector).forEach(elm => elm.setAttribute("fill", options.fill));
+					} else {
+						document.querySelectorAll(selector).forEach(elm => elm.classList.add("map-basin-ulleung-fill"));
+					}
+				};
+
+				// 초기 실행함수 수행
+				this.initUlleungBasin();
+				]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>22</w2:width>
+				<w2:viewBox>0 0 22 25</w2:viewBox>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="defs">
+				<xf:group tagname="style">
+					.map-basin {
+					stroke: #AAAAAA;
+					stroke-miterlimit: 1;
+					stroke-width: 1;
+					}
+
+					.map-basin-ulleung-fill {
+					fill: #ECFFFF;
+					}
+				</xf:group>
+			</xf:group>
+			<xf:group tagname="g">
+				<xf:group class="map-basin" tagname="path">
+					<w2:attributes>
+						<w2:d>
+							M18.7263 15.7904C18.8465 15.6984 16.8309 15.3113 15.5928 16.9259C14.3547 18.5404 15.2074 20.2943 14.3672 21.3641C13.5271 22.434
+							13.5808 24.5531 14.6138 24.3385C15.6294 24.1645 15.5729 23.0421 16.2866 22.3015C17.3613 21.3452 17.468 21.8358 18.4992
+							20.9725C19.0013 20.544 19.344 20.322 19.8889 19.9494C20.3523 19.6017 21.4209 20.061 21.0445 18.9537C20.6682 17.8465 20.3719 18.4692
+							19.2319 17.7284C18.6011 16.9464 19.8488 16.5976 18.7263 15.7904Z
+						</w2:d>
+					</w2:attributes>
+				</xf:group>
+				<xf:group class="map-basin" tagname="path">
+					<w2:attributes>
+						<w2:d>
+							M16.2458 2.68396C16.457 2.59945 12.333 0.967315 9.88815 2.80313C7.44327 4.63894 5.06001 7.41917 3.41138 8.62763C1.76274 9.8361 2.40057
+							13.9494 3.98242 14.0568C5.52249 14.2158 7.06983 13.8797 8.4022 13.0966C10.3443 12.1473 10.4228 11.5752 12.2644 10.7429C13.1644
+							10.3259 14.0859 9.9572 15.0251 9.6383C15.8364 9.32259 16.9137 9.86788 16.8168 8.11314C16.72 6.3584 16.1619 6.3142 16.3919
+							5.0502C16.622 3.7862 16.0346 2.76846 16.2458 2.68396Z
+						</w2:d>
+					</w2:attributes>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

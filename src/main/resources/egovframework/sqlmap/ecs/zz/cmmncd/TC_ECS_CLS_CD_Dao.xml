@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TC_ECS_CLS_CD_Dao">
+
+	<select id="TC_ECS_CLS_CD_Dao_retrieveClsCd" parameterType="kw.ecs.zz.cmmncd.vo.ClsCdVo" resultType="egovMap">
+		/* TC_ECS_CLS_CD_Dao_retrieveClsCd */
+		SELECT
+			A.CLS_CD,
+			A.CLS_CD_NM,
+			A.CLS_CD_DC,
+			A.USE_YN
+		FROM
+			tc_ecs_cls_cd A
+		<where>
+			<if test="useYn != null and useYn != ''">
+			AND A.USE_YN = #{useYn}
+			</if>
+			<if test="clsCdNm != null and clsCdNm != ''">
+			AND A.CLS_CD_NM LIKE '%' || #{clsCdNm} || '%'
+			</if>
+			<if test="clsCdDc != null and clsCdDc != ''">
+			AND A.CLS_CD_DC LIKE '%' || #{clsCdDc} || '%'
+			</if>
+		</where>
+		ORDER BY A.CLS_CD
+	</select>
+
+	<insert id="TC_ECS_CLS_CD_Dao_insertClsCdList" parameterType="kw.ecs.zz.cmmncd.vo.ClsCdVo">
+		/* TC_ECS_CLS_CD_Dao_insertClsCdList */
+		INSERT INTO tc_ecs_cls_cd (
+			CLS_CD,
+			CLS_CD_NM,
+			CLS_CD_DC,
+			USE_YN,
+			FRST_REGIST_DT,
+			FRST_RGSTR_ID,
+			LAST_UPDT_DT,
+			LAST_UPDUSR_ID
+		) VALUES (
+			#{clsCd},
+			#{clsCdNm},
+			#{clsCdDc},
+			#{useYn},
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)	
+	</insert>
+	
+	<update id="TC_ECS_CLS_CD_Dao_updateClsCdList" parameterType="kw.ecs.zz.cmmncd.vo.ClsCdVo">
+		/* TC_ECS_CLS_CD_Dao_updateClsCdList */
+		UPDATE
+			tc_ecs_cls_cd
+		SET
+			CLS_CD_NM = #{clsCdNm},
+			CLS_CD_DC = #{clsCdDc},
+			USE_YN = #{useYn},
+			LAST_UPDT_DT = SYSDATE,
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE
+			CLS_CD = #{clsCd}
+	</update>
+		
+	<delete id="TC_ECS_CLS_CD_Dao_deleteClsCdList" parameterType="kw.ecs.zz.cmmncd.vo.ClsCdVo">
+		/* TC_ECS_CLS_CD_Dao_deleteClsCdList */
+		DELETE
+			tc_ecs_cls_cd
+		WHERE
+			CLS_CD = #{clsCd}
+	</delete>
+	
+	<select id="TC_ECS_CLS_CD_Dao_selectBbsClsCdList" parameterType="kw.ecs.zz.cmmncd.vo.ClsCdVo" resultType="egovMap">
+			<if test="sysDivCd == null or sysDivCd == ''">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_ecs_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd != null and sysDivCd != '' and (sysDivCd == 'SCM' or sysDivCd == 'SMP' or sysDivCd == 'SMC')">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_ecs_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'FMS' or sysDivCd == 'BID'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_fms_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'CMS' or sysDivCd == 'CTS'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_cms_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'LWS' or sysDivCd == 'LWP'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_lws_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'WFM' or sysDivCd == 'PFM'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_wfm_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'ADT'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_adt_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'HRM'">
+				SELECT
+					CLS_CD ,
+					CLS_CD_NM
+				FROM
+					tc_hrm_cls_cd
+				WHERE CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'LAW'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_law_cls_cd
+				WHERE CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'MGT'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_mgt_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'STG'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_stg_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'WCB'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_wcb_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'WQE'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_wqe_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'WRI'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_wri_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'WRO'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_wro_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+			<if test="sysDivCd == 'ECS'">
+				SELECT
+					CLS_CD,
+					CLS_CD_NM
+				FROM
+					tc_ecs_cls_cd
+				WHERE
+					CLS_CD_DC LIKE '게시판분류%'
+			</if>
+	</select>
+</mapper>

@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <w2:userPalette defaultIcon="mix.png" desc=""/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[ ]]></script>
+    </head>
+    <body><xf:group style="" id="" class="con-box toggle-box">
+	<w2:anchor class="toggle-btn" ev:onclick="" id="" outerDiv="false" style="">
+		<xf:label>
+<![CDATA[열기/닫기]]></xf:label>
+</w2:anchor>
+	<xf:group style="" id="" class="title-group">
+		<xf:group tagname="h3" style="" id="" class="">
+			<w2:span style="" id="" label="타이틀">
+			</w2:span>
+</xf:group>
+		<xf:group style="" id="" class="com-area">
+			<xf:group style="" id="" class="info-box">
+			</xf:group>
+			<xf:group style="" id="" class="btn-group">
+				<w2:anchor outerDiv="false" style="" id="">
+					<xf:label>
+<![CDATA[버튼명입력]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+</xf:group>
+	<xf:group class="view-box box" id="" style="">
+		<xf:group class="title-group" id="" style="">
+			<xf:group class="" id="" style="" tagname="h4">
+				<w2:span id="" label="타이틀" style="">
+				</w2:span>
+</xf:group>
+			<xf:group class="com-area" id="" style="">
+				<xf:group class="info-box" id="" style="">
+				</xf:group>
+				<xf:group class="btn-group" id="" style="">
+					<w2:anchor id="" outerDiv="false" style="">
+						<xf:label>
+<![CDATA[버튼명입력]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+</xf:group>
+		<xf:group class="w2tb" id="" style="" tagname="table">
+			<w2:attributes>
+				<w2:summary>
+				</w2:summary>
+</w2:attributes>
+			<xf:group tagname="caption">
+			</xf:group>
+			<xf:group tagname="colgroup">
+				<xf:group style="" tagname="col">
+				</xf:group>
+				<xf:group style="" tagname="col">
+				</xf:group>
+				<xf:group style="" tagname="col">
+				</xf:group>
+				<xf:group style="" tagname="col">
+				</xf:group>
+</xf:group>
+			<xf:group tagname="tr">
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+</xf:group>
+			<xf:group tagname="tr">
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+</xf:group>
+			<xf:group tagname="tr">
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+</xf:group>
+			<xf:group tagname="tr">
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+</xf:group>
+			<xf:group tagname="tr">
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+				<xf:group class="w2tb_th cw2 right" style="" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+					<w2:span id="" label="타이틀" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td" style="" tagname="td">
+					<w2:attributes>
+						<w2:headers>
+						</w2:headers>
+</w2:attributes>
+</xf:group>
+</xf:group>
+</xf:group>
+</xf:group>
+</xf:group>
+</body>
+</html>

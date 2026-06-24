@@ -1,0 +1,768 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSZZ2200000.xml
+			* 설 명 : 에너지공통_코드관리_공통메시지관리
+			* 작성일 : 2023.06.21
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.06.21 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltMsgList" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="msgId" name="메시지ID" dataType="text"></w2:column>
+						<w2:column id="msgLangCd" name="메시지언어코드" dataType="text"></w2:column>
+						<w2:column id="msgSysDivCd" name="시스템구분코드" dataType="text"></w2:column>
+						<w2:column id="msgMngFomNm" name="메시지관리형식명" dataType="text"></w2:column>
+						<w2:column id="msgUseYn" name="메시지사용여부" dataType="text"></w2:column>
+						<w2:column id="msgCtnt" name="메시지내용" dataType="text"></w2:column>
+						<w2:column id="lastUpdtDt" name="최종수정일자" dataType="text"></w2:column>
+						<w2:column id="lastUpdusrNm" name="최종수정자" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap id="dmaInqireParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="sysDivCd" name="시스템구분" dataType="text"></w2:key>
+						<w2:key id="msgLangCd" name="언어" dataType="text"></w2:key>
+						<w2:key id="msgMngFomNm" name="관리형식명" dataType="text"></w2:key>
+						<w2:key id="usrId" name="사용자ID" dataType="text"></w2:key>
+						<w2:key id="msgCtnt" name="메시지내용" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap id="dmaSaveMsg" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="msgId" dataType="text" name="메시지ID"></w2:key>
+						<w2:key id="msgLangCd" dataType="text" name="메시지언어코드"></w2:key>
+						<w2:key id="msgSysDivCd" dataType="text" name="시스템구분코드"></w2:key>
+						<w2:key id="msgMngFomNm" dataType="text" name="메시지관리형식명"></w2:key>
+						<w2:key id="msgUseYn" dataType="text" name="메시지사용여부"></w2:key>
+						<w2:key id="msgCtnt" dataType="text" name="메시지내용"></w2:key>
+						<w2:key id="lastInfo" dataType="text" name="최종수정정보"></w2:key>
+						<w2:key id="rowStatus" dataType="text" name="상태값"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltSysDivCdList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" dataType="text" name="시스템구분코드"></w2:column>
+						<w2:column id="sysDivCdNm" dataType="text" name="시스템구분코드명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSZZ2200000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 로그인한 사용자 ID 변수설정
+		scwin.usrId = comLib.getUsrId();
+		scwin.isAdmin = comLib.getAthrId() || "";
+
+		// 사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+		scwin.setAthrSysDivCd();
+	};
+
+	/**
+	 * 사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.setAthrSysDivCd = function () {
+		var requestData = {};
+
+		// 사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+		if(scwin.isAdmin != "ADMIN") { 
+			requestData.data = {
+				"usrId" : scwin.usrId,
+				"sysDivCd" : "SCM_0000"
+			};
+		} else {
+			requestData.data = {
+				"usrId" : "",
+				"sysDivCd" : "SCM_0000"
+			};
+		}
+
+		var option = {
+			action : "sc/authmng/retrieveAthrSysDivCd.do",
+			reqData : requestData,
+			resData : dltSysDivCdList,
+			success : "scwin.retrieveAthrSysDivCdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.requestAjaxSyncCode($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.retrieveAthrSysDivCdCallback = function (resBody, e) {
+		var sysDivCd = comLib.getSysDivCd();
+
+		dmaInqireParam.set("sysDivCd", sysDivCd);
+		dmaInqireParam.set("usrId", scwin.usrId);
+
+		// 화면 오픈시 자동조회를 한다.
+		comLib.setEnterKeyEvent(grpInqire, scwin.btnInqire_onclick);
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var requestData = {};
+		requestData.dmaInqireParam = dmaInqireParam.getJSON();
+
+		var option = {
+			action : "sc/msgmng/retrieveMsg.do",
+			reqData : requestData,
+			resData : dltMsgList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireCallback = function(resBody) {
+		if (dltMsgList.getRowCount() > 0) {
+			//console.log("조회된 데이터는 총 " + dltMsgList.getRowCount() + " 건 입니다.");
+			txtCnt.setValue(dltMsgList.getRowCount());
+		} else{
+			txtCnt.setValue(0);
+		}
+
+		// 화면 오픈과 동시에 공통메세지상세항목은 초기화 한다.
+		scwin.btnNew_onclick();
+	};
+
+	/**
+	 * 대내권한 등록을 위해 신규버튼 클릭시 dataMap 초기화 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnNew_onclick = function() {
+		// 데이터 맵 초기화
+		dmaSaveMsg.reset();
+		// PK 수정 불가능 하도록 수정(초기에는 활성화, 값이 있으면 비활성화)
+		ibxMsgId.setDisabled(false);
+		// 최종수정시간은 메뉴목록에서 선택을 했을 경우만 db 내용을 보여준다.
+		tbxLastUpdtDt.setValue("");
+		// 시스템 구분 값 설정
+		dmaSaveMsg.set("msgSysDivCd" , comLib.getSysDivCd());
+		// ID값 설정
+		dmaSaveMsg.set("msgId" , comLib.getSysDivCd() + ".");
+		// 사용여부는 Defualt로 Y 로 셋팅된다.
+		dmaSaveMsg.set("msgUseYn" , "Y");
+		// 신규 flag 설정
+		dmaSaveMsg.set("rowStatus" , "C");
+	};
+
+	/**
+	 * 공통메세지상세에서 기재한 내용을 수정/저장한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		var valRowStatus = dmaSaveMsg.get("rowStatus");
+		var newFlag = false;
+
+		if(utilLib.validateGroup(grpDtl, dmaSaveMsg)) {
+			newFlag = true;
+		} else {
+			newFlag = false;
+			return;
+		}
+
+		if (newFlag) {
+			if (valRowStatus != "D") {
+				// 저장할것인지 confirm
+				comLib.confirm($p, utilLib.getMessage("SCM.INFO.00239"), "scwin.saveConfirmCallback");
+			} else {
+				// 삭제할것인지 confirm
+				comLib.confirm($p, utilLib.getMessage("SCM.INFO.00251"), "scwin.saveConfirmCallback");
+			}
+		}
+	};
+
+	/**
+	 * 저장전 입력항목 체크를 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveValcheck = function() {
+		if (sbxSysDivCd2.getSelectedIndex() == 0) {
+			//{0} 은 필수 입력값입니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "시스템구분"));
+			sbxSysDivCd2.focus();
+			return false;
+		}
+		if (ibxMsgId.getValue() == "") {
+			//{0} 은 필수 입력값입니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "메세지ID"));
+			ibxMsgId.focus();
+			return false;
+		} 
+		if (ibxMsgMngFomNm2.getValue() == "") {
+			//{0} 은 필수 입력값입니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "메세지관리형식명"));
+			ibxMsgMngFomNm2.focus();
+			return false;
+		} 
+		if (sbxMsgLangCd2.getSelectedIndex() == 0) {
+			//{0} 은 필수 입력값입니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "언어"));
+			sbxMsgLangCd2.focus();
+			return false;
+		}
+	};
+
+	/**
+	 * 수정/저장 ComfirmCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var requestData = {};
+		requestData.dmaSaveMsg = dmaSaveMsg.getJSON();
+
+		var option = {
+			action : "sc/msgmng/saveMsg.do",
+			reqData : requestData,
+			success : "scwin.saveMsgCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 수정/저장 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.saveMsgCallback = function(resBody) {
+		//comLib.alert($p, resBody.message.code_name);
+		comLib.alert($p, utilLib.getMessage("SCM.INFO.00327"));
+
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 작업중이던 내용을 취소하고 초기화한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnCancl_onclick = function() {
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 특정 셀을 선택시 해당 내용을 상세내역으로 표출한다.
+	 * @param <Int> row
+	 * @param <Int> col
+	 * @return
+	 */
+	scwin.grdMsgList_oncellclick = function(row,col) {
+		var rowIndex = row;
+		var colIndex = col;
+		var setJsonData = dltMsgList.getRowJSON(rowIndex);
+
+		dmaSaveMsg.setJSON(setJsonData);
+		dmaSaveMsg.set("lastInfo", dltMsgList.getCellData(rowIndex , "lastUpdtDt") + " " + dltMsgList.getCellData(rowIndex , "lastUpdusrNm"));
+
+		var info = dmaSaveMsg.get("lastInfo");
+		// PK 수정 불가능 하도록 수정(초기에는 활성화, 값이 있으면 비활성화)
+		if (info != "") {
+			ibxMsgId.setDisabled(true);
+		}
+		// 수정 flag 설정
+		dmaSaveMsg.set("rowStatus", "U");
+	};
+
+	/**
+	 * 공통메세지 목록에서 선택한 메세지를삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDel_onclick = function() {
+		var strMsgId = "";
+		strMsgId = dmaSaveMsg.get("msgId");
+
+		if(strMsgId != null || strMsgId != "") {
+			dmaSaveMsg.set("rowStatus", "D");
+
+			scwin.btnSave_onclick();
+		} else {
+			// 삭제하고자 하는 데이터 선택 후 삭제하도록 알림
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00252"));
+		}
+	};
+
+	/**
+	 * 시스템 구분을 선택 시 메세지 ID 자동설정
+	 * @param <Object> info
+	 * @return
+	 */
+	scwin.sbxSysDivCd2_onviewchange = function(info) {
+		var oldValue = info.oldValue;
+		var newValue = info.newValue;
+
+		if (newValue != "") {
+			var sysDivCd = dmaSaveMsg.get("msgSysDivCd");
+
+			if (!ibxMsgId.getDisabled()) {
+				dmaSaveMsg.set("msgId", "");
+				dmaSaveMsg.set("msgId", sysDivCd + ".");
+			}
+
+			ibxMsgMngFomNm2.focus();
+		} else {
+			//{0} 은 필수 입력값입니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "시스템구분"));
+
+			dmaSaveMsg.set("msgId", "");
+
+			sbxSysDivCd2.focus();
+		}
+	};
+
+	/**
+	 * 메세지 관리형식을 입력 시 메세지 ID 자동설정
+	 * @param <Object> info
+	 * @return
+	 */
+	scwin.ibxMsgMngFomNm2_onviewchange = function(info) {
+		var oldValue = info.oldValue;
+		var newValue = info.newValue;
+		var strMsgId = dmaSaveMsg.get("msgId");
+
+		if (newValue != "") {
+			var strMsgMngFomNm = dmaSaveMsg.get("msgMngFomNm");
+
+			if (!ibxMsgId.getDisabled()) {
+				dmaSaveMsg.set("msgId", strMsgId + strMsgMngFomNm + ".");
+				ibxMsgId.focus();
+			}
+		} else {
+			//{0} 은 필수 입력값입니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "메세지관리형식"));
+
+			dmaSaveMsg.set("msgId", strMsgId);
+
+			ibxMsgMngFomNm2.focus();
+		}
+	};
+]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group id="grpInqire" class="search-box">
+				<xf:group class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="시스템구분"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:select1 id="sbxSysDivCd1" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass="w2selectbox_disabled"
+									displayMode="label" optionOrder="false" selectedData="true" submenuSize="auto" ref="data:dmaInqireParam.sysDivCd"
+									chooseOptionLabel="전체">
+									<xf:choices>
+										<xf:itemset nodeset="data:dltSysDivCdList">
+											<xf:label ref="sysDivCdNm"></xf:label>
+											<xf:value ref="sysDivCd"></xf:value>
+										</xf:itemset>
+									</xf:choices>
+								</xf:select1>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="언어"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:select1 id="sbxMsgLangCd1" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass="w2selectbox_disabled"
+									displayMode="label" optionOrder="false" selectedData="true" submenuSize="auto" ref="data:dmaInqireParam.msgLangCd"
+									chooseOptionLabel="전체">
+									<xf:choices>
+										<xf:item>
+											<xf:label><![CDATA[한국어]]></xf:label>
+											<xf:value><![CDATA[ko]]></xf:value>
+										</xf:item>
+										<xf:item>
+											<xf:label><![CDATA[영어]]></xf:label>
+											<xf:value><![CDATA[eng]]></xf:value>
+										</xf:item>
+										<xf:item>
+											<xf:label><![CDATA[일본어]]></xf:label>
+											<xf:value><![CDATA[jp]]></xf:value>
+										</xf:item>
+									</xf:choices>
+								</xf:select1>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="관리형식명"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:attributes>
+									<w2:colspan>1</w2:colspan>
+									<w2:rowspan>1</w2:rowspan>
+								</w2:attributes>
+								<xf:input id="ibxMsgMngFomNm1" ref="data:dmaInqireParam.msgMngFomNm">
+								</xf:input>
+							</xf:group>
+							<xf:group tagname="th" class="w2tb_th cw1">
+								<w2:span label="메세지내용"></w2:span>
+							</xf:group>
+							<xf:group tagname="td" class="w2tb_td cw2">
+								<xf:input id="ibxMsgCtnt" ref="data:dmaInqireParam.msgCtnt"></xf:input>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" ev:onclick="scwin.btnInqire_onclick" userData1="Q">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="layout-float">
+					<xf:group class="float-con left-area cw13">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="공통메세지목록">
+									</w2:span>
+									<w2:span id="txtCnt" label="0" class="title-num">
+									</w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group class="list-box box">
+								<w2:gridView id="grdMsgList" scrollByColumnAdaptive="false" summaryAuto="false" useShiftKey="true" scrollByColumn="false"
+									focusMode="row" fixedColumnWithHidden="true" dataList="dltMsgList" ignoreCellClick="false" autoFit="allColumn" visibleRowNum="19"
+									ignoreToggleOnDisabled="false" readOnly="true" sortable="true" tooltipDisplay="true" ev:oncellclick="scwin.grdMsgList_oncellclick"
+									defaultCellHeight="35" style="height:45.4rem;">
+									<w2:header>
+										<w2:row>
+											<w2:column id="hMsgId" inputType="text" value="메시지ID" width="150">
+											</w2:column>
+											<w2:column id="hMsgLangCd" inputType="text" value="메시지언어코드" width="120">
+											</w2:column>
+											<w2:column id="hMsgSysDivCd" inputType="text" value="시스템구분코드" width="100">
+											</w2:column>
+											<w2:column id="hMsgMngFomNm" inputType="text" value="메시지관리형식명" width="120">
+											</w2:column>
+											<w2:column id="hMsgUseYn" inputType="text" value="메시지사용여부" width="120">
+											</w2:column>
+											<w2:column id="hMsgCtnt" inputType="text" value="메시지내용" width="*">
+											</w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="msgId" inputType="text"></w2:column>
+											<w2:column id="msgLangCd" inputType="select" chooseOption="true" chooseOptionLabel="선택">
+												<w2:choices>
+													<w2:item>
+														<w2:label><![CDATA[한국어]]></w2:label>
+														<w2:value><![CDATA[ko]]></w2:value>
+													</w2:item>
+													<w2:item>
+														<w2:label><![CDATA[영어]]></w2:label>
+														<w2:value><![CDATA[eng]]></w2:value>
+													</w2:item>
+													<w2:item>
+														<w2:label><![CDATA[일본어]]></w2:label>
+														<w2:value><![CDATA[jp]]></w2:value>
+													</w2:item>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="msgSysDivCd" inputType="select" chooseOption="true" chooseOptionLabel="선택">
+												<w2:choices>
+													<w2:itemset nodeset="data:dltSysDivCdList">
+														<w2:label ref="sysDivCdNm"></w2:label>
+														<w2:value ref="sysDivCd"></w2:value>
+													</w2:itemset>
+												</w2:choices>
+											</w2:column>
+											<w2:column id="msgMngFomNm" inputType="text"></w2:column>
+											<w2:column id="msgUseYn" inputType="checkbox" falseValue="N" trueValue="Y" valueType="other" checkboxLabel="&amp;nbsp"></w2:column>
+											<w2:column id="msgCtnt" width="*" inputType="text" textAlign="left">
+											</w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="float-con right-area cw7">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="공통메세지상세">
+									</w2:span>
+								</xf:group>
+								<xf:group class="com-area">
+									<xf:group class="btn-group">
+										<w2:anchor id="btnNew" outerDiv="false" ev:onclick="scwin.btnNew_onclick" userData1="N">
+											<xf:label><![CDATA[신규]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+									<xf:group class="info-box">
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="view-box box">
+								<xf:group id="grpDtl" class="w2tb" tagname="table">
+									<xf:group tagname="colgroup">
+										<xf:group class="detail_tit" tagname="col">
+										</xf:group>
+										<xf:group tagname="col">
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="시스템구분">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>3</w2:colspan>
+												<w2:rowspan>1</w2:rowspan>
+											</w2:attributes>
+											<xf:select1 id="sbxSysDivCd2" appearance="minimal" chooseOption="true" chooseOptionLabel="선택" direction="auto"
+												disabledClass="w2selectbox_disabled" displayMode="label" ev:onviewchange="scwin.sbxSysDivCd2_onviewchange" optionOrder="false"
+												ref="data:dmaSaveMsg.msgSysDivCd" mandatory="true">
+												<xf:choices>
+													<xf:itemset nodeset="data:dltSysDivCdList">
+														<xf:label ref="sysDivCdNm"></xf:label>
+														<xf:value ref="sysDivCd"></xf:value>
+													</xf:itemset>
+												</xf:choices>
+											</xf:select1>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="메세지관리형식명">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:input id="ibxMsgMngFomNm2" ref="data:dmaSaveMsg.msgMngFomNm" ev:onviewchange="scwin.ibxMsgMngFomNm2_onviewchange"
+												mandatory="true"></xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="ID">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>3</w2:colspan>
+												<w2:rowspan>1</w2:rowspan>
+											</w2:attributes>
+											<xf:group class="cw10"></xf:group>
+											<xf:input id="ibxMsgId" ref="data:dmaSaveMsg.msgId" mandatory="true"></xf:input>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="언어">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>3</w2:colspan>
+												<w2:rowspan>1</w2:rowspan>
+											</w2:attributes>
+											<xf:select1 appearance="minimal" chooseOption="true" chooseOptionLabel="선택" direction="auto" disabled="false"
+												disabledClass="w2selectbox_disabled" displayMode="label" id="sbxMsgLangCd2" optionOrder="false" ref="data:dmaSaveMsg.msgLangCd"
+												selectedData="true" submenuSize="auto" mandatory="true">
+												<xf:choices>
+													<xf:item>
+														<xf:label><![CDATA[한국어]]></xf:label>
+														<xf:value><![CDATA[ko]]></xf:value>
+													</xf:item>
+													<xf:item>
+														<xf:label><![CDATA[영어]]></xf:label>
+														<xf:value><![CDATA[eng]]></xf:value>
+													</xf:item>
+													<xf:item>
+														<xf:label><![CDATA[일본어]]></xf:label>
+														<xf:value><![CDATA[jp]]></xf:value>
+													</xf:item>
+												</xf:choices>
+											</xf:select1>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="메세지내용">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:textarea id="txaMsgCtnt" ref="data:dmaSaveMsg.msgCtnt" style="height: 103px;">
+											</xf:textarea>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right req" tagname="th">
+											<w2:span label="사용여부">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:select1 id="radUseYn" appearance="full" cols="2" ref="data:dmaSaveMsg.msgUseYn" selectedIndex="0" renderType="radiogroup"
+												mandatory="true">
+												<xf:choices>
+													<xf:item>
+														<xf:label><![CDATA[예]]></xf:label>
+														<xf:value><![CDATA[Y]]></xf:value>
+													</xf:item>
+													<xf:item>
+														<xf:label><![CDATA[아니오]]></xf:label>
+														<xf:value><![CDATA[N]]></xf:value>
+													</xf:item>
+												</xf:choices>
+											</xf:select1>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group class="w2tb_th right" tagname="th">
+											<w2:span label="최종수정정보">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td" tagname="td">
+											<w2:attributes>
+												<w2:colspan>
+													3
+												</w2:colspan>
+												<w2:rowspan>
+													1
+												</w2:rowspan>
+											</w2:attributes>
+											<xf:group class="mix-box">
+												<xf:group class="cw20">
+													<w2:span id="tbxLastUpdtDt" label=" 천원" ref="data:dmaSaveMsg.lastInfo">
+													</w2:span>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="tr">
+										<xf:group tagname="th" class="w2tb_th right"></xf:group>
+										<xf:group tagname="td" class="w2tb_td"></xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnSave" outerDiv="false" ev:onclick="scwin.btnSave_onclick" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnCancl" outerDiv="false" ev:onclick="scwin.btnCancl_onclick" userData1="CC">
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDel" outerDiv="false" style="display:none;" ev:onclick="scwin.btnDel_onclick" userData1="D">
+						<xf:label><![CDATA[삭제]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

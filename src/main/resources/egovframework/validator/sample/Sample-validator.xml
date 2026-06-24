@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE form-validation PUBLIC 
+    "-//Apache Software Foundation//DTD Commons Validator Rules Configuration 1.1//EN" 
+    "http://jakarta.apache.org/commons/dtds/validator_1_1.dtd">
+
+<form-validation>
+
+	<formset>
+		<form name="sampleVo">
+			<field property="id" depends="required">
+				<arg0 key="아이디" />
+			</field>
+			<field property="name" depends="required">
+				<arg0 key="이름" />
+			</field>
+		</form>
+
+		<form name="sampleListNormalVo">
+			<field property="slipNo" depends="required">
+				<arg0 key="전표번호" />
+			</field>
+			<field property="baseDt" depends="required">
+				<arg0 key="기준일자" />
+			</field>
+			<field property="title" depends="required">
+				<arg0 key="제목" />
+			</field>
+		</form>
+
+	</formset>
+
+</form-validation>

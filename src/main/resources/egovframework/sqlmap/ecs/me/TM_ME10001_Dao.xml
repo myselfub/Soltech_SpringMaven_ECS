@@ -1,0 +1,1000 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 관리/폐기 - 에너지 관리 -->
+<mapper namespace="TM_ME10001_Dao">
+	<sql id="TM_ME10001_Dao_IEM_MAPPING">
+		IEM_MAPPING_LIST AS (
+			/*
+				소양강댐지사, 충주댐지사, 대청댐지사, 용담댐지사, 주암댐지사,
+				안동권지사, 합천댐지사, 남강댐지사, 횡성원주권지사, 부안권지사,
+				전남서남권지사, 섬진강댐지사, 김천부항댐지사, 보현산댐지사, 군위댐지사,
+				청송권지사, 영주댐지사
+			*/
+			SELECT /*+ MATERIALZE */
+				'2020,2016,3025,3014,3032,' ||
+				'4012,4025,4026,2021,3013,' ||
+				'3029,3015,4014,4015,4013,' ||
+				'4016,4017' AS dept_cd,
+				'건중_발전설비%' AS fnct_are_nm,
+				'1440' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'%' AS budget_cmtmt_grp_nm,
+				'%' AS budget_cmtmt_grp_cd,
+				'%' AS budget_cmtmt_iem_nm,
+				'%' AS budget_cmtmt_iem_cd,
+				'02' AS iem_div_cd /* 개대체 */
+			FROM
+				DUAL
+			UNION ALL
+			/*
+				충주댐지사, 대청댐지사, 용담댐지사, 주암댐지사, 안동권지사,
+				합천댐지사, 경기서북권지사, 경기동남권지사, 횡성원주권지사, 보령권지사,
+				동화권지사, 전남중부권지사, 밀양권지사, 울산권지사, 운문권지사,
+				포항권지사, 한강보관리단, 금강보관리단, 영산강보관리단, 낙동강보관리단,
+				시화조력관리단, 아라뱃길지사, 경기동북권지사, 경기서남권지사, 태백권지사,
+				수자원시설처, 금강유역관리처, 아산권지사, 천안권지사, 청주권지사,
+				충남중부권지사, 전주권지사, 경남서부권지사, 창원권지사, 구미권지사
+			*/
+			SELECT
+				'2016,3025,3014,3032,4012,' ||
+				'4025,2014,2012,2021,3023,' ||
+				'3011,3028,4024,4023,4010,' ||
+				'4011,2010,3016,3027,4007,' ||
+				'5006,2018,2025,2011,2022,' ||
+				'1122,3002,3018,3019,3017,' ||
+				'3020,3010,4021,4020,4009' AS dept_cd,
+				'건중_신재생에너지%' AS fnct_are_nm,
+				'1400' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'%' AS budget_cmtmt_grp_nm,
+				'%' AS budget_cmtmt_grp_cd,
+				'%' AS budget_cmtmt_iem_nm,
+				'%' AS budget_cmtmt_iem_cd,
+				'02' AS iem_div_cd /* 개대체 */
+			FROM
+				DUAL
+			UNION ALL
+			/*
+				소양강댐지사, 충주댐지사, 대청댐지사, 용담댐지사, 주암댐지사,
+				안동권지사, 합천댐지사, 남강댐지사, 횡성원주권지사, 부안권지사,
+				전남서남권지사, 섬진강댐지사, 김천부항댐지사, 보현산댐지사, 군위댐지사,
+				청송권지사, 영주댐지사
+			*/
+			SELECT
+				'2020,2016,3025,3014,3032,' ||
+				'4012,4025,4026,2021,3013,' ||
+				'3029,3015,4014,4015,4013,' ||
+				'4016,4017' AS dept_cd,
+				'관리_댐운영사업비%' AS fnct_are_nm,
+				'5230' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'수선유지비' AS budget_cmtmt_grp_nm,
+				'6155000' AS budget_cmtmt_grp_cd,
+				'수선유지비_발전유지보수%' AS budget_cmtmt_iem_nm,
+				'6155023' AS budget_cmtmt_iem_cd,
+				'01' AS iem_div_cd /* 수선유지비 */
+			FROM
+				DUAL
+			UNION ALL
+			/*
+				충주댐지사, 한강보관리단, 금강보관리단, 영산강보관리단, 낙동강보관리단,
+				시화조력관리단, 아라뱃길지사, 수자원시설처, 금강유역관리처
+			*/
+			SELECT
+				'2016,2010,3016,3027,4007' ||
+				'5006,2018,1122,3002' AS dept_cd,
+				'관리_신재생에너지사업비%' AS fnct_are_nm,
+				'5250' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'수선유지비' AS budget_cmtmt_grp_nm,
+				'6155000' AS budget_cmtmt_grp_cd,
+				'수선유지비_발전유지보수%' AS budget_cmtmt_iem_nm,
+				'6155023' AS budget_cmtmt_iem_cd,
+				'01' AS iem_div_cd /* 수선유지비 */
+			FROM
+				DUAL
+			UNION ALL
+			/*
+				대청댐지사, 용담댐지사, 주암댐지사, 안동권지사, 합천댐지사,
+				경기서북권지사, 경기동남권지사, 횡성원주권지사, 보령권지사, 동화권지사,
+				전남중부권지사, 밀양권지사, 울산권지사, 운문권지사, 포항권지사,
+				경기동북권지사, 경기서남권지사, 태백권지사, 아산권지사, 천안권지사,
+				청주권지사, 충남중부권지사, 전주권지사, 경남서부권지사, 창원권지사,
+				구미권지사
+			*/
+			SELECT
+				'3025,3014,3032,4012,4025,' ||
+				'2014,2012,2021,3023,3011,' ||
+				'3028,4024,4023,4010,4011,' ||
+				'2025,2011,2022,3018,3019,' ||
+				'3017,3020,3010,4021,4020,' ||
+				'4009' AS dept_cd,
+				'관리_신재생에너지사업비%' AS fnct_are_nm,
+				'5250' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'수선유지비' AS budget_cmtmt_grp_nm,
+				'6155000' AS budget_cmtmt_grp_cd,
+				'%' AS budget_cmtmt_iem_nm,
+				'%' AS budget_cmtmt_iem_cd,
+				'01' AS iem_div_cd /* 수선유지비 */
+			FROM
+				DUAL
+			<!--
+			UNION ALL
+			/*
+				소양강댐지사, 충주댐지사, 대청댐지사, 용담댐지사, 주암댐지사,
+				안동권지사, 합천댐지사, 남강댐지사, 전남서남권지사, 섬진강댐지사,
+				김천부항댐지사, 보현산댐지사, 군위댐지사, 청송권지사, 영주댐지사
+			*/
+			SELECT
+				'2020,2016,3025,3014,3032,' ||
+				'4012,4025,4026,3029,3015,' ||
+				'4014,4015,4013,4016,4017' AS dept_cd,
+				'관리_댐운영사업비%' AS fnct_are_nm,
+				'5230' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'수선유지비' AS budget_cmtmt_grp_nm,
+				'6155000' AS budget_cmtmt_grp_cd,
+				'수선유지비_발전점검정비%' AS budget_cmtmt_iem_nm,
+				'6155031' AS budget_cmtmt_iem_cd,
+				'03' AS iem_div_cd /* 점검정비 */
+			FROM
+				DUAL
+			UNION ALL
+			/*
+				한강보관리단, 금강보관리단, 영산강보관리단, 낙동강보관리단, 시화조력관리단,
+				아라뱃길지사
+			*/
+			SELECT
+				'2010,3016,3027,4007,2018' AS dept_cd,
+				'관리_신재생에너지사업비%' AS fnct_are_nm,
+				'5250' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'수선유지비' AS budget_cmtmt_grp_nm,
+				'6155000' AS budget_cmtmt_grp_cd,
+				'수선유지비_발전점검정비%' AS budget_cmtmt_iem_nm,
+				'6155031' AS budget_cmtmt_iem_cd,
+				'03' AS iem_div_cd /* 점검정비 */
+			FROM
+				DUAL
+			-->
+			UNION ALL
+			/*
+				수자원시설처
+			*/
+			SELECT
+				'1122' AS dept_cd,
+				'관리_신재생에너지사업비%' AS fnct_are_nm,
+				'5250' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'수선유지비' AS budget_cmtmt_grp_nm,
+				'6155000' AS budget_cmtmt_grp_cd,
+				'%' AS budget_cmtmt_iem_nm,
+				'%' AS budget_cmtmt_iem_cd,
+				'01' AS iem_div_cd /* 수선유지비 */
+			FROM
+				DUAL
+			UNION ALL
+			/*
+				수자원시설처
+			*/
+			SELECT
+				'1122' AS dept_cd,
+				'건중_발전설비%' AS fnct_are_nm,
+				'1440' AS fnct_are_cd,
+				'%' AS prflos_cnter_nm,
+				'%' AS prflos_cnter_cd,
+				'%' AS budget_cmtmt_grp_nm,
+				'%' AS budget_cmtmt_grp_cd,
+				'%' AS budget_cmtmt_iem_nm,
+				'%' AS budget_cmtmt_iem_cd,
+				'02' AS iem_div_cd /* 개대체 */
+			FROM
+				DUAL
+			UNION ALL
+			/*
+				수자원운영처
+			*/
+			SELECT
+				'1125' AS dept_cd,
+				'관리_댐운영사업비%' AS fnct_are_nm,
+				'5230' AS fnct_are_cd,
+				'댐운영공통%' AS prflos_cnter_nm,
+				'G0110101' AS prflos_cnter_cd,
+				'수선유지비' AS budget_cmtmt_grp_nm,
+				'6155000' AS budget_cmtmt_grp_cd,
+				'%' AS budget_cmtmt_iem_nm,
+				'%' AS budget_cmtmt_iem_cd,
+				'01' AS iem_div_cd /* 수선유지비 */
+			FROM
+				DUAL
+			UNION ALL
+			/*
+				수자원운영처
+			*/
+			SELECT
+				'1125' AS dept_cd,
+				'관리_신재생에너지사업비%' AS fnct_are_nm,
+				'5250' AS fnct_are_cd,
+				'신재생에너지사업공통%' AS prflos_cnter_nm,
+				'L0110101' AS prflos_cnter_cd,
+				'수선유지비' AS budget_cmtmt_grp_nm,
+				'6155000' AS budget_cmtmt_grp_cd,
+				'%' AS budget_cmtmt_iem_nm,
+				'%' AS budget_cmtmt_iem_cd,
+				'01' AS iem_div_cd /* 수선유지비 */
+			FROM
+				DUAL
+		), IEM_DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				rqest_no,
+				dept_cd,
+				dept_nm,
+				fnct_are_cd,
+				fnct_are_nm,
+				prflos_cnter_cd,
+				prflos_cnter_nm,
+				budget_cmtmt_grp_cd,
+				budget_cmtmt_grp_nm,
+				budget_cmtmt_iem_cd,
+				budget_cmtmt_iem_nm,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2004'
+						AND cmmn_cd = iem_div_cd
+				) AS iem_div_nm,
+				iem_div_cd
+			FROM (
+				SELECT
+					A.rqest_no,
+					A.dept_cd,
+					A.dept_nm,
+					A.fnct_are_cd,
+					A.fnct_are_nm,
+					A.prflos_cnter_cd,
+					A.prflos_cnter_nm,
+					A.budget_cmtmt_grp_cd,
+					A.budget_cmtmt_grp_nm,
+					A.budget_cmtmt_iem_cd,
+					A.budget_cmtmt_iem_nm,
+					(
+						SELECT
+							DISTINCT IEM_MAPPING_LIST.iem_div_cd
+						FROM
+							IEM_MAPPING_LIST
+						WHERE
+							IEM_MAPPING_LIST.dept_cd LIKE '%' || A.dept_cd || '%'
+							AND A.fnct_are_cd LIKE IEM_MAPPING_LIST.fnct_are_cd
+							AND A.prflos_cnter_cd LIKE IEM_MAPPING_LIST.prflos_cnter_cd
+							AND A.budget_cmtmt_grp_cd LIKE IEM_MAPPING_LIST.budget_cmtmt_grp_cd
+							AND A.budget_cmtmt_iem_cd LIKE IEM_MAPPING_LIST.budget_cmtmt_iem_cd
+							
+					) AS iem_div_cd
+				FROM
+					FMS.vd_ct01006_01 A
+				WHERE
+					use_yn = 'Y'
+					AND (
+						fnct_are_nm = '건중_발전설비'
+						OR fnct_are_nm = '건중_신재생에너지'
+						OR fnct_are_nm = '관리_댐운영사업비'
+						OR fnct_are_nm = '관리_신재생에너지사업비'
+					)
+			)
+			WHERE
+				iem_div_cd IS NOT NULL
+		)
+	</sql>
+
+	<select id="TM_ME10001_Dao_retrieveMntmngList" parameterType="kw.ecs.me.mntmng.vo.MntmngVo" resultType="egovMap">
+		/* TM_ME10001_Dao_retrieveMntmngList */
+		WITH <include refid="TM_ME10001_Dao.TM_ME10001_Dao_IEM_MAPPING"></include>
+		, <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SearchFMSAllDeptBasinMappingInit"></include>
+		, MNTMNG_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(B A) */
+				NVL(B.cmmn_cd_nm, '금강') || '(' || (
+					SELECT
+						stext
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						(objid, enddt) = (
+							SELECT
+								objid,
+								MAX(enddt) AS enddt
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								objid = A.basin_cd
+							GROUP BY
+								objid
+						)
+				) || ')' AS basin_nm,
+				A.basin_cd,
+				A.requst_dept_cd,
+				NVL(
+					(
+						SELECT
+							stext
+						FROM
+							HRM.vm_hr01a01
+						WHERE
+							(objid, enddt) = (
+								SELECT
+									objid,
+									enddt
+								FROM (
+									SELECT
+										rownum AS no,
+										objid,
+										enddt
+									FROM (
+										SELECT
+											objid,
+											MAX(enddt) AS enddt
+										FROM
+											HRM_SEARCH_LIST
+										WHERE
+											kostl = LPAD(A.requst_dept_cd, 10, '0')
+										GROUP BY
+											objid
+										ORDER BY
+											enddt
+									)
+								)
+								WHERE
+									no = 1
+							)
+					), requst_dept_nm
+				) AS requst_dept_nm,
+				A.competam,
+				A.iem_div_nm,
+				A.iem_div_cd
+			FROM (
+				SELECT
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SearchFMSAllDeptBasinMapping"></include> AS basin_cd,
+					requst_dept_cd,
+					requst_dept_nm,
+					competam,
+					iem_div_nm,
+					iem_div_cd
+				FROM (
+					SELECT
+						requst_dept_cd,
+						requst_dept_nm,
+						competam,
+						iem_div_nm,
+						iem_div_cd
+					FROM (
+						SELECT
+							requst_dept_cd,
+							MAX(requst_dept_nm) AS requst_dept_nm,
+							SUM(
+								CASE
+									WHEN TRIM(ecs_setcsc_div_cd) IS NULL OR ecs_setcsc_div_cd = '99' 
+									THEN NULL
+									<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+									WHEN ecs_setcsc_div_cd != #{ecsSetcscDivCd}
+									THEN NULL
+									</if>
+									ELSE competam
+								END
+							) AS competam,
+							MAX(iem_div_nm) AS iem_div_nm,
+							iem_div_cd
+						FROM (
+								SELECT /*+ LEADING(C B A) */
+									A.requst_dept_cd,
+									A.requst_dept_nm,
+									A.rqest_no,
+									B.ecs_setcsc_div_cd,
+									A.competam,
+									CASE
+										WHEN B.iem_div_nm IS NOT NULL
+										THEN B.iem_div_nm
+										ELSE C.iem_div_nm
+									END AS iem_div_nm,
+									CASE
+										WHEN B.iem_div_cd IS NOT NULL
+										THEN B.iem_div_cd
+										ELSE C.iem_div_cd
+									END AS iem_div_cd
+								FROM (
+										SELECT /*+ LEADING(A B) */
+											A.ordg_no,
+											A.requst_dept_cd,
+											A.requst_dept_nm,
+											A.rqest_no,
+											B.competam
+										FROM (
+												SELECT
+													ordg_no,
+													requst_dept_cd,
+													requst_dept_nm,
+													rqest_no
+												FROM
+													FMS.vm_ct01017_01
+											) A, (
+												SELECT
+													cntrct_no,
+													competam
+												FROM
+													FMS.vm_ct05002_01
+												WHERE
+													last_compet_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101'
+													AND SUBSTR(#{strtDt}, 0, 4) || '1231'
+											) B
+										WHERE
+											A.ordg_no = B.cntrct_no
+											<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+											AND LPAD(A.requst_dept_cd, 10, '0') = #{ecsChrgDeptId}
+											</if>
+									) A, (
+										SELECT
+											ecs_setcsc_div_cd,
+											cntrct_no,
+											(
+												SELECT
+													cmmn_cd_nm
+												FROM
+													tc_ecs_cd
+												WHERE
+													use_yn = 'Y'
+													AND cls_cd = 'ECS_2004'
+													AND cmmn_cd = iem_div_nm
+											) AS iem_div_nm,
+											iem_div_nm AS iem_div_cd
+										FROM
+											tm_me10001
+										WHERE
+											1 = 1
+											<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+											AND ecs_setcsc_div_cd = #{ecsSetcscDivCd}
+											</if>
+									) B, (
+										SELECT
+											DISTINCT
+												iem_div_nm,
+												iem_div_cd,
+												rqest_no
+										FROM
+											IEM_DATA_LIST
+									) C
+								WHERE
+									A.rqest_no = C.rqest_no
+									AND A.ordg_no = B.cntrct_no(+)
+									/* AND B.iem_div_nm IS NOT NULL */
+						)
+						GROUP BY
+							requst_dept_cd,
+							iem_div_cd
+						UNION ALL
+						SELECT
+							requst_dept_cd,
+							MAX(requst_dept_nm) AS requst_dept_nm,
+							SUM(competam) AS competam,
+							MAX(iem_div_nm) AS iem_div_nm,
+							iem_div_cd
+						FROM (
+							SELECT
+								A.ecs_chrg_dept_id AS requst_dept_cd,
+								(
+									SELECT
+										kostx
+									FROM (
+										SELECT
+											kostx
+										FROM
+											HRM.vm_hr01a01
+										WHERE
+											TO_DATE(A.slip_pstde, 'yyyyMMdd') BETWEEN strdt AND enddt
+											AND kostl = LPAD(A.ecs_chrg_dept_id, 10, '0')
+										ORDER BY
+											enddt DESC
+									)
+									WHERE
+										ROWNUM = 1
+								) AS requst_dept_nm,
+								CASE
+									WHEN TRIM(ecs_setcsc_div_cd) IS NULL OR ecs_setcsc_div_cd = '99' 
+									THEN NULL
+									<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+									WHEN ecs_setcsc_div_cd != #{ecsSetcscDivCd}
+									THEN NULL
+									</if>
+									ELSE A.sum_amt
+								END AS competam,
+								(
+									SELECT
+										cmmn_cd_nm
+									FROM
+										tc_ecs_cd
+									WHERE
+										use_yn = 'Y'
+										AND cls_cd = 'ECS_2004'
+										AND cmmn_cd = '03'
+								) AS iem_div_nm,
+								'03' AS iem_div_cd
+							FROM
+								tm_me10002 A
+							WHERE
+								slip_pstde BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101'
+								AND SUBSTR(#{strtDt}, 0, 4) || '1231'
+								<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+								AND ecs_setcsc_div_cd = #{ecsSetcscDivCd}
+								</if>
+								<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+								AND LPAD(A.ecs_chrg_dept_id, 10, '0') = #{ecsChrgDeptId}
+								</if>
+						)
+						GROUP BY
+							requst_dept_cd,
+							iem_div_cd
+					)
+				) A
+			) A, (
+				SELECT
+					upobj,
+					MAX(cmmn_cd_nm) AS cmmn_cd_nm,
+					MAX(cmmn_cd) AS cmmn_cd
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptBasinMapping"></include>
+				)
+				GROUP BY
+					upobj
+			) B
+			WHERE
+				A.basin_cd = B.upobj(+)
+				<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+				AND cmmn_cd = #{ecsBasinDivCd}
+				</if>
+		)
+		SELECT
+			#{strtDt} AS YEAR,
+			basin_cd,
+			basin_nm,
+			requst_dept_cd,
+			requst_dept_nm,
+			NVL(rmntncst, 0) rmntncst,
+			NVL(remt, 0) remt,
+			NVL(chck_mntnc, 0) chck_mntnc
+		FROM (
+			SELECT
+				basin_cd,
+				basin_nm,
+				requst_dept_cd,
+				requst_dept_nm,
+				competam,
+				iem_div_cd
+			FROM
+				MNTMNG_DATA_LIST
+		)
+		PIVOT (
+			SUM(competam) /* iem_div_nm */
+			FOR iem_div_cd IN ('01' AS rmntncst, '02' AS remt, '03' AS chck_mntnc)
+		)
+		ORDER BY
+			basin_nm,
+			requst_dept_nm
+	</select>
+
+	<select id="TM_ME10001_Dao_retrieveMntmngHistList" parameterType="kw.ecs.me.mntmng.vo.MntmngVo" resultType="egovMap">
+		/* TM_ME10001_Dao_retrieveMntmngHistList */
+		<!--
+			오아시스 첨부문서
+			ordg_drft_id, scsbid_drft_id, cntrct_drft_id, 분해점검/대점검, relt_doc, 관련문서
+			cntrct_no 계약번호
+			ordg_tit 계약명
+			requst_dept_cd : 담당부서코드
+			requst_dept_nm : 담당부서명
+			cntrwk_spt_loc_info : 현장소재지
+			strwrk_de : 착공일
+			rqstr_nm : 담당자
+			cntrct_div_nm : 업무구분
+			new_ordyr_div_nm : 신규연차구분
+			cntrct_dept_nm : 발주부서
+			thstrm_abslt_cntrwk_pd : 당기절대공사기간
+			scsbid_entrps_nm : 낙찰업체
+			rqstr_empno : 요청자 사원번호
+			ctr_csct + prcure_vat : 도급공사비 + vat = 계약금액
+			iem_div_nm : 구분
+			competam : 준공금액
+			last_compet_de : 준공일
+		-->
+		WITH <include refid="TM_ME10001_Dao.TM_ME10001_Dao_IEM_MAPPING"></include>
+		SELECT
+			cntrct_no,
+			ordg_tit,
+			requst_dept_cd,
+			requst_dept_nm,
+			cntrwk_spt_loc_info,
+			strwrk_de,
+			compet_de,
+			rqstr_nm,
+			cntrct_div_nm,
+			new_ordyr_div_nm,
+			cntrct_dept_nm,
+			thstrm_abslt_cntrwk_pd,
+			scsbid_entrps_nm,
+			rqstr_empno,
+			ctr_csct,
+			competam,
+			excut_amt,
+			relt_doc,
+			ordg_drft_id,
+			scsbid_drft_id,
+			cntrct_drft_id,
+			ecs_setcsc_div_cd,
+			setcsc_nm,
+			iem_div_nm,
+			iem_div_cd,
+			iem_dtl_ctnt,
+			atchfl_id,
+			lrge_chck_atchfl_nm,
+			lrge_chck_atch_flpth,
+			dcomp_chck_atchfl_nm,
+			dcomp_chck_atch_flpth,
+			cnd
+		FROM (
+			SELECT /*+ LEADING(C B A) */
+				A.ordg_no AS cntrct_no,
+				A.ordg_tit,
+				A.requst_dept_cd,
+				A.requst_dept_nm,
+				A.cntrwk_spt_loc_info,
+				A.strwrk_de,
+				A.last_compet_de AS compet_de,
+				A.rqstr_nm,
+				A.cntrct_div_nm,
+				A.new_ordyr_div_nm,
+				A.cntrct_dept_nm,
+				A.thstrm_abslt_cntrwk_pd,
+				A.scsbid_entrps_nm,
+				A.rqstr_empno,
+				A.ctr_csct,
+				A.competam,
+				NULL AS excut_amt,
+				A.relt_doc,
+				A.ordg_drft_id,
+				A.scsbid_drft_id,
+				A.cntrct_drft_id,
+				B.ecs_setcsc_div_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM (
+						SELECT
+							cmmn_cd,
+							cmmn_cd_nm
+						FROM
+							tc_ecs_cd
+						WHERE
+							use_yn = 'Y'
+							AND cls_cd = 'ECS_1001'
+						UNION ALL
+						SELECT
+							'99' AS cmmn_cd,
+							'해당없음' AS cmmn_cd_nm
+						FROM
+							dual
+					)
+					WHERE
+						cmmn_cd = B.ecs_setcsc_div_cd
+				) AS setcsc_nm,
+				CASE
+					WHEN B.iem_div_nm IS NOT NULL
+					THEN B.iem_div_nm
+					ELSE C.iem_div_nm
+				END AS iem_div_nm,
+				CASE
+					WHEN B.iem_div_cd IS NOT NULL
+					THEN B.iem_div_cd
+					ELSE C.iem_div_cd
+				END AS iem_div_cd,
+				B.iem_dtl_ctnt,
+				B.atchfl_id,
+				B.lrge_chck_atchfl_nm,
+				B.lrge_chck_atch_flpth,
+				B.dcomp_chck_atchfl_nm,
+				B.dcomp_chck_atch_flpth,
+				'N' AS cnd
+			FROM (
+					SELECT /*+ LEADING(A B) */
+						A.ordg_no,
+						A.ordg_tit,
+						A.requst_dept_cd,
+						A.requst_dept_nm,
+						A.rqest_no,
+						A.cntrwk_spt_loc_info,
+						A.strwrk_de,
+						A.rqstr_nm,
+						A.cntrct_div_nm,
+						A.new_ordyr_div_nm,
+						A.cntrct_dept_nm,
+						A.thstrm_abslt_cntrwk_pd,
+						A.scsbid_entrps_nm,
+						A.rqstr_empno,
+						A.ctr_csct,
+						A.relt_doc,
+						A.ordg_drft_id,
+						A.scsbid_drft_id,
+						A.cntrct_drft_id,
+						B.last_compet_de,
+						B.competam
+					FROM (
+							SELECT
+								ordg_no,
+								ordg_tit,
+								requst_dept_cd,
+								requst_dept_nm,
+								rqest_no,
+								cntrwk_spt_loc_info,
+								strwrk_de,
+								rqstr_nm,
+								cntrct_div_nm,
+								new_ordyr_div_nm,
+								cntrct_dept_nm,
+								thstrm_abslt_cntrwk_pd,
+								scsbid_entrps_nm,
+								rqstr_empno,
+								(ctr_csct + prcure_vat) AS ctr_csct,
+								ordg_drft_id || ',' || scsbid_drft_id || ',' || cntrct_drft_id AS relt_doc,
+								ordg_drft_id,
+								scsbid_drft_id,
+								cntrct_drft_id
+							FROM
+								FMS.vm_ct01017_01
+							WHERE
+								requst_dept_cd = #{ecsChrgDeptId}
+						) A, (
+							SELECT
+								cntrct_no,
+								last_compet_de,
+								competam
+							FROM
+								FMS.vm_ct05002_01
+							WHERE
+								last_compet_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101'
+								AND SUBSTR(#{strtDt}, 0, 4) || '1231'
+						) B
+					WHERE
+						A.ordg_no = B.cntrct_no
+				) A, (
+					SELECT
+						cntrct_no,
+						ecs_setcsc_div_cd,
+						iem_dtl_ctnt,
+						CASE
+							WHEN lrge_chck_atch_flpth IS NOT NULL
+							THEN lrge_chck_atch_flpth
+							WHEN dcomp_chck_atch_flpth IS NOT NULL
+							THEN dcomp_chck_atch_flpth
+							ELSE ''
+						END AS atchfl_id,
+						lrge_chck_atchfl_nm,
+						lrge_chck_atch_flpth,
+						dcomp_chck_atchfl_nm,
+						dcomp_chck_atch_flpth,
+						(
+							SELECT
+								cmmn_cd_nm
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = 'ECS_2004'
+								AND cmmn_cd = iem_div_nm
+						) AS iem_div_nm,
+						iem_div_nm AS iem_div_cd
+					FROM
+						tm_me10001
+					WHERE
+						1 = 1
+						<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+						AND ecs_setcsc_div_cd = #{ecsSetcscDivCd}
+						</if>
+				) B, (
+					SELECT
+						DISTINCT
+							iem_div_nm,
+							iem_div_cd,
+							rqest_no
+					FROM
+						IEM_DATA_LIST
+				) C
+			WHERE
+				A.ordg_no = B.cntrct_no(+)
+				AND A.rqest_no = C.rqest_no
+			UNION ALL
+			SELECT
+				A.slip_no AS cntrct_no,
+				A.iem_tit_ctnt AS ordg_tit,
+				A.ecs_chrg_dept_id AS requst_dept_cd,
+				(
+					SELECT
+						kostx
+					FROM (
+						SELECT
+							kostx
+						FROM
+							HRM.vm_hr01a01
+						WHERE
+							TO_DATE(A.slip_pstde, 'yyyyMMdd') BETWEEN strdt AND enddt
+							AND kostl = LPAD(A.ecs_chrg_dept_id, 10, '0')
+						ORDER BY
+							enddt DESC
+					)
+					WHERE
+						ROWNUM = 1
+				) AS requst_dept_nm,
+				NULL AS cntrwk_spt_loc_info,
+				NULL AS strwrk_de,
+				A.slip_pstde AS compet_de,
+				(
+					SELECT
+						korname
+					FROM
+						HRM.vm_hr01601
+					WHERE
+						empno = A.charger_id
+				) AS rqstr_nm,
+				NULL AS cntrct_div_nm,
+				NULL AS new_ordyr_div_nm,
+				NULL AS cntrct_dept_nm,
+				NULL AS thstrm_abslt_cntrwk_pd,
+				A.entrps_nm AS scsbid_entrps_nm,
+				A.charger_id AS rqstr_empno,
+				NULL AS ctr_csct,
+				A.sum_amt AS competam,
+				A.excut_amt,
+				NULL AS relt_doc,
+				NULL AS ordg_drft_id,
+				NULL AS scsbid_drft_id,
+				NULL AS cntrct_drft_id,
+				A.ecs_setcsc_div_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM (
+						SELECT
+							cmmn_cd,
+							cmmn_cd_nm
+						FROM
+							tc_ecs_cd
+						WHERE
+							use_yn = 'Y'
+							AND cls_cd = 'ECS_1001'
+						UNION ALL
+						SELECT
+							'99' AS cmmn_cd,
+							'해당없음' AS cmmn_cd_nm
+						FROM
+							dual
+					)
+					WHERE
+						cmmn_cd = A.ecs_setcsc_div_cd
+				) AS setcsc_nm,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2004'
+						AND cmmn_cd = '03'
+				) AS iem_div_nm,
+				'03' AS iem_div_cd,
+				A.iem_dtl_ctnt,
+				CASE
+					WHEN A.lrge_chck_atch_flpth IS NOT NULL
+					THEN A.lrge_chck_atch_flpth
+					WHEN A.dcomp_chck_atch_flpth IS NOT NULL
+					THEN A.dcomp_chck_atch_flpth
+					ELSE ''
+				END AS atchfl_id,
+				A.lrge_chck_atchfl_nm,
+				A.lrge_chck_atch_flpth,
+				A.dcomp_chck_atchfl_nm,
+				A.dcomp_chck_atch_flpth,
+				'Y' AS cnd
+			FROM
+				tm_me10002 A
+			WHERE
+				slip_pstde BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101'
+				AND SUBSTR(#{strtDt}, 0, 4) || '1231'
+				AND ecs_chrg_dept_id = #{ecsChrgDeptId}
+				<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+				AND ecs_setcsc_div_cd = #{ecsSetcscDivCd}
+				</if>
+		)
+	</select>
+
+	<update id="TM_ME10001_Dao_saveMntmng" parameterType="kw.ecs.me.mntmng.vo.MntmngVo">
+		/* TM_ME10001_Dao_saveMntmng */
+		MERGE INTO
+			tm_me10001 A
+		USING (
+			SELECT
+				#{cntrctNo} AS cntrct_no,
+				#{ecsSetcscDivCd} AS ecs_setcsc_div_cd,
+				#{iemDivNm} AS iem_div_nm,
+				#{iemDtlCtnt} AS iem_dtl_ctnt,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn,
+				#{lrgeChckAtchflNm} AS lrge_chck_atchfl_nm,
+				#{lrgeChckAtchFlpth} AS lrge_chck_atch_flpth,
+				#{dcompChckAtchflNm} AS dcomp_chck_atchfl_nm,
+				#{dcompChckAtchFlpth} AS dcomp_chck_atch_flpth
+			FROM
+				DUAL
+		) B
+		ON (
+			A.cntrct_no = B.cntrct_no
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.ecs_setcsc_div_cd = B.ecs_setcsc_div_cd,
+				A.iem_div_nm = B.iem_div_nm,
+				A.iem_dtl_ctnt = B.iem_dtl_ctnt,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn,
+				A.lrge_chck_atchfl_nm = B.lrge_chck_atchfl_nm,
+				A.lrge_chck_atch_flpth = B.lrge_chck_atch_flpth,
+				A.dcomp_chck_atchfl_nm = B.dcomp_chck_atchfl_nm,
+				A.dcomp_chck_atch_flpth = B.dcomp_chck_atch_flpth
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.cntrct_no,
+				A.ecs_setcsc_div_cd,
+				A.iem_div_nm,
+				A.iem_dtl_ctnt,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn,
+				A.lrge_chck_atchfl_nm,
+				A.lrge_chck_atch_flpth,
+				A.dcomp_chck_atchfl_nm,
+				A.dcomp_chck_atch_flpth
+			) VALUES (
+				B.cntrct_no,
+				B.ecs_setcsc_div_cd,
+				B.iem_div_nm,
+				B.iem_dtl_ctnt,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn,
+				B.lrge_chck_atchfl_nm,
+				B.lrge_chck_atch_flpth,
+				B.dcomp_chck_atchfl_nm,
+				B.dcomp_chck_atch_flpth
+			)
+	</update>
+
+	<delete id="TM_ME10001_Dao_deleteMntmng" parameterType="kw.ecs.me.mntmng.vo.MntmngVo">
+		/* TM_ME10001_Dao_deleteMntmng */
+		DELETE FROM
+			tm_me10001
+		WHERE
+			cntrct_no = #{cntrctNo}
+	</delete>
+</mapper>

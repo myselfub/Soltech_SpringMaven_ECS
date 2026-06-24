@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="VM_RS175_Dao">
+	<select id="VM_RS175_Dao_retrieveVmRs175Data" parameterType="kw.ecs.zz.cmmncd.vo.HrmVmRs175Vo" resultType="egovMap">
+		/* VM_RS175_Dao_retrieveVmRs175Data */
+		SELECT
+			COGRP,
+			COGR2,
+			COGR3,
+			COTX3,
+			USEFG
+		FROM
+			HRM.VM_RS175
+		WHERE
+			1 = 1
+			AND USEFG = '1'
+		<if test="cogrp != null and cogrp !=''">
+			AND COGRP = #{cogrp}
+		</if>
+		<if test="cogr2 != null and cogr2 !=''">
+			AND COGR2 = #{cogr2}
+		</if>
+		<if test="cogr3 != null and cogr3 !=''">
+			AND COGR3 = #{cogr3}
+		</if>
+	</select>
+</mapper>

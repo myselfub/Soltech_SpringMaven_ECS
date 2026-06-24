@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TC_ECS_CTG_Dao">
+
+	<select id="TC_ECS_CTG_Dao_retrieveCtgry" parameterType="kw.ecs.zz.cmmncd.vo.CtgryVo" resultType="egovMap">
+		/* TC_ECS_CTG_Dao_retrieveCtgry */
+		SELECT
+			CTGRY_ID,
+			CTGRY_NM,
+			UPPER_CTGRY_ID,
+			LEVEL
+		FROM
+			TM_ECS_CTG
+		WHERE
+			CTGRY_USE_YN = 'Y'
+			START WITH UPPER_CTGRY_ID IS NULL
+			CONNECT BY UPPER_CTGRY_ID = PRIOR CTGRY_ID
+			ORDER SIBLINGS BY CTGRY_ID
+	</select>
+</mapper>

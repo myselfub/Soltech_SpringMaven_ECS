@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_SCRIN_BTN_MNG_Dao">
+	<select id="TM_ECS_SCRIN_BTN_MNG_Dao_retrieveBtnInfo" parameterType="kw.ecs.zz.authmng.vo.BtnAthrVo" resultType="egovMap">
+		/* TM_ECS_SCRIN_BTN_MNG_Dao_retrieveBtnInfo */
+		SELECT
+			intn_sys_div_cd,
+			btn_seq,
+			btn_nm,
+			btn_athr_vu
+		FROM
+			tm_ecs_scrin_btn_mng
+			<where>
+				<if test="intnSysDivCd != null and intnSysDivCd != ''">
+			AND intn_sys_div_cd = #{intnSysDivCd}
+				<if test="btnNm != null and btnNm != ''">
+				</if>
+			AND btn_nm LIKE '%' || #{btnNm} || '%'
+				</if>
+			</where>
+		ORDER BY
+			btn_seq
+	</select>
+
+	<select id="TM_ECS_SCRIN_BTN_MNG_Dao_selectBtnUse" parameterType="kw.ecs.zz.authmng.vo.ScrinBtnVo" resultType="egovMap">
+		/* TM_ECS_SCRIN_BTN_MNG_Dao_selectBtnInfo */
+		SELECT
+			intn_sys_div_cd,
+			A.btn_seq,
+			A.btn_nm,
+			(
+				SELECT
+					COUNT(*)
+				FROM
+					tm_ecs_intn_athr_menu
+				WHERE
+					btn_athr_list LIKE '%' || TO_CHAR(A.btn_athr_vu) || '%'
+					/*
+					TO_CHAR(A.btn_athr_vu) IN (
+						usr_dfn_nm1, usr_dfn_nm2, usr_dfn_nm3, usr_dfn_nm4,
+						usr_dfn_nm5, usr_dfn_nm6, usr_dfn_nm7, usr_dfn_nm8, usr_dfn_nm9
+					)
+					*/
+			) AS menu_cnt,
+			(
+				SELECT
+					COUNT(*)
+				FROM
+					tm_ecs_intn_usr_menu
+				WHERE
+					btn_athr_list LIKE '%' || TO_CHAR(A.btn_athr_vu) || '%'
+					/*
+					TO_CHAR(A.btn_athr_vu) IN (
+						usr_dfn_nm1, usr_dfn_nm2, usr_dfn_nm3, usr_dfn_nm4,
+						usr_dfn_nm5, usr_dfn_nm6, usr_dfn_nm7, usr_dfn_nm8, usr_dfn_nm9
+					)
+					*/
+			) AS usr_cnt
+		FROM
+			tm_ecs_scrin_btn_mng A
+		WHERE
+			A.intn_sys_div_cd = #{intnSysDivCd}
+			AND A.btn_seq = #{btnSeq}
+	</select>
+
+	<insert id="TM_ECS_SCRIN_BTN_MNG_Dao_insertScrinBtn" parameterType="kw.ecs.zz.authmng.vo.ScrinBtnVo">
+		/* TM_ECS_SCRIN_BTN_MNG_Dao_insertScrinBtn */
+		INSERT INTO
+			TM_ECS_SCRIN_BTN_MNG (
+				intn_sys_div_cd,
+				btn_seq,
+				btn_nm,
+				btn_athr_vu,
+				frst_regist_dt,
+				frst_rgstr_id,
+				last_updt_dt,
+				last_updusr_id
+		) VALUES (
+			#{intnSysDivCd},
+			#{btnSeq},
+			#{btnNm},
+			#{btnAthrVu},
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<update id="TM_ECS_SCRIN_BTN_MNG_Dao_updateScrinBtn" parameterType="kw.ecs.zz.authmng.vo.ScrinBtnVo">
+		/* TM_ECS_SCRIN_BTN_MNG_Dao_updateScrinBtn */
+		UPDATE
+			tm_ecs_scrin_btn_mng
+		SET
+			btn_nm = #{btnNm},
+			btn_athr_vu = #{btnAthrVu},
+			last_updt_dt = SYSDATE,
+			last_updusr_id = #{lastUpdusrId}
+		WHERE
+			intn_sys_div_cd = #{intnSysDivCd}
+			AND btn_seq = #{btnSeq}
+	</update>
+
+	<delete id="TM_ECS_SCRIN_BTN_MNG_Dao_deleteScrinBtn" parameterType="kw.ecs.zz.authmng.vo.ScrinBtnVo">
+		/* TM_ECS_SCRIN_BTN_MNG_Dao_deleteScrinBtn */
+		DELETE FROM
+			tm_ecs_scrin_btn_mng 
+		WHERE
+			intn_sys_div_cd = #{intnSysDivCd}
+			AND btn_seq = #{btnSeq}
+	</delete>
+</mapper>

@@ -1,0 +1,1561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 에너지전주기 - 전력에너지실적현황의 RE100 -->
+<mapper namespace="TM_EC42001_Dao">
+	<sql id="TM_EC42001_Dao_Cnstqy">
+		SELECT /*+ RESULT_CACHE */
+			AAAA.yy,
+			AAAA.dscfc_lclhq_cd,
+			AAAA.dscfc_lclhq_nm,
+			AAAA.dscfc_bplc_cd,
+			AAAA.dscfc_bplc_nm,
+			AAAA.dscfc_id,
+			MAX(AAAA.dscfc_nm) AS dscfc_nm,
+			AAAA.dscfc_procs_ty_cd,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '01', AAAA.sum_dscfc_usgqty)), 0), 0) AS jan,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '02', AAAA.sum_dscfc_usgqty)), 0), 0) AS feb,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '03', AAAA.sum_dscfc_usgqty)), 0), 0) AS mar,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '04', AAAA.sum_dscfc_usgqty)), 0), 0) AS apr,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '05', AAAA.sum_dscfc_usgqty)), 0), 0) AS may,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '06', AAAA.sum_dscfc_usgqty)), 0), 0) AS jun,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '07', AAAA.sum_dscfc_usgqty)), 0), 0) AS jul,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '08', AAAA.sum_dscfc_usgqty)), 0), 0) AS agu,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '09', AAAA.sum_dscfc_usgqty)), 0), 0) AS sep,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '10', AAAA.sum_dscfc_usgqty)), 0), 0) AS oct,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '11', AAAA.sum_dscfc_usgqty)), 0), 0) AS nov,
+			NVL(ROUND(SUM(DECODE(SUBSTR(AAAA.dscfc_use_de, 5, 2), '12', AAAA.sum_dscfc_usgqty)), 0), 0) AS dec,
+			NVL(SUM(AAAA.sum_dscfc_usgqty) ,0) AS tot_usgqty
+		FROM (
+			SELECT /*+ LEADING(BBB AAA) */
+				SUBSTR(AAA.dscfc_use_de, 0, 4) AS yy,
+				<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin"></include> AS dscfc_lclhq_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						SCM.tc_sc_unif_cmmn_cd
+					WHERE
+						sys_div_cd = 'SC'
+						AND cls_cd = 'GHG_1001'
+						AND cmmn_cd = <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin"></include>
+					) AS dscfc_lclhq_nm,
+				BBB.dscfc_bplc_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						SCM.tc_sc_unif_cmmn_cd
+					WHERE
+						sys_div_cd = 'SC'
+						AND cls_cd = 'GHG_1002'
+						AND cmmn_cd = BBB.dscfc_bplc_cd
+				) AS dscfc_bplc_nm,
+				BBB.dscfc_id,
+				BBB.dscfc_nm,
+				BBB.dscfc_procs_ty_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						SCM.tc_sc_unif_cmmn_cd
+					WHERE
+						sys_div_cd = 'SC'
+						AND cls_cd LIKE 'GHG_0024'
+						AND cmmn_cd = BBB.dscfc_procs_ty_cd
+				) AS dscfc_procs_ty_nm,
+				BBB.dscfc_use_fuel_div_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						SCM.tc_sc_unif_cmmn_cd
+					WHERE
+						sys_div_cd = 'SC'
+						AND cls_cd = 'GHG_0005'
+						AND cmmn_cd = BBB.dscfc_use_fuel_div_cd
+				) AS dscfc_use_fuel_div_nm,
+				AAA.dscfc_use_de,
+				AAA.sum_dscfc_usgqty
+			FROM (
+					SELECT
+						ABC.dscfc_id,
+						ABC.dscfc_use_de,
+						MAX(ABC.usgqty) AS sum_dscfc_usgqty
+					FROM (
+						SELECT
+							AA.dscfc_id,
+							AA.dscfc_use_de,
+							CASE
+								WHEN AA.dsqty_cfrml_parm_id IN ('2005', '2001')
+								THEN MAX(AA.dscfc_usgqty)
+							END AS usgqty
+						FROM (
+							SELECT /*+ LEADING(B A) */
+								A.dscfc_id,
+								A.dscfc_use_de,
+								B.dsqty_cfrml_parm_id,
+								B.dsqty_cfrml_parm_nm,
+								A.dscfc_usgqty
+							FROM
+								GHG.tm_rq01103 A,
+								GHG.tm_gg01104 B
+							WHERE
+								(
+									(A.dscfc_use_slip_no IS NOT NULL
+									AND A.dscfc_use_slip_no NOT LIKE 'TMP%')
+									OR A.dscfc_use_slip_prcs_ty_cd = '1'
+								)
+								AND A.dscfc_use_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{endDt}, 0, 4) || '1231'
+								AND A.dsqty_cfrml_parm_id IN ('2005', '2001')
+								AND A.dsqty_cfrml_parm_id = B.dsqty_cfrml_parm_id
+						) AA
+						GROUP BY
+							AA.dscfc_id,
+							AA.dscfc_use_de,
+							AA.dsqty_cfrml_parm_id,
+							AA.dsqty_cfrml_parm_nm
+					) ABC
+					GROUP BY
+						ABC.dscfc_id,
+						ABC.dscfc_use_de
+				) AAA, (
+					SELECT
+						dscfc_id,
+						dscfc_nm,
+						dscfc_lclhq_cd,
+						dscfc_bplc_cd,
+						dscfc_procs_ty_cd,
+						dscfc_use_fuel_div_cd
+					FROM
+						GHG.tm_gg01101
+					WHERE
+						dscfc_use_yn = '1'
+						AND dscfc_regist_stat_div_cd = '1'
+						AND dscfc_use_fuel_div_cd = '61' /* 전기 */
+						AND dscfc_lclhq_cd != '88888888' /* 위탁 */
+				) BBB
+			WHERE
+				BBB.dscfc_id = AAA.dscfc_id(+)
+		) AAAA
+		GROUP BY
+			AAAA.yy,
+			AAAA.dscfc_lclhq_cd,
+			AAAA.dscfc_lclhq_nm,
+			AAAA.dscfc_bplc_cd,
+			AAAA.dscfc_bplc_nm,
+			AAAA.dscfc_id,
+			AAAA.dscfc_procs_ty_cd,
+			AAAA.dscfc_use_fuel_div_cd
+	</sql>
+
+	<select id="TM_EC42001_Dao_retrieveRe100List" parameterType="kw.ecs.ec.energyacmsltmng.re100.vo.Re100Vo" resultType="egovMap">
+		/* TM_EC42001_Dao_retrieveRe100List */
+		WITH MAPPING_LIST AS (
+			SELECT /*+ MATERIALZE */
+				'0' AS seq,
+				'RE100 이행률' AS setcsc_nm,
+				'RE100 이행률' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'RE100 이행률(누적)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'1' AS seq,
+				'RE100 이행률' AS setcsc_nm,
+				'RE100 이행률' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'RE100 이행률(월별)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'2' AS seq,
+				'전력소비량(합계)' AS setcsc_nm,
+				'전력소비량(합계)' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'소비량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'3' AS seq,
+				'발전량(합계)' AS setcsc_nm,
+				'발전량(합계)' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'4' AS seq,
+				'발전량(합계)' AS setcsc_nm,
+				'발전량(합계)' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'5' AS seq,
+				'발전량(합계)' AS setcsc_nm,
+				'발전량(합계)' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'6' AS seq,
+				'대수력' AS setcsc_nm,
+				'소양강' AS ecs_elcpwstn_div_nm,
+				'110110' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'7' AS seq,
+				'대수력' AS setcsc_nm,
+				'소양강' AS ecs_elcpwstn_div_nm,
+				'110110' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'8' AS seq,
+				'대수력' AS setcsc_nm,
+				'소양강' AS ecs_elcpwstn_div_nm,
+				'110110' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'9' AS seq,
+				'대수력' AS setcsc_nm,
+				'충주' AS ecs_elcpwstn_div_nm,
+				'110210' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'10' AS seq,
+				'대수력' AS setcsc_nm,
+				'충주' AS ecs_elcpwstn_div_nm,
+				'110210' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'11' AS seq,
+				'대수력' AS setcsc_nm,
+				'충주' AS ecs_elcpwstn_div_nm,
+				'110210' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'12' AS seq,
+				'대수력' AS setcsc_nm,
+				'대청' AS ecs_elcpwstn_div_nm,
+				'210310' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'13' AS seq,
+				'대수력' AS setcsc_nm,
+				'대청' AS ecs_elcpwstn_div_nm,
+				'210310' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'14' AS seq,
+				'대수력' AS setcsc_nm,
+				'대청' AS ecs_elcpwstn_div_nm,
+				'210310' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'15' AS seq,
+				'대수력' AS setcsc_nm,
+				'용담' AS ecs_elcpwstn_div_nm,
+				'210410' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'16' AS seq,
+				'대수력' AS setcsc_nm,
+				'용담' AS ecs_elcpwstn_div_nm,
+				'210410' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'17' AS seq,
+				'대수력' AS setcsc_nm,
+				'용담' AS ecs_elcpwstn_div_nm,
+				'210410' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'18' AS seq,
+				'대수력' AS setcsc_nm,
+				'주암' AS ecs_elcpwstn_div_nm,
+				'310510' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'19' AS seq,
+				'대수력' AS setcsc_nm,
+				'주암' AS ecs_elcpwstn_div_nm,
+				'310510' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'20' AS seq,
+				'대수력' AS setcsc_nm,
+				'주암' AS ecs_elcpwstn_div_nm,
+				'310510' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'21' AS seq,
+				'대수력' AS setcsc_nm,
+				'임하' AS ecs_elcpwstn_div_nm,
+				'410610' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'22' AS seq,
+				'대수력' AS setcsc_nm,
+				'임하' AS ecs_elcpwstn_div_nm,
+				'410610' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'23' AS seq,
+				'대수력' AS setcsc_nm,
+				'임하' AS ecs_elcpwstn_div_nm,
+				'410610' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'24' AS seq,
+				'대수력' AS setcsc_nm,
+				'안동' AS ecs_elcpwstn_div_nm,
+				'410710' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'25' AS seq,
+				'대수력' AS setcsc_nm,
+				'안동' AS ecs_elcpwstn_div_nm,
+				'410710' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'26' AS seq,
+				'대수력' AS setcsc_nm,
+				'안동' AS ecs_elcpwstn_div_nm,
+				'410710' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'27' AS seq,
+				'대수력' AS setcsc_nm,
+				'합천' AS ecs_elcpwstn_div_nm,
+				'410810' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'28' AS seq,
+				'대수력' AS setcsc_nm,
+				'합천' AS ecs_elcpwstn_div_nm,
+				'410810' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'29' AS seq,
+				'대수력' AS setcsc_nm,
+				'합천' AS ecs_elcpwstn_div_nm,
+				'410810' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'30' AS seq,
+				'대수력' AS setcsc_nm,
+				'남강' AS ecs_elcpwstn_div_nm,
+				'410910' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'31' AS seq,
+				'대수력' AS setcsc_nm,
+				'남강' AS ecs_elcpwstn_div_nm,
+				'410910' AS ecs_elcpwstn_div_cd,
+				'' AS iem_nm,
+				'REC발급량' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'32' AS seq,
+				'대수력' AS setcsc_nm,
+				'남강' AS ecs_elcpwstn_div_nm,
+				'410910' AS ecs_elcpwstn_div_cd,
+				'issQy' AS iem_nm,
+				'재생에너지사용확인서 발급량<![CDATA[]]>(MWh)' AS iem_cd
+			FROM
+				dual
+			UNION ALL
+			SELECT
+				'33' AS seq,
+				'태양광' AS setcsc_nm,
+				'-' AS ecs_elcpwstn_div_nm,
+				'999999' AS ecs_elcpwstn_div_cd,
+				'elyrsQy' AS iem_nm,
+				'발전량(kWh)' AS iem_cd
+			FROM
+				dual
+		), RE100_LIST AS (
+			SELECT /*+ MATERIALZE */
+				cmmn_cd,
+				cmmn_cd_nm,
+				sort_ordr,
+				usr_dfn_vu1,
+				usr_dfn_vu2,
+				usr_dfn_vu3,
+				usr_dfn_vu4,
+				usr_dfn_vu5
+			FROM
+				tc_ecs_cd
+			WHERE
+				use_yn = 'Y'
+				AND cls_cd = 'ECS_2012'
+			ORDER BY
+				sort_ordr
+		), CFCNT_LIST AS (
+			SELECT
+				SUBSTR(mt, 0, 4) AS yy,
+				SUBSTR(mt, 5, 2) AS mt,
+				cmmn_cd,
+				cmmn_cd_nm,
+				CASE
+					WHEN TRIM(usr_dfn_vu1) IS NOT NULL AND TRIM(usr_dfn_vu4) IS NOT NULL AND TRIM(usr_dfn_vu5) IS NOT NULL AND usr_dfn_vu4 &lt;= mt
+					THEN TO_NUMBER(usr_dfn_vu5)
+					WHEN TRIM(usr_dfn_vu1) IS NOT NULL AND TRIM(usr_dfn_vu2) IS NOT NULL AND TRIM(usr_dfn_vu3) IS NOT NULL AND usr_dfn_vu2 &lt;= mt
+					THEN TO_NUMBER(usr_dfn_vu3)
+					WHEN TRIM(usr_dfn_vu1) IS NOT NULL
+					THEN TO_NUMBER(usr_dfn_vu1)
+					ELSE NULL
+				END AS cfcnt
+			FROM (
+					SELECT
+						cmmn_cd,
+						cmmn_cd_nm,
+						sort_ordr,
+						usr_dfn_vu1,
+						usr_dfn_vu2,
+						usr_dfn_vu3,
+						usr_dfn_vu4,
+						usr_dfn_vu5
+					FROM
+						RE100_LIST
+				) A, (
+					SELECT
+						TO_CHAR(ADD_MONTHS(TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM'), LEVEL - 2), 'yyyyMM') AS mt
+					FROM
+						DUAL
+					CONNECT BY
+						LEVEL &lt;= MONTHS_BETWEEN(TO_DATE(SUBSTR(#{endDt}, 0, 4) || '12', 'yyyyMM'), TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM')) + 2
+				) B
+		), DATA_INIT_LIST AS (
+			SELECT /*+ MATERIALZE */
+				re100_year,
+				ecs_elcpwstn_div_cd,
+				iem_nm,
+				mon01_iem_vu,
+				mon02_iem_vu,
+				mon03_iem_vu,
+				mon04_iem_vu,
+				mon05_iem_vu,
+				mon06_iem_vu,
+				mon07_iem_vu,
+				mon08_iem_vu,
+				mon09_iem_vu,
+				mon10_iem_vu,
+				mon11_iem_vu,
+				mon12_iem_vu
+			FROM
+				tm_ec42001
+			WHERE
+				re100_year = SUBSTR(#{strtDt}, 0, 4)
+		), CNSTQY_DATA_LIST AS (
+			/* 전력소비량 */
+			SELECT /*+ MATERIALZE */
+				'2' AS seq,
+				'전력소비량(합계)' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				ROUND(SUM(tot_usgqty), 0) AS sum,
+				ROUND(SUM(jan), 1) AS mon01_iem_vu,
+				ROUND(SUM(feb), 1) AS mon02_iem_vu,
+				ROUND(SUM(mar), 1) AS mon03_iem_vu,
+				ROUND(SUM(apr), 1) AS mon04_iem_vu,
+				ROUND(SUM(may), 1) AS mon05_iem_vu,
+				ROUND(SUM(jun), 1) AS mon06_iem_vu,
+				ROUND(SUM(jul), 1) AS mon07_iem_vu,
+				ROUND(SUM(agu), 1) AS mon08_iem_vu,
+				ROUND(SUM(sep), 1) AS mon09_iem_vu,
+				ROUND(SUM(oct), 1) AS mon10_iem_vu,
+				ROUND(SUM(nov), 1) AS mon11_iem_vu,
+				ROUND(SUM(dec), 1) AS mon12_iem_vu
+			FROM (
+				<include refid="TM_EC42001_Dao.TM_EC42001_Dao_Cnstqy"></include>
+			)
+		), ELCPWSTN_ELYRS_DATA_LIST AS (
+			/* 대수력 발전량: 신재생에너지 공급의무화제도(RPS) 종합지원시스템 데이터 수기입력 */
+			SELECT /*+ MATERIALZE LEADING(A B) */
+				TO_CHAR(A.sort_ordr * 3 - 2) AS seq,
+				A.cmmn_cd_nm AS ecs_elcpwstn_div_nm,
+				A.cmmn_cd AS ecs_elcpwstn_div_cd,
+				ROUND((
+					NVL(mon01_iem_vu, 0) + NVL(mon02_iem_vu, 0) + NVL(mon03_iem_vu, 0) + NVL(mon04_iem_vu, 0) +
+					NVL(mon05_iem_vu, 0) + NVL(mon06_iem_vu, 0) + NVL(mon07_iem_vu, 0) + NVL(mon08_iem_vu, 0) +
+					NVL(mon09_iem_vu, 0) + NVL(mon10_iem_vu, 0) + NVL(mon11_iem_vu, 0) + NVL(mon12_iem_vu, 0)
+				), 0) AS sum,
+				B.mon01_iem_vu,
+				B.mon02_iem_vu,
+				B.mon03_iem_vu,
+				B.mon04_iem_vu,
+				B.mon05_iem_vu,
+				B.mon06_iem_vu,
+				B.mon07_iem_vu,
+				B.mon08_iem_vu,
+				B.mon09_iem_vu,
+				B.mon10_iem_vu,
+				B.mon11_iem_vu,
+				B.mon12_iem_vu
+			FROM (
+				SELECT
+					cmmn_cd,
+					cmmn_cd_nm,
+					sort_ordr
+				FROM
+					RE100_LIST
+				UNION ALL
+				SELECT
+					'999999' AS cmmn_cd,
+					'태양광' AS cmmn_cd_nm,
+					10 AS sort_ordr
+				FROM
+					dual
+			) A LEFT OUTER JOIN (
+				SELECT
+					re100_year,
+					ecs_elcpwstn_div_cd,
+					iem_nm,
+					ROUND(SUM(mon01_iem_vu), 1) AS mon01_iem_vu,
+					ROUND(SUM(mon02_iem_vu), 1) AS mon02_iem_vu,
+					ROUND(SUM(mon03_iem_vu), 1) AS mon03_iem_vu,
+					ROUND(SUM(mon04_iem_vu), 1) AS mon04_iem_vu,
+					ROUND(SUM(mon05_iem_vu), 1) AS mon05_iem_vu,
+					ROUND(SUM(mon06_iem_vu), 1) AS mon06_iem_vu,
+					ROUND(SUM(mon07_iem_vu), 1) AS mon07_iem_vu,
+					ROUND(SUM(mon08_iem_vu), 1) AS mon08_iem_vu,
+					ROUND(SUM(mon09_iem_vu), 1) AS mon09_iem_vu,
+					ROUND(SUM(mon10_iem_vu), 1) AS mon10_iem_vu,
+					ROUND(SUM(mon11_iem_vu), 1) AS mon11_iem_vu,
+					ROUND(SUM(mon12_iem_vu), 1) AS mon12_iem_vu
+				FROM
+					DATA_INIT_LIST
+				WHERE
+					iem_nm = 'elyrsQy'
+				GROUP BY
+					re100_year,
+					ecs_elcpwstn_div_cd,
+					iem_nm
+			) B
+			ON
+				A.cmmn_cd = B.ecs_elcpwstn_div_cd
+		), ELCPWSTN_REC_DATA_LIST AS (
+			/* 대수력 REC 발급량: ROUNDDOWN[발전량(MWh) * REC가중치(1.5) + {전월 발전량(MWh) * REC가중치(1.5) - TRUNC(전월 발전량(MWh) * REC가중치(1.5))}] */
+			SELECT /*+ MATERIALZE */
+				seq,
+				ecs_elcpwstn_div_nm,
+				ecs_elcpwstn_div_cd,
+				ROUND((
+					NVL(mon01_iem_vu, 0) + NVL(mon02_iem_vu, 0) + NVL(mon03_iem_vu, 0) + NVL(mon04_iem_vu, 0) +
+					NVL(mon05_iem_vu, 0) + NVL(mon06_iem_vu, 0) + NVL(mon07_iem_vu, 0) + NVL(mon08_iem_vu, 0) +
+					NVL(mon09_iem_vu, 0) + NVL(mon10_iem_vu, 0) + NVL(mon11_iem_vu, 0) + NVL(mon12_iem_vu, 0)
+				), 0) AS sum,
+				mon01_iem_vu,
+				mon02_iem_vu,
+				mon03_iem_vu,
+				mon04_iem_vu,
+				mon05_iem_vu,
+				mon06_iem_vu,
+				mon07_iem_vu,
+				mon08_iem_vu,
+				mon09_iem_vu,
+				mon10_iem_vu,
+				mon11_iem_vu,
+				mon12_iem_vu
+			FROM (
+				SELECT /*+ LEADING(A B) */
+					TO_CHAR(A.sort_ordr * 3 - 1) AS seq,
+					A.cmmn_cd_nm AS ecs_elcpwstn_div_nm,
+					A.cmmn_cd AS ecs_elcpwstn_div_cd,
+					FLOOR((B.mon01_iem_vu * mon01_iem_vu_cfcnt) + ((B.pre_mon12_iem_vu * pre_mon12_iem_vu_cfcnt) - TRUNC(B.pre_mon12_iem_vu * pre_mon12_iem_vu_cfcnt))) AS mon01_iem_vu,
+					FLOOR((B.mon02_iem_vu * mon02_iem_vu_cfcnt) + ((B.mon01_iem_vu * mon01_iem_vu_cfcnt) - TRUNC(B.mon01_iem_vu * mon01_iem_vu_cfcnt))) AS mon02_iem_vu,
+					FLOOR((B.mon03_iem_vu * mon03_iem_vu_cfcnt) + ((B.mon02_iem_vu * mon02_iem_vu_cfcnt) - TRUNC(B.mon02_iem_vu * mon02_iem_vu_cfcnt))) AS mon03_iem_vu,
+					FLOOR((B.mon04_iem_vu * mon04_iem_vu_cfcnt) + ((B.mon03_iem_vu * mon03_iem_vu_cfcnt) - TRUNC(B.mon03_iem_vu * mon03_iem_vu_cfcnt))) AS mon04_iem_vu,
+					FLOOR((B.mon05_iem_vu * mon05_iem_vu_cfcnt) + ((B.mon04_iem_vu * mon04_iem_vu_cfcnt) - TRUNC(B.mon04_iem_vu * mon04_iem_vu_cfcnt))) AS mon05_iem_vu,
+					FLOOR((B.mon06_iem_vu * mon06_iem_vu_cfcnt) + ((B.mon05_iem_vu * mon05_iem_vu_cfcnt) - TRUNC(B.mon05_iem_vu * mon05_iem_vu_cfcnt))) AS mon06_iem_vu,
+					FLOOR((B.mon07_iem_vu * mon07_iem_vu_cfcnt) + ((B.mon06_iem_vu * mon06_iem_vu_cfcnt) - TRUNC(B.mon06_iem_vu * mon06_iem_vu_cfcnt))) AS mon07_iem_vu,
+					FLOOR((B.mon08_iem_vu * mon08_iem_vu_cfcnt) + ((B.mon07_iem_vu * mon07_iem_vu_cfcnt) - TRUNC(B.mon07_iem_vu * mon07_iem_vu_cfcnt))) AS mon08_iem_vu,
+					FLOOR((B.mon09_iem_vu * mon09_iem_vu_cfcnt) + ((B.mon08_iem_vu * mon08_iem_vu_cfcnt) - TRUNC(B.mon08_iem_vu * mon08_iem_vu_cfcnt))) AS mon09_iem_vu,
+					FLOOR((B.mon10_iem_vu * mon10_iem_vu_cfcnt) + ((B.mon09_iem_vu * mon09_iem_vu_cfcnt) - TRUNC(B.mon09_iem_vu * mon09_iem_vu_cfcnt))) AS mon10_iem_vu,
+					FLOOR((B.mon11_iem_vu * mon11_iem_vu_cfcnt) + ((B.mon10_iem_vu * mon10_iem_vu_cfcnt) - TRUNC(B.mon10_iem_vu * mon10_iem_vu_cfcnt))) AS mon11_iem_vu,
+					FLOOR((B.mon12_iem_vu * mon12_iem_vu_cfcnt) + ((B.mon11_iem_vu * mon11_iem_vu_cfcnt) - TRUNC(B.mon11_iem_vu * mon11_iem_vu_cfcnt))) AS mon12_iem_vu
+				FROM (
+					SELECT
+						cmmn_cd,
+						cmmn_cd_nm,
+						sort_ordr
+					FROM
+						RE100_LIST
+				) A, (
+					SELECT
+						A.re100_year,
+						A.ecs_elcpwstn_div_cd,
+						A.iem_nm,
+						A.pre_mon12_iem_vu,
+						A.mon01_iem_vu,
+						A.mon02_iem_vu,
+						A.mon03_iem_vu,
+						A.mon04_iem_vu,
+						A.mon05_iem_vu,
+						A.mon06_iem_vu,
+						A.mon07_iem_vu,
+						A.mon08_iem_vu,
+						A.mon09_iem_vu,
+						A.mon10_iem_vu,
+						A.mon11_iem_vu,
+						A.mon12_iem_vu,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND (TO_NUMBER(A.re100_year) - 1) = B.yy
+								AND B.mt = '12'
+						), 1.5) AS pre_mon12_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '01'
+						), 1.5) AS mon01_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '02'
+						), 1.5) AS mon02_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '03'
+						), 1.5) AS mon03_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '04'
+						), 1.5) AS mon04_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '05'
+						), 1.5) AS mon05_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '06'
+						), 1.5) AS mon06_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '07'
+						), 1.5) AS mon07_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '08'
+						), 1.5) AS mon08_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '09'
+						), 1.5) AS mon09_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '10'
+						), 1.5) AS mon10_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '11'
+						), 1.5) AS mon11_iem_vu_cfcnt,
+						NVL((
+							SELECT
+								cfcnt
+							FROM
+								CFCNT_LIST B
+							WHERE
+								A.ecs_elcpwstn_div_cd = B.cmmn_cd
+								AND A.re100_year = B.yy
+								AND B.mt = '12'
+						), 1.5) AS mon12_iem_vu_cfcnt
+					FROM (
+							SELECT
+								re100_year,
+								ecs_elcpwstn_div_cd,
+								iem_nm,
+								NVL((
+									SELECT
+										SUM(mon12_iem_vu)
+									FROM
+										tm_ec42001
+									WHERE
+										re100_year = (DATA_INIT_LIST.re100_year - 1)
+										AND ecs_elcpwstn_div_cd = DATA_INIT_LIST.ecs_elcpwstn_div_cd
+										AND iem_nm = DATA_INIT_LIST.iem_nm
+								), 0) AS pre_mon12_iem_vu,
+								ROUND(NVL(SUM(mon01_iem_vu / 1000), 0), 1) AS mon01_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon02_iem_vu / 1000), 0), 1) AS mon02_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon03_iem_vu / 1000), 0), 1) AS mon03_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon04_iem_vu / 1000), 0), 1) AS mon04_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon05_iem_vu / 1000), 0), 1) AS mon05_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon06_iem_vu / 1000), 0), 1) AS mon06_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon07_iem_vu / 1000), 0), 1) AS mon07_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon08_iem_vu / 1000), 0), 1) AS mon08_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon09_iem_vu / 1000), 0), 1) AS mon09_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon10_iem_vu / 1000), 0), 1) AS mon10_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon11_iem_vu / 1000), 0), 1) AS mon11_iem_vu, /* kWh => mWh */
+								ROUND(NVL(SUM(mon12_iem_vu / 1000), 0), 1) AS mon12_iem_vu /* kWh => mWh */
+							FROM
+								DATA_INIT_LIST
+							WHERE
+								iem_nm = 'elyrsQy'
+							GROUP BY
+								re100_year,
+								ecs_elcpwstn_div_cd,
+								iem_nm
+						) A
+				) B
+				WHERE
+					A.cmmn_cd = B.ecs_elcpwstn_div_cd
+			)
+		), ELCPWSTN_ISS_DATA_LIST AS (
+			/* 재생에너지사용확인서 발급량: K-RE100 관리 시스템 데이터 수기입력 */
+			SELECT /*+ MATERIALZE LEADING(A B) */
+				TO_CHAR(A.sort_ordr * 3) AS seq,
+				A.cmmn_cd_nm AS ecs_elcpwstn_div_nm,
+				A.cmmn_cd AS ecs_elcpwstn_div_cd,
+				ROUND((
+					NVL(B.mon01_iem_vu, 0) + NVL(B.mon02_iem_vu, 0) + NVL(B.mon03_iem_vu, 0) + NVL(B.mon04_iem_vu, 0) +
+					NVL(B.mon05_iem_vu, 0) + NVL(B.mon06_iem_vu, 0) + NVL(B.mon07_iem_vu, 0) + NVL(B.mon08_iem_vu, 0) +
+					NVL(B.mon09_iem_vu, 0) + NVL(B.mon10_iem_vu, 0) + NVL(B.mon11_iem_vu, 0) + NVL(B.mon12_iem_vu, 0)
+				), 0) AS sum,
+				B.mon01_iem_vu,
+				B.mon02_iem_vu,
+				B.mon03_iem_vu,
+				B.mon04_iem_vu,
+				B.mon05_iem_vu,
+				B.mon06_iem_vu,
+				B.mon07_iem_vu,
+				B.mon08_iem_vu,
+				B.mon09_iem_vu,
+				B.mon10_iem_vu,
+				B.mon11_iem_vu,
+				B.mon12_iem_vu
+			FROM (
+				SELECT
+					cmmn_cd,
+					cmmn_cd_nm,
+					sort_ordr
+				FROM
+					RE100_LIST
+			) A LEFT OUTER JOIN (
+				SELECT
+					re100_year,
+					ecs_elcpwstn_div_cd,
+					iem_nm,
+					ROUND(SUM(mon01_iem_vu), 1) AS mon01_iem_vu,
+					ROUND(SUM(mon02_iem_vu), 1) AS mon02_iem_vu,
+					ROUND(SUM(mon03_iem_vu), 1) AS mon03_iem_vu,
+					ROUND(SUM(mon04_iem_vu), 1) AS mon04_iem_vu,
+					ROUND(SUM(mon05_iem_vu), 1) AS mon05_iem_vu,
+					ROUND(SUM(mon06_iem_vu), 1) AS mon06_iem_vu,
+					ROUND(SUM(mon07_iem_vu), 1) AS mon07_iem_vu,
+					ROUND(SUM(mon08_iem_vu), 1) AS mon08_iem_vu,
+					ROUND(SUM(mon09_iem_vu), 1) AS mon09_iem_vu,
+					ROUND(SUM(mon10_iem_vu), 1) AS mon10_iem_vu,
+					ROUND(SUM(mon11_iem_vu), 1) AS mon11_iem_vu,
+					ROUND(SUM(mon12_iem_vu), 1) AS mon12_iem_vu
+				FROM
+					DATA_INIT_LIST
+				WHERE
+					iem_nm = 'issQy'
+				GROUP BY
+					re100_year,
+					ecs_elcpwstn_div_cd,
+					iem_nm
+			) B
+			ON
+				A.cmmn_cd = B.ecs_elcpwstn_div_cd
+		), ELYRS_QY_DATA_LIST AS (
+			/* 발전량(kWh): 대수력 발전량 + 자가소비 발전량 합계 */
+			SELECT /*+ MATERIALZE */
+				seq,
+				'발전량(합계)' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				SUM(sum) AS sum,
+				SUM(mon01_iem_vu) AS mon01_iem_vu,
+				SUM(mon02_iem_vu) AS mon02_iem_vu,
+				SUM(mon03_iem_vu) AS mon03_iem_vu,
+				SUM(mon04_iem_vu) AS mon04_iem_vu,
+				SUM(mon05_iem_vu) AS mon05_iem_vu,
+				SUM(mon06_iem_vu) AS mon06_iem_vu,
+				SUM(mon07_iem_vu) AS mon07_iem_vu,
+				SUM(mon08_iem_vu) AS mon08_iem_vu,
+				SUM(mon09_iem_vu) AS mon09_iem_vu,
+				SUM(mon10_iem_vu) AS mon10_iem_vu,
+				SUM(mon11_iem_vu) AS mon11_iem_vu,
+				SUM(mon12_iem_vu) AS mon12_iem_vu
+			FROM (
+				SELECT
+					'3' AS seq,
+					sum,
+					mon01_iem_vu,
+					mon02_iem_vu,
+					mon03_iem_vu,
+					mon04_iem_vu,
+					mon05_iem_vu,
+					mon06_iem_vu,
+					mon07_iem_vu,
+					mon08_iem_vu,
+					mon09_iem_vu,
+					mon10_iem_vu,
+					mon11_iem_vu,
+					mon12_iem_vu
+				FROM
+					ELCPWSTN_ELYRS_DATA_LIST
+				UNION ALL
+				SELECT
+					'4' AS seq,
+					sum,
+					mon01_iem_vu,
+					mon02_iem_vu,
+					mon03_iem_vu,
+					mon04_iem_vu,
+					mon05_iem_vu,
+					mon06_iem_vu,
+					mon07_iem_vu,
+					mon08_iem_vu,
+					mon09_iem_vu,
+					mon10_iem_vu,
+					mon11_iem_vu,
+					mon12_iem_vu
+				FROM
+					ELCPWSTN_REC_DATA_LIST
+				UNION ALL
+				SELECT
+					'5' AS seq,
+					sum,
+					mon01_iem_vu,
+					mon02_iem_vu,
+					mon03_iem_vu,
+					mon04_iem_vu,
+					mon05_iem_vu,
+					mon06_iem_vu,
+					mon07_iem_vu,
+					mon08_iem_vu,
+					mon09_iem_vu,
+					mon10_iem_vu,
+					mon11_iem_vu,
+					mon12_iem_vu
+				FROM
+					ELCPWSTN_ISS_DATA_LIST
+			)
+			GROUP BY
+				seq
+		), RE100_MON_DATA_LIST AS (
+			/* RE100 이행률(월별): 발전량 / 소비량(합계) */
+			SELECT /*+ MATERIALZE */
+				'1' AS seq,
+				'RE100 이행률' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.sum, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS sum,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon01_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon01_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon02_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon02_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon03_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon03_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon04_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon04_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon05_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon05_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon06_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon06_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon07_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon07_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon08_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon08_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon09_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon09_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon10_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon10_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon11_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon11_iem_vu,
+				CASE
+					WHEN CNSTQY_DATA_LIST.sum IS NULL OR CNSTQY_DATA_LIST.sum = 0
+					THEN 0.0
+					ELSE ROUND(NVL(A.mon12_iem_vu, 0) / CNSTQY_DATA_LIST.sum * 100, 3)
+				END AS mon12_iem_vu
+			FROM
+				CNSTQY_DATA_LIST, (
+					SELECT
+						sum,
+						mon01_iem_vu,
+						mon02_iem_vu,
+						mon03_iem_vu,
+						mon04_iem_vu,
+						mon05_iem_vu,
+						mon06_iem_vu,
+						mon07_iem_vu,
+						mon08_iem_vu,
+						mon09_iem_vu,
+						mon10_iem_vu,
+						mon11_iem_vu,
+						mon12_iem_vu
+					FROM
+						ELYRS_QY_DATA_LIST
+					WHERE
+						seq = '3'
+				) A
+		), RE100_ACML_DATA_LIST AS (
+			/* RE100 이행률(누적): 전월 RE100 이행률(월별) + RE100 이행률(월별) */
+			SELECT /*+ MATERIALZE */
+				'0' AS seq,
+				'RE100 이행률' AS ecs_elcpwstn_div_nm,
+				'' AS ecs_elcpwstn_div_cd,
+				/*
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu + mon06_iem_vu + mon07_iem_vu + mon08_iem_vu +
+					mon09_iem_vu + mon10_iem_vu + mon11_iem_vu + mon12_iem_vu
+				) AS sum,
+				*/
+				sum,
+				mon01_iem_vu AS mon01_iem_vu,
+				(mon01_iem_vu + mon02_iem_vu) AS mon02_iem_vu,
+				(mon01_iem_vu + mon02_iem_vu + mon03_iem_vu) AS mon03_iem_vu,
+				(mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu) AS mon04_iem_vu,
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu
+				) AS mon05_iem_vu,
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu + mon06_iem_vu
+				) AS mon06_iem_vu,
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu + mon06_iem_vu + mon07_iem_vu
+				) AS mon07_iem_vu,
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu + mon06_iem_vu + mon07_iem_vu + mon08_iem_vu
+				) AS mon08_iem_vu,
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu + mon06_iem_vu + mon07_iem_vu + mon08_iem_vu +
+					mon09_iem_vu
+				) AS mon09_iem_vu,
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu + mon06_iem_vu + mon07_iem_vu + mon08_iem_vu +
+					mon09_iem_vu + mon10_iem_vu
+				) AS mon10_iem_vu,
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu + mon06_iem_vu + mon07_iem_vu + mon08_iem_vu +
+					mon09_iem_vu + mon10_iem_vu + mon11_iem_vu
+				) AS mon11_iem_vu,
+				(
+					mon01_iem_vu + mon02_iem_vu + mon03_iem_vu + mon04_iem_vu +
+					mon05_iem_vu + mon06_iem_vu + mon07_iem_vu + mon08_iem_vu +
+					mon09_iem_vu + mon10_iem_vu + mon11_iem_vu + mon12_iem_vu
+				) AS mon12_iem_vu
+			FROM
+				RE100_MON_DATA_LIST
+		)
+		SELECT /*+ LEADING(MAPPING_LIST A) */
+			SUBSTR(#{strtDt}, 0, 4) AS re100_year,
+			TO_NUMBER(MAPPING_LIST.seq) AS seq,
+			MAPPING_LIST.setcsc_nm,
+			NVL(A.ecs_elcpwstn_div_nm, MAPPING_LIST.ecs_elcpwstn_div_nm) AS ecs_elcpwstn_div_nm,
+			NVL(A.ecs_elcpwstn_div_cd, MAPPING_LIST.ecs_elcpwstn_div_cd) AS ecs_elcpwstn_div_cd,
+			MAPPING_LIST.iem_cd,
+			MAPPING_LIST.iem_nm,
+			A.sum,
+			A.mon01_iem_vu,
+			A.mon02_iem_vu,
+			A.mon03_iem_vu,
+			A.mon04_iem_vu,
+			A.mon05_iem_vu,
+			A.mon06_iem_vu,
+			A.mon07_iem_vu,
+			A.mon08_iem_vu,
+			A.mon09_iem_vu,
+			A.mon10_iem_vu,
+			A.mon11_iem_vu,
+			A.mon12_iem_vu
+		FROM
+			MAPPING_LIST, (
+				SELECT
+					seq,
+					ecs_elcpwstn_div_nm,
+					ecs_elcpwstn_div_cd,
+					TO_CHAR(ROUND(sum, 1), 'FM999,999,990.0') || '%' AS sum,
+					TO_CHAR(ROUND(mon01_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon01_iem_vu,
+					TO_CHAR(ROUND(mon02_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon02_iem_vu,
+					TO_CHAR(ROUND(mon03_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon03_iem_vu,
+					TO_CHAR(ROUND(mon04_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon04_iem_vu,
+					TO_CHAR(ROUND(mon05_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon05_iem_vu,
+					TO_CHAR(ROUND(mon06_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon06_iem_vu,
+					TO_CHAR(ROUND(mon07_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon07_iem_vu,
+					TO_CHAR(ROUND(mon08_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon08_iem_vu,
+					TO_CHAR(ROUND(mon09_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon09_iem_vu,
+					TO_CHAR(ROUND(mon10_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon10_iem_vu,
+					TO_CHAR(ROUND(mon11_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon11_iem_vu,
+					TO_CHAR(ROUND(mon12_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon12_iem_vu
+				FROM
+					RE100_ACML_DATA_LIST
+				UNION ALL
+				SELECT
+					seq,
+					ecs_elcpwstn_div_nm,
+					ecs_elcpwstn_div_cd,
+					'' AS sum,
+					TO_CHAR(ROUND(mon01_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon01_iem_vu,
+					TO_CHAR(ROUND(mon02_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon02_iem_vu,
+					TO_CHAR(ROUND(mon03_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon03_iem_vu,
+					TO_CHAR(ROUND(mon04_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon04_iem_vu,
+					TO_CHAR(ROUND(mon05_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon05_iem_vu,
+					TO_CHAR(ROUND(mon06_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon06_iem_vu,
+					TO_CHAR(ROUND(mon07_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon07_iem_vu,
+					TO_CHAR(ROUND(mon08_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon08_iem_vu,
+					TO_CHAR(ROUND(mon09_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon09_iem_vu,
+					TO_CHAR(ROUND(mon10_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon10_iem_vu,
+					TO_CHAR(ROUND(mon11_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon11_iem_vu,
+					TO_CHAR(ROUND(mon12_iem_vu, 1), 'FM999,999,990.0') || '%' AS mon12_iem_vu
+				FROM
+					RE100_MON_DATA_LIST
+				UNION ALL
+				SELECT
+					seq,
+					ecs_elcpwstn_div_nm,
+					ecs_elcpwstn_div_cd,
+					TO_CHAR(sum) AS sum,
+					TO_CHAR(mon01_iem_vu) AS mon01_iem_vu,
+					TO_CHAR(mon02_iem_vu) AS mon02_iem_vu,
+					TO_CHAR(mon03_iem_vu) AS mon03_iem_vu,
+					TO_CHAR(mon04_iem_vu) AS mon04_iem_vu,
+					TO_CHAR(mon05_iem_vu) AS mon05_iem_vu,
+					TO_CHAR(mon06_iem_vu) AS mon06_iem_vu,
+					TO_CHAR(mon07_iem_vu) AS mon07_iem_vu,
+					TO_CHAR(mon08_iem_vu) AS mon08_iem_vu,
+					TO_CHAR(mon09_iem_vu) AS mon09_iem_vu,
+					TO_CHAR(mon10_iem_vu) AS mon10_iem_vu,
+					TO_CHAR(mon11_iem_vu) AS mon11_iem_vu,
+					TO_CHAR(mon12_iem_vu) AS mon12_iem_vu
+				FROM
+					CNSTQY_DATA_LIST
+				UNION ALL
+				SELECT
+					seq,
+					ecs_elcpwstn_div_nm,
+					ecs_elcpwstn_div_cd,
+					TO_CHAR(sum) AS sum,
+					TO_CHAR(mon01_iem_vu) AS mon01_iem_vu,
+					TO_CHAR(mon02_iem_vu) AS mon02_iem_vu,
+					TO_CHAR(mon03_iem_vu) AS mon03_iem_vu,
+					TO_CHAR(mon04_iem_vu) AS mon04_iem_vu,
+					TO_CHAR(mon05_iem_vu) AS mon05_iem_vu,
+					TO_CHAR(mon06_iem_vu) AS mon06_iem_vu,
+					TO_CHAR(mon07_iem_vu) AS mon07_iem_vu,
+					TO_CHAR(mon08_iem_vu) AS mon08_iem_vu,
+					TO_CHAR(mon09_iem_vu) AS mon09_iem_vu,
+					TO_CHAR(mon10_iem_vu) AS mon10_iem_vu,
+					TO_CHAR(mon11_iem_vu) AS mon11_iem_vu,
+					TO_CHAR(mon12_iem_vu) AS mon12_iem_vu
+				FROM
+					ELYRS_QY_DATA_LIST
+				UNION ALL
+				SELECT
+					TO_CHAR(TO_NUMBER(seq) + 5) AS seq,
+					ecs_elcpwstn_div_nm,
+					ecs_elcpwstn_div_cd,
+					TO_CHAR(sum) AS sum,
+					TO_CHAR(mon01_iem_vu) AS mon01_iem_vu,
+					TO_CHAR(mon02_iem_vu) AS mon02_iem_vu,
+					TO_CHAR(mon03_iem_vu) AS mon03_iem_vu,
+					TO_CHAR(mon04_iem_vu) AS mon04_iem_vu,
+					TO_CHAR(mon05_iem_vu) AS mon05_iem_vu,
+					TO_CHAR(mon06_iem_vu) AS mon06_iem_vu,
+					TO_CHAR(mon07_iem_vu) AS mon07_iem_vu,
+					TO_CHAR(mon08_iem_vu) AS mon08_iem_vu,
+					TO_CHAR(mon09_iem_vu) AS mon09_iem_vu,
+					TO_CHAR(mon10_iem_vu) AS mon10_iem_vu,
+					TO_CHAR(mon11_iem_vu) AS mon11_iem_vu,
+					TO_CHAR(mon12_iem_vu) AS mon12_iem_vu
+				FROM (
+					SELECT
+						seq,
+						ecs_elcpwstn_div_nm,
+						ecs_elcpwstn_div_cd,
+						TO_CHAR(sum) AS sum,
+						TO_CHAR(mon01_iem_vu) AS mon01_iem_vu,
+						TO_CHAR(mon02_iem_vu) AS mon02_iem_vu,
+						TO_CHAR(mon03_iem_vu) AS mon03_iem_vu,
+						TO_CHAR(mon04_iem_vu) AS mon04_iem_vu,
+						TO_CHAR(mon05_iem_vu) AS mon05_iem_vu,
+						TO_CHAR(mon06_iem_vu) AS mon06_iem_vu,
+						TO_CHAR(mon07_iem_vu) AS mon07_iem_vu,
+						TO_CHAR(mon08_iem_vu) AS mon08_iem_vu,
+						TO_CHAR(mon09_iem_vu) AS mon09_iem_vu,
+						TO_CHAR(mon10_iem_vu) AS mon10_iem_vu,
+						TO_CHAR(mon11_iem_vu) AS mon11_iem_vu,
+						TO_CHAR(mon12_iem_vu) AS mon12_iem_vu
+					FROM
+						ELCPWSTN_ELYRS_DATA_LIST
+					UNION ALL
+					SELECT
+						seq,
+						ecs_elcpwstn_div_nm,
+						ecs_elcpwstn_div_cd,
+						TO_CHAR(sum) AS sum,
+						TO_CHAR(mon01_iem_vu) AS mon01_iem_vu,
+						TO_CHAR(mon02_iem_vu) AS mon02_iem_vu,
+						TO_CHAR(mon03_iem_vu) AS mon03_iem_vu,
+						TO_CHAR(mon04_iem_vu) AS mon04_iem_vu,
+						TO_CHAR(mon05_iem_vu) AS mon05_iem_vu,
+						TO_CHAR(mon06_iem_vu) AS mon06_iem_vu,
+						TO_CHAR(mon07_iem_vu) AS mon07_iem_vu,
+						TO_CHAR(mon08_iem_vu) AS mon08_iem_vu,
+						TO_CHAR(mon09_iem_vu) AS mon09_iem_vu,
+						TO_CHAR(mon10_iem_vu) AS mon10_iem_vu,
+						TO_CHAR(mon11_iem_vu) AS mon11_iem_vu,
+						TO_CHAR(mon12_iem_vu) AS mon12_iem_vu
+					FROM
+						ELCPWSTN_REC_DATA_LIST
+					UNION ALL
+					SELECT
+						seq,
+						ecs_elcpwstn_div_nm,
+						ecs_elcpwstn_div_cd,
+						TO_CHAR(sum) AS sum,
+						TO_CHAR(mon01_iem_vu) AS mon01_iem_vu,
+						TO_CHAR(mon02_iem_vu) AS mon02_iem_vu,
+						TO_CHAR(mon03_iem_vu) AS mon03_iem_vu,
+						TO_CHAR(mon04_iem_vu) AS mon04_iem_vu,
+						TO_CHAR(mon05_iem_vu) AS mon05_iem_vu,
+						TO_CHAR(mon06_iem_vu) AS mon06_iem_vu,
+						TO_CHAR(mon07_iem_vu) AS mon07_iem_vu,
+						TO_CHAR(mon08_iem_vu) AS mon08_iem_vu,
+						TO_CHAR(mon09_iem_vu) AS mon09_iem_vu,
+						TO_CHAR(mon10_iem_vu) AS mon10_iem_vu,
+						TO_CHAR(mon11_iem_vu) AS mon11_iem_vu,
+						TO_CHAR(mon12_iem_vu) AS mon12_iem_vu
+					FROM
+						ELCPWSTN_ISS_DATA_LIST
+				)
+			) A
+		WHERE
+			MAPPING_LIST.seq = A.seq(+)
+		ORDER BY
+			seq
+	</select>
+
+	<update id="TM_EC42001_Dao_saveRe100" parameterType="kw.ecs.ec.energyacmsltmng.re100.vo.Re100Vo">
+		/* TM_EC42001_Dao_saveRe100 */
+		MERGE INTO
+			tm_ec42001 A
+		USING (
+			SELECT
+				#{re100Year} AS re100_year,
+				#{ecsElcpwstnDivCd} AS ecs_elcpwstn_div_cd,
+				#{iemNm} AS iem_nm,
+				#{mon01IemVu} AS mon01_iem_vu,
+				#{mon02IemVu} AS mon02_iem_vu,
+				#{mon03IemVu} AS mon03_iem_vu,
+				#{mon04IemVu} AS mon04_iem_vu,
+				#{mon05IemVu} AS mon05_iem_vu,
+				#{mon06IemVu} AS mon06_iem_vu,
+				#{mon07IemVu} AS mon07_iem_vu,
+				#{mon08IemVu} AS mon08_iem_vu,
+				#{mon09IemVu} AS mon09_iem_vu,
+				#{mon10IemVu} AS mon10_iem_vu,
+				#{mon11IemVu} AS mon11_iem_vu,
+				#{mon12IemVu} AS mon12_iem_vu,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.re100_year = B.re100_year
+			AND A.ecs_elcpwstn_div_cd = B.ecs_elcpwstn_div_cd
+			AND A.iem_nm = B.iem_nm
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.mon01_iem_vu = B.mon01_iem_vu,
+				A.mon02_iem_vu = B.mon02_iem_vu,
+				A.mon03_iem_vu = B.mon03_iem_vu,
+				A.mon04_iem_vu = B.mon04_iem_vu,
+				A.mon05_iem_vu = B.mon05_iem_vu,
+				A.mon06_iem_vu = B.mon06_iem_vu,
+				A.mon07_iem_vu = B.mon07_iem_vu,
+				A.mon08_iem_vu = B.mon08_iem_vu,
+				A.mon09_iem_vu = B.mon09_iem_vu,
+				A.mon10_iem_vu = B.mon10_iem_vu,
+				A.mon11_iem_vu = B.mon11_iem_vu,
+				A.mon12_iem_vu = B.mon12_iem_vu,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.re100_year,
+				A.ecs_elcpwstn_div_cd,
+				A.iem_nm,
+				A.mon01_iem_vu,
+				A.mon02_iem_vu,
+				A.mon03_iem_vu,
+				A.mon04_iem_vu,
+				A.mon05_iem_vu,
+				A.mon06_iem_vu,
+				A.mon07_iem_vu,
+				A.mon08_iem_vu,
+				A.mon09_iem_vu,
+				A.mon10_iem_vu,
+				A.mon11_iem_vu,
+				A.mon12_iem_vu,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.re100_year,
+				B.ecs_elcpwstn_div_cd,
+				B.iem_nm,
+				B.mon01_iem_vu,
+				B.mon02_iem_vu,
+				B.mon03_iem_vu,
+				B.mon04_iem_vu,
+				B.mon05_iem_vu,
+				B.mon06_iem_vu,
+				B.mon07_iem_vu,
+				B.mon08_iem_vu,
+				B.mon09_iem_vu,
+				B.mon10_iem_vu,
+				B.mon11_iem_vu,
+				B.mon12_iem_vu,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<select id="TM_EC42001_Dao_retrieveRe100FlflList" parameterType="kw.ecs.ec.energyacmsltmng.re100.vo.Re100Vo" resultType="egovMap">
+		/* TM_EC42001_Dao_retrieveRe100FlflList */
+		WITH YEAR_LIST AS (
+			SELECT /*+ MATERIALZE */
+				TO_CHAR(TO_NUMBER(SUBSTR(#{strtDt}, 0, 4)) + LEVEL - 1) AS yy
+			FROM
+				DUAL
+			CONNECT BY
+				LEVEL &lt;= TO_CHAR(TO_NUMBER(SUBSTR(#{endDt}, 0, 4)) - TO_NUMBER(SUBSTR(#{strtDt}, 0, 4)) + 1)
+		), CNSTQY_DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				yy,
+				ROUND(SUM(tot_usgqty), 0) AS sum,
+				ROUND(SUM(jan), 0) AS mon01_iem_vu,
+				ROUND(SUM(feb), 0) AS mon02_iem_vu,
+				ROUND(SUM(mar), 0) AS mon03_iem_vu,
+				ROUND(SUM(apr), 0) AS mon04_iem_vu,
+				ROUND(SUM(may), 0) AS mon05_iem_vu,
+				ROUND(SUM(jun), 0) AS mon06_iem_vu,
+				ROUND(SUM(jul), 0) AS mon07_iem_vu,
+				ROUND(SUM(agu), 0) AS mon08_iem_vu,
+				ROUND(SUM(sep), 0) AS mon09_iem_vu,
+				ROUND(SUM(oct), 0) AS mon10_iem_vu,
+				ROUND(SUM(nov), 0) AS mon11_iem_vu,
+				ROUND(SUM(dec), 0) AS mon12_iem_vu
+			FROM (
+				<include refid="TM_EC42001_Dao.TM_EC42001_Dao_Cnstqy"></include>
+			)
+			WHERE
+				yy IS NOT NULL
+			GROUP BY
+				yy
+		), ELYRS_QY_DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				re100_year,
+				iem_nm,
+				ROUND(SUM(mon01_iem_vu), 0) AS mon01_iem_vu,
+				ROUND(SUM(mon02_iem_vu), 0) AS mon02_iem_vu,
+				ROUND(SUM(mon03_iem_vu), 0) AS mon03_iem_vu,
+				ROUND(SUM(mon04_iem_vu), 0) AS mon04_iem_vu,
+				ROUND(SUM(mon05_iem_vu), 0) AS mon05_iem_vu,
+				ROUND(SUM(mon06_iem_vu), 0) AS mon06_iem_vu,
+				ROUND(SUM(mon07_iem_vu), 0) AS mon07_iem_vu,
+				ROUND(SUM(mon08_iem_vu), 0) AS mon08_iem_vu,
+				ROUND(SUM(mon09_iem_vu), 0) AS mon09_iem_vu,
+				ROUND(SUM(mon10_iem_vu), 0) AS mon10_iem_vu,
+				ROUND(SUM(mon11_iem_vu), 0) AS mon11_iem_vu,
+				ROUND(SUM(mon12_iem_vu), 0) AS mon12_iem_vu
+			FROM
+				tm_ec42001
+			WHERE
+				re100_year BETWEEN (
+					SELECT
+						MIN(yy)
+					FROM
+						YEAR_LIST
+					)
+				AND (
+					SELECT
+						MAX(yy)
+					FROM
+						YEAR_LIST
+				)
+				AND iem_nm = 'elyrsQy'
+			GROUP BY
+				re100_year,
+				iem_nm
+		)
+		SELECT /*+ LEADING(YEAR_LIST A B) */
+			YEAR_LIST.yy AS re100_year,
+			CASE
+				WHEN B.sum IS NULL OR B.sum = 0
+				THEN 0.0
+				ELSE ROUND((NVL(A.sum, 0) / B.sum) * 100, 1)
+			END AS total
+		FROM
+			YEAR_LIST, (
+				SELECT
+					re100_year,
+					(
+						NVL(SUM(mon01_iem_vu), 0) + NVL(SUM(mon02_iem_vu), 0) + NVL(SUM(mon03_iem_vu), 0) + NVL(SUM(mon04_iem_vu), 0) +
+						NVL(SUM(mon05_iem_vu), 0) + NVL(SUM(mon06_iem_vu), 0) + NVL(SUM(mon07_iem_vu), 0) + NVL(SUM(mon08_iem_vu), 0) +
+						NVL(SUM(mon09_iem_vu), 0) + NVL(SUM(mon10_iem_vu), 0) + NVL(SUM(mon11_iem_vu), 0) + NVL(SUM(mon12_iem_vu), 0)
+					) AS sum
+				FROM
+					ELYRS_QY_DATA_LIST
+				GROUP BY
+					re100_year
+			) A, (
+				SELECT
+					yy,
+					(
+						NVL(SUM(mon01_iem_vu), 0) + NVL(SUM(mon02_iem_vu), 0) + NVL(SUM(mon03_iem_vu), 0) + NVL(SUM(mon04_iem_vu), 0) +
+						NVL(SUM(mon05_iem_vu), 0) + NVL(SUM(mon06_iem_vu), 0) + NVL(SUM(mon07_iem_vu), 0) + NVL(SUM(mon08_iem_vu), 0) +
+						NVL(SUM(mon09_iem_vu), 0) + NVL(SUM(mon10_iem_vu), 0) + NVL(SUM(mon11_iem_vu), 0) + NVL(SUM(mon12_iem_vu), 0)
+					) AS sum
+				FROM
+					CNSTQY_DATA_LIST
+				GROUP BY
+					yy
+			) B
+		WHERE
+			YEAR_LIST.yy = A.re100_year(+)
+			AND YEAR_LIST.yy = B.yy(+)
+		ORDER BY
+			re100_year ASC
+	</select>
+</mapper>

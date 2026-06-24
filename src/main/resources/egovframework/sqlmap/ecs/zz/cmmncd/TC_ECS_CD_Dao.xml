@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TC_ECS_CD_Dao">
+
+	<resultMap type="egovMap" id="selectData">
+		<result property="dataEnc" column="DATA_ENC" jdbcType="BINARY" javaType="java.lang.String" />
+	</resultMap>
+
+	<select id="TC_ECS_CD_Dao_retrieveCmmnCd" parameterType="kw.ecs.zz.cmmncd.vo.CmmnCdVo" resultType="egovMap">
+		/* TC_ECS_CD_Dao_retrieveCmmnCd */
+		SELECT
+			A.CLS_CD,
+			A.CLS_CD_NM,
+			B.CMMN_CD,
+			B.CMMN_CD_NM,
+			B.CMMN_CD_DC,
+			B.UPPER_CLS_CD,
+			B.UPPER_CMMN_CD,
+			B.USE_YN,
+			B.SORT_ORDR,
+			B.SAP_LNK_YN,
+			B.USR_DFN_VU1,
+			B.USR_DFN_VU2,
+			B.USR_DFN_VU3,
+			B.USR_DFN_VU4,
+			B.USR_DFN_VU5,
+			B.USR_DFN_VU6,
+			B.USR_DFN_VU7,
+			B.USR_DFN_VU8
+		FROM
+			tc_ecs_cls_cd A,
+			tc_ecs_cd B
+		WHERE
+			A.CLS_CD = B.CLS_CD
+		<if test="useYn != null and useYn != ''">
+			AND A.USE_YN = #{useYn}
+			AND B.USE_YN = #{useYn}
+		</if>
+		<if test="clsCd != null and clsCd !=''">
+			AND A.CLS_CD = #{clsCd}
+		</if>
+		<if test="cmmnCd != null and cmmnCd != ''">
+			AND B.CMMN_CD = #{cmmnCd}
+		</if>
+		<if test="cmmnCdNm != null and cmmnCdNm != ''">
+			AND B.CMMN_CD_NM LIKE '%' || #{cmmnCdNm} || '%'
+		</if>
+		<if test="usrDfnVu == 'VU1'">
+		<if test="usrDfnEtcVu != null and usrDfnEtcVu != ''">
+			AND B.USR_DFN_VU1 LIKE '%' || #{usrDfnEtcVu} || '%'
+		</if>
+		</if>
+		<if test="usrDfnVu == 'VU2'">
+		<if test="usrDfnEtcVu != null and usrDfnEtcVu != ''">
+			AND B.USR_DFN_VU2 LIKE '%' || #{usrDfnEtcVu} || '%'
+		</if>
+		</if>
+		<if test="usrDfnVu == 'VU3'">
+			<if test="usrDfnEtcVu != null and usrDfnEtcVu != ''">
+			AND B.USR_DFN_VU3 LIKE '%' || #{usrDfnEtcVu} || '%'
+			</if>
+		</if>
+		<if test="usrDfnVu == 'VU4'">
+			<if test="usrDfnEtcVu != null and usrDfnEtcVu != ''">
+			AND B.USR_DFN_VU4 LIKE '%' || #{usrDfnEtcVu} || '%'
+			</if>
+		</if>
+		<if test="usrDfnVu == 'VU5'">
+			<if test="usrDfnEtcVu != null and usrDfnEtcVu != ''">
+			AND B.USR_DFN_VU5 LIKE '%' || #{usrDfnEtcVu} || '%'
+			</if>
+		</if>
+		<if test="usrDfnVu == 'VU6'">
+			<if test="usrDfnEtcVu != null and usrDfnEtcVu != ''">
+			AND B.USR_DFN_VU6 LIKE '%' || #{usrDfnEtcVu} || '%'
+			</if>
+		</if>
+		<if test="usrDfnVu == 'VU7'">
+			<if test="usrDfnEtcVu != null and usrDfnEtcVu != ''">
+			AND B.USR_DFN_VU7 LIKE '%' || #{usrDfnEtcVu} || '%'
+			</if>
+		</if>
+		<if test="usrDfnVu == 'VU8'">
+			<if test="usrDfnEtcVu != null and usrDfnEtcVu != ''">
+			AND B.USR_DFN_VU8 LIKE '%' || #{usrDfnEtcVu} || '%'
+			</if>
+		</if>
+		ORDER BY
+			A.CLS_CD,
+			B.SORT_ORDR,
+			B.CMMN_CD
+	</select>
+
+	<sql id="header_clsCdCmmnCd">
+		SELECT
+			B.CLS_CD,
+			B.CMMN_CD,
+			B.CMMN_CD_NM,
+			B.CMMN_CD_DC,
+			B.UPPER_CLS_CD,
+			B.UPPER_CMMN_CD,
+			B.USE_YN,
+			B.SORT_ORDR,
+			B.SAP_LNK_YN,
+			B.USR_DFN_VU1,
+			B.USR_DFN_VU2,
+			B.USR_DFN_VU3,
+			B.USR_DFN_VU4,
+			B.USR_DFN_VU5,
+			B.USR_DFN_VU6,
+			B.USR_DFN_VU7,
+			B.USR_DFN_VU8
+	</sql>
+
+	<sql id="footer_clsCdCmmnCd">
+		WHERE
+			A.CLS_CD = B.CLS_CD
+			AND A.USE_YN = 'Y'
+			AND B.USE_YN = 'Y'
+			AND A.CLS_CD IN <foreach collection="list" item="item" index="index" separator="," open="(" close=")">#{item}</foreach>
+	</sql>
+
+	<select id="TC_ECS_CD_Dao_retrieveClsCdCmmnCd" parameterType="list" resultType="egovMap">
+		/* TC_ECS_CD_Dao_retrieveClsCdCmmnCd */
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_ecs_cls_cd A,
+			tc_ecs_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_adt_cls_cd A,
+			tc_adt_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_cms_cls_cd A,
+			tc_cms_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_fms_cls_cd A,
+			tc_fms_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_hrm_cls_cd A,
+			tc_hrm_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_law_cls_cd A,
+			tc_law_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_lws_cls_cd A,
+			tc_lws_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_mgt_cls_cd A,
+			tc_mgt_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_stg_cls_cd A,
+			tc_stg_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_wcb_cls_cd A,
+			tc_wcb_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_wfm_cls_cd A,
+			tc_wfm_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_wqe_cls_cd A,
+			tc_wqe_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_wri_cls_cd A,
+			tc_wri_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_wro_cls_cd A,
+			tc_wro_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		UNION
+		<include refid="header_clsCdCmmnCd"></include>
+		FROM
+			tc_ecs_cls_cd A,
+			tc_ecs_cd B
+		<include refid="footer_clsCdCmmnCd"></include>
+		ORDER BY
+			CLS_CD,
+			SORT_ORDR
+	</select>
+
+	<insert id="TC_ECS_CD_Dao_insertCmmnCdList" parameterType="kw.ecs.zz.cmmncd.vo.CmmnCdVo">
+		/* TC_ECS_CD_Dao_insertCmmnCdList */
+		INSERT INTO tc_ecs_cd (
+			CLS_CD,
+			CMMN_CD,
+			CMMN_CD_NM,
+			CMMN_CD_DC,
+			UPPER_CLS_CD,
+			UPPER_CMMN_CD,
+			USE_YN,
+			SORT_ORDR,
+			SAP_LNK_YN,
+			USR_DFN_VU1,
+			USR_DFN_VU2,
+			USR_DFN_VU3,
+			USR_DFN_VU4,
+			USR_DFN_VU5,
+			USR_DFN_VU6,
+			USR_DFN_VU7,
+			USR_DFN_VU8,
+			FRST_REGIST_DT,
+			FRST_RGSTR_ID,
+			LAST_UPDT_DT,
+			LAST_UPDUSR_ID
+		) VALUES (
+			#{clsCd},
+			#{cmmnCd},
+			#{cmmnCdNm},
+			#{cmmnCdDc},
+			#{upperClsCd},
+			#{upperCmmnCd},
+			#{useYn},
+			#{sortOrdr},
+			#{sapLnkYn},
+			#{usrDfnVu1},
+			#{usrDfnVu2},
+			#{usrDfnVu3},
+			#{usrDfnVu4},
+			#{usrDfnVu5},
+			#{usrDfnVu6},
+			#{usrDfnVu7},
+			#{usrDfnVu8},
+			SYSDATE ,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<update id="TC_ECS_CD_Dao_updateCmmnCdList" parameterType="kw.ecs.zz.cmmncd.vo.CmmnCdVo">
+		/* TC_ECS_CD_Dao_updateCmmnCdList */
+		UPDATE
+			tc_ecs_cd
+		SET
+			CMMN_CD_NM = #{cmmnCdNm},
+			CMMN_CD_DC = #{cmmnCdDc},
+			UPPER_CLS_CD = #{upperClsCd},
+			UPPER_CMMN_CD = #{upperCmmnCd},
+			USE_YN = #{useYn},
+			SORT_ORDR = #{sortOrdr},
+			SAP_LNK_YN = #{sapLnkYn},
+			USR_DFN_VU1 = #{usrDfnVu1},
+			USR_DFN_VU2 = #{usrDfnVu2},
+			USR_DFN_VU3 = #{usrDfnVu3},
+			USR_DFN_VU4 = #{usrDfnVu4},
+			USR_DFN_VU5 = #{usrDfnVu5},
+			USR_DFN_VU6 = #{usrDfnVu6},
+			USR_DFN_VU7 = #{usrDfnVu7},
+			USR_DFN_VU8 = #{usrDfnVu8},
+			LAST_UPDT_DT = SYSDATE,
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE
+			CLS_CD = #{clsCd}
+			AND CMMN_CD = #{cmmnCd}
+	</update>
+
+	<delete id="TC_ECS_CD_Dao_deleteCmmnCdList" parameterType="kw.ecs.zz.cmmncd.vo.CmmnCdVo">
+		/* TC_ECS_CD_Dao_deleteCmmnCdList */
+		DELETE
+			tc_ecs_cd
+		WHERE
+			CLS_CD = #{clsCd}
+			AND CMMN_CD = #{cmmnCd}
+	</delete>
+	
+	<select id="TC_ECS_CD_Dao_selectDataEnc" parameterType="Map" resultMap="selectData">
+		/* TC_ECS_CD_Dao_selectDataEnc */
+		SELECT
+			FN_ECS_DATA_ENCRYPT(#{dataDec}) AS DATA_ENC
+		FROM
+			DUAL
+	</select>
+
+	<select id="TC_ECS_CD_Dao_selectNttCdList" parameterType="kw.ecs.zz.cmmncd.vo.CmmnCdVo" resultType="egovMap">
+		SELECT
+			B.CLS_CD,
+			B.CMMN_CD,
+			B.CMMN_CD_NM,
+			B.CMMN_CD_DC,
+			B.UPPER_CLS_CD,
+			B.UPPER_CMMN_CD,
+			B.USE_YN,
+			B.SORT_ORDR,
+			B.SAP_LNK_YN,
+			B.USR_DFN_VU1,
+			B.USR_DFN_VU2,
+			B.USR_DFN_VU3,
+			B.USR_DFN_VU4,
+			B.USR_DFN_VU5,
+			B.USR_DFN_VU6,
+			B.USR_DFN_VU7,
+			B.USR_DFN_VU8
+		<if test="sysDivCd == null or sysDivCd == ''">
+		FROM
+			tc_ecs_cls_cd A,
+			tc_ecs_cd B
+		</if>
+		<if test="sysDivCd != null and sysDivCd != '' and (sysDivCd == 'SCM' or sysDivCd == 'SMP' or sysDivCd == 'SMC')">
+			FROM
+				tc_ecs_cls_cd A,
+				tc_ecs_cd B
+		</if>
+		<if test="sysDivCd == 'FMS' or sysDivCd == 'BID'">
+			FROM
+				tc_fms_cls_cd A,
+				tc_fms_cd B
+		</if>
+		<if test="sysDivCd == 'CMS' or sysDivCd == 'CTS'">
+			FROM
+				tc_cms_cls_cd A,
+				tc_cms_cd B
+		</if>
+		<if test="sysDivCd == 'LWS' or sysDivCd == 'LWP'">
+			FROM
+				tc_lws_cls_cd A,
+				tc_lws_cd B
+		</if>
+		<if test="sysDivCd == 'WFM' or sysDivCd == 'PFM'">
+			FROM
+				tc_wfm_cls_cd A,
+				tc_wfm_cd B
+		</if>
+		<if test="sysDivCd == 'ADT'">
+			FROM
+				tc_adt_cls_cd A,
+				tc_adt_cd B
+		</if>
+		<if test="sysDivCd == 'HRM'">
+			FROM
+				tc_hrm_cls_cd A,
+				tc_hrm_cd B
+		</if>
+		<if test="sysDivCd == 'LAW'">
+			FROM
+				tc_law_cls_cd A,
+				tc_law_cd B
+		</if>
+		<if test="sysDivCd == 'MGT'">
+			FROM
+				tc_mgt_cls_cd A,
+				tc_mgt_cd B
+		</if>
+		<if test="sysDivCd == 'STG'">
+			FROM
+				tc_stg_cls_cd A,
+				tc_stg_cd B
+		</if>
+		<if test="sysDivCd == 'WCB'">
+			FROM
+				tc_wcb_cls_cd A,
+				tc_wcb_cd B
+		</if>
+		<if test="sysDivCd == 'WQE'">
+			FROM
+				tc_wqe_cls_cd A,
+				tc_wqe_cd B
+		</if>
+		<if test="sysDivCd == 'WRI'">
+			FROM
+				tc_wri_cls_cd A,
+				tc_wri_cd B
+		</if>
+		<if test="sysDivCd == 'WRO'">
+			FROM
+				tc_wro_cls_cd A,
+				tc_wro_cd B
+		</if>
+		<if test="sysDivCd == 'ECS'">
+			FROM
+				tc_ecs_cls_cd A,
+				tc_ecs_cd B
+		</if>
+			WHERE
+				A.CLS_CD = B.CLS_CD
+				AND A.USE_YN = 'Y'
+				AND B.USE_YN = 'Y'
+				AND A.CLS_CD = #{clsCd}
+	</select>
+</mapper>

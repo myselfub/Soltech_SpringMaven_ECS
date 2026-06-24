@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "지도 제주",
+			"version": "",
+			"apis": [],
+			"pluginName": "map_jeju_basin",
+			"width": "56px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "map_jeju_basin",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "31px"
+			}
+		-->
+		<xf:group class="map-basin-jeju" tagname="svg" pluginName="map_jeju_basin">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initJejuBasin = function() {
+					// fill 설정
+					var selector = "#" + this.getID() + " .map-basin";
+					if (options.fill && options.fill != "") {
+						document.querySelectorAll(selector).forEach(elm => elm.setAttribute("fill", options.fill));
+					} else {
+						document.querySelectorAll(selector).forEach(elm => elm.classList.add("map-basin-jeju-fill"));
+					}
+				};
+
+				// 초기 실행함수 수행
+				this.initJejuBasin();
+				]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>56</w2:width>
+				<w2:viewBox>0 0 56 31</w2:viewBox>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="defs">
+				<xf:group tagname="style">
+					.map-basin {
+					stroke: #AAAAAA;
+					stroke-miterlimit: 1;
+					stroke-width: 1;
+					}
+
+					.map-basin-jeju-fill {
+					fill: #EFEDFF;
+					}
+				</xf:group>
+			</xf:group>
+			<xf:group tagname="g">
+				<xf:group class="map-basin" tagname="path">
+					<w2:attributes>
+						<w2:d>
+							M39.4703 21.7492C37.9407 21.4626 36.792 21.4787 35.8417 22.4517C34.8914 23.4247 34.7952 24.644 33.9244 25.617C33.0537 26.5899 32.0433 26.4648
+							30.7311 26.7313C29.4188 26.9977 29.0063 26.0126 27.1314 26.6263C25.2566 27.2399 25.8803 28.0252 24.5034 27.2743C23.1266 26.5233
+							24.7081 26.3154 22.6322 26.4971C20.5562 26.6788 20.9403 26.5496 18.5653 26.7797C16.1903 27.0098 15.6516 26.699 15.822 27.9061C15.8457
+							28.232 15.7885 28.5584 15.6542 28.8622C15.52 29.1659 15.3122 29.4393 15.0457 29.6628C14.7792 29.8862 14.4607 30.0542 14.1129
+							30.1547C13.7652 30.2551 13.3968 30.2855 13.0344 30.2437C11.3055 30.1105 9.99806 31.1324 9.5602 29.6628C9.12233 28.1932 8.55556
+							27.9606 6.89177 27.2743C5.22797 26.5879 4.12074 26.4688 3.35482 23.9213C2.58889 21.3738 4.2057 21.8098 3.05162 19.888C1.89753 17.9663
+							0.753844 17.1669 1.42713 15.011C2.10042 12.855 2.12166 12.629 3.79404 11.8578C5.46642 11.0867 6.921 9.16901 8.90472 7.57831C10.8884
+							5.98762 14.1916 4.65531 15.7565 4.95811C17.3213 5.26091 17.0217 5.63232 18.4415 5.43852C19.8613 5.24473 17.9024 4.62701 21.1848
+							4.3121C24.4672 3.99719 23.5558 5.01464 26.1635 3.65003C28.7713 2.28542 33.5991 2.09161 35.6858 1.91397C37.7726 1.73633 36.6592
+							2.40249 39.2855 2.01894C41.9117 1.6354 41.5231 0.945023 42.8851 2.12392C44.247 3.30281 43.2217 3.41586 45.0911 3.39568C46.9605
+							3.37549 44.8548 2.81023 47.3405 3.46024C49.8263 4.11024 50.5768 3.3674 49.9966 4.74412C49.4164 6.12084 53.4503 4.8603 52.7888
+							6.27739C52.1272 7.69448 51.7219 6.99116 53.3225 8.1862C54.923 9.38124 53.3225 10.5722 54.3898 12.0038C55.4572 13.4354 55.3451 14.1782
+							54.9235 15.8214C54.5019 17.4646 53.3866 16.3514 51.326 17.6675C49.2655 18.9837 49.8868 18.9796 47.1887 19.9607C44.4906 20.9418
+							45.3609 20.9014 43.5159 21.8704C41.6709 22.8393 40.9926 22.0399 39.4703 21.7492Z
+						</w2:d>
+					</w2:attributes>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

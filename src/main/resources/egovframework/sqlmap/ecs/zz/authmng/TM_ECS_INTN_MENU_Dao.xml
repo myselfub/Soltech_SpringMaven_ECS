@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_INTN_MENU_Dao">
+	<select id="TM_ECS_INTN_MENU_Dao_retrieveMenu" parameterType="kw.ecs.zz.authmng.vo.MenuMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_MENU_Dao_retrieveMenu */
+		SELECT
+			A.MENU_ID,
+			A.MENU_NM,
+			A.MENU_SYS_DIV_CD,
+			(SELECT
+				DISTINCT CMMN_CD_NM
+			FROM
+				SCM.tc_sc_cd
+			WHERE
+				CLS_CD = 'SCM_0000'
+				AND CMMN_CD = A.MENU_SYS_DIV_CD
+				AND USE_YN = 'Y'
+			) AS MENU_SYS_DIV_NM, --시스템구분코드명
+			A.UPPER_MENU_ID,
+			(SELECT
+				DISTINCT MENU_NM
+			FROM
+				tm_ecs_intn_menu
+			WHERE
+				MENU_ID = A.UPPER_MENU_ID
+				AND MENU_SYS_DIV_CD = A.MENU_SYS_DIV_CD
+				AND USE_YN = 'Y'
+			) AS UPPER_MENU_NM,
+			A.MENU_ORDR,
+			A.SCRIN_ID,
+			(SELECT
+				DISTINCT SCRIN_NM
+			FROM
+				tm_ecs_intn_scrin
+			WHERE
+				SCRIN_ID = A.SCRIN_ID
+				AND INTN_SYS_DIV_CD = A.MENU_SYS_DIV_CD
+				AND USE_YN = 'Y'
+			) AS SCRIN_NM,
+			A.MENU_LVL,
+			A.MENU_DC,
+			A.MENU_HIDE_YN,
+			A.POPUP_YN,
+			A.MENU_EXECUT_YN,
+			A.USE_YN,
+			A.MENU_APPLC_DE,
+			A.MENU_END_DE,
+			A.CALL_PARM,
+			TO_CHAR(A.FRST_REGIST_DT, 'YYYY-MM-DD HH:MM:DD') AS FRST_REGIST_DT,
+			A.FRST_RGSTR_ID,
+			(SELECT
+				DISTINCT KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.FRST_RGSTR_ID) AS FRST_RGSTR_NM,
+				TO_CHAR(A.LAST_UPDT_DT, 'YYYY-MM-DD HH:MM:DD') AS LAST_UPDT_DT,
+				A.LAST_UPDUSR_ID,
+			(SELECT
+				DISTINCT KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.LAST_UPDUSR_ID
+			) AS LAST_UPDUSR_NM
+		FROM
+			tm_ecs_intn_menu A
+		WHERE
+			A.MENU_SYS_DIV_CD = #{menuSysDivCd}
+		<if test="menuNm != null and menuNm != ''">
+			AND A.MENU_NM LIKE #{menuNm} || '%'
+		</if>
+		START WITH
+			A.UPPER_MENU_ID IS NULL
+			OR A.UPPER_MENU_ID = 'NULL'
+		CONNECT BY
+			PRIOR A.MENU_ID = A.UPPER_MENU_ID
+		ORDER SIBLINGS BY
+			A.MENU_SYS_DIV_CD,
+			A.MENU_ORDR,
+			A.MENU_LVL
+	</select>
+
+	<insert id="TM_ECS_INTN_MENU_Dao_insertMenuMng" parameterType="kw.ecs.zz.authmng.vo.MenuMngVo">
+		/* TM_ECS_INTN_MENU_Dao_insertMenuMng */
+		INSERT INTO tm_ecs_intn_menu (
+			MENU_ID,
+			MENU_NM,
+			MENU_SYS_DIV_CD,
+			UPPER_MENU_ID,
+			MENU_ORDR,
+			SCRIN_ID,
+			MENU_LVL,
+			MENU_DC,
+			MENU_HIDE_YN,
+			POPUP_YN,
+			MENU_EXECUT_YN,
+			USE_YN,
+			MENU_APPLC_DE,
+			MENU_END_DE,
+			CALL_PARM,
+			FRST_REGIST_DT,
+			FRST_RGSTR_ID,
+			LAST_UPDT_DT,
+			LAST_UPDUSR_ID
+		) VALUES (
+			#{menuId},
+			#{menuNm},
+			#{menuSysDivCd},
+			#{upperMenuId},
+			#{menuOrdr},
+			#{scrinId},
+			#{menuLvl},
+			#{menuDc},
+			'N',
+			#{popupYn},
+			DECODE(#{scrinId}, '', 'N', 'Y'),
+			#{useYn},
+			#{menuApplcDe},
+			#{menuEndDe},
+			#{callParm},
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<update id="TM_ECS_INTN_MENU_Dao_updateMenuMng" parameterType="kw.ecs.zz.authmng.vo.MenuMngVo">
+		/* TM_ECS_INTN_MENU_Dao_updateMenuMng */
+		UPDATE
+			tm_ecs_intn_menu
+		SET
+			MENU_NM = #{menuNm},
+			MENU_SYS_DIV_CD = #{menuSysDivCd},
+			UPPER_MENU_ID = #{upperMenuId},
+			MENU_ORDR = #{menuOrdr},
+			SCRIN_ID = #{scrinId},
+			MENU_LVL = #{menuLvl},
+			MENU_DC = #{menuDc},
+			POPUP_YN = #{popupYn},
+			MENU_EXECUT_YN = DECODE(#{scrinId}, '', 'N', 'Y'),
+			USE_YN = #{useYn},
+			MENU_APPLC_DE = #{menuApplcDe},
+			MENU_END_DE = #{menuEndDe},
+			CALL_PARM = #{callParm},
+			LAST_UPDT_DT = SYSDATE,
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE
+			MENU_ID = #{menuId}
+	</update>
+
+	<delete id="TM_ECS_INTN_MENU_Dao_deleteMenuMng" parameterType="kw.ecs.zz.authmng.vo.MenuMngVo">
+		/* TM_ECS_INTN_MENU_Dao_deleteMenuMng */
+		DELETE FROM
+			tm_ecs_intn_menu 
+		WHERE
+			MENU_ID = #{menuId}
+	</delete>
+
+	<select id="TM_ECS_INTN_MENU_Dao_selectMenuUse" parameterType="kw.ecs.zz.authmng.vo.MenuMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_MENU_Dao_getSearchMenuUse */
+		SELECT
+			MENU_ID,
+			MENU_NM,
+			(SELECT COUNT(*) FROM TM_ECS_INTN_ATHR_MENU WHERE MENU_ID = A.MENU_ID AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN MENU_APPLC_DE AND MENU_END_DE ) AS MENU_CNT,
+			(SELECT COUNT(*) FROM TM_ECS_INTN_USR_MENU WHERE MENU_ID = A.MENU_ID AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN APPLC_STRT_DE AND APPLC_END_DE ) AS USR_CNT
+		FROM
+			tm_ecs_intn_menu A
+		WHERE
+			A.MENU_ID = #{menuId}
+	</select>
+
+	<select id="TM_ECS_INTN_MENU_Dao_retrieveIntnAthrMenu" parameterType="kw.ecs.zz.authmng.vo.IntnAthrMenuVo" resultType="egovMap">
+		/* TM_ECS_INTN_MENU_Dao_retrieveIntnAthrMenu */
+		SELECT
+			A.ATHR_ID,
+			(SELECT
+				ATHR_NM
+			FROM
+				tm_ecs_intn_athr
+			WHERE
+				A.ATHR_ID = ATHR_ID
+			) AS ATHR_NM,
+			M.INTN_SYS_DIV_CD,
+			M.MENU_ID,
+			M.MENU_NM,
+			M.MENU_DC,
+			M.SCRIN_ID,
+			M.SCRIN_NM,
+			A.BTN_ATHR_LIST,
+			DECODE(A.APPLC_STRT_DE, '', M.MENU_APPLC_DE, A.APPLC_STRT_DE) AS APPLC_STRT_DE,
+			DECODE(A.APPLC_END_DE, '', M.MENU_END_DE, A.APPLC_END_DE) AS APPLC_END_DE
+		FROM
+			tm_ecs_intn_athr_menu A,
+			(SELECT
+				B.MENU_ID,
+				B.MENU_NM,
+				B.MENU_SYS_DIV_CD AS INTN_SYS_DIV_CD,
+				B.MENU_DC,
+				B.SCRIN_ID,
+				(SELECT
+					SCRIN_NM
+				FROM
+					tm_ecs_intn_scrin
+				WHERE
+					B.SCRIN_ID = SCRIN_ID
+				) AS SCRIN_NM,
+				B.MENU_ORDR,
+				B.MENU_APPLC_DE,
+				B.MENU_END_DE
+			FROM
+				tm_ecs_intn_menu B
+			WHERE
+				TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN B.MENU_APPLC_DE AND B.MENU_END_DE
+				AND B.MENU_EXECUT_YN = 'Y'
+			) M
+		WHERE
+			A.MENU_ID(+) = M.MENU_ID
+		<if test="athrId != null and athrId != ''">
+			/* 권한그룹 선택 후 권한별 메뉴목록에서 검색시 */
+			AND A.ATHR_ID(+) = #{athrId} 
+		</if>
+		<if test="intnSysDivCd != null and intnSysDivCd != ''">
+			/* 시스템 구분 선택 시 */
+			AND (M.INTN_SYS_DIV_CD = #{intnSysDivCd} OR M.INTN_SYS_DIV_CD = 'ECS')
+		</if>
+		<if test=" menuNm != null and menuNm != ''">
+			/* 메뉴명 검색 시 */
+			AND M.MENU_NM LIKE '%' || #{menuNm} || '%'
+		</if>
+		<if test=" menuId != null and menuId != ''">
+			/* 메뉴명 검색 시 */
+			AND M.MENU_ID LIKE '%' || #{menuId} || '%'
+		</if>
+		ORDER BY
+			M.MENU_ORDR
+	</select>
+
+	<select id="TM_ECS_INTN_MENU_Dao_retrieveUsrMenuAthr" parameterType="kw.ecs.zz.authmng.vo.IntnAthrMenuVo" resultType="egovMap">
+		/* TM_ECS_INTN_MENU_Dao_retrieveUsrMenuAthr */
+		SELECT
+			DISTINCT
+				A.ATHR_ID,
+				A.INTN_SYS_DIV_CD,
+				A.ATHR_NM,
+				A.ATHR_DC
+		FROM
+			tm_ecs_intn_athr A,
+			tm_ecs_intn_usr_athr B,
+			tm_ecs_intn_athr_menu C
+		WHERE
+			A.ATHR_ID = B.ATHR_ID
+			AND A.ATHR_ID = C.ATHR_ID
+			AND A.INTN_SYS_DIV_CD = #{intnSysDivCd}
+			AND B.USR_ID = #{usrId}
+			AND C.MENU_ID = #{menuId}
+		ORDER BY
+			A.ATHR_ID
+	</select>
+
+	<insert id="TM_ECS_INTN_MENU_Dao_insertAthrMenu" parameterType="kw.ecs.zz.authmng.vo.IntnAthrMenuVo">
+		/* TM_ECS_INTN_MENU_Dao_insertAthrMenu */	
+		INSERT INTO tm_ecs_intn_athr_menu (
+			ATHR_ID,
+			MENU_ID,
+			BTN_ATHR_LIST,
+			APPLC_STRT_DE,
+			APPLC_END_DE,
+			FRST_REGIST_DT,
+			FRST_RGSTR_ID,
+			LAST_UPDT_DT,
+			LAST_UPDUSR_ID 
+		) VALUES (
+			#{athrId},
+			#{menuId},
+			#{btnAthrList},
+			#{applcStrtDe},
+			#{applcEndDe},
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<update id="TM_ECS_INTN_MENU_Dao_updateAthrMenu" parameterType="kw.ecs.zz.authmng.vo.IntnAthrMenuVo">
+		/* TM_ECS_INTN_MENU_Dao_updateAthrMenu */
+		UPDATE
+			tm_ecs_intn_athr_menu
+		SET
+			BTN_ATHR_LIST = #{btnAthrList},
+			APPLC_STRT_DE = #{applcStrtDe},
+			APPLC_END_DE = #{applcEndDe},
+			LAST_UPDT_DT = SYSDATE,
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE
+			ATHR_ID = #{athrId}
+			AND MENU_ID = #{menuId}
+	</update>
+
+	<delete id="TM_ECS_INTN_MENU_Dao_deleteAthrMenu" parameterType="kw.ecs.zz.authmng.vo.IntnAthrMenuVo">
+		/* TM_ECS_INTN_MENU_Dao_deleteAthrMenu */
+		DELETE FROM
+			tm_ecs_intn_athr_menu
+		WHERE
+			ATHR_ID = #{athrId}
+			AND MENU_ID = #{menuId}
+	</delete>
+</mapper>

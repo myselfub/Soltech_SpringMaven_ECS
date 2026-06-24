@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+            	<w2:dataMap baseNode="map" id="dmaImgData">
+            		<w2:keyInfo>
+            			<w2:key id="imgData" name="이미지데이터" dataType="text"></w2:key>
+            		</w2:keyInfo>
+            	</w2:dataMap>
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initStatus = true;
+
+	/**
+	 * 화면 초기화 작업을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		comLib.initForm($p, 'IMG_VIEWER');
+		var imgData = $p.getParameter( 'imgData' );
+		if(imgData != null || imgData != '') {
+			dmaImgData.set( 'imgData', imgData);
+		}
+	};]]></script>
+    </head>
+    <body>
+    	<xf:image src="" style="width: 100%;height: 100%;" id="" ref="data:dmaImgData.imgData"></xf:image>
+    </body>
+</html>

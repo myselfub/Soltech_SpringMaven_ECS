@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/sc/resources/css/common.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events"
+	xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataList id="dataList1" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="chk" name="선택" dataType="text"></w2:column>
+						<w2:column id="name" name="파일명" dataType="text"></w2:column>
+						<w2:column id="displaySize" name="파일사이즈" dataType="text"></w2:column>
+						<w2:column id="Status" name="전송상태" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="true">
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="fileList" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="orginFileNm" name="원본파일명" dataType="text"></w2:column>
+						<w2:column id="tempFileNm" name="임시저장소저장된파일명" dataType="text"></w2:column>
+						<w2:column id="tempFilePath" name="임시저장소경로" dataType="text"></w2:column>
+						<w2:column id="fileSize" name="파일사이즈" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dlt_file">
+					<w2:columnInfo>
+						<w2:column id="orginlFileNm" name="파일명" dataType="text"></w2:column>
+						<w2:column id="fileEventn" name="파일확장자명" dataType="text"></w2:column>
+						<w2:column id="fileSize" name="파일사이즈" dataType="number"></w2:column>
+						<w2:column id="saveFileNm" name="물리파일명" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="파일경로" dataType="text"></w2:column>
+						<w2:column id="idvdinfoInclsYn" name="개인정보포함여부" dataType="text"></w2:column>
+						<w2:column id="atchFileId" name="파일ID" dataType="text"></w2:column>
+						<w2:column id="fileSn" name="파일순번" dataType="number"></w2:column>
+						<w2:column id="fileTempPath" name="임시저장소 저장된 파일명" dataType="text"></w2:column>
+						<w2:column id="sapYn" name="SAP여부" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+		</xf:model>
+		<script lazy="false" type="javascript"><![CDATA[
+	var paramJson;
+	scwin.initScreen = function() {
+		var popupStr = WebSquare.util.getPopupParam();
+		paramJson = JSON.parse(popupStr);
+		scwin.closeCallbackFncName = paramJson.closeCallbackFncName;
+		
+		//$p.$("#gridFile").css("hegiht","90");
+		//scwin.tobe_onComplete();   /*플래쉬 모드인경우만 사용이 됨*/
+		defaultRows();
+		
+	};
+			
+	// 기본으로 화면에 5개의 Row를 만들어준다. (안영헌대리요청사항)
+	// 멀티업로드인 경우, 단일 파일 업로드인 경우는 하나만..
+	function defaultRows() {
+	    var fileInfos = new Array();
+		for (var i=0; i < 5; i++) {
+			fileInfos.push("");
+			dataList1.setJSON(fileInfos);
+		}
+	}
+			
+				
+		        
+	function selectCallback() {
+	
+		var fileInfos = new Array();
+		var arrowFileInfo = new Array();
+	 	fileInfos = tobe.getFileInfos();
+		//첨부파일 업로드 가능여부체크
+		var chkFile = "";
+		if ( fileInfos.length < 5 ) {
+			var i = 0;
+			for ( i=0; i < fileInfos.length; i++) {
+				chkFile = fileLib.multiUploadFileCheck(fileInfos[i]);
+				if (chkFile) {
+					arrowFileInfo.push(fileInfos[i]);
+					dataList1.setJSON( arrowFileInfo );
+				} 
+			}
+			while (i < 5) {
+				arrowFileInfo.push("");
+				dataList1.setJSON(arrowFileInfo);
+				i++;
+				
+			}		
+		} else {
+			for (var i=0; i < fileInfos.length; i++) {
+				chkFile = fileLib.multiUploadFileCheck(fileInfos[i]);
+				if (chkFile) {
+					arrowFileInfo.push(fileInfos[i]);
+					dataList1.setJSON( arrowFileInfo );
+				} 
+			}
+		}	
+	}
+			
+	scwin.tobe_onprogress = function(info) {
+		var rowidx = dataList1.getMatchedIndex("name", info.fileName);
+		$("td[colindex='3']:eq("+rowidx+") .w2grid_inputFile").text(info.percentData+"%");
+		$("td[colindex='3']:eq("+rowidx+") .w2grid_inputFile").css("width", info.percentData+"%");
+	};
+		
+		/*	
+			function multiupload10_ondone(data) {
+		//		alert ( "첨부파일이 임시저장 저장되었습니다.");
+				console.log(JSON.stringify(data));
+				setTimeout( clearUpload, "3000" );
+			};
+		*/	
+	scwin.tobe_ondone = function(data) {
+		alert ( "첨부파일이 임시저장 저장되었습니다.");
+		utilLib.getParentPage().eval(paramJson.closeCallbackFncName)( data );
+   		WebSquare.util.closePopup( WebSquare.net.getParameter("popupID") );
+				
+//		scwin.parentObj.comLib.closePopup($p, scwin.popupID, scwin.closeCallbackFncName, data );
+		setTimeout( clearUpload, "1000" );
+	};
+			
+	function clearUpload() {
+		dataList1.removeAll();
+	}
+
+	scwin.textbox4_onclick = function(e) {
+		var idxArr = gridFile.getCheckedJSON("chk");
+		var idxArr1 = gridFile.getCheckedIndex( "chk" );
+		for( var i=0;i<idxArr.length;i++ ) {
+			var fileName = idxArr[i].name;
+			tobe.removeFile( fileName );
+		}
+		dataList1.removeRows( idxArr1 );
+	};
+	
+	scwin.textbox5_onclick = function(e) {
+		tobe.startUpload();
+	};
+				
+	//멀티 파일 업로드 컨포넌트 생성 후 기본값 셋팅	(Flash 모드에서만 작동하고 있음)
+	scwin.tobe_onComplete = function() {
+		tobe.setMaxFileCount(3); 
+		tobe.setMaxFileSize( 1 * 1024 );     //현재 WebSquare 버전에서는 작동하지 않음. 패치가 필요함.(2017.06.12)
+//		tobe.setMessageDuplicateText( "이미 등록된 동일파일이 존재합니다." );
+	};
+			
+	scwin.textbox_insert_onclick = function(e) {
+		
+	};
+	
+	//SAP 저장용
+	scwin.textbox6_onclick = function(e) {
+	 	comLib.confirm($p, "첨부파일을 저장하시겠습니까?", "saveFileBasicConfirmCallback");
+	};	
+	
+	scwin.saveFileBasicConfirmCallback = function() {
+		tobe.startUpload();
+	};
+	
+	]]></script>
+	<style type="text/css">
+		<![CDATA[ 
+			td[colindex='3'] .w2grid_inputFile {
+				display: block;
+				text-align: right;
+				background-color: #ffcc00;
+				width: 0%;
+			}
+		]]>
+	</style>
+	</head>
+	<body>
+		
+		<xf:group style="" id="" class="popup-wrap">
+			<!-- <xf:group style="width:432px;height:26px;" id="" class="">
+				<w2:textbox id="textbox1" style="position: relative;" label="HTML5 MultiUpload Sample" tagname="h1"></w2:textbox>
+				</xf:group> -->
+			<xf:group class="content-area" id="" style="">
+				<xf:group id="grp_grid" class="" style="width: 100%;">
+					<w2:gridView ignoreCellClick="false" id="gridFile" dataList="dataList1" style="height:270px;" useShiftKey="true"
+						scrollByColumn="false" fixedColumnWithHidden="true" autoFit="allColumn">
+						<w2:header id="header1" style="">
+							<w2:row id="row2" style="">
+								<w2:column blockSelect="false" id="column11" style="height:20px;" inputType="checkbox" width="27" value="chk" checkboxLabel="&amp;nbsp;"></w2:column>
+								<w2:column blockSelect="false" id="column9" style="height:20px;" inputType="text" width="273" value="파일명"></w2:column>
+								<w2:column blockSelect="false" id="column7" style="height:20px;" inputType="text" width="92" value="파일사이즈"></w2:column>
+								<w2:column blockSelect="false" id="column3" style="height:20px;" width="175" inputType="text" value="전송상태"></w2:column>
+							</w2:row>
+						</w2:header>
+						<w2:gBody id="gBody4" style="">
+							<w2:row id="row5" style="">
+								<w2:column blockSelect="false" id="chk" style="height:20px;" inputType="checkbox" width="27" checkboxLabel="&amp;nbsp;"></w2:column>
+								<w2:column blockSelect="false" id="name" style="height:20px;" inputType="text" width="273" textAlign="left"></w2:column>
+								<w2:column blockSelect="false" id="displaySize" style="height:20px;" inputType="text" width="92"></w2:column>
+								<w2:column blockSelect="false" id="Status" style="height:20px;" width="175" inputType="text" value=""></w2:column>
+							</w2:row>
+						</w2:gBody>
+					</w2:gridView>
+				</xf:group>
+			</xf:group>
+			<xf:group id="group1" style="overflow:hidden;margin-top:5px;">
+				<xf:group id="upload">
+					<w2:multiupload maxcount="" id="tobe" maxsize="2048000" ev:ondone="scwin.tobe_ondone"
+						style="position:absolute;height:34px;width:111px;float:left;z-index: 999;" ev:onprogress="scwin.tobe_onprogress" action="" uploadButton=""
+						wmode="false" filter="*:*.*" mode="html5_transparent" selectCallback="selectCallback" ev:onComplete="scwin.tobe_onComplete">
+					</w2:multiupload>
+					<w2:textbox label="추가" id="textbox_insert"
+						style="position:relative;height:23px;width: 111px;float:left;margin-left:5px;text-align:center;padding-top:11px;padding-bottom:0px;z-index: 1;"
+						class="" ev:onclick="scwin.textbox_insert_onclick">
+					</w2:textbox>
+				</xf:group>
+				<w2:textbox label="삭제" id="textbox4"
+					style="position: relative;height:23px;width: 84px;float:left;margin-left:5px;text-align:center;padding-top:11px;padding-bottom:0px;"
+					class="delete_ing" ev:onclick="scwin.textbox4_onclick">
+				</w2:textbox>
+				<w2:textbox id="textbox5" label="전송"
+					style="position: relative;height:23px;width:84px;float:left;margin-left:5px;text-align:center;padding-top:11px;padding-bottom:0px;" class="start"
+					ev:onclick="scwin.textbox5_onclick">
+				</w2:textbox>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

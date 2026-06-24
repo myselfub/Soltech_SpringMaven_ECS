@@ -1,0 +1,899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSZZ1300000.xml
+			* 설 명 : 에너지공통_권한관리_메뉴관리
+			* 작성일 : 2023.02.09
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.09 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltMenuList" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="menuId" name="메뉴ID" dataType="text"></w2:column>
+						<w2:column id="menuNm" name="메뉴명" dataType="text"></w2:column>
+						<w2:column id="menuSysDivCd" name="메뉴시스템구분코드" dataType="text"></w2:column>
+						<w2:column id="upperMenuId" name="상위메뉴ID" dataType="text"></w2:column>
+						<w2:column id="upperMenuNm" name="상위메뉴명" dataType="text"></w2:column>
+						<w2:column id="menuOrdr" name="메뉴순서" dataType="number"></w2:column>
+						<w2:column id="scrinId" name="화면ID" dataType="text"></w2:column>
+						<w2:column id="scrinNm" name="화면명" dataType="text"></w2:column>
+						<w2:column id="menuLvl" name="메뉴레벨" dataType="number"></w2:column>
+						<w2:column id="menuDc" name="메뉴설명" dataType="text"></w2:column>
+						<w2:column id="popupYn" name="팝업여부" dataType="text"></w2:column>
+						<w2:column id="menuExecutYn" name="메뉴실행여부" dataType="text"></w2:column>
+						<w2:column id="useYn" name="사용여부" dataType="text"></w2:column>
+						<w2:column id="menuApplcDe" name="메뉴적용일" dataType="text"></w2:column>
+						<w2:column id="menuEndDe" name="메뉴종료일" dataType="text"></w2:column>
+						<w2:column id="callParm" name="호출파라미터" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap id="dmaInqireParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="menuSysDivCd" name="시스템구분" dataType="text"></w2:key>
+						<w2:key id="fstLvl" name="1레벨" dataType="text"></w2:key>
+						<w2:key id="secLvl" name="2레벨" dataType="text"></w2:key>
+						<w2:key id="thrLvl" name="3레벨" dataType="text"></w2:key>
+						<w2:key id="usrId" name="사용자ID" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap id="dmaSaveMenu" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="menuId" name="메뉴ID" dataType="text"></w2:key>
+						<w2:key id="menuNm" name="메뉴명" dataType="text"></w2:key>
+						<w2:key id="menuSysDivCd" name="메뉴시스템구분코드" dataType="text"></w2:key>
+						<w2:key id="upperMenuId" name="상위메뉴ID" dataType="text"></w2:key>
+						<w2:key id="upperMenuNm" name="상위메뉴명" dataType="text"></w2:key>
+						<w2:key id="menuOrdr" name="메뉴순서" dataType="number"></w2:key>
+						<w2:key id="scrinId" name="화면ID" dataType="text"></w2:key>
+						<w2:key id="scrinNm" name="화면명" dataType="text"></w2:key>
+						<w2:key id="menuLvl" name="메뉴레벨" dataType="number"></w2:key>
+						<w2:key id="menuDc" name="메뉴설명" dataType="text"></w2:key>
+						<w2:key id="popupYn" name="팝업여부" dataType="text"></w2:key>
+						<w2:key id="menuExecutYn" name="메뉴실행여부" dataType="text"></w2:key>
+						<w2:key id="useYn" name="사용여부" dataType="text"></w2:key>
+						<w2:key id="menuApplcDe" name="메뉴적용일" dataType="text"></w2:key>
+						<w2:key id="menuEndDe" name="메뉴종료일" dataType="text"></w2:key>
+						<w2:key id="callParm" name="호출파라미터" dataType="text"></w2:key>
+						<w2:key id="lastInfo" name="최종수정정보" dataType="text"></w2:key>
+						<w2:key id="rowStatus" name="상태값" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap id="dmaInqireMenuUse" baseNode="map" saveRemovedData="true">
+					<w2:keyInfo>
+						<w2:key id="menuId" dataType="text" name="화면ID"></w2:key>
+						<w2:key id="menuNm" dataType="text" name="화면명"></w2:key>
+						<w2:key id="menuCnt" dataType="number" name="메뉴설정건수"></w2:key>
+						<w2:key id="usrCnt" dataType="number" name="사용자수"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltLvl1" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="menuId" dataType="text" name="메뉴ID"></w2:column>
+						<w2:column id="menuNm" dataType="text" name="메뉴명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltLvl2" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="menuId" dataType="text" name="메뉴ID"></w2:column>
+						<w2:column id="menuNm" dataType="text" name="메뉴명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltLvl3" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="menuId" dataType="text" name="메뉴ID"></w2:column>
+						<w2:column id="menuNm" dataType="text" name="메뉴명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltSysDivCdList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" dataType="text" name="시스템구분코드"></w2:column>
+						<w2:column id="sysDivCdNm" dataType="text" name="시스템구분코드명"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.today = "";
+	scwin.rowIndex;
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSZZ1300000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 로그인한 사용자 ID 변수설정
+		scwin.usrId = comLib.getUsrId();
+
+		//사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+		scwin.setAthrSysDivCd();
+
+		// 작업일자 설정한다.
+		scwin.today = utilLib.getCurrentDate();
+	};
+
+	/**
+	 * 사용자에게 부여된 권한의 시스템구분코드를 조회한다. 
+	 * @param
+	 * @return
+	 */
+	scwin.setAthrSysDivCd = function () {
+		var requestData = {};
+		requestData.data = {"usrId" : scwin.usrId, "sysDivCd" : "SCM_0000"};
+
+		var option = {action : "sc/authmng/retrieveAthrSysDivCd.do",
+			reqData : requestData,
+			resData : dltSysDivCdList,
+			success : "scwin.retrieveAthrSysDivCdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.requestAjaxSyncCode($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.retrieveAthrSysDivCdCallback = function (resBody, e) {
+		if (dltSysDivCdList.getRowCount() == 0) {
+			// 시스템관리자만 접근이 가능합니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00343"), "utilLib.winContainerClose");
+			return;
+		}
+
+		var sysDivCd = comLib.getSysDivCd();
+
+		dmaInqireParam.set("menuSysDivCd" , sysDivCd);
+		dmaInqireParam.set("usrId" , scwin.usrId);
+
+		// 화면 오픈시 자동조회를 한다. 
+		comLib.setEnterKeyEvent(grpInqire, scwin.btnInqire_onclick);
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 메뉴등록 정보 검색한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var requestData = {};
+		requestData.dmaInqireParam = dmaInqireParam.getJSON();
+
+		var option = {action : "zz/authmng/retrieveMenu.do",
+			reqData : requestData,
+			resData : dltMenuList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireCallback = function(resBody) {
+		dltLvl1.removeAll();
+		dltLvl2.removeAll();
+		dltLvl3.removeAll();
+
+		if (resBody.message.code == "success") {
+			grdMenuList.spanAll(true);
+			txtCnt.setValue(dltMenuList.getRowCount());
+
+			if (dltMenuList.getRowCount() > 0) {
+				// 1,2,3레벨 값 필터해서 세팅 ( 사용안함 )
+				var setLvl1Json = dltMenuList.getMatchedJSON("menuLvl", 1);
+				var setLvl2Json = dltMenuList.getMatchedJSON("menuLvl", 2);
+				var setLvl3Json = dltMenuList.getMatchedJSON("menuLvl", 3);
+
+				dltLvl1.setJSON(setLvl1Json);
+				dltLvl2.setJSON(setLvl2Json);
+				dltLvl3.setJSON(setLvl3Json);
+			}
+		}
+		else{
+			comLib.alert($p, "fail");
+		}
+	};
+
+	/**
+ 	* 메뉴를 상위로 이동
+ 	* @param
+ 	* @return
+	*/
+	scwin.btnUpRowMenu_onclick = function() {
+		var rowIndex = dltMenuList.getRowPosition();
+
+		if (rowIndex < 1) {
+			// 이동할 대상 위치에 메뉴이(가) 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00332", "메뉴"));
+			return;
+		}
+
+		var dmaMenu = dltMenuList.getRowJSON(rowIndex);
+		var dmaBfMenu = dltMenuList.getRowJSON(rowIndex - 1);
+		var dmaChildMenu = null;
+
+		if (rowIndex < dltMenuList.getRowCount() - 1) {
+			dmaChildMenu = dltMenuList.getRowJSON(rowIndex + 1);
+		}
+
+		// 하위메뉴가 존재할 경우 이동 불가
+		if (dmaChildMenu != null && dmaMenu.menuId == dmaChildMenu.upperMenuId) {
+			// 메뉴의 하위자료가 존재하여 이동할 수 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00153", dmaMenu.menuNm, "이동"));
+			return;
+		}
+
+		if (dmaMenu.menuLvl == dmaBfMenu.menuLvl) {
+			dltMenuList.setCellData(rowIndex, "menuOrdr", dmaBfMenu.menuOrdr);
+			dltMenuList.setCellData(rowIndex - 1, "menuOrdr", dmaMenu.menuOrdr);
+			dltMenuList.rowMoveUp(rowIndex);
+		} else if (dmaMenu.menuLvl != dmaBfMenu.menuLvl) {
+			// 이동할 대상 위치에 메뉴이(가) 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00332", "메뉴"));
+			return;
+		}
+	};
+
+	/**
+ 	* 메뉴를 하위로 이동
+ 	* @param
+ 	* @return
+	*/
+	scwin.btnDownRowMenu_onclick = function() {
+		var rowIndex = dltMenuList.getRowPosition();
+
+		if (rowIndex >= dltMenuList.getRowCount() - 1) {
+			// 이동할 대상 위치에 메뉴이(가) 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00332", "메뉴"));
+			return;
+		}
+
+		var dmaMenu = dltMenuList.getRowJSON(rowIndex);
+		var dmaNextMenu = dltMenuList.getRowJSON(rowIndex + 1);
+		var dmaChildMenu = null;
+
+		if (rowIndex + 2 <= dltMenuList.getRowCount() - 1) {
+			dmaChildMenu = dltMenuList.getRowJSON(rowIndex + 2);
+		}
+
+		// 이동할 메뉴의 하위메뉴가 존재할 경우 이동 불가
+		if (dmaMenu.menuId == dmaNextMenu.upperMenuId) {
+			// 메뉴의 하위자료가 존재하여 이동할 수 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00153", dmaMenu.menuNm, "이동"));
+			return;
+		}
+		// 이동할 대상메뉴가 상위 메뉴일 경우 이동 불가
+		if (dmaMenu.menuLvl > dmaNextMenu.menuLvl) {
+			// 이동할 대상 위치에 메뉴이(가) 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00332", "메뉴"));
+			return;
+		}
+		// 이동할 대상메뉴의 하위메뉴가 존재할 경우 이동 불가
+		if (dmaChildMenu != null && dmaNextMenu.menuId == dmaChildMenu.upperMenuId) {
+			// 메뉴의 하위자료가 존재하여 이동할 수 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00153", dmaNextMenu.menuNm, "이동"));
+			return;
+		}
+
+		// 이동할 대상메뉴가 같은 레벨의 메뉴일 경우 이동
+		if (dmaMenu.menuLvl == dmaNextMenu.menuLvl) {
+			dltMenuList.setCellData(rowIndex, "menuOrdr", dmaNextMenu.menuOrdr);
+			dltMenuList.setCellData(rowIndex + 1, "menuOrdr", dmaMenu.menuOrdr);
+			dltMenuList.rowMoveDown(rowIndex);
+		} else if (dmaMenu.menuLvl != dmaNextMenu.menuLvl) {
+			// 이동할 대상 위치에 메뉴이(가) 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00332", "메뉴"));
+			return;
+		}
+	};
+
+	 /**
+	 * 동급레벨 추가를 할 경우 사용한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSmrkLvl_onclick = function() {
+		// 선택된 메뉴 열
+		var index = grdMenuList.getRealRowIndex(grdMenuList.getFocusedRowIndex());
+
+		if (index == -1) {
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00258"));
+			return;
+		} else if (index == 0) {
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00256"));
+			return;
+		}
+
+		// 선택된 메뉴
+		var dmaMenu = dltMenuList.getRowJSON(index);
+		// 선택된 메뉴의 레벨
+		var menuLvl = dmaMenu.menuLvl;
+		// 동급레벨 중 마지막 열
+		var arrIndex = dltMenuList.getMatchedIndex("upperMenuId", dmaMenu.upperMenuId, true, index + 1);
+		// 메뉴를 추가할 최종 열
+		var lastIndex = index;
+
+		if (arrIndex.length > 0) {
+			// 마지막 동급레벨 메뉴의 열로 변경
+			lastIndex = arrIndex[arrIndex.length - 1];
+		}
+
+		// 추가할 다음 열로 변경
+		lastIndex++;
+
+		// 마지막 열의 메뉴의 레벨에 하위 메뉴가 존재할 경우 하위메뉴 끝나는 열의 위치를 파악
+		for (var idx = lastIndex; idx < dltMenuList.getTotalRow(); idx++) {
+			if (dltMenuList.getCellData(idx , "menuLvl") <= menuLvl) {
+				// 다음 메뉴가 선택된 메뉴보다 상위메뉴일 경우 마지막 열로 변경하고 검색 종료
+				lastIndex = idx;
+				break;
+			} else {
+				// 다음 메뉴가 하위메뉴이고 마지막 메뉴일 경우도 있으므로, 마지막 열로 적용
+				lastIndex = idx + 1;
+			}
+		}
+
+		dltMenuList.setRowData(lastIndex , ["", "", dmaMenu.menuSysDivCd || dmaInqireParam.get("menuSysDivCd"), dmaMenu.upperMenuId, dmaMenu.upperMenuNm, "", "", "", dmaMenu.menuLvl, "", "N", "N", "Y", scwin.today, "99991231", "", "C"], false);
+		grdMenuList.setFocusedCell(lastIndex, 0, true);
+	};
+
+ 	 /**
+	 * 하위레벨 추가를 할 경우 사용한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnLwprtLvl_onclick = function() {
+		// 선택된 메뉴 열
+		var index = grdMenuList.getRealRowIndex(grdMenuList.getFocusedRowIndex());
+
+		if (index == -1) {
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00258"));
+			return;
+		}
+
+		// 선택된 메뉴
+		var dmaMenu = dltMenuList.getRowJSON(index);
+		// 선택된 메뉴의 레벨
+		var menuLvl = dmaMenu.menuLvl;
+		// 동급레벨 중 마지막 열
+		var arrIndex = dltMenuList.getMatchedIndex("upperMenuId", dmaMenu.upperMenuId, true, index + 1);
+		// 메뉴를 추가할 최종 열
+		var lastIndex = index + 1;
+
+		// 동급레벨 중 다른 메뉴가 존재할 경우
+		if (arrIndex.length > 0) {
+			// 다음 동급레벨 메뉴의 앞열로 변경
+			lastIndex = arrIndex[0];
+		} else {
+			// 마지막 열의 메뉴의 레벨에 하위 메뉴가 존재할 경우 하위메뉴 끝나는 열의 위치를 파악
+			for (var idx = lastIndex; idx < dltMenuList.getTotalRow(); idx++) {
+				if (dltMenuList.getCellData(idx, "menuLvl") <= menuLvl) {
+					// 다음 메뉴가 선택된 메뉴보다 상위메뉴일 경우 마지막 열로 변경하고 검색 종료
+					lastIndex = idx;
+					break;
+				} else {
+					// 다음 메뉴가 하위메뉴이고 마지막 메뉴일 경우도 있으므로, 마지막 열로 적용
+					lastIndex = idx + 1;
+				}
+			}
+		}
+
+		dltMenuList.setRowData(lastIndex, ["", "", dmaMenu.menuSysDivCd, dmaMenu.menuId, dmaMenu.menuNm, "", "", "", dmaMenu.menuLvl + 1, "", "N", "N", "Y", scwin.today, "99991231", "", "C"], false);
+		grdMenuList.setFocusedCell(lastIndex, 0, true);
+	};
+
+	 /**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm = spnSubTitle.getValue();
+		// 엑셀 내부 타이틀 추가_240108
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 11,
+			text 		: `${menuNm}_` + `${subTitleNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		comLib.downloadExcel(grdMenuList, {
+			fileName : `${menuNm}_` + `${subTitleNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			removeColumns : "3,4",
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			useDataFormat: true,
+			applyDataFormat : true
+		}, infoArr);
+	};
+
+	/**
+	* 메뉴등록 시 화면 수동입력에서 검색 후 등록을 하도록 수정
+	 * @param
+	 * @return
+	*/
+	scwin.inqireScrin = function(row) {
+		scwin.setRow = grdMenuList.getRealRowIndex(row);
+
+		var url = comLib.ECS_POP_URL + "/ui/ecs/zz/searchmng/ECSZZ0000004.xml";
+
+		// 팝업창 옵션
+		var option = {popupID : "ECSZZ0000004",
+			width : 800,
+			height : 500,
+			title : "화면검색"
+		};
+
+		var strEnc = comLib.dataDecEnc(utilLib.getDate(), "E"); //암호화 키값
+		var usrInfo; //세션정보 및 윈도우 타이틀
+
+		usrInfo = JSON.stringify(comLib.getUserInfo4Param(strEnc, encodeURI(option.title)));
+
+		var jsonObj = {
+			// 필수값
+			userInfo : usrInfo,
+			closeCallbackFncName : "scwin.inqireScrinCallback",
+			popupId : option.popupID,
+			// 선택값(팝업에 따라 적용)
+			sysDivCd : dmaInqireParam.get("menuSysDivCd")
+		};
+
+		comLib.openPostWinPopup($p, url, option, jsonObj);
+	};
+
+	/**
+ 	* 화면검색 후 콜백 실행
+ 	* @param <Object> returnValue
+ 	* @return
+	*/
+	scwin.inqireScrinCallback = function(returnValue) {
+		var selectedOrg = returnValue;
+
+		dltMenuList.setCellData(scwin.setRow, "scrinId", selectedOrg.scrinId);
+		dltMenuList.setCellData(scwin.setRow, "scrinNm", selectedOrg.scrinNm);
+	};
+
+	/**
+	* 메뉴등록 시 화면 수동입력에서 검색 후 등록을 하도록 수정
+	 * @param
+	 * @return
+	*/
+	scwin.removeScrin = function(row) {
+		var rowIndex = grdMenuList.getRealRowIndex(row);
+		dltMenuList.setCellData(rowIndex, "scrinId", "");
+		dltMenuList.setCellData(rowIndex, "scrinNm", "");
+	};
+
+	/**
+	 * 메뉴상세에서 기재한 내용을 수정/저장한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		var valInfo = [{id : "menuId", mandatory : true},
+			{id : "menuNm", mandatory : true},
+			{id : "menuSysDivCd", mandatory : true},
+			{id : "menuOrdr", mandatory : true},
+			{id : "menuExecutYn", mandatory : true},
+			{id : "useYn", mandatory : true},
+			{id : "menuApplcDe", mandatory : true},
+			{id : "menuEndDe", mandatory : true}
+		];
+
+		if (dltMenuList.getModifiedData() == "") {
+			// 처리할 데이터가 없습니다. 
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+			return;
+		}
+
+		// 중복체크
+		var insertList = dltMenuList.getInsertedJSON();
+
+		if (insertList != null && insertList.length > 0) {
+			for (var idx = 0; idx < insertList.length; idx++) {
+				for (var j = 0; j < dltMenuList.getTotalRow(); j++) {
+					if (dltMenuList.getRowStatus(j) != "C" && insertList[idx].menuId == dltMenuList.getCellData(j, "menuId")) {
+						// {0}(은/는) 중복될 수 없습니다.
+						comLib.alert($p, utilLib.getMessage("SCM.INFO.00068", "메뉴ID"));
+						return;
+					}
+				}
+			}
+		}
+
+		if (utilLib.validateGridView(grdMenuList, valInfo)) {
+			scwin.saveFlag = "C";
+			scwin.saveCnfirm();
+		}
+	};
+
+	/**
+	 * 저장, 삭제 여부를 물어본다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveCnfirm = function() {
+		if (scwin.saveFlag != "D") {
+			// 저장할것인지 confirm
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00239"), "scwin.saveConfirmCallback");
+		} else {
+			// 삭제할것인지 confirm
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00251"), "scwin.saveConfirmCallback");
+		}
+	};
+
+	/**
+	 * 수정/저장 CnfirmCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var requestData = {};
+		requestData.dltMenuList = dltMenuList.getModifiedJSON();
+
+		var option = {action : "zz/authmng/saveMenuMngList.do",
+			reqData : requestData,
+			success : "scwin.saveMenuMngCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 수정/저장 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+ 	*/
+	scwin.saveMenuMngCallback = function(resBody) {
+		if (scwin.saveFlag == "D") {
+			// 삭제되었습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00328"));
+		} else {
+			// 저장되었습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00327"));
+		}
+
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 작업중이던 내용을 취소한다.
+	 * @param
+	 * @return
+	 */ 
+	scwin.btnCancl_onclick = function() {
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 선택한 메뉴를 삭제한다.
+	 * @param
+	 * @return
+	 */ 
+	scwin.btnDel_onclick = function() {
+		scwin.rowIndex = grdMenuList.getRealRowIndex(grdMenuList.getFocusedRowIndex());
+
+		var menuId = dltMenuList.getCellData(scwin.rowIndex, "menuId");
+
+		if (menuId != null && menuId != "") {
+			// 등록된 메뉴가 있는지 확인을 하고 없으면 삭제처리를 한다. 
+			dmaSaveMenu.set("menuId", menuId);
+			scwin.inqireMenuUse();
+		} else {
+			// 삭제할 자료를 선택한 후 처리하시기 바랍니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00252"));
+		}
+	};
+
+	 /**
+	 * 권한 삭제전 등록된 정보가 있는지 확인한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireMenuUse = function() {
+		var requestData = {};
+		requestData.dmaSaveMenu = dmaSaveMenu.getJSON();
+
+		// 하위메뉴가 있는지 조회
+		var childMenuList = dltMenuList.getMatchedJSON("upperMenuId", requestData.dmaSaveMenu.menuId, true);
+
+		if (childMenuList.length > 0) {
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00246", dltMenuList.getCellData(scwin.rowIndex, "menuNm")));
+			return;
+		}
+
+		var option = {action : "zz/authmng/selectMenuUse.do",
+			reqData : requestData,
+			resData : dmaInqireMenuUse,
+			success : "scwin.inqireMenuUseCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	 /**
+	 * 권한 삭제전 등록된 정보조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireMenuUseCallback = function(resBody) {
+		var menuCnt = 0;
+		var usrCnt = 0;
+
+		if (resBody.message.code == "success") {
+			menuCnt = dmaInqireMenuUse.get("menuCnt");
+			usrCnt = dmaInqireMenuUse.get("usrCnt");
+
+			if (menuCnt == 0 && usrCnt == 0) {
+				scwin.saveFlag = "D";
+				dltMenuList.deleteRow(scwin.rowIndex);
+				scwin.saveCnfirm();
+			} else {
+				// 사용중인 권한그룹은 삭제 못하도록 메세지 알림
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00246", dltMenuList.getCellData(scwin.rowIndex, "menuNm")));
+			}
+		}
+	};
+]]></script>
+	</head>
+	<body>
+		<w2:wframe class="wfm_title" id="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml" ></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group id="grpInqire" class="search-box">
+				<xf:group class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="시스템구분"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="actIntnSysdivCd1" chooseOptionLabel="- 전체 -" editType="select"
+									ev:onviewchange="scwin.actIntnSysdivCd1_onviewchange" ref="data:dmaInqireParam.menuSysDivCd" search="contain"
+									submenuSize="auto" useKeywordHighlight="false" visibleRowNum="5" disabled="true">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltSysDivCdList">
+											<w2:label ref="sysDivCdNm"></w2:label>
+											<w2:value ref="sysDivCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="1레벨" style="display:none;"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:select1 id="sbxFstLvl" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass="w2selectbox_disabled"
+									displayMode="label" optionOrder="false" selectedData="true" style="display:none;" submenuSize="auto" ref="data:dmaInqireParam.fstLvl"
+									chooseOptionLabel="전체">
+									<xf:choices>
+										<xf:itemset nodeset="data:dltLvl1">
+											<xf:label ref="menuNm"></xf:label>
+											<xf:value ref="menuId"></xf:value>
+										</xf:itemset>
+									</xf:choices>
+								</xf:select1>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="2레벨" style="display:none;"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:select1 id="sbxSecLvl" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass="w2selectbox_disabled"
+									displayMode="label" optionOrder="false" selectedData="true" style="display:none;" submenuSize="auto" ref="data:dmaInqireParam.secLvl"
+									chooseOptionLabel="전체">
+									<xf:choices>
+										<xf:itemset nodeset="data:dltLvl2">
+											<xf:label ref="menuNm"></xf:label>
+											<xf:value ref="menuId"></xf:value>
+										</xf:itemset>
+									</xf:choices>
+								</xf:select1>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:span label="3레벨" style="display:none;"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:select1 id="sbxThrLvl" appearance="minimal" chooseOption="true" direction="auto" disabled="false" disabledClass="w2selectbox_disabled"
+									displayMode="label" optionOrder="false" selectedData="true" style="display:none;" submenuSize="auto" ref="data:dmaInqireParam.theLvl"
+									chooseOptionLabel="전체">
+									<xf:choices>
+										<xf:itemset nodeset="data:dltLvl3">
+											<xf:label ref="menuNm"></xf:label>
+											<xf:value ref="menuId"></xf:value>
+										</xf:itemset>
+									</xf:choices>
+								</xf:select1>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" ev:onclick="scwin.btnInqire_onclick" userData1="Q">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span id="spnSubTitle" label="메뉴목록">
+							</w2:span>
+							<w2:span id="txtCnt" class="title-num" label="0">
+							</w2:span>
+						</xf:group>
+						<xf:group class="com-area">
+							<xf:group class="btn-group">
+								<w2:anchor id="btnUpRowCfmln" class="up_move fa fa-angle-up" ev:onclick="scwin.btnUpRowMenu_onclick" outerDiv="false">
+									<xf:label><![CDATA[행위로]]></xf:label>
+								</w2:anchor>
+								<w2:anchor id="btnDownRowCfmln" class="down_move fa fa-angle-down" ev:onclick="scwin.btnDownRowMenu_onclick" outerDiv="false">
+									<xf:label><![CDATA[행아래로]]></xf:label>
+								</w2:anchor>
+								<w2:anchor id="btnSmrkLvl" ev:onclick="scwin.btnSmrkLvl_onclick" outerDiv="false">
+									<xf:label><![CDATA[동급레벨]]></xf:label>
+								</w2:anchor>
+								<w2:anchor id="btnLwprtLvl" ev:onclick="scwin.btnLwprtLvl_onclick" outerDiv="false">
+									<xf:label><![CDATA[하위레벨]]></xf:label>
+								</w2:anchor>
+								<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down" outerDiv="false" ev:onclick="scwin.btnDownExcel_onclick"
+									userData1="E">
+									<xf:label><![CDATA[엑셀]]></xf:label>
+								</w2:anchor>
+							</xf:group>
+							<xf:group class="info-box">
+							</xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="list-box box">
+						<w2:gridView id="grdMenuList" scrollByColumnAdaptive="false" summaryAuto="false" useShiftKey="true" scrollByColumn="false"
+							focusMode="row" dataList="dltMenuList" ignoreCellClick="false" visibleRowNum="19" ignoreToggleOnDisabled="false" fixedColumn="3"
+							tooltipDisplay="true" style="height:45.4rem;" keyMoveEditMode="true" defaultCellHeight="35">
+							<w2:caption></w2:caption>
+							<w2:header>
+								<w2:row>
+									<w2:column id="hMenuNm" inputType="text" value="메뉴명" width="220">
+									</w2:column>
+									<w2:column id="hMenuId" inputType="text" value="메뉴ID" width="120">
+									</w2:column>
+									<w2:column id="hScrinId" width="210" inputType="text" value="화면ID" colSpan="3">
+									</w2:column>
+									<w2:column id="hScrinNm" width="130" inputType="text" value="화면명">
+									</w2:column>
+									<w2:column id="hMenuOrdr" width="100" inputType="text" value="메뉴순서">
+									</w2:column>
+									<w2:column id="hMenuApplcDe" width="100" inputType="text" value="메뉴적용일">
+									</w2:column>
+									<w2:column id="hMenuEndDe" width="100" inputType="text" value="메뉴종료일">
+									</w2:column>
+									<w2:column id="hCallParm" width="60" inputType="text" value="호출파라미터">
+									</w2:column>
+									<w2:column id="hMenuDc" width="60" inputType="text" value="메뉴설명">
+									</w2:column>
+									<w2:column id="hPopupYn" width="60" inputType="text" value="팝업여부">
+									</w2:column>
+									<w2:column id="hUseYn" width="60" inputType="text" value="사용여부">
+									</w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="menuNm" inputType="drilldown" width="220" textAlign="left" depthColumn="menuLvl" depthType="line"
+										showDepth="1">
+									</w2:column>
+									<w2:column id="menuId" inputType="text" width="120"></w2:column>
+									<w2:column id="scrinId" width="130" inputType="text" textAlign="left" readOnly="true">
+									</w2:column>
+									<w2:column id="inqireScrin" width="40" inputType="image" imageSrc="/resources/images/common/btn_tcm_src.png"
+										imageClickFunction="scwin.inqireScrin">
+									</w2:column>
+									<w2:column id="removeScrin" width="40" inputType="image" imageSrc="/resources/images/common/btn_tcm_clear_H.png"
+										imageClickFunction="scwin.removeScrin">
+									</w2:column>
+									<w2:column id="scrinNm" width="130" inputType="text" readOnly="true">
+									</w2:column>
+									<w2:column id="menuOrdr" width="100" inputType="text"></w2:column>
+									<w2:column id="menuApplcDe" width="100" inputType="calendar"></w2:column>
+									<w2:column id="menuEndDe" width="100" inputType="calendar"></w2:column>
+									<w2:column id="callParm" width="80" inputType="text" textAlign="left">
+									</w2:column>
+									<w2:column id="menuDc" width="90" inputType="text" textAlign="left">
+									</w2:column>
+									<w2:column id="popupYn" width="60" inputType="checkbox" chooseOption="true" checkboxLabel="&amp;nbsp"
+										dataType="boolean" falseValue="N" trueValue="Y" valueType="other">
+									</w2:column>
+									<w2:column id="useYn" width="60" inputType="checkbox" chooseOption="true" checkboxLabel="&amp;nbsp"
+										dataType="boolean" falseValue="N" trueValue="Y" valueType="other">
+									</w2:column>
+								</w2:row>
+							</w2:gBody>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnSave" outerDiv="false" ev:onclick="scwin.btnSave_onclick" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnCancl" outerDiv="false" ev:onclick="scwin.btnCancl_onclick" userData1="CC">
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDel" outerDiv="false" ev:onclick="scwin.btnDel_onclick" userData1="D">
+						<xf:label><![CDATA[삭제]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

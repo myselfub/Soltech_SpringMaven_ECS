@@ -1,0 +1,125 @@
+
+.btn-group .w2anchor2{background:#3d92a1;}
+.btn-group a.add_row, .btn-group a.del_row{background:#62b1bf;}
+
+.title-group h4, .title-group h5{color:#286c8b;}
+.title-group .com-area .info-box > span:nth-child(1):before{color:#3d92a1;}
+.box > .search-box a.btn_sh {background: #9db0ca;}
+.box .title-group .com-area .btn-group a {color:#339a94; border:1px solid #3d92a1;}
+.box .title-group .com-area .btn-group a.add_row:before, .box .title-group .com-area .btn-group a.del_row:before, .comp a.add_row:before, 
+.comp a.del_row:before, .comp a.del_row .box .title-group .com-area .btn-group a.del_row:before{color:#3d92a1;}
+.w2group.view-box > .w2tb .w2tb_th{background:#f2fbfa;}
+.view-box .info-box > span:nth-child(1):before{color:#3d92a1;}
+.view-box table td> a.w2anchor2, .list-box table td > a.w2anchor2, .view-box table td .mix-box >div> a.w2anchor2, 
+.list-box table td > div > a.w2anchor2 {color: #33b1b3;background-color: #eef9f7;border: 1px solid #a4d0c2;}
+
+/*레이아웃*/
+#header{background:#3d92a1;}
+#header .usermenu{background:#1b5d69;}
+#header .usermenu li.m-on{background-color:#3d92a1;}
+#header .search .input_search input{color:#166166;}
+#header .search .input_search input::placeholder{color:#166166;}
+#header .search .input_search a:before{color:#297f8e !important;}
+#header .nav .w2treeview{background:#3d92a1;}
+#header .nav .w2treeview .w2treeview_row_child{background:#4e898d;}
+#header .nav .w2treeview .w2treeview_open_child {border-bottom: 1px solid #398997;}
+#header .nav .w2treeview_table_node .w2treeview_table_node .w2treeview_child.w2treeview_none{background:#12494c;}
+#header .nav .w2treeview_open_child .w2treeview_row_parent.w2treeview_row_depth1{background:#297f8e;}
+#header .nav .w2treeview_row_depth2 .w2treeview_col_label span{background:#226c71;}
+#header .nav .w2treeview_row_depth2 .w2treeview_col_label span.w2treeview_select_node{background:#166166;}
+#header .nav .w2treeview_row_depth3{background-color:#12494c;}
+#header .nav .w2treeview_row_depth3 .w2treeview_col_label span.w2treeview_select_node{background:#12494c; border-left: 3px solid #00e3ff;}
+#header .nav .w2treeview_row_parent.w2treeview_row_depth4{background:#12494c;}
+#header .nav .w2treeview_open_child .w2treeview_row_depth4 .w2treeview_col_label span.w2treeview_select_node{background:#297f8e;}
+#header .nav .w2treeview_row_parent.w2treeview_row_depth5{background:#12494c;}
+#header .nav .w2treeview_row_parent.w2treeview_row_depth6{background:#12494c;}
+#header .nav .w2treeview_row_depth6 .w2treeview_col_label span.w2treeview_select_node {background:#12494c; color:#00e3ff;}
+
+#contents .ctr_box > a {background: url(../images/frame/bg_ctrbox.png) no-repeat;}
+
+/*조회영역*/
+/* .search-box{background: #d3e6e4 url(../images/common/bg_search_coolgreen.png) repeat-x left top;} */
+.search-box{background: #d3e6e4;}
+.search-box .list td> .w2anchor2{background:#548993;}
+.search-box .w2anchor2.btn_sh{background:#3d92a1;}
+.toggle-btn, .toggle-btn2{background: url(../images/common/btn_toggle_search.png) center no-repeat #62b1bf !important;}
+
+/*그리드*/
+.view-box td .w2grid th.gridHeaderTDDefault {color: #666768 !important;}
+.w2grid .gridHeaderTableDefault th.gridHeaderTDDefault{background:#f2fbfa;}
+.w2grid_plus{background-image: url(../images/common/grid-plus_coolgreen.png) !important;}
+.w2grid_minus{background-image: url(../images/common/grid-minus_coolgreen.png) !important;}
+.view-box .w2tb .mix-box >a, .gridBodyDefault button{color:#5f9d8b;}
+.view-box td .w2grid {border: 1px solid #dadada;}
+.view-box td .w2grid .gridBodyDefault {border-color: #dadada !important;}
+.gridBodyDefault button {color: #33b1b3;background: #eef9f7;border: 1px solid #a4d0c2;}
+/* .w2grid .gridHeaderTableDefault input[type=checkbox]:checked + label:before {background: url(../images/common/checkbox_checked_coolgreen.png) no-repeat;} */
+/* .w2grid .gridBodyDefault input[type=checkbox]:checked + label:before {background: url(../images/common/checkbox_checked_coolgreen.png) no-repeat;} */
+
+/*컴포넌트*/
+.input_search a:before{color:#5f9d8b;}
+.w2inputCalendar_button:before{color:#5f9d8b;}
+.w2selectbox .w2selectbox_col_button, 
+/* .w2checkcombobox .w2checkcombobox_col_button {background: url(../images/common/bg_select_coolgreen.png) no-repeat 10px center;} */
+.w2checkcombobox .w2checkcombobox_col_button {background: url(../images/common/bg_select_ds.png) no-repeat 10px center;}
+.w2table_sb_col_over,.w2table_sb_col_focus{background:#e9f1ed; color:#61108b;}
+.w2input_table_sb_col_over{background:#e9f1ed; color:#22811a;}
+.w2input_table_sb{border:1px solid #cbcbcb}
+.w2table_ccb_col_checkbox:checked + label {background: url(../images/common/checkbox_checked_coolgreen.png) no-repeat;}
+.w2table_ccb_col_over{background:#e9f1ed;}
+.w2table_ccb_col_focus .w2table_ccb_col_label,.w2table_ccb_col_over .w2table_ccb_col_label{color:#22811a;}
+/* .w2autoComplete .w2autoComplete_col_button {background: url(../images/common/bg_select_coolgreen.png) no-repeat 10px center;} */
+.w2autoComplete .w2autoComplete_col_button {background: url(../images/common/bg_select_ds.png) no-repeat 10px center;}
+/* .w2radio_item input[type=radio]:checked + label {background: url(../images/common/radio_checked_coolgreen.png) no-repeat;} */
+/* .w2checkbox_item input[type=checkbox]:checked + label {background: url(../images/common/checkbox_checked_coolgreen.png) no-repeat;} */
+/* .w2treeview_open_child .w2treeview_icon_navi {background: url(../images/websquare/treeview/images/minus_coolgreen.png) no-repeat center center;} */
+.w2spinner.w2_horizon.type1 .w2spinner_down:BEFORE{color:#0dd9f1;}
+.w2spinner.w2_horizon.type1 .w2spinner_up:BEFORE{color:#0dd9f1;}
+
+/* UDC */
+.gb_udc_cal .cal_to_wrap .btn_cal:before, .gb_udc_cal .month_wrap .btn_cal:before{color:#5f9d8b;}
+.gb_udc_cal .quarter_wrap .btn_cal:before{color:#5f9d8b;}
+.gb_udc_cal .year_wrap .btn_cal:before{color:#5f9d8b;}
+.gb_udc_cal .time_wrap .btn_cal:before{color:#5f9d8b;}
+
+/* 탭 */
+.w2tabcontrol > .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center{background:#3d92a1 !important;}
+.w2tabcontrol > .w2tabcontrol_tabhost{border-bottom:2px solid #3d92a1;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control.mask .w2tabcontrol_control.scroll > ul.w2tabcontrol_tabhost li.w2tabcontrol_active {border: 1px solid #3d92a1;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center a{color:#3d92a1 !important;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control{border-bottom:1px solid #3d92a1 !important;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control .w2tabcontrol_control.btn_scrollLeft{background: url(../images/common/tab_tab_arrow_prev_coolgreen.png) no-repeat center center transparent;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control .w2tabcontrol_control.btn_scrollRight{background: url(../images/common/tab_tab_arrow_next_coolgreen.png) no-repeat center center transparent;}
+.w2tabcontrol .w2tabcontrol .w2tabcontrol_control .w2tabcontrol_control.btn_submenu {background: url(../images/common/tab_tab_list_coolgreen.png) no-repeat center center transparent;}
+
+/* ECS */
+:root {
+	--wrap-ecs-top-back-color: #338B9A;
+	--wrap-ecs-top-info-back-color: #257280;
+	--content-default-btn-back: #2D8392;
+	--dash-grd-header-back-color: #3DD0EA;
+	--dash-grd-subtotal-back-color: #BFEBF3;
+	--dash-box-con-title-back-color: #72D3E4;
+	--dash-water-drop-shape-back-color: #79DCED;
+	--dash-belt-menu-back-color: #D4F9FF;
+	--dash-belt-menu-color: #28C8E4;
+	--dash-cbn-ntrlt-sign-color: #63E8FF;
+	--dash-cbn-ntrlt-box-shadow-color: #70EAFF9E;
+	--pagination-item-active-color: #7FECFF;
+	--pagination-item-color: #7FECFF88;
+
+	--dash-square-top-plan-back-color: #65ADEC;
+	--dash-square-top-plan-back-color-hover: #65ADEC78;
+	--dash-square-top-cnstrc-back-color: #5EAAEF;
+	--dash-square-top-cnstrc-back-color-hover: #5EAAEF7D;
+	--dash-square-top-prdctn-back-color: #4BD8EF;
+	--dash-square-top-prdctn-back-color-hover: #4BD8EF7D;
+	--dash-square-top-cnstn-back-color: #4AD3E9;
+	--dash-square-top-cnstn-back-color-hover: #4AD3E982;
+	--dash-square-top-mng-back-color: #2C8EE6;
+	--dash-square-top-mng-back-color-hover: #2C8EE682;
+	--dash-square-top-excclc-back-color: #17B6CF;
+	--dash-square-top-excclc-back-color-hover: #17B6CF87;
+	--dash-square-top-dsuse-back-color: #0674D4;
+	--dash-square-top-dsuse-back-color-hover: #0674D487;
+}

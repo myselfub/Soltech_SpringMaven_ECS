@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "생산/소비 종합현황 대시보드 탄소중립현황_공장",
+			"version": "",
+			"apis": [],
+			"pluginName": "dash_cbn_ntrlt_factory",
+			"width": "1550px",
+			"company": "Soltech",
+			"developer": "WHS",
+			"componentName": "dash_cbn_ntrlt_factory",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "207px"
+			}
+		-->
+		<xf:group id="grpObjFactory" class="dash-cbn-ntrlt-factory" tagname="svg" pluginName="dash_cbn_ntrlt_factory">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initDashCbnNtrltFactory = function() {
+					// 기본 설정
+					var dashCbnNtrltFactoryClipPathUrl = "url(#" + grpDashCbnNtrltFactoryClipPath.getID() + ")";
+
+					document.getElementById(grpClipPath.getID()).setAttribute("clip-path", dashCbnNtrltFactoryClipPathUrl);
+				};
+
+				// 초기 실행함수 수행
+				this.initDashCbnNtrltFactory();
+		]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>100</w2:width>
+				<w2:height>108</w2:height>
+				<w2:viewBox>0 0 100 108</w2:viewBox>
+				<w2:fill>none</w2:fill>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="g">
+				<xf:group tagname="defs">
+					<xf:group id="grpDashCbnNtrltFactoryClipPath" tagname="clipPath">
+						<xf:group tagname="rect">
+							<w2:attributes>
+								<w2:width>90.9087</w2:width>
+								<w2:height>100.502</w2:height>
+								<w2:fill>white</w2:fill>
+								<w2:transform>translate(4.85742)</w2:transform>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="g">
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M98.8835 105.809C99.3474 106.924 98.4088 108 97.2009 108H1.80345C0.595531 108 -0.343136 106.924 0.120825 105.809C4.02503 96.424
+								24.6478 89.2644 49.5022 89.2644C74.3566 89.2644 94.9793 96.424 98.8835 105.809Z
+							</w2:d>
+							<w2:fill>#2D3538</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group id="grpClipPath" tagname="g">
+						<w2:attributes>
+							<w2:clip-path>url(#grpDashCbnNtrltFactoryClipPath)</w2:clip-path>
+						</w2:attributes>
+						<xf:group tagname="g">
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M95.2307 66.3771L85.0566 56.9299L74.8826 47.477L74.8302 64.2982L66.897 56.9299L56.7229 47.477L56.6706 64.2982L48.7315
+										56.9299L38.5575 47.477L38.4993 66.222V66.2737H35.1526L27.8247 15.0236H14.1933L4.85742 83.026H5.0786L4.93891
+										83.204V97.2283H95.0677V66.5264L95.2307 66.3771Z
+									</w2:d>
+									<w2:fill>#CDD1D5</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M27.8246 15.0236H20.8809V66.0785H35.1234L27.8246 15.0236Z
+									</w2:d>
+									<w2:fill>#A3ADB5</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M13.3145 21.4327H28.7443L28.3427 18.6129H13.6986L13.3145 21.4327Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M12.3652 28.3414H29.7275L29.128 24.1089H12.9415L12.3652 28.3414Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M20.8809 21.4327H28.7442L28.3426 18.6129H20.8809V21.4327Z
+									</w2:d>
+									<w2:fill>#243338</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M29.7279 28.3414L29.1284 24.1089H20.8809V28.3414H29.7279Z
+									</w2:d>
+									<w2:fill>#243338</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M66.7162 61.1625L74.7076 68.5307L74.7192 64.0799L66.9665 56.93L56.7226 47.4771L56.7109 51.9278L66.7162 61.1625Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M84.8123 61.1625L95.1086 70.5465L95.2308 66.3771L85.0568 56.93L74.8827 47.4771L74.8711 51.9278L84.8123 61.1625Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M48.6433 61.1625L56.7104 68.5307L56.722 64.0799L48.8994 56.93L38.5566 47.4771L38.5449 51.9278L48.6433 61.1625Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M30.3458 78.9714H15.1953V84.9269H30.3458V78.9714Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M53.4044 78.9714H38.2539V84.9269H53.4044V78.9714Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M76.4649 78.9714H61.3145V84.9269H76.4649V78.9714Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M95.7662 96.3324H4.86914V100.502H95.7662V96.3324Z
+									</w2:d>
+									<w2:fill>#364E57</w2:fill>
+								</w2:attributes>
+							</xf:group>
+							<xf:group tagname="path">
+								<w2:attributes>
+									<w2:d>
+										M22.3008 12.3244C22.3008 12.3244 31.788 -5.86931 46.2517 1.9526C60.7154 9.78026 66.6231 18.5842 81.5582 10.7566C81.5582
+										10.7566 75.8018 25.2346 61.9609 20.1463C48.12 15.058 36.7645 3.31943 22.3008 12.3186V12.3244Z
+									</w2:d>
+									<w2:fill>#A1AAAD</w2:fill>
+								</w2:attributes>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="dash-cbn-ntrlt-factory-data-box dash-cbn-ntrlt-factory-data-box-dsqty">
+				<w2:span id="spnCbnNtrltDsqty" class="dash-cbn-ntrlt-factory-data-box-data" label="-"></w2:span>
+				<w2:span class="dash-cbn-ntrlt-factory-data-box-unit" label=" tCO2"></w2:span>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

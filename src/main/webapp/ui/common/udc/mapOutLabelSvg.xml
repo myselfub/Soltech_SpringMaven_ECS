@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "지도 바깥쪽 라벨",
+			"version": "",
+			"apis": [],
+			"pluginName": "map_out_label",
+			"width": "80px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "map_out_label",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "80px"
+			}
+		-->
+		<xf:group class="map-out-label" tagname="svg" pluginName="map_out_label">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수
+				this.initMapOutLabel = function() {
+					// fill 설정
+					if (options.fill && options.fill != "") {
+						var color = options.fill;
+						if (color == "H") {
+							color = "url(#" + grpLinearH.getID() + ")";
+						} else if (color == "G") {
+							color = "url(#" + grpLinearG.getID() + ")";
+						} else if (color == "N") {
+							color = "url(#" + grpLinearN.getID() + ")";
+						} else if (color == "Y") {
+							color = "url(#" + grpLinearY.getID() + ")";
+						}
+						document.getElementById(grpMapOutLabelFill.getID()).setAttribute("fill", color);
+					}
+				};
+
+				// 초기 실행함수 수행
+				this.initMapOutLabel();
+				]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>80</w2:width>
+				<w2:viewBox>0 0 80 80</w2:viewBox>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="defs">
+				<xf:group id="grpLinearH" tagname="linearGradient">
+					<w2:attributes>
+						<w2:x1>40</w2:x1>
+						<w2:y1>0</w2:y1>
+						<w2:x2>40</w2:x2>
+						<w2:y2>80</w2:y2>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+					</w2:attributes>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.473958</w2:offset>
+							<w2:stop-color>#96E325</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.578125</w2:offset>
+							<w2:stop-color>#81C220</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpLinearG" tagname="linearGradient">
+					<w2:attributes>
+						<w2:x1>40</w2:x1>
+						<w2:y1>0</w2:y1>
+						<w2:x2>40</w2:x2>
+						<w2:y2>80</w2:y2>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+					</w2:attributes>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.473958</w2:offset>
+							<w2:stop-color>#F6D007</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.578125</w2:offset>
+							<w2:stop-color>#E6BE34</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpLinearN" tagname="linearGradient">
+					<w2:attributes>
+						<w2:x1>40</w2:x1>
+						<w2:y1>0</w2:y1>
+						<w2:x2>40</w2:x2>
+						<w2:y2>80</w2:y2>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+					</w2:attributes>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.473958</w2:offset>
+							<w2:stop-color>#3080F9</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.578125</w2:offset>
+							<w2:stop-color>#2F6CC8</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpLinearY" tagname="linearGradient">
+					<w2:attributes>
+						<w2:x1>40</w2:x1>
+						<w2:y1>0</w2:y1>
+						<w2:x2>40</w2:x2>
+						<w2:y2>80</w2:y2>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+					</w2:attributes>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.473958</w2:offset>
+							<w2:stop-color>##EE58A0</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.578125</w2:offset>
+							<w2:stop-color>##CF2979</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group id="grpMapOutLabelFill" tagname="path">
+				<w2:attributes>
+					<w2:fill-rule>evenodd</w2:fill-rule>
+					<w2:clip-rule>evenodd</w2:clip-rule>
+					<w2:d>M40 80C62.0914 80 80 62.0914 80 40C80 17.9086 62.0914 0 40 0C17.9086 0 0 17.9086 0 40C0 62.0914 17.9086 80 40 80ZM40 74.4C58.9986
+						74.4 74.4 58.9986 74.4 40C74.4 21.0014 58.9986 5.6 40 5.6C21.0014 5.6 5.6 21.0014 5.6 40C5.6 58.9986 21.0014 74.4 40 74.4Z
+					</w2:d>
+					<w2:fill></w2:fill>
+				</w2:attributes>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

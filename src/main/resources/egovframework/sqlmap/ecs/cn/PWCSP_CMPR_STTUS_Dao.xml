@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 소비 - 사업장 소비전력 비교현황 -->
+<mapper namespace="PWCSP_CMPR_STTUS_Dao">
+	<sql id="PWCSP_CMPR_STTUS_Dao_Default">
+		WITH MONTH_DATE_LIST AS (
+			SELECT /*+ MATERIALZE */
+				<choose>
+					<when test='null != cnd and "mnby" == cnd'>
+				TO_CHAR(ADD_MONTHS(TO_DATE(SUBSTR(#{strtDt}, 0, 4) - 1 || '01', 'yyyyMM'), LEVEL - 1), 'yyyyMM') AS mt_de
+					</when>
+					<otherwise>
+				TO_CHAR(TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '0101', 'yyyyMMdd') + LEVEL - 1, 'yyyyMMdd') AS mt_de
+					</otherwise>
+				</choose>
+			FROM
+				DUAL
+			CONNECT BY
+				<choose>
+					<when test='null != cnd and "mnby" == cnd'>
+				LEVEL &lt;= MONTHS_BETWEEN(TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '12', 'yyyyMM'), TO_DATE(SUBSTR(#{strtDt}, 0, 4) - 1 || '01', 'yyyyMM')) + 1
+					</when>
+					<otherwise>
+				TO_CHAR(TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '0101', 'yyyyMMdd') + LEVEL - 1, 'yyyyMMdd') &lt;= #{strtDt}
+					</otherwise>
+				</choose>
+		), MAPPING_INIT_LIST AS (
+			SELECT /*+ MATERIALZE */
+				stdr_use_de,
+				disc_fclty_no AS dscfc_id,
+				(
+					SELECT
+						dscfc_nm
+					FROM
+						GHG.tm_gg01101
+					WHERE
+						dscfc_use_yn = '1'
+						AND dscfc_regist_stat_div_cd = '1'
+						AND dscfc_use_fuel_div_cd = '61' /* 전기 */
+						AND dscfc_bplc_cd != '88888889' /* 위탁 */
+						AND dscfc_id = AA.disc_fclty_no
+				) AS dscfc_nm,
+				cntrct_elteng
+			FROM (
+				SELECT /*+ LEADING(A B) */
+					B.stdr_use_de,
+					A.bplc_fnct_lc_no,
+					A.plnt_no,
+					A.dstrct_hq_cd,
+					A.disc_fclty_no,
+					B.cntrct_elteng
+				FROM
+					WRO.ti_pg20058 A, (
+						SELECT
+							stdr_use_de,
+							bplc_fnct_lc_no,
+							plnt_no,
+							cntrct_elteng
+						FROM
+							WRO.tm_pg07072
+						WHERE
+							stdr_use_de BETWEEN SUBSTR((
+								SELECT
+									MIN(mt_de)
+								FROM
+									MONTH_DATE_LIST
+								), 0, 4) - 4 || '0101' /* 5년 */
+							AND SUBSTR((
+								SELECT
+									MAX(mt_de)
+								FROM
+									MONTH_DATE_LIST
+								), 0, 4) || '1231'
+							AND cntrct_elteng &gt; 0
+					) B
+				WHERE
+					A.bplc_fnct_lc_no = B.bplc_fnct_lc_no
+					AND A.plnt_no = B.plnt_no
+			) AA
+		), MAPPING_LIST AS (
+			SELECT /*+ MATERIALZE */
+				mt_de,
+				dscfc_id,
+				dscfc_nm,
+				(
+					SELECT
+						cntrct_elteng
+					FROM (
+						SELECT
+							ROWNUM AS rn,
+							cntrct_elteng,
+							seq
+						FROM (
+							SELECT
+								MAPPING_INIT_LIST.cntrct_elteng,
+								(TO_NUMBER(MAPPING_INIT_LIST.stdr_use_de) - TO_NUMBER(SUBSTR(B.mt_de, 0, 6) || TO_CHAR(LAST_DAY(TO_DATE(SUBSTR(B.mt_de, 0, 6), 'yyyyMM')), 'dd')))AS seq
+								/* MIN(MAPPING_INIT_LIST.cntrct_elteng) OVER(PARTITION BY dscfc_nm ORDER BY (TO_NUMBER(MAPPING_INIT_LIST.stdr_use_de) - TO_NUMBER(SUBSTR(B.mt_de, 0, 6) || TO_CHAR(LAST_DAY(TO_DATE(SUBSTR(B.mt_de, 0, 6), 'yyyyMM')), 'dd'))) DESC) AS cntrct_elteng */
+							FROM
+								MAPPING_INIT_LIST
+							WHERE
+								MAPPING_INIT_LIST.dscfc_id = B.dscfc_id
+								AND (TO_NUMBER(MAPPING_INIT_LIST.stdr_use_de) - TO_NUMBER(SUBSTR(B.mt_de, 0, 6) || TO_CHAR(LAST_DAY(TO_DATE(SUBSTR(B.mt_de, 0, 6), 'yyyyMM')), 'dd'))) &lt;= 0
+							ORDER BY
+								seq DESC
+						)
+					)
+					WHERE
+						rn = 1
+				) AS cntrct_elteng
+			FROM (
+				SELECT /*+ LEADING(MONTH_DATE_LIST A) */
+					MONTH_DATE_LIST.mt_de,
+					A.dscfc_id,
+					A.dscfc_nm
+				FROM
+					MONTH_DATE_LIST, (
+						SELECT
+							dscfc_id,
+							MAX(dscfc_nm) AS dscfc_nm
+						FROM
+							MAPPING_INIT_LIST
+						WHERE
+							dscfc_nm IS NOT NULL
+						GROUP BY
+							dscfc_id
+					) A
+			) B
+		),
+		<choose>
+			<when test='null != cnd and "mnby" == cnd'>
+		PWCSP_DATA_INIT_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(MAPPING_LIST A B) */
+				SUBSTR(MAPPING_LIST.mt_de, 0, 6) AS mt,
+				MAPPING_LIST.dscfc_id,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1000'
+						AND cmmn_cd = (
+							SELECT
+								upper_cmmn_cd
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = 'ECS_2001'
+								AND cmmn_cd = B.upper_cmmn_cd
+					)
+				) AS basin_nm,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2001'
+						AND cmmn_cd = B.upper_cmmn_cd
+				) AS dept_nm,
+				(
+					SELECT
+						cmmn_cd
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2001'
+						AND cmmn_cd = B.upper_cmmn_cd
+				) AS dept_cd,
+				B.cmmn_cd_nm AS cnstsc_nm,
+				B.sort_ordr,
+				MAPPING_LIST.cntrct_elteng,
+				A.sum_dscfc_usgqty /* KW */
+			FROM
+				MAPPING_LIST, (
+					SELECT
+						dscfc_id,
+						SUBSTR(dscfc_use_de, 0, 6) AS dscfc_use_de,
+						SUM(sum_dscfc_usgqty) AS sum_dscfc_usgqty
+					FROM (
+						SELECT
+							ABC.dscfc_id,
+							ABC.dscfc_use_de,
+							MAX(ABC.usgqty) AS sum_dscfc_usgqty
+						FROM (
+							SELECT
+								AA.dscfc_id,
+								AA.dscfc_use_de,
+								CASE
+									WHEN AA.dsqty_cfrml_parm_id IN ('2005', '2001')
+									THEN MAX(AA.dscfc_usgqty)
+								END AS usgqty
+							FROM (
+								SELECT /*+ LEADING(B A) */
+									A.dscfc_id,
+									A.dscfc_use_de,
+									B.dsqty_cfrml_parm_id,
+									B.dsqty_cfrml_parm_nm,
+									A.dscfc_usgqty
+								FROM
+									GHG.tm_rq01103 A,
+									GHG.tm_gg01104 B
+								WHERE
+									(
+										(A.dscfc_use_slip_no IS NOT NULL
+										AND A.dscfc_use_slip_no NOT LIKE 'TMP%')
+										OR A.dscfc_use_slip_prcs_ty_cd = '1'
+									)
+									AND A.dscfc_use_de BETWEEN SUBSTR((
+											SELECT
+												MIN(mt_de)
+											FROM
+												MONTH_DATE_LIST
+										), 0, 6) || '01'
+									AND SUBSTR((
+											SELECT
+												MAX(mt_de)
+											FROM
+												MONTH_DATE_LIST
+										), 0, 6) || '31'
+									AND A.dsqty_cfrml_parm_id IN ('2005', '2001')
+									AND A.dsqty_cfrml_parm_id = B.dsqty_cfrml_parm_id
+							) AA
+							GROUP BY
+								AA.dscfc_id,
+								AA.dscfc_use_de,
+								AA.dsqty_cfrml_parm_id,
+								AA.dsqty_cfrml_parm_nm
+						) ABC
+						GROUP BY
+							ABC.dscfc_id,
+							ABC.dscfc_use_de
+					)
+					GROUP BY
+						dscfc_id,
+						SUBSTR(dscfc_use_de, 0, 6)
+				) A, (
+					SELECT
+						cmmn_cd,
+						upper_cmmn_cd,
+						cmmn_cd_nm,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2002'
+				) B
+			WHERE
+				MAPPING_LIST.dscfc_id = A.dscfc_id(+)
+				AND SUBSTR(MAPPING_LIST.mt_de, 0, 6) = A.dscfc_use_de(+)
+				AND MAPPING_LIST.dscfc_nm LIKE '%' || B.cmmn_cd_nm || '%'
+		), PWCSP_DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				mt AS use_de,
+				basin_nm,
+				dept_nm,
+				dept_cd,
+				cnstsc_nm,
+				NVL(cntrct_elteng, NULL) AS cntrct_elteng,
+				NVL((
+					SELECT
+						SUM(A.sum_dscfc_usgqty) AS yy_cnstn
+					FROM
+						PWCSP_DATA_INIT_LIST A
+					WHERE
+						A.mt BETWEEN SUBSTR((
+							SELECT
+								MAX(mt_de)
+							FROM
+								MONTH_DATE_LIST
+							), 0, 4) || '01' AND SUBSTR(#{strtDt}, 0, 6)
+						AND A.dscfc_id = PWCSP_DATA_INIT_LIST.dscfc_id
+					GROUP BY
+						SUBSTR(A.mt, 0, 4),
+						A.dscfc_id
+				), 0) AS yy_cnstn,
+				NVL(sum_dscfc_usgqty, 0) AS mt_cnstn,
+				NVL((
+					SELECT
+						A.sum_dscfc_usgqty
+					FROM
+						PWCSP_DATA_INIT_LIST A
+					WHERE
+						A.mt = SUBSTR((
+							SELECT
+								MAX(mt_de)
+							FROM
+								MONTH_DATE_LIST
+							), 0, 4) - 1 || SUBSTR(#{strtDt}, 5, 2)
+						AND A.dscfc_id = PWCSP_DATA_INIT_LIST.dscfc_id
+				), 0) AS pre_yy_mt_cnstn
+			FROM
+				PWCSP_DATA_INIT_LIST
+			WHERE
+				mt = #{strtDt}
+		)
+			</when>
+			<otherwise>
+		PWCSP_DATA_INIT_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(B A) */
+				A.kepco_inqire_de,
+				A.kepco_cstmr_no,
+				B.cmmn_cd_nm AS cnstsc_nm,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1000'
+						AND cmmn_cd = (
+							SELECT
+								upper_cmmn_cd
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = 'ECS_2001'
+								AND cmmn_cd = B.upper_cmmn_cd
+					)
+				) AS basin_nm,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2001'
+						AND cmmn_cd = B.upper_cmmn_cd
+				) AS dept_nm,
+				(
+					SELECT
+						cmmn_cd
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2001'
+						AND cmmn_cd = B.upper_cmmn_cd
+				) AS dept_cd,
+				A.epwr_usgqty, /* KW */
+				B.sort_ordr
+			FROM (
+					SELECT
+						kepco_inqire_de,
+						kepco_cstmr_no,
+						SUM(epwr_usgqty) AS epwr_usgqty
+					FROM (
+						SELECT
+							kepco_inqire_de,
+							kepco_cstmr_no,
+							epwr_usgqty
+						FROM
+							ti_ecs_kepco_cnsmp
+						WHERE
+							kepco_inqire_de BETWEEN SUBSTR((
+								SELECT
+									MAX(mt_de)
+								FROM
+									MONTH_DATE_LIST
+								), 0, 4) || '0101'
+							AND SUBSTR((
+								SELECT
+									MAX(mt_de)
+								FROM
+									MONTH_DATE_LIST
+								), 0, 4) || '1231'
+							AND kepco_cstmr_no != '0'
+					)
+					GROUP BY
+						kepco_inqire_de,
+						kepco_cstmr_no
+				) A, (
+					SELECT
+						cmmn_cd,
+						upper_cmmn_cd,
+						cmmn_cd_nm,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2002'
+				) B
+			WHERE
+				A.kepco_cstmr_no = B.cmmn_cd
+		), PWCSP_DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				kepco_inqire_de AS use_de,
+				basin_nm,
+				dept_nm,
+				dept_cd,
+				cnstsc_nm,
+				NVL((
+					SELECT
+						cntrct_elteng
+					FROM
+						MAPPING_LIST
+					WHERE
+						MAPPING_LIST.mt_de = PWCSP_DATA_INIT_LIST.kepco_inqire_de
+						AND MAPPING_LIST.dscfc_nm LIKE '%' || PWCSP_DATA_INIT_LIST.cnstsc_nm || '%'
+				), NULL) AS cntrct_elteng,
+				NVL((
+					SELECT
+						SUM(A.epwr_usgqty) AS yy_cnstn
+					FROM
+						PWCSP_DATA_INIT_LIST A
+					WHERE
+						A.kepco_inqire_de BETWEEN SUBSTR((
+							SELECT
+								MAX(mt_de)
+							FROM
+								MONTH_DATE_LIST
+							), 0, 4) || '0101' AND SUBSTR(#{strtDt}, 0, 8)
+						AND A.kepco_cstmr_no = PWCSP_DATA_INIT_LIST.kepco_cstmr_no
+					GROUP BY
+						SUBSTR(A.kepco_inqire_de, 0, 4),
+						A.kepco_cstmr_no
+				), 0) AS yy_cnstn,
+				epwr_usgqty AS mt_cnstn,
+				NVL((
+					SELECT
+						A.epwr_usgqty
+					FROM
+						PWCSP_DATA_INIT_LIST A
+					WHERE
+						A.kepco_inqire_de = TO_CHAR(TO_DATE(SUBSTR(#{strtDt}, 0, 8), 'yyyyMMdd') - 1, 'yyyyMMdd')
+						AND A.kepco_cstmr_no = PWCSP_DATA_INIT_LIST.kepco_cstmr_no
+				), 0) AS pre_yy_mt_cnstn
+			FROM
+				PWCSP_DATA_INIT_LIST
+			WHERE
+				kepco_inqire_de = #{strtDt}
+		)
+			</otherwise>
+		</choose>
+		, DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				basin_nm,
+				dept_nm,
+				dept_cd,
+				cntrct_elteng,
+				yy_cnstn,
+				mt_cnstn,
+				pre_yy_mt_cnstn,
+				redcn_rt,
+				redcn_rt_org,
+				ROWNUM AS wnty_rnk,
+				COUNT(*) OVER() AS wnty_cnt,
+				ROW_NUMBER() OVER(PARTITION BY basin_nm ORDER BY redcn_rt_org) AS basin_rnk,
+				COUNT(basin_nm) OVER(PARTITION BY basin_nm) AS basin_cnt
+			FROM (
+				SELECT
+					MAX(basin_nm) AS basin_nm,
+					MAX(dept_nm) AS dept_nm,
+					dept_cd AS dept_cd,
+					ROUND(SUM(cntrct_elteng), 0) AS cntrct_elteng,
+					ROUND(SUM(yy_cnstn), 1) AS yy_cnstn,
+					ROUND(SUM(mt_cnstn), 1) AS mt_cnstn,
+					ROUND(SUM(pre_yy_mt_cnstn), 1) AS pre_yy_mt_cnstn,
+					ABS(CASE
+						WHEN SUM(pre_yy_mt_cnstn) != 0 AND (SUM(mt_cnstn) / SUM(pre_yy_mt_cnstn)) &gt;= 0
+						THEN ROUND(((SUM(mt_cnstn) / SUM(pre_yy_mt_cnstn)) - 1) * 100, 1)
+						WHEN SUM(pre_yy_mt_cnstn) != 0 AND (SUM(mt_cnstn) / SUM(pre_yy_mt_cnstn)) &lt; 0
+						THEN ROUND((1 - (SUM(mt_cnstn) / SUM(pre_yy_mt_cnstn))) * 100, 1)
+						ELSE NULL
+					END) AS redcn_rt,
+					CASE
+						WHEN SUM(pre_yy_mt_cnstn) != 0 AND (SUM(mt_cnstn) / SUM(pre_yy_mt_cnstn)) &gt;= 0
+						THEN ROUND(((SUM(mt_cnstn) / SUM(pre_yy_mt_cnstn)) - 1) * 100, 1)
+						WHEN SUM(pre_yy_mt_cnstn) != 0 AND (SUM(mt_cnstn) / SUM(pre_yy_mt_cnstn)) &lt; 0
+						THEN ROUND((1 - (SUM(mt_cnstn) / SUM(pre_yy_mt_cnstn))) * 100, 1)
+						ELSE NULL
+					END AS redcn_rt_org
+				FROM
+					PWCSP_DATA_LIST
+				GROUP BY
+					dept_cd
+				ORDER BY
+					redcn_rt_org,
+					mt_cnstn DESC
+			)
+		), DATA_GRID_LIST AS (
+			SELECT /*+ MATERIALZE */
+				dept_nm,
+				dept_cd,
+				basin_nm,
+				cntrct_elteng AS eqp_ccty,
+				yy_cnstn AS fyer_acml_cnsmp_elteng,
+				pre_yy_mt_cnstn AS pre_yy_mt_cnsmp_elteng,
+				mt_cnstn AS thsmon_cnsmp_elteng,
+				redcn_rt AS prvyy_samm_versus_pwcsp_dcrs_rt,
+				redcn_rt_org AS prvyy_samm_versus_pwcsp_dcrs_rt_org,
+				wnty_rnk AS wnty_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+				wnty_cnt AS wnty_prvyy_samm_versus_cnsmp_redcn_rt_cnt,
+				basin_rnk AS basin_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+				basin_cnt AS basin_prvyy_samm_versus_cnsmp_redcn_rt_cnt
+			FROM
+				DATA_LIST
+			WHERE
+				dept_cd = #{ecsChrgDeptId}
+			UNION ALL
+			SELECT
+				dept_nm,
+				dept_cd,
+				basin_nm,
+				cntrct_elteng AS eqp_ccty,
+				yy_cnstn AS fyer_acml_cnsmp_elteng,
+				pre_yy_mt_cnstn AS pre_yy_mt_cnsmp_elteng,
+				mt_cnstn AS thsmon_cnsmp_elteng,
+				redcn_rt AS prvyy_samm_versus_pwcsp_dcrs_rt,
+				redcn_rt_org AS prvyy_samm_versus_pwcsp_dcrs_rt_org,
+				wnty_rnk AS wnty_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+				wnty_cnt AS wnty_prvyy_samm_versus_cnsmp_redcn_rt_cnt,
+				basin_rnk AS basin_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+				basin_cnt AS basin_prvyy_samm_versus_cnsmp_redcn_rt_cnt
+			FROM
+				DATA_LIST
+			WHERE
+				dept_cd = #{cmprEcsChrgDeptId}
+		), DATA_CHART_LIST AS (
+			SELECT /*+ MATERIALZE */
+				MIN(ROWNUM) AS seq,
+				MAX(dept_nm) AS dept_nm,
+				dept_cd,
+				cnstsc_nm,
+				MAX(mt_cnstn) AS mt_cnstn,
+				MAX(pre_yy_mt_cnstn) AS pre_yy_mt_cnstn,
+				MAX(redcn_rt) AS redcn_rt
+			FROM (
+				SELECT
+					dept_nm,
+					dept_cd,
+					dept_nm AS cnstsc_nm,
+					mt_cnstn,
+					pre_yy_mt_cnstn,
+					redcn_rt
+				FROM
+					DATA_LIST
+				WHERE
+					dept_cd = #{ecsChrgDeptId}
+				UNION ALL
+				SELECT
+					dept_nm,
+					dept_cd,
+					cnstsc_nm,
+					mt_cnstn,
+					pre_yy_mt_cnstn,
+					redcn_rt
+				FROM (
+					SELECT
+						dept_nm,
+						dept_cd,
+						cnstsc_nm,
+						mt_cnstn,
+						pre_yy_mt_cnstn,
+						ABS(CASE
+							WHEN pre_yy_mt_cnstn != 0 AND (mt_cnstn / pre_yy_mt_cnstn) &gt;= 0
+							THEN ROUND(((mt_cnstn / pre_yy_mt_cnstn) - 1) * 100, 1)
+							WHEN pre_yy_mt_cnstn != 0 AND (mt_cnstn / pre_yy_mt_cnstn) &lt; 0
+							THEN ROUND((1 - (mt_cnstn / pre_yy_mt_cnstn)) * 100, 1)
+							ELSE NULL
+						END) AS redcn_rt,
+						CASE
+							WHEN pre_yy_mt_cnstn != 0 AND (mt_cnstn / pre_yy_mt_cnstn) &gt;= 0
+							THEN ROUND(((mt_cnstn / pre_yy_mt_cnstn) - 1) * 100, 1)
+							WHEN pre_yy_mt_cnstn != 0 AND (mt_cnstn / pre_yy_mt_cnstn) &lt; 0
+							THEN ROUND((1 - (mt_cnstn / pre_yy_mt_cnstn)) * 100, 1)
+							ELSE NULL
+						END AS redcn_rt_org
+					FROM
+						PWCSP_DATA_LIST
+					WHERE
+						dept_cd = #{ecsChrgDeptId}
+					ORDER BY
+						dept_cd,
+						redcn_rt_org
+					)
+				UNION ALL
+				SELECT
+					dept_nm,
+					dept_cd,
+					dept_nm AS cnstsc_nm,
+					mt_cnstn,
+					pre_yy_mt_cnstn,
+					redcn_rt
+				FROM
+					DATA_LIST
+				WHERE
+					dept_cd = #{cmprEcsChrgDeptId}
+				UNION ALL
+				SELECT
+					dept_nm,
+					dept_cd,
+					cnstsc_nm,
+					mt_cnstn,
+					pre_yy_mt_cnstn,
+					redcn_rt
+				FROM (
+					SELECT
+						dept_nm,
+						dept_cd,
+						cnstsc_nm,
+						mt_cnstn,
+						pre_yy_mt_cnstn,
+						ABS(CASE
+							WHEN pre_yy_mt_cnstn != 0 AND (mt_cnstn / pre_yy_mt_cnstn) &gt;= 0
+							THEN ROUND(((mt_cnstn / pre_yy_mt_cnstn) - 1) * 100, 1)
+							WHEN pre_yy_mt_cnstn != 0 AND (mt_cnstn / pre_yy_mt_cnstn) &lt; 0
+							THEN ROUND((1 - (mt_cnstn / pre_yy_mt_cnstn)) * 100, 1)
+							ELSE NULL
+						END) AS redcn_rt,
+						CASE
+							WHEN pre_yy_mt_cnstn != 0 AND (mt_cnstn / pre_yy_mt_cnstn) &gt;= 0
+							THEN ROUND(((mt_cnstn / pre_yy_mt_cnstn) - 1) * 100, 1)
+							WHEN pre_yy_mt_cnstn != 0 AND (mt_cnstn / pre_yy_mt_cnstn) &lt; 0
+							THEN ROUND((1 - (mt_cnstn / pre_yy_mt_cnstn)) * 100, 1)
+							ELSE NULL
+						END AS redcn_rt_org
+					FROM
+						PWCSP_DATA_LIST
+					WHERE
+						dept_cd = #{cmprEcsChrgDeptId}
+					ORDER BY
+						dept_cd,
+						redcn_rt_org
+					)
+			)
+			GROUP BY
+				dept_cd,
+				cnstsc_nm
+		)
+	</sql>
+
+	<select id="PWCSP_CMPR_STTUS_Dao_retrievePwcspCmprSttusList" parameterType="kw.ecs.cn.pwcspcmprsttus.vo.PwcspCmprSttusVo" resultType="egovMap">
+		/* PWCSP_CMPR_STTUS_Dao_retrievePwcspCmprSttusList */
+		<include refid="PWCSP_CMPR_STTUS_Dao.PWCSP_CMPR_STTUS_Dao_Default"></include>
+		SELECT
+			dept_nm,
+			TO_CHAR(eqp_ccty, 'FM999,999,999') AS eqp_ccty,
+			TO_CHAR(fyer_acml_cnsmp_elteng, 'FM999,999,999') AS fyer_acml_cnsmp_elteng,
+			TO_CHAR(pre_yy_mt_cnsmp_elteng, 'FM999,999,999') AS pre_yy_mt_cnsmp_elteng,
+			TO_CHAR(thsmon_cnsmp_elteng, 'FM999,999,999') AS thsmon_cnsmp_elteng,
+			CASE
+				WHEN prvyy_samm_versus_pwcsp_dcrs_rt_org &gt; 0
+				THEN <![CDATA['<span style="color:#FF0024;">&#9650;&nbsp;</span>']]>
+				WHEN prvyy_samm_versus_pwcsp_dcrs_rt_org &lt; 0
+				THEN <![CDATA['<span style="color:#0082FF;">&#9660;&nbsp;</span>']]>
+				ELSE ''
+			END || TO_CHAR(prvyy_samm_versus_pwcsp_dcrs_rt, 'FM999,999,990.0') AS prvyy_samm_versus_pwcsp_dcrs_rt,
+			TO_CHAR(wnty_prvyy_samm_versus_cnsmp_redcn_rt_rnk, 'FM999,999,999') || '/' || TO_CHAR(wnty_prvyy_samm_versus_cnsmp_redcn_rt_cnt, 'FM999,999,999') || '위' AS wnty_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+			CASE
+				WHEN basin_nm = LEAD(basin_nm) OVER (ORDER BY rownum) OR basin_nm = LAG(basin_nm) OVER (ORDER BY rownum)
+				THEN TO_CHAR(basin_prvyy_samm_versus_cnsmp_redcn_rt_rnk, 'FM999,999,999') || '/' || TO_CHAR(basin_prvyy_samm_versus_cnsmp_redcn_rt_cnt, 'FM999,999,999') || '위'
+				ELSE '-'
+			END AS basin_prvyy_samm_versus_cnsmp_redcn_rt_rnk
+		FROM
+			DATA_GRID_LIST
+		UNION ALL
+		SELECT
+			dept_nm,
+			CASE
+				WHEN (eqp_ccty_stdr - eqp_ccty_cmpr) &gt; 0
+				THEN <![CDATA['<span style="color:#FF0024;">&#9650;&nbsp;</span>']]> || TO_CHAR((eqp_ccty_stdr - eqp_ccty_cmpr), 'FM999,999,999')
+				WHEN (eqp_ccty_stdr - eqp_ccty_cmpr) = 0
+				THEN '' || TO_CHAR((eqp_ccty_stdr - eqp_ccty_cmpr), 'FM999,999,999')
+				WHEN (eqp_ccty_stdr - eqp_ccty_cmpr) &lt; 0
+				THEN <![CDATA['<span style="color:#0082FF;">&#9660;&nbsp;</span>']]> || TO_CHAR(ABS((eqp_ccty_stdr - eqp_ccty_cmpr)), 'FM999,999,999')
+				ELSE '-'
+			END AS eqp_ccty,
+			fyer_acml_cnsmp_elteng,
+			CASE
+				WHEN (pre_yy_mt_cnsmp_elteng_stdr - pre_yy_mt_cnsmp_elteng_cmpr) &gt; 0
+				THEN <![CDATA['<span style="color:#FF0024;">&#9650;&nbsp;</span>']]> || TO_CHAR((pre_yy_mt_cnsmp_elteng_stdr - pre_yy_mt_cnsmp_elteng_cmpr), 'FM999,999,999')
+				WHEN (pre_yy_mt_cnsmp_elteng_stdr - pre_yy_mt_cnsmp_elteng_cmpr) = 0
+				THEN '' || TO_CHAR((pre_yy_mt_cnsmp_elteng_stdr - pre_yy_mt_cnsmp_elteng_cmpr), 'FM999,999,999')
+				WHEN (pre_yy_mt_cnsmp_elteng_stdr - pre_yy_mt_cnsmp_elteng_cmpr) &lt; 0
+				THEN <![CDATA['<span style="color:#0082FF;">&#9660;&nbsp;</span>']]> || TO_CHAR(ABS((pre_yy_mt_cnsmp_elteng_stdr - pre_yy_mt_cnsmp_elteng_cmpr)), 'FM999,999,999')
+				ELSE '-'
+			END AS pre_yy_mt_cnsmp_elteng,
+			CASE
+				WHEN (thsmon_cnsmp_elteng_stdr - thsmon_cnsmp_elteng_cmpr) &gt; 0
+				THEN <![CDATA['<span style="color:#FF0024;">&#9650;&nbsp;</span>']]> || TO_CHAR((thsmon_cnsmp_elteng_stdr - thsmon_cnsmp_elteng_cmpr), 'FM999,999,999')
+				WHEN (thsmon_cnsmp_elteng_stdr - thsmon_cnsmp_elteng_cmpr) = 0
+				THEN '' || TO_CHAR((thsmon_cnsmp_elteng_stdr - thsmon_cnsmp_elteng_cmpr), 'FM999,999,999')
+				WHEN (thsmon_cnsmp_elteng_stdr - thsmon_cnsmp_elteng_cmpr) &lt; 0
+				THEN <![CDATA['<span style="color:#0082FF;">&#9660;&nbsp;</span>']]> || TO_CHAR(ABS((thsmon_cnsmp_elteng_stdr - thsmon_cnsmp_elteng_cmpr)), 'FM999,999,999')
+				ELSE '-'
+			END AS thsmon_cnsmp_elteng,
+			prvyy_samm_versus_pwcsp_dcrs_rt,
+			wnty_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+			basin_prvyy_samm_versus_cnsmp_redcn_rt_rnk
+		FROM (
+			SELECT
+				'비교현황' AS dept_nm,
+				eqp_ccty AS eqp_ccty_stdr,
+				LEAD(eqp_ccty) OVER (ORDER BY rownum) AS eqp_ccty_cmpr,
+				'-' AS fyer_acml_cnsmp_elteng,
+				pre_yy_mt_cnsmp_elteng AS pre_yy_mt_cnsmp_elteng_stdr,
+				LEAD(pre_yy_mt_cnsmp_elteng) OVER (ORDER BY rownum) AS pre_yy_mt_cnsmp_elteng_cmpr,
+				thsmon_cnsmp_elteng AS thsmon_cnsmp_elteng_stdr,
+				LEAD(thsmon_cnsmp_elteng) OVER (ORDER BY rownum) AS thsmon_cnsmp_elteng_cmpr,
+				'-' AS prvyy_samm_versus_pwcsp_dcrs_rt,
+				'-' AS wnty_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+				'-' AS basin_prvyy_samm_versus_cnsmp_redcn_rt_rnk
+			FROM
+				DATA_GRID_LIST
+		)
+		WHERE
+			ROWNUM = 1
+		UNION ALL
+		SELECT
+			dept_nm,
+			CASE
+				WHEN eqp_ccty_stdr &gt; 0 AND eqp_ccty_cmpr &gt; 0 AND (eqp_ccty_stdr / eqp_ccty_cmpr) &gt; 1
+				THEN <![CDATA['<span style="color:#FF0024;">&#9650;&nbsp;</span>']]> || ROUND(((eqp_ccty_stdr / eqp_ccty_cmpr) - 1) * 100, 1)
+				WHEN eqp_ccty_stdr &gt; 0 AND eqp_ccty_cmpr &gt; 0 AND (eqp_ccty_stdr / eqp_ccty_cmpr) &lt; 1
+				THEN <![CDATA['<span style="color:#0082FF;">&#9660;&nbsp;</span>']]> || ROUND((1 - (eqp_ccty_stdr / eqp_ccty_cmpr)) * 100, 1)
+				WHEN eqp_ccty_stdr &gt; 0 AND eqp_ccty_cmpr &gt; 0 AND (eqp_ccty_stdr / eqp_ccty_cmpr) = 1
+				THEN '' || ROUND((1 - (eqp_ccty_stdr / eqp_ccty_cmpr)) * 100, 1)
+				ELSE '-'
+			END || '%' AS eqp_ccty,
+			fyer_acml_cnsmp_elteng,
+			CASE
+				WHEN pre_yy_mt_cnsmp_elteng_stdr &gt; 0 AND pre_yy_mt_cnsmp_elteng_cmpr &gt; 0 AND (pre_yy_mt_cnsmp_elteng_stdr / pre_yy_mt_cnsmp_elteng_cmpr) &gt; 1
+				THEN <![CDATA['<span style="color:#FF0024;">&#9650;&nbsp;</span>']]> || ROUND(((pre_yy_mt_cnsmp_elteng_stdr / pre_yy_mt_cnsmp_elteng_cmpr) - 1) * 100, 1)
+				WHEN pre_yy_mt_cnsmp_elteng_stdr &gt; 0 AND pre_yy_mt_cnsmp_elteng_cmpr &gt; 0 AND (pre_yy_mt_cnsmp_elteng_stdr / pre_yy_mt_cnsmp_elteng_cmpr) &lt; 1
+				THEN <![CDATA['<span style="color:#0082FF;">&#9660;&nbsp;</span>']]> || ROUND((1 - (pre_yy_mt_cnsmp_elteng_stdr / pre_yy_mt_cnsmp_elteng_cmpr)) * 100, 1)
+				WHEN pre_yy_mt_cnsmp_elteng_stdr &gt; 0 AND pre_yy_mt_cnsmp_elteng_cmpr &gt; 0 AND (pre_yy_mt_cnsmp_elteng_stdr / pre_yy_mt_cnsmp_elteng_cmpr) = 1
+				THEN '' || ROUND((1 - (pre_yy_mt_cnsmp_elteng_stdr / pre_yy_mt_cnsmp_elteng_cmpr)) * 100, 1)
+				ELSE '-'
+			END || '%' AS pre_yy_mt_cnsmp_elteng,
+			CASE
+				WHEN thsmon_cnsmp_elteng_stdr &gt; 0 AND thsmon_cnsmp_elteng_cmpr &gt; 0 AND (thsmon_cnsmp_elteng_stdr / thsmon_cnsmp_elteng_cmpr) &gt; 1
+				THEN <![CDATA['<span style="color:#FF0024;">&#9650;&nbsp;</span>']]> || ROUND(((thsmon_cnsmp_elteng_stdr / thsmon_cnsmp_elteng_cmpr) - 1) * 100, 1)
+				WHEN thsmon_cnsmp_elteng_stdr &gt; 0 AND thsmon_cnsmp_elteng_cmpr &gt; 0 AND (thsmon_cnsmp_elteng_stdr / thsmon_cnsmp_elteng_cmpr) &lt; 1
+				THEN <![CDATA['<span style="color:#0082FF;">&#9660;&nbsp;</span>']]> || ROUND((1 - (thsmon_cnsmp_elteng_stdr / thsmon_cnsmp_elteng_cmpr)) * 100, 1)
+				WHEN thsmon_cnsmp_elteng_stdr &gt; 0 AND thsmon_cnsmp_elteng_cmpr &gt; 0 AND (thsmon_cnsmp_elteng_stdr / thsmon_cnsmp_elteng_cmpr) = 1
+				THEN '' || ROUND((1 - (thsmon_cnsmp_elteng_stdr / thsmon_cnsmp_elteng_cmpr)) * 100, 1)
+				ELSE '-'
+			END || '%' AS thsmon_cnsmp_elteng,
+			prvyy_samm_versus_pwcsp_dcrs_rt,
+			wnty_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+			basin_prvyy_samm_versus_cnsmp_redcn_rt_rnk
+		FROM (
+			SELECT
+				'비교현황' AS dept_nm,
+				eqp_ccty AS eqp_ccty_stdr,
+				LEAD(eqp_ccty) OVER (ORDER BY rownum) AS eqp_ccty_cmpr,
+				'-' AS fyer_acml_cnsmp_elteng,
+				pre_yy_mt_cnsmp_elteng AS pre_yy_mt_cnsmp_elteng_stdr,
+				LEAD(pre_yy_mt_cnsmp_elteng) OVER (ORDER BY rownum) AS pre_yy_mt_cnsmp_elteng_cmpr,
+				thsmon_cnsmp_elteng AS thsmon_cnsmp_elteng_stdr,
+				LEAD(thsmon_cnsmp_elteng) OVER (ORDER BY rownum) AS thsmon_cnsmp_elteng_cmpr,
+				'-' AS prvyy_samm_versus_pwcsp_dcrs_rt,
+				'-' AS wnty_prvyy_samm_versus_cnsmp_redcn_rt_rnk,
+				'-' AS basin_prvyy_samm_versus_cnsmp_redcn_rt_rnk
+			FROM
+				DATA_GRID_LIST
+		)
+		WHERE
+			ROWNUM = 1
+	</select>
+
+	<select id="PWCSP_CMPR_STTUS_Dao_retrievePwcspCmprSttusChart" parameterType="kw.ecs.cn.pwcspcmprsttus.vo.PwcspCmprSttusVo" resultType="egovMap">
+		/* PWCSP_CMPR_STTUS_Dao_retrievePwcspCmprSttusChart */
+		<include refid="PWCSP_CMPR_STTUS_Dao.PWCSP_CMPR_STTUS_Dao_Default"></include>
+		SELECT
+			dept_nm,
+			dept_cd,
+			cnstsc_nm,
+			mt_cnstn,
+			pre_yy_mt_cnstn,
+			redcn_rt
+		FROM
+			DATA_CHART_LIST
+		ORDER BY
+			seq
+	</select>
+</mapper>

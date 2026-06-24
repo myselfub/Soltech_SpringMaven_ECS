@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_INTN_USR_ATHR_Dao">
+	<select id="TM_ECS_INTN_USR_ATHR_Dao_retriebeUsrAthrGrp" parameterType="kw.ecs.zz.authmng.vo.UsrAthrGrpMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_USR_ATHR_Dao_retriebeUsrAthrGrp */
+		SELECT
+			AT.athr_id,
+			AT.athr_nm,
+			UI.empno AS usr_id,
+			UI.korname AS usr_nm,
+			UI.empno AS usr_empno,
+			UI.buscd AS usr_dept_cd,
+			UI.dept AS usr_dept_nm,
+			UI.calcd AS usr_ofcps_cd,
+			UI.posit AS usr_ofcps_nm,
+			UI.zgrcd AS usr_jgrd_cd,
+			UI.grade AS usr_jgrd_nm,
+			AT.applc_strt_de,
+			AT.applc_end_de
+		FROM
+			HRM.vm_hr01601 UI,
+			(SELECT
+				C.athr_id,
+				C.athr_nm,
+				B.usr_id,
+				B.applc_strt_de,
+				B.applc_end_de,
+				C.use_yn
+			FROM
+				tm_ecs_intn_usr_athr B,
+				tm_ecs_intn_athr C
+			WHERE
+				B.athr_id = C.athr_id
+		<if test="athrId != null and athrId != ''">
+				/*권한그룹으로 검색을 했을 경우*/
+				AND C.athr_id = #{athrId}
+		</if>
+			) AT
+		WHERE
+			1 = 1
+			/*권한그룹으로 검색을 했을 경우*/
+			AND UI.empno = AT.usr_id
+		<if test=" usrDeptNm != null and usrDeptNm != ''">
+			AND UI.dept LIKE '%' || #{usrDeptNm} || '%' --부서명으로 검색
+		</if>
+		<if test=" usrNm != null and usrNm != ''">
+			AND UI.korname LIKE '%' || #{usrNm} || '%' --사용자명으로 검색
+		</if>
+	</select>
+
+	<insert id="TM_ECS_INTN_USR_ATHR_Dao_insertUsrAhtrGrpMng" parameterType="kw.ecs.zz.authmng.vo.UsrAthrGrpMngVo">
+		/* TM_ECS_INTN_USR_ATHR_Dao_insertUsrAhtrGrpMng */
+		INSERT INTO tm_ecs_intn_usr_athr (
+				usr_id,
+				athr_id,
+				applc_strt_de,
+				applc_end_de,
+				frst_regist_dt,
+				frst_rgstr_id,
+				last_updt_dt,
+				last_updusr_id
+		) VALUES (
+			#{usrId},
+			#{athrId},
+			#{applcStrtDe},
+			#{applcEndDe},
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<insert id="TM_ECS_INTN_USR_ATHR_Dao_mergeUsrAhtrGrpMng" parameterType="kw.ecs.zz.authmng.vo.UsrAthrGrpMngVo">
+		/* TM_ECS_INTN_USR_ATHR_Dao_mergeUsrAhtrGrpMng */
+		MERGE INTO
+			tm_ecs_intn_usr_athr
+		USING DUAL ON (
+			usr_id = #{usrId}
+			AND athr_id = #{athrId}
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				applc_strt_de = #{applcStrtDe},
+				applc_end_de = #{applcEndDe},
+				last_updt_dt = SYSDATE,
+				last_updusr_id = #{lastUpdusrId}
+		WHEN NOT MATCHED THEN
+			INSERT (
+				usr_id,
+				athr_id,
+				applc_strt_de,
+				applc_end_de,
+				frst_regist_dt,
+				frst_rgstr_id,
+				last_updt_dt,
+				last_updusr_id
+			) VALUES (
+				#{usrId},
+				#{athrId},
+				#{applcStrtDe},
+				#{applcEndDe},
+				SYSDATE,
+				#{frstRgstrId},
+				SYSDATE,
+				#{lastUpdusrId}
+			)
+	</insert>
+
+	<update id="TM_ECS_INTN_USR_ATHR_Dao_updateUsrAhtrGrpMng" parameterType="kw.ecs.zz.authmng.vo.UsrAthrGrpMngVo">
+		/* TM_ECS_INTN_USR_ATHR_Dao_updateUsrAhtrGrpMng */
+		UPDATE
+			tm_ecs_intn_usr_athr
+		SET
+			applc_strt_de = #{applcStrtDe},
+			applc_end_de = #{applcEndDe},
+			last_updt_dt = SYSDATE,
+			last_updusr_id = #{lastUpdusrId}
+		WHERE
+			usr_id = #{usrId}
+			AND athr_id = #{athrId}
+	</update>
+
+	<delete id="TM_ECS_INTN_USR_ATHR_Dao_deleteUsrAhtrGrpMng" parameterType="kw.ecs.zz.authmng.vo.UsrAthrGrpMngVo">
+		/* TM_ECS_INTN_USR_ATHR_Dao_deleteUsrAhtrMng */
+		DELETE FROM
+			tm_ecs_intn_usr_athr
+		WHERE
+			usr_id = #{usrId}
+			AND athr_id = #{athrId}
+	</delete>
+
+	<select id="TM_ECS_INTN_USR_ATHR_Dao_retrieveMenuBtnAthr" parameterType="kw.ecs.zz.authmng.vo.IntnUsrMenuVo" resultType="egovMap">
+		/* 버튼 권한 조회 */
+		/* TM_ECS_INTN_USR_ATHR_Dao_retrieveMenuBtnAthr */
+		SELECT
+			DISTINCT btn_athr_list
+		FROM (
+			(SELECT
+				BTN_ATHR_LIST
+			FROM
+				tm_ecs_intn_athr_menu A,
+				tm_ecs_intn_menu B
+			WHERE
+				A.menu_id = B.menu_id
+				AND A.athr_id IN (
+					SELECT
+						ATHR_ID
+					FROM
+						tm_ecs_intn_usr_athr
+					WHERE
+						USR_ID = #{usrId}
+					UNION ALL
+					SELECT
+						#{intnSysDivCd} || 'GN01'
+					FROM
+						tm_ecs_intn_usr_athr
+					WHERE
+						1 = 1
+						<!-- #{usrId} <![CDATA[<]]> '60000000' --> /* TODO: 운영에선 용역제외 */
+				)
+				AND B.menu_sys_div_cd = #{intnSysDivCd}
+				AND B.scrin_id = #{scrinId}
+				AND btn_athr_list IS NOT NULL
+			)
+			UNION ALL (
+				SELECT
+					btn_athr_list
+				FROM
+					tm_ecs_intn_usr_menu A,
+					tm_ecs_intn_menu B
+				WHERE
+					A.menu_id = B.menu_id
+					AND A.usr_id = #{usrId}
+					AND B.menu_sys_div_cd = #{intnSysDivCd}
+					AND B.scrin_id = #{scrinId}
+					AND btn_athr_list IS NOT NULL
+			)
+		)
+	</select>
+
+	<select id="TM_ECS_INTN_USR_ATHR_Dao_selectUsrAthrUse" parameterType="kw.ecs.zz.authmng.vo.UsrAthrRqstVo" resultType="egovMap">
+		/* TM_ECS_INTN_USR_ATHR_Dao_selectUsrAthrUse */
+		SELECT
+			A.usr_id,
+			A.athr_id
+		FROM
+			tm_ecs_intn_usr_athr A
+		WHERE
+			A.usr_id = #{usrId}
+			AND A.athr_id = #{athrId}
+	</select>
+
+	<select id="TM_ECS_INTN_USR_ATHR_Dao_retrieveUsrAthr" parameterType="kw.ecs.zz.authmng.vo.UsrAthrRqstVo" resultType="egovMap">
+		/* 시스템 구분 조회 */
+		/* TM_ECS_INTN_USR_ATHR_Dao_retrieveUsrAthr */
+		SELECT
+			B.usr_id,
+			A.athr_id,
+			A.athr_nm,
+			A.athr_dc
+		FROM
+			tm_ecs_intn_athr A,
+			tm_ecs_intn_usr_athr B
+		WHERE
+			A.athr_id = B.athr_id
+			AND A.intn_sys_div_cd = #{intnSysDivCd}
+			AND B.usr_id = #{usrId}
+		<if test ="athrId != null and athrId != ''">
+			/* 권한명을 지정 후 검색을 할때 */
+			AND B.athr_id = #{athrId}
+		</if>
+		ORDER BY
+			A.athr_id
+	</select>
+</mapper>

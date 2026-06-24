@@ -1,0 +1,74 @@
+@charset "utf-8";
+
+/*그리드 소계 합계 배경색*/
+/* .w2grid .gridSubtotalDefault, .w2grid .gridSubtotalDefault.gridSubtotalDefault_rowNumber {border:0; background-color:#E5F8DA;} */
+/* .w2grid .gridFooterTableDefault, .w2grid .gridFooterTDDefault {border:0; background-color:#FFF2C6;} */
+
+/*조회조건 버튼간 간격*/
+/* .search-box.toggle-box > .btn-group{margin-right:33px !important;} */
+
+/*행추가,행삭제 바탕색변경*/
+/* .title-group .com-area .btn-group a.add_row, .title-group .com-area .btn-group a.del_row {color:#73BCE6 !important;} */
+/* .btn-group a.add_row, .btn-group a.del_row {background:#73BCE6;} */
+
+/*툴팁*/
+/* .w2selectbox_tooltip {background:RGBA(0, 0, 0, .5); border-radius:3px; font-size:11px; padding:4px 7px 3px;} */
+/* .w2selectbox_tooltip:BEFORE {content:""; display:block; width:0; height:0; left:50%; margin-left:-7px; border-left:5px solid transparent; border-right:5px solid transparent; border-bottom:5px solid RGBA(0, 0, 0, .5); position:absolute; top:-5px;} */
+/* .arr-down.w2selectbox_tooltip:BEFORE {content:""; display:block; width:0; height:0; left:50%; margin-left:-7px; border-left:5px solid transparent; border-bottom:0px; border-right:5px solid transparent; border-top:5px solid RGBA(0, 0, 0, .5); position:absolute; top:auto; bottom:-5px;} */
+
+/* .w2balloonTip {background:rgba(0, 0, 0, .5); border-radius:3px; font-size:11px;padding:4px 7px 3px; position:absolute; margin-top:-7px;} */
+/* .w2balloonTip:BEFORE {content:""; display:block; width:0; height:0; left:4.9%; margin-left:-7px; border-left:5px solid transparent; border-bottom:0px; border-right:5px solid transparent; border-top:5px solid rgba(0, 0, 0, .5); position:absolute; top:auto; bottom:-5px;} */
+/* .w2balloonTip_col_centercenter, .w2balloonTip_col_centerleft, .w2balloonTip_col_centerright {background:none;} */
+
+/* SelectBox*/
+/* .w2table_sb {border:1px solid #CBCBCB; border-radius:3px;} */
+/* .w2table_sb_col {border:0; height:24px;} */
+/* .w2table_sb_col_over, .w2table_sb_col_focus {background:#DDF0FD; color:#10618B;} */
+
+/* TabControl */
+/* .w2table_tabControl {left:auto !important; right:10px;} */
+/* .w2tabcontrol {margin-bottom:15px;} */
+/* .layout-float .con-box .w2tabcontrol {position:relative; top:-10px;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost {height:46px; background:#FFFFFF !important;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_li {margin-right:0; overflow:visible !important; background:transparent; height:46px;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_li {overflow:hidden !important;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_li:last-child .w2tabcontrol_tab_center {border-right:0px none;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_tab_center {padding:0; border:0px none; border-right:0; background:transparent;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_tab_center a {top:0; margin:0; padding:0 15px 0 14px; display:block; color:#606060; line-height:46px; font-size:15px;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center {border:0px none !important; background:#54CBED !important; color:#208DAC; box-sizing:border-box; position:relative; overflow:visible;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center:after {content:""; display:block; width:0; height:0; left:50%; margin-left:-7px; border-left:5px solid transparent; border-bottom:0px; border-right:5px solid transparent; border-top:5px solid #54CBED; position:absolute; top:auto; bottom:-5px;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center a {color:#FFFFFF !important; font-size:15px; line-height:46px; cursor:default;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active + .w2tabcontrol_li .w2tabcontrol_tab_center {border-left:1px solid #FFFFFF;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_disabled {opacity:1} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_disabled .w2tabcontrol_tab_center {background:#F7F7F7;} */
+/* .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_disabled .w2tabcontrol_tab_center a {color:#888888; line-height:46px;} */
+/* .w2tabcontrol .w2tabcontrol_tab_right, .w2tabcontrol_tab_left {display:none;} */
+/* .w2tabcontrol .w2tabcontrol_container {border:0; padding-bottom:0; background:transparent;} */
+
+/* /* Tab in TabControl */ */
+/* .w2tabcontrol .w2table_tabControl {left:auto !important; right:10px;} */
+/* .w2tabcontrol .w2tabcontrol {margin-bottom:15px;} */
+/* .layout-float .con-box .w2tabcontrol .w2tabcontrol {position:relative; top:-10px;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost {height:36px; background:#F9F9F9 url(../images/common/bg_tab_border.png) repeat-x bottom !important;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_li {margin-right:0; overflow:hidden; background:transparent; border-bottom:1px solid #E0E0E0; height:36px;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_li:last-child .w2tabcontrol_tab_center {border-right:0px none;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_tab_center {padding:0; border:0px none; border-right:0; background:transparent;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_tab_center a {top:0; margin:0; padding:0 12px 0 12px; display:block; color:#666666; line-height:36px; font-size:13px;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_tab_center a:before {position:absolute; right:0px; top:9px; content:""; display:block; width:1px; height:16px; background:#E1E1E1;} */
+/* .w2tabcontrol_tabhost .w2tabcontrol_tabhost li:FIRST-CHILD .w2tabcontrol_tab_center a:before {display:none;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_over .w2tabcontrol_tab_center {border-color:#AAA9A9; background:#E0E6EE;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center {border-color:#FFFFFF; background:#FFFFFF !important; border-bottom:2px solid #54CBED !important; color:#219EC2; box-sizing:border-box;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center a {color:#219EC2 !important; font-size:13px; line-height:36px; cursor:default;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active .w2tabcontrol_tab_center a:before {display:none;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_active + .w2tabcontrol_li .w2tabcontrol_tab_center {border-left:1px solid #FFFFFF;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_disabled {opacity:1} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_disabled .w2tabcontrol_tab_center {border-color:#DBD9D9; background:#F7F7F7;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tabhost .w2tabcontrol_disabled .w2tabcontrol_tab_center a {color:#888888; line-height:36px;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_tab_right, .w2tabcontrol_tab_left {display:none;} */
+/* .w2tabcontrol .w2tabcontrol .w2tabcontrol_container {border:0; padding-bottom:0; background:transparent;} */
+
+/* /*테이블 내 소계,합계 배경색 지정(그리드와동일) 폰트두께 bold클래스 설정*/ */
+/* .tbl-subtotal {background-color:#E5F8DA !important; font-weight:bold !important;} */
+/* .tbl-total {background-color:#FFF2C6 !important; font-weight:bold !important;} */
+/* .bold {font-weight:bold !important;} */
+/* .red {color:red;} */

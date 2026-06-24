@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 관리/폐기 - 비오차시험/변환장치 관리대장 -->
+<mapper namespace="TM_ME33001_Dao">
+	<select id="TM_ME33001_Dao_retrieveCnvrEqpList" parameterType="kw.ecs.me.cnvreqp.vo.CnvrEqpVo" resultType="egovMap">
+		/* TM_ME33001_Dao_retrieveCnvrEqpList */
+		SELECT
+			ecs_elcpwstn_div_cd,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM
+					tc_ecs_cd
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_1002'
+					AND cmmn_cd = A.ecs_elcpwstn_div_cd
+			) AS ecs_elcpwstn_div_nm,
+			cnvr_eqp_lc_nm,
+			cnvr_eqp_nm,
+			iem_cd,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM
+					tc_ecs_cd
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_2008'
+					AND cmmn_cd = A.iem_cd
+			) AS iem_nm,
+			mnfct_year,
+			eqp_qty_vu,
+			eror_exam_hist_ym,
+			eror_exam_plan_ym,
+			eror_exam_acmslt_ym,
+			rm_ctnt,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id,
+			updt_rsn
+		FROM
+			tm_me33001 A
+		WHERE
+			1 = 1
+			<if test='null != ecsElcpwstnDivCd and "" neq ecsElcpwstnDivCd and "ALL" neq ecsElcpwstnDivCd'>
+			AND ecs_elcpwstn_div_cd = #{ecsElcpwstnDivCd}
+			</if>
+			<if test='null != iemCd and "" neq iemCd and "ALL" neq iemCd'>
+			AND iem_cd IN (
+				SELECT
+					REGEXP_SUBSTR(#{iemCd}, '[^,]+', 1, LEVEL)
+				FROM
+					DUAL
+				CONNECT BY
+					LEVEL &lt;= LENGTH(REGEXP_REPLACE(#{iemCd}, '[^,]+', '')) + 1
+			)
+			</if>
+		ORDER BY
+			ecs_elcpwstn_div_cd,
+			cnvr_eqp_lc_nm,
+			cnvr_eqp_nm,
+			iem_cd
+	</select>
+
+	<update id="TM_ME33001_Dao_saveCnvrEqpList" parameterType="kw.ecs.me.cnvreqp.vo.CnvrEqpVo">
+		/* TM_ME33001_Dao_saveCnvrEqpList */
+		MERGE INTO
+			tm_me33001 A
+		USING (
+			SELECT
+				#{ecsElcpwstnDivCd} AS ecs_elcpwstn_div_cd,
+				#{cnvrEqpLcNm} AS cnvr_eqp_lc_nm,
+				#{cnvrEqpNm} AS cnvr_eqp_nm,
+				#{iemCd} AS iem_cd,
+				#{mnfctYear} AS mnfct_year,
+				#{eqpQtyVu} AS eqp_qty_vu,
+				#{erorExamHistYm} AS eror_exam_hist_ym,
+				#{erorExamPlanYm} AS eror_exam_plan_ym,
+				#{erorExamAcmsltYm} AS eror_exam_acmslt_ym,
+				#{rmCtnt} AS rm_ctnt,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.ecs_elcpwstn_div_cd = B.ecs_elcpwstn_div_cd
+			AND A.cnvr_eqp_lc_nm = B.cnvr_eqp_lc_nm
+			AND A.cnvr_eqp_nm = B.cnvr_eqp_nm
+			AND A.iem_cd = B.iem_cd
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.mnfct_year = B.mnfct_year,
+				A.eqp_qty_vu = B.eqp_qty_vu,
+				A.eror_exam_hist_ym = B.eror_exam_hist_ym,
+				A.eror_exam_plan_ym = B.eror_exam_plan_ym,
+				A.eror_exam_acmslt_ym = B.eror_exam_acmslt_ym,
+				A.rm_ctnt = B.rm_ctnt,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.ecs_elcpwstn_div_cd,
+				A.cnvr_eqp_lc_nm,
+				A.cnvr_eqp_nm,
+				A.iem_cd,
+				A.mnfct_year,
+				A.eqp_qty_vu,
+				A.eror_exam_hist_ym,
+				A.eror_exam_plan_ym,
+				A.eror_exam_acmslt_ym,
+				A.rm_ctnt,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.ecs_elcpwstn_div_cd,
+				B.cnvr_eqp_lc_nm,
+				B.cnvr_eqp_nm,
+				B.iem_cd,
+				B.mnfct_year,
+				B.eqp_qty_vu,
+				B.eror_exam_hist_ym,
+				B.eror_exam_plan_ym,
+				B.eror_exam_acmslt_ym,
+				B.rm_ctnt,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<delete id="TM_ME33001_Dao_deleteCnvrEqpList" parameterType="kw.ecs.me.cnvreqp.vo.CnvrEqpVo">
+		/* TM_ME33001_Dao_deleteCnvrEqpList */
+		DELETE FROM
+			tm_me33001
+		WHERE
+			ecs_elcpwstn_div_cd = #{ecsElcpwstnDivCd}
+			AND cnvr_eqp_lc_nm = #{cnvrEqpLcNm}
+			AND cnvr_eqp_nm = #{cnvrEqpNm}
+			AND iem_cd = #{iemCd}
+	</delete>
+</mapper>

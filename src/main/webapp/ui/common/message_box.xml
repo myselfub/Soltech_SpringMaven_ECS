@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript" lazy="false"><![CDATA[
+		scwin.mainLoadInd = false;
+		scwin.clickedConfirm = false;
+		/**
+		 * 메시지 박스 화면 초기화 작업을 수행한다.
+		 */
+		scwin.initScreen = function() { 
+			scwin.mainLoad();
+		};
+
+		scwin.mainLoad = function() {
+			if (scwin.mainLoadInd) {
+				//console.log("중복호출");
+				scwin.mainLoadInd = false;
+			} else {
+				scwin.mainLoadInd = true;
+				scwin.popupID = $p.getParameter("popupID");
+
+				if (scwin.popupID.indexOf("alert") > -1) {
+					btn_Yes.setStyle("display","none");
+					btn_No.setStyle("display","none");
+					btn_Confirm.setStyle("display","");
+					btn_Confirm.focus();
+				} else if (scwin.popupID.indexOf("confirm") > -1) {
+					btn_Yes.setStyle("display","");
+					btn_No.setStyle("display","");
+					btn_Yes.focus();
+					btn_Confirm.setStyle("display","none");
+				}
+				var popupStr = $p.getPopupParam();
+
+				var paramJson = utilLib.parse(popupStr);
+				scwin.closeCallbackFncName = paramJson.closeCallbackFncName;
+				scwin.isReturnValue = paramJson.isReturnValue;
+				scwin.dataCltId = paramJson.dataCltId;
+				if (!scwin.dataCltId) {
+					txaSaveRsn.remove();
+				}
+
+				if (typeof paramJson.message == "object" && paramJson.message.length > 1) {
+					//class 변경
+					var oldClass = grp_Alert.getClass();
+					if (scwin.popupID.substr(0, 5) === "alert") { //alert
+						if (paramJson.message[1] == "INFO") {
+							grp_Alert.changeClass(oldClass , "alert info");
+						} else if (paramJson.message[1] == "ERROR" || paramJson.message[1] == "SYS") {
+							grp_Alert.changeClass( oldClass , "alert warning" );
+						}
+					} else { // confirm
+						grp_Alert.changeClass( oldClass , "alert check" );
+					}
+
+					tbx_Message.setValue(utilLib.displayTextArea(paramJson.message[0]));
+				} else {
+					tbx_Message.setValue(utilLib.displayTextArea(paramJson.message));
+				}
+				scrollView2.setStyle("height", "auto");
+			}
+		};
+
+		/**
+		 * 확인 결과를 반환하면서 팝업 창을 닫는다.
+		 */
+		scwin.closeConfirm = function(returnValue) {
+			if ((typeof scwin.isReturnValue !== "undefined") && (scwin.isReturnValue === true)) {
+				comLib.closePopup($p, scwin.popupID, scwin.closeCallbackFncName, returnValue);
+			} else {
+				if (scwin.dataCltId) {
+					var dataCltIdSplit = scwin.dataCltId.split(".");
+					var dataCltCmp = $p.getComponentById(dataCltIdSplit[0]);
+					var dataCltColId = dataCltIdSplit[1];
+					var saveRsn = txaSaveRsn.getValue();
+					if (dataCltCmp.getObjectType() == "dataList") {
+						for (var idx = 0; idx < dataCltCmp.getDataLength(); idx++) {
+							if (["U", "C"].includes(dataCltCmp.getAllJSON()[idx].rowStatus)) {
+								dataCltCmp.setCellData(idx, dataCltColId, saveRsn);
+							}
+						}
+					} else if (dataCltCmp.getObjectType() == "dataMap") {
+						dataCltCmp.set(dataCltColId, saveRsn);
+					}
+				}
+
+				if (returnValue === true) {
+					comLib.closePopup($p, scwin.popupID, scwin.closeCallbackFncName);
+				} else {
+					comLib.closePopup($p, scwin.popupID);
+				}
+			}
+		};
+
+		scwin.btn_Yes_onclick = function(e) {
+			if (scwin.clickedConfirm == true) return;
+			scwin.closeConfirm(true);
+			scwin.clickedConfirm = true;
+		};
+
+		scwin.btn_No_onclick = function(e) {
+			scwin.closeConfirm(false);
+		};
+
+		/**
+		 * 팝업 창을 닫는다.
+		 */
+		scwin.btn_Confirm_onclick = function(e) {
+			if ((scwin.closeCallbackFncName !== "undefined") && (scwin.closeCallbackFncName !== "")) {
+				comLib.closePopup($p, scwin.popupID, scwin.closeCallbackFncName);
+			} else {
+				comLib.closePopup($p, scwin.popupID);
+			}
+		};
+		]]></script>
+	</head>
+	<body class="white" ev:onpageload="scwin.mainLoad">
+		<!--<w2:pageInherit id="comPage" src="/ui/common/content_common.xml" /> -->
+		<!--<w2:wframe id="wframe1" src="/ui/common/popup_header.xml" /> -->
+		<xf:group class="alert-pop">
+			<xf:group class="alert check" id="grp_Alert">
+				<w2:scrollView class="" id="scrollView2" style="position: relative;">
+					<w2:textbox id="tbx_Message" style="position: relative;" />
+					<xf:textarea id="txaSaveRsn" class="wd-100" placeholder="수정사유를 입력하세요." style="height:3rem;margin-top:0.25rem;"/>
+				</w2:scrollView>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group posi-rela">
+					<w2:anchor class="btn_com" ev:onclick="scwin.btn_Yes_onclick" id="btn_Yes" outerDiv="false" style="display: none;">
+						<xf:label><![CDATA[예]]></xf:label>
+					</w2:anchor>
+					<w2:anchor class="btn_com" ev:onclick="scwin.btn_No_onclick" id="btn_No" outerDiv="false" style="display: none;">
+						<xf:label><![CDATA[아니오]]></xf:label>
+					</w2:anchor>
+					<w2:anchor class="btn_com" ev:onclick="scwin.btn_Confirm_onclick" id="btn_Confirm" outerDiv="false" style="display: none;">
+						<xf:label><![CDATA[확인]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 에너지공통 - 사이트 통계 -->
+<mapper namespace="SITE_STATS_Dao">
+	<select id="SITE_STATS_Dao_retrieveVisitrCntByDt" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* SITE_STATS_Dao_retrieveVisitrCntByDt */
+		SELECT
+			<choose>
+				<when test='null != cnd and "mnby" eq cnd'>
+			TO_CHAR(login_dttm, 'yyyy.MM') AS dt,
+				</when>
+				<otherwise>
+			TO_CHAR(login_dttm, 'yyyy.MM.dd') AS dt,
+				</otherwise>
+			</choose>
+			count(login_dttm) AS cnt
+		FROM
+			th_sc_intn_usr_login
+		WHERE
+			<choose>
+				<when test='null != sysDivCd and "" neq sysDivCd'>
+			sys_div_cd = #{sysDivCd}
+				</when>
+				<otherwise>
+			sys_div_cd = 'ECS'
+				</otherwise>
+			</choose>
+			<choose>
+				<when test='null != cnd and "mnby" eq cnd'>
+			AND login_dttm BETWEEN TO_DATE(SUBSTR(#{strtDt}, 0, 6) || '01 00:00:00', 'yyyyMMdd HH24:MI:SS')
+			AND TO_DATE(TO_CHAR(LAST_DAY(SUBSTR(#{endDt}, 0, 6) || '01'), 'yyyyMMdd') || ' 23:59:59', 'yyyyMMdd HH24:MI:SS')
+				</when>
+				<otherwise>
+			AND login_dttm BETWEEN TO_DATE(SUBSTR(#{strtDt}, 0, 8) || ' 00:00:00', 'yyyyMMdd HH24:MI:SS')
+			AND TO_DATE(SUBSTR(#{endDt}, 0, 8) || ' 23:59:59', 'yyyyMMdd HH24:MI:SS')
+				</otherwise>
+			</choose>
+			AND etc_nm = 'success'
+		GROUP BY
+			<choose>
+				<when test='null != cnd and "mnby" eq cnd'>
+			TO_CHAR(login_dttm, 'yyyy.MM')
+				</when>
+				<otherwise>
+			TO_CHAR(login_dttm, 'yyyy.MM.dd')
+				</otherwise>
+			</choose>
+		ORDER BY
+			cnt DESC
+	</select>
+
+	<select id="SITE_STATS_Dao_retrieveDeptVisitrCntByDt" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* SITE_STATS_Dao_retrieveVisitrCntByDt */
+		SELECT
+			dept_nm,
+			ROUND(cnt / SUM(cnt) OVER(PARTITION BY NULL) * 100, 2) AS cnt
+		FROM (
+			SELECT
+				dept_nm,
+				cnt
+			FROM (
+				SELECT
+					<!--
+					<choose>
+						<when test='null != cnd and "mnby" eq cnd'>
+					TO_CHAR(login_dttm, 'yyyy.MM') AS dt,
+						</when>
+						<otherwise>
+					TO_CHAR(login_dttm, 'yyyy.MM.dd') AS dt,
+						</otherwise>
+					</choose>
+					-->
+					dept_nm,
+					count(dept_nm) AS cnt,
+					ROW_NUMBER() OVER (PARTITION BY NULL ORDER BY count(dept_nm) DESC, dept_nm) AS rn
+				FROM
+					th_sc_intn_usr_login
+				WHERE
+					<choose>
+						<when test='null != sysDivCd and "" neq sysDivCd'>
+					sys_div_cd = #{sysDivCd}
+						</when>
+						<otherwise>
+					sys_div_cd = 'ECS'
+						</otherwise>
+					</choose>
+					<choose>
+						<when test='null != cnd and "mnby" eq cnd'>
+					AND login_dttm BETWEEN TO_DATE(SUBSTR(#{strtDt}, 0, 6) || '01 00:00:00', 'yyyyMMdd HH24:MI:SS')
+					AND TO_DATE(TO_CHAR(LAST_DAY(SUBSTR(#{endDt}, 0, 6) || '01'), 'yyyyMMdd') || ' 23:59:59', 'yyyyMMdd HH24:MI:SS')
+						</when>
+						<otherwise>
+					AND login_dttm BETWEEN TO_DATE(SUBSTR(#{strtDt}, 0, 8) || ' 00:00:00', 'yyyyMMdd HH24:MI:SS')
+					AND TO_DATE(SUBSTR(#{endDt}, 0, 8) || ' 23:59:59', 'yyyyMMdd HH24:MI:SS')
+						</otherwise>
+					</choose>
+					AND etc_nm = 'success'
+				GROUP BY
+					<!--
+					<choose>
+						<when test='null != cnd and "mnby" eq cnd'>
+					TO_CHAR(login_dttm, 'yyyy.MM'),
+						</when>
+						<otherwise>
+					TO_CHAR(login_dttm, 'yyyy.MM.dd'),
+						</otherwise>
+					</choose>
+					-->
+					dept_nm
+				ORDER BY
+					rn
+			)
+			WHERE
+				rn &lt;= 10
+		)
+		ORDER BY
+			cnt DESC
+	</select>
+
+	<select id="SITE_STATS_Dao_retrieveMtYyVisitrCntByDt" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* SITE_STATS_Dao_retrieveMtYyVisitrCntByDt */
+		SELECT
+			<choose>
+				<when test='null != cnd and "mnby" eq cnd'>
+			TO_CHAR(login_dttm, 'yyyy') AS dt,
+				</when>
+				<otherwise>
+			TO_CHAR(login_dttm, 'yyyy.MM') AS dt,
+				</otherwise>
+			</choose>
+			count(login_dttm) AS cnt
+		FROM
+			th_sc_intn_usr_login
+		WHERE
+			<choose>
+				<when test='null != sysDivCd and "" neq sysDivCd'>
+			sys_div_cd = #{sysDivCd}
+				</when>
+				<otherwise>
+			sys_div_cd = 'ECS'
+				</otherwise>
+			</choose>
+			<choose>
+				<when test='null != cnd and "mnby" eq cnd'>
+			AND login_dttm BETWEEN TO_DATE(TO_NUMBER(SUBSTR(#{endDt}, 0, 4)) - 5 || SUBSTR(#{endDt}, 5, 2) || '01 00:00:00', 'yyyyMMdd HH24:MI:SS')
+			AND TO_DATE(TO_CHAR(LAST_DAY(SUBSTR(#{endDt}, 0, 6) || '01'), 'yyyyMMdd') || ' 23:59:59', 'yyyyMMdd HH24:MI:SS')
+				</when>
+				<otherwise>
+			AND login_dttm BETWEEN ADD_MONTHS(TO_DATE(SUBSTR(#{endDt}, 0, 8) || ' 00:00:00', 'yyyyMMdd HH24:MI:SS'), -12)
+			AND TO_DATE(SUBSTR(#{endDt}, 0, 8) || ' 23:59:59', 'yyyyMMdd HH24:MI:SS')
+				</otherwise>
+			</choose>
+			AND etc_nm = 'success'
+		GROUP BY
+			<choose>
+				<when test='null != cnd and "mnby" eq cnd'>
+			TO_CHAR(login_dttm, 'yyyy')
+				</when>
+				<otherwise>
+			TO_CHAR(login_dttm, 'yyyy.MM')
+				</otherwise>
+			</choose>
+		ORDER BY
+			dt
+	</select>
+
+	<select id="SITE_STATS_Dao_retrieveVisitrCntByMenu" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* SITE_STATS_Dao_retrieveVisitrCntByMenu */
+		SELECT
+			menu_id,
+			(
+				SELECT
+					menu_nm
+				FROM
+					th_sc_menu_mapng
+				WHERE
+					sys_div_cd = A.sys_div_cd
+					AND menu_id = A.menu_id
+			) AS menu_nm,
+			count(menu_id) AS cnt
+		FROM (
+			SELECT
+				MAX(sys_div_cd) AS sys_div_cd,
+				menu_id,
+				conctr_id,
+				<choose>
+					<when test='null != cnd and "mnby" eq cnd'>
+				TO_CHAR(conect_dttm, 'yyyy.MM') AS dt
+					</when>
+					<otherwise>
+				TO_CHAR(conect_dttm, 'yyyy.MM.dd') AS dt
+					</otherwise>
+				</choose>
+			FROM
+				th_sc_intn_menu_conect
+			WHERE
+				<choose>
+					<when test='null != sysDivCd and "" neq sysDivCd'>
+				sys_div_cd = #{sysDivCd}
+					</when>
+					<otherwise>
+				sys_div_cd = 'ECS'
+					</otherwise>
+				</choose>
+				<choose>
+					<when test='null != cnd and "mnby" eq cnd'>
+				AND conect_dttm BETWEEN TO_DATE(SUBSTR(#{strtDt}, 0, 6) || '01 00:00:00', 'yyyyMMdd HH24:MI:SS')
+				AND TO_DATE(TO_CHAR(LAST_DAY(SUBSTR(#{endDt}, 0, 6) || '01'), 'yyyyMMdd') || ' 23:59:59', 'yyyyMMdd HH24:MI:SS')
+					</when>
+					<otherwise>
+				AND conect_dttm BETWEEN TO_DATE(SUBSTR(#{strtDt}, 0, 8) || ' 00:00:00', 'yyyyMMdd HH24:MI:SS')
+				AND TO_DATE(SUBSTR(#{endDt}, 0, 8) || ' 23:59:59', 'yyyyMMdd HH24:MI:SS')
+					</otherwise>
+				</choose>
+			GROUP BY
+				conctr_id,
+				menu_id,
+				<choose>
+					<when test='null != cnd and "mnby" eq cnd'>
+				TO_CHAR(conect_dttm, 'yyyy.MM')
+					</when>
+					<otherwise>
+				TO_CHAR(conect_dttm, 'yyyy.MM.dd')
+					</otherwise>
+				</choose>
+		) A
+		GROUP BY
+			sys_div_cd,
+			menu_id
+		ORDER BY
+			cnt DESC
+	</select>
+</mapper>

@@ -1,0 +1,1079 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 에너지전주기 - 정산 종합현황 -->
+<mapper namespace="DSBRD_CL_Dao">
+	<select id="DSBRD_CL_Dao_retrievePrdctnExcclcList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* DSBRD_CL_Dao_retrievePrdctnExcclcList */
+		WITH MONTH_LIST AS (
+			SELECT /*+ MATERIALZE */
+				TO_CHAR(ADD_MONTHS(TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM'), LEVEL - 1), 'yyyyMM') AS mt
+			FROM
+				DUAL
+			CONNECT BY
+				LEVEL &lt;= MONTHS_BETWEEN(TO_DATE(SUBSTR(#{endDt}, 0, 4) || '12', 'yyyyMM'), TO_DATE(SUBSTR(#{strtDt}, 0, 4) || '01', 'yyyyMM')) + 1
+		), WTHT_MAPPING_LIST AS (
+			SELECT /*+ MATERIALZE */
+				mt,
+				(
+					SELECT
+						usr_dfn_vu1
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1001'
+						AND usr_dfn_vu3 LIKE '%01%'
+						AND cmmn_cd = '60' /* 수열 */
+				) AS iem_div_id
+			FROM
+				MONTH_LIST
+			GROUP BY
+				mt
+		), WTHT_INIT_DATA_LIST1 AS (
+			SELECT /*+ MATERIALZE */
+				ecs_chrg_dept_id,
+				wtht_suply_begin_de,
+				eqp_nm
+			FROM
+				tm_cl12001
+			WHERE
+				iem_div_nm = '03' /* 외부 */
+		), WTHT_INIT_DATA_LIST2 AS (
+			SELECT /*+ MATERIALZE */
+				wtht_suply_begin_de,
+				eqp_nm,
+				ctrpd_end_de,
+				excclc_amt
+			FROM
+				tm_cl12002
+			WHERE
+				ctrpd_end_de BETWEEN (
+						SELECT
+							MIN(mt)
+						FROM
+							MONTH_LIST
+					) || '01'
+					AND (
+						SELECT
+							MAX(mt)
+						FROM
+							MONTH_LIST
+					) || '31'
+		), WTHT_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(WTHT_MAPPING_LIST A) */
+				WTHT_MAPPING_LIST.mt,
+				WTHT_MAPPING_LIST.iem_div_id,
+				NVL(A.excclc_amt, 0) AS inqire_iem_vu
+			FROM
+				WTHT_MAPPING_LIST, (
+					SELECT /*+ LEADING(A WTHT_INIT_DATA_LIST2) */
+						SUBSTR(WTHT_INIT_DATA_LIST2.ctrpd_end_de, 0, 6) AS mt,
+						SUM(WTHT_INIT_DATA_LIST2.excclc_amt) AS excclc_amt
+					FROM (
+						SELECT
+							ecs_chrg_dept_id,
+							wtht_suply_begin_de,
+							eqp_nm
+						FROM
+							WTHT_INIT_DATA_LIST1
+						WHERE
+							1 = 1
+							<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+							AND ecs_chrg_dept_id IN (
+								SELECT
+									obj
+								FROM (
+									SELECT
+										upobj AS objid,
+										objid AS obj
+									FROM (
+										<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMDeptMapping"></include>
+									)
+								)
+								WHERE
+									<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnAllBasin"></include> IN (
+										SELECT
+											objid
+										FROM (
+											<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_AllBasinMapping"></include>
+										)
+										WHERE
+											cmmn_cd = #{ecsBasinDivCd}
+									)
+							)
+							</if>
+						) A,
+						WTHT_INIT_DATA_LIST2
+					WHERE
+						A.wtht_suply_begin_de = WTHT_INIT_DATA_LIST2.wtht_suply_begin_de(+)
+						AND A.eqp_nm = WTHT_INIT_DATA_LIST2.eqp_nm(+)
+					GROUP BY
+						SUBSTR(WTHT_INIT_DATA_LIST2.ctrpd_end_de, 0, 6)
+				) A
+			WHERE
+				WTHT_MAPPING_LIST.mt = A.mt(+)
+		), MAPPING_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(MONTH_LIST A) */
+				MONTH_LIST.mt,
+				A.elcpwstn_cd,
+				A.elcpwstn_cls_cd,
+				A.centr_elyrs_yn
+			FROM
+				MONTH_LIST, (
+					SELECT
+						elcpwstn_cd,
+						DECODE(elcpwstn_cls_cd,
+							'0005', '0004',
+							'0007', '0002',
+							elcpwstn_cls_cd
+						) AS elcpwstn_cls_cd,
+						centr_elyrs_yn
+					FROM
+						WRO.tc_eg10101
+					WHERE
+						centr_elyrs_yn IN ('Y', 'N', 'X')
+						AND accnut_acnt_cd LIKE '' || '%'
+						/*
+						elcpwstn_div_cd != 'X'
+						AND accnut_lnk_elcpwstn_yn = 'Y'
+						*/
+						AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> IN (
+							SELECT
+								objid
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+							)
+							WHERE
+								1 = 1
+								<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+								AND cmmn_cd = #{ecsBasinDivCd}
+								</if>
+						)
+						AND elcpwstn_cls_cd IN (
+							SELECT
+								DISTINCT REGEXP_SUBSTR(elcpwstn_cls_cd, '[^,]+', 1, LEVEL) AS elcpwstn_cls_cd
+							FROM (
+								SELECT
+									elcpwstn_cls_cd
+								FROM (
+									<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+								)
+								WHERE
+									1 = 1
+									<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+									AND cmmn_cd = #{ecsSetcscDivCd}
+									</if>
+							)
+							CONNECT BY
+								LEVEL &lt;= LENGTH(REGEXP_REPLACE(elcpwstn_cls_cd, '[^,]+', '')) + 1
+						)
+						<if test='null != ecsElcpwstnDivCd and "" neq ecsElcpwstnDivCd and "ALL" neq ecsElcpwstnDivCd'>
+						AND elcpwstn_cd = #{ecsElcpwstnDivCd}
+						</if>
+				) A
+		), INIT_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(LST HST MPF) */
+				LST.mt,
+				(
+					SELECT
+						cmmn_cd_nm_en
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+					) B
+					WHERE
+						B.elcpwstn_cls_cd LIKE '%' || LST.elcpwstn_cls_cd || '%'
+						AND cnd LIKE '%01%'
+						AND ROWNUM = 1
+				) AS iem_div_id,
+				NVL(SUM(LST.r3val), 0) AS r3val,
+				NVL(SUM(MPF.epwr_indust_fnd_fund_amt), 0) AS epwr_indust_fnd_fund_amt,
+				NVL(SUM(HST.etc_dstb_profit_amt), 0) AS etc_dstb_profit_amt
+			FROM (
+					SELECT /*+ LEADING(MAPPING_LIST LT2 LT4) */
+						MAPPING_LIST.mt,
+						MAPPING_LIST.elcpwstn_cd,
+						MAPPING_LIST.elcpwstn_cls_cd,
+						DECODE(MAPPING_LIST.centr_elyrs_yn,
+							'N', NVL(LT4.sep_amt, LT2.excclc_amt),
+							DECODE(LT2.excclc_amt,
+								'', LT4.excclc_amt,
+								DECODE(LT2.excclc_amt,
+									0, LT4.excclc_amt,
+									LT2.excclc_amt
+								)
+							)
+						) AS r3val
+					FROM
+						MAPPING_LIST, (
+							SELECT
+								stdr_de,
+								elcpwstn_cd,
+								ROUND(elyrs_plan_qy, 2) AS elyrs_plan_qy,
+								ROUND(excclc_amt, 2) AS excclc_amt
+							FROM (
+								SELECT
+									SUBSTR(stdr_de, 0, 6) AS stdr_de,
+									elcpwstn_cd,
+									SUM(elyrs_qy) AS elyrs_plan_qy,
+									SUM(excclc_amt) AS excclc_amt
+								FROM
+									WRO.tm_eg04105
+								WHERE
+									excclc_div_cd = '0001' /* 자체 */
+									AND stdr_de BETWEEN SUBSTR((
+											SELECT
+												MIN(mt)
+											FROM
+												MONTH_LIST
+										), 0, 6) || '01'
+										AND SUBSTR((
+											SELECT
+												MAX(mt)
+											FROM
+												MONTH_LIST
+										), 0, 6) || '31'
+								GROUP BY
+									SUBSTR(stdr_de, 0, 6),
+									elcpwstn_cd
+								UNION ALL
+								SELECT
+									SUBSTR(stdr_plan_ym, 0, 6) AS stdr_plan_ym,
+									elcpwstn_cd,
+									SUM(elyrs_qy) * 1000 AS elyrs_plan_qy,
+									SUM(splval_amt) AS excclc_amt
+								FROM
+									WRO.tm_eg04117
+								WHERE
+									stdr_plan_ym BETWEEN SUBSTR((
+										SELECT
+											MIN(mt)
+										FROM
+											MONTH_LIST
+										), 0, 6)
+										AND SUBSTR((
+										SELECT
+											MAX(mt)
+										FROM
+											MONTH_LIST
+										), 0, 6)
+								GROUP BY
+									SUBSTR(stdr_plan_ym, 0, 6),
+									elcpwstn_cd
+							)
+						) LT2, (
+							SELECT
+								SUBSTR(stdr_de, 0, 6) AS stdr_de,
+								elcpwstn_cd,
+								ROUND(SUM(sep_amt), 2) AS sep_amt,
+								ROUND(SUM(excclc_sum_amt), 2) AS excclc_amt
+							FROM
+								WRO.tm_eg03121
+							WHERE
+								excclc_div_cd = '0001'
+								AND
+									stdr_de BETWEEN SUBSTR((
+										SELECT
+											MIN(mt)
+										FROM
+											MONTH_LIST
+										), 0, 6) || '01'
+										AND SUBSTR((
+										SELECT
+											MAX(mt)
+										FROM
+											MONTH_LIST
+										), 0, 6) || '31'
+							GROUP BY
+								SUBSTR(stdr_de, 0, 6),
+								elcpwstn_cd
+						) LT4
+					WHERE
+						MAPPING_LIST.elcpwstn_cd = LT2.elcpwstn_cd(+)
+						AND MAPPING_LIST.elcpwstn_cd = LT4.elcpwstn_cd(+)
+						AND MAPPING_LIST.mt = LT2.stdr_de(+)
+						AND MAPPING_LIST.mt = LT4.stdr_de(+)
+				) LST, (
+					SELECT
+						SUBSTR(stdr_plan_ym, 0, 6) AS stdr_plan_ym,
+						elcpwstn_cd,
+						ROUND(SUM(etc_dstb_profit_amt), 2) AS etc_dstb_profit_amt
+					FROM
+						WRO.tm_eg05115
+					WHERE
+						stdr_plan_ym BETWEEN SUBSTR((
+							SELECT
+								MIN(mt)
+							FROM
+								MONTH_LIST
+							), 0, 6)
+							AND SUBSTR((
+							SELECT
+								MAX(mt)
+							FROM
+								MONTH_LIST
+							), 0, 6)
+					GROUP BY
+						SUBSTR(stdr_plan_ym, 0, 6),
+						elcpwstn_cd
+				) HST, (
+					SELECT
+						SUBSTR(stdr_de, 0, 6) AS stdr_de,
+						elcpwstn_cd,
+						ROUND(TRUNC(SUM(TO_NUMBER(epwr_indust_fnd_fund_amt)) - TO_NUMBER(TRUNC(SUM(epwr_indust_fnd_rdcamt_vu), -1)), -1), 2) AS epwr_indust_fnd_fund_amt
+					FROM
+						WRO.tm_eg05106
+					WHERE
+						stdr_de BETWEEN SUBSTR((
+							SELECT
+								MIN(mt)
+							FROM
+								MONTH_LIST
+							), 0, 6) || '01'
+							AND SUBSTR((
+							SELECT
+								MAX(mt)
+							FROM
+								MONTH_LIST
+							), 0, 6) || '31'
+					GROUP BY
+						SUBSTR(stdr_de, 0, 6),
+						elcpwstn_cd
+				) MPF
+			WHERE
+				LST.elcpwstn_cd = HST.elcpwstn_cd(+)
+				AND LST.elcpwstn_cd = MPF.elcpwstn_cd(+)
+				AND LST.mt = HST.stdr_plan_ym(+)
+				AND LST.mt = MPF.stdr_de(+)
+			GROUP BY
+				LST.mt,
+				LST.elcpwstn_cls_cd
+		), DATA_LIST AS (
+			SELECT
+				SUBSTR(mt, 0, 4) AS yy,
+				iem_div_id,
+				ROUND((NVL(SUM(r3val + NVL(epwr_indust_fnd_fund_amt, 0)), 0) - NVL(SUM(etc_dstb_profit_amt), 0)) * 1.1, 2) AS inqire_iem_vu
+			FROM
+				INIT_DATA_LIST
+			GROUP BY
+				SUBSTR(mt, 0, 4),
+				iem_div_id
+			UNION ALL
+			SELECT
+				SUBSTR(mt, 0, 4) AS yy,
+				iem_div_id,
+				SUM(inqire_iem_vu) AS inqire_iem_vu
+			FROM
+				WTHT_DATA_LIST
+			GROUP BY
+				SUBSTR(mt, 0, 4),
+				iem_div_id
+		)
+		<if test='null != inqireDe and "" neq inqireDe'>
+		, INQIRE_DATA_LIST AS (
+			SELECT
+				SUBSTR(mt, 0, 4) AS yy,
+				iem_div_id,
+				ROUND((NVL(SUM(r3val + NVL(epwr_indust_fnd_fund_amt, 0)), 0) - NVL(SUM(etc_dstb_profit_amt), 0)) * 1.1, 2) AS inqire_iem_vu
+			FROM
+				INIT_DATA_LIST
+			WHERE
+				mt BETWEEN SUBSTR(#{inqireDe}, 0, 4) || '01' AND SUBSTR(#{inqireDe}, 0, 6)
+			GROUP BY
+				SUBSTR(mt, 0, 4),
+				iem_div_id
+			UNION ALL
+			SELECT
+				SUBSTR(mt, 0, 4) AS yy,
+				iem_div_id,
+				SUM(inqire_iem_vu) AS inqire_iem_vu
+			FROM
+				WTHT_DATA_LIST
+			WHERE
+				mt BETWEEN SUBSTR(#{inqireDe}, 0, 4) || '01' AND SUBSTR(#{inqireDe}, 0, 6)
+			GROUP BY
+				SUBSTR(mt, 0, 4),
+				iem_div_id
+		)
+		</if>
+		SELECT
+			yy AS inqire_de,
+			iem_div_id,
+			ROUND(inqire_iem_vu / 100 / 1000 / 1000, 2) AS inqire_iem_vu
+		FROM
+			DATA_LIST
+		UNION ALL
+		SELECT
+			yy AS inqire_de,
+			'total' AS iem_div_id,
+			ROUND(SUM(inqire_iem_vu) / 100 / 1000 / 1000, 2) AS inqire_iem_vu
+		FROM
+			DATA_LIST
+		WHERE
+			yy = SUBSTR((
+				SELECT
+					MAX(mt)
+				FROM
+					MONTH_LIST
+				), 0, 4)
+		GROUP BY
+			yy
+		<if test='null != inqireDe and "" neq inqireDe'>
+		UNION ALL
+		SELECT
+			yy AS inqire_de,
+			iem_div_id || 'Inqire' AS iem_div_id,
+			ROUND(inqire_iem_vu / 100 / 1000 / 1000, 2) AS inqire_iem_vu
+		FROM
+			INQIRE_DATA_LIST
+		</if>
+		ORDER BY
+			inqire_de,
+			iem_div_id
+	</select>
+
+	<select id="DSBRD_CL_Dao_retrieveEtcExcclcList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* DSBRD_CL_Dao_retrieveEtcExcclcList */
+		WITH YEAR_LIST AS (
+			SELECT /*+ MATERIALZE */
+				TO_CHAR(TO_NUMBER(SUBSTR(#{strtDt}, 0, 4)) + LEVEL - 1) AS yy
+			FROM
+				DUAL
+			CONNECT BY
+				LEVEL &lt;= TO_CHAR(TO_NUMBER(SUBSTR(#{endDt}, 0, 4)) - TO_NUMBER(SUBSTR(#{strtDt}, 0, 4)) + 1)
+		), CER_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(A YEAR_LIST) */
+				YEAR_LIST.yy,
+				'cer' AS iem_div_id,
+				NVL(A.cer, 0) AS inqire_iem_vu
+			FROM
+				YEAR_LIST, (
+					SELECT
+						SUBSTR(cer_delng_de, 0, 4) AS cer_delng_de,
+						SUM(cer_amt) AS cer
+					FROM
+						tm_cl23001
+					WHERE
+						cer_delng_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{endDt}, 0, 4) || '1231'
+					GROUP BY
+						SUBSTR(cer_delng_de, 0, 4)
+				) A
+			WHERE
+				YEAR_LIST.yy = A.cer_delng_de(+)
+		), REC_DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				rec_delng_year,
+				rec_eqp_cd_nm,
+				NVL((
+					SELECT
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> AS hq_cd
+					FROM
+						WRO.tc_eg10101 A, (
+							SELECT
+								cmmn_cd,
+								usr_dfn_vu1
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = 'ECS_2003'
+						) B
+					WHERE
+						A.elcpwstn_cd = B.usr_dfn_vu1
+						AND B.cmmn_cd = C.rec_eqp_cd_nm
+				), 'ALL') AS hq_cd,
+				SUM(rec_accnut_snrn) AS rec_accnut_snrn
+			FROM
+				tm_cl22001 C
+			WHERE
+				rec_delng_year BETWEEN SUBSTR(#{strtDt}, 0, 4) AND SUBSTR(#{endDt}, 0, 4)
+			GROUP BY
+				rec_delng_year,
+				rec_eqp_cd_nm
+			UNION ALL
+			SELECT
+				rec_delng_year,
+				rec_eqp_cd_nm,
+				NVL((
+					SELECT
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> AS hq_cd
+					FROM
+						WRO.tc_eg10101 A, (
+							SELECT
+								cmmn_cd,
+								usr_dfn_vu1
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = 'ECS_2003'
+						) B
+					WHERE
+						A.elcpwstn_cd = B.usr_dfn_vu1
+						AND B.cmmn_cd = C.rec_eqp_cd_nm
+				), 'ALL') AS hq_cd,
+				SUM(rec_excclc_tamt) AS rec_excclc_tamt
+			FROM
+				tm_cl22002 C
+			WHERE
+				rec_delng_year BETWEEN SUBSTR(#{strtDt}, 0, 4) AND SUBSTR(#{endDt}, 0, 4)
+			GROUP BY
+				rec_delng_year,
+				rec_eqp_cd_nm
+		), REC_BASIN_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(A YEAR_LIST) */
+				YEAR_LIST.yy,
+				'rec' AS iem_div_id,
+				NVL(A.rec_accnut_snrn, 0) AS inqire_iem_vu
+			FROM
+				YEAR_LIST, (
+					SELECT
+						rec_delng_year,
+						SUM(rec_accnut_snrn) AS rec_accnut_snrn
+					FROM
+						REC_DATA_LIST
+					WHERE
+						1 = 1
+						AND hq_cd IN (
+							SELECT
+								objid
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+							)
+							WHERE
+								1 = 1
+								<choose>
+									<when test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+								AND cmmn_cd = #{ecsBasinDivCd}
+									</when>
+									<otherwise>
+							UNION ALL
+							SELECT
+								'ALL' AS objid
+							FROM
+								dual
+									</otherwise>
+								</choose>
+						)
+					GROUP BY
+						rec_delng_year
+				) A
+			WHERE
+				YEAR_LIST.yy = A.rec_delng_year(+)
+		), DR_DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				excclc_year,
+				(
+					SELECT
+						upper_cmmn_cd
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2001'
+						AND cmmn_cd = (
+							SELECT
+								upper_cmmn_cd
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = 'ECS_2002'
+								AND cmmn_cd = A.bplc_cd_id
+						)
+				) AS cmmn_cd,
+				(
+					SUM(mon01_iem_vu) + SUM(mon02_iem_vu) + SUM(mon03_iem_vu) +
+					SUM(mon04_iem_vu) + SUM(mon05_iem_vu) + SUM(mon06_iem_vu) +
+					SUM(mon07_iem_vu) + SUM(mon08_iem_vu) + SUM(mon09_iem_vu) +
+					SUM(mon10_iem_vu) + SUM(mon11_iem_vu) + SUM(mon12_iem_vu) +
+					SUM(time_add_excclc_amt)
+				) AS dr
+			FROM
+				tm_cl24001 A
+			WHERE
+				excclc_year BETWEEN SUBSTR(#{strtDt}, 0, 4) AND SUBSTR(#{endDt}, 0, 4)
+			GROUP BY
+				excclc_year,
+				bplc_cd_id
+		), DR_BASIN_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(A YEAR_LIST) */
+				YEAR_LIST.yy,
+				'dr' AS iem_div_id,
+				NVL(A.dr, 0) AS inqire_iem_vu
+			FROM
+				YEAR_LIST, (
+					SELECT
+						excclc_year,
+						SUM(dr) AS dr
+					FROM
+						DR_DATA_LIST
+					WHERE
+						1 = 1
+						<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+						AND cmmn_cd = #{ecsBasinDivCd}
+						</if>
+					GROUP BY
+						excclc_year
+				) A
+			WHERE
+				YEAR_LIST.yy = A.excclc_year(+)
+		), OVSEA_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(A YEAR_LIST) */
+				YEAR_LIST.yy,
+				'ovsea' AS iem_div_id,
+				NVL(A.elyrs_selng_sum_val, 0) AS inqire_iem_vu
+			FROM
+				YEAR_LIST, (
+					SELECT
+						SUBSTR(stdr_de, 0, 4) AS stdr_de,
+						ROUND(SUM(elyrs_selng_sum * nation_ehgt), 2) AS elyrs_selng_sum_val
+					FROM
+						WRO.tm_eg04111
+					WHERE
+						stdr_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{endDt}, 0, 4) || '1231'
+					GROUP BY
+						SUBSTR(stdr_de, 0, 4)
+				) A
+			WHERE
+				YEAR_LIST.yy = A.stdr_de(+)
+		), DATA_LIST AS (
+			SELECT /*+ MATERIALZE */
+				yy,
+				iem_div_id,
+				CASE
+					WHEN #{ecsBasinDivCd} = '' OR #{ecsBasinDivCd} = 'ALL' OR #{ecsBasinDivCd} = '01' /* 한강 */
+					THEN inqire_iem_vu
+					ELSE 0
+				END AS inqire_iem_vu
+			FROM
+				CER_DATA_LIST
+			UNION ALL
+			SELECT
+				yy,
+				iem_div_id,
+				inqire_iem_vu
+			FROM
+				REC_BASIN_DATA_LIST
+			UNION ALL
+			SELECT
+				yy,
+				iem_div_id,
+				inqire_iem_vu
+			FROM
+				DR_BASIN_DATA_LIST
+			UNION ALL
+			SELECT
+				yy,
+				iem_div_id,
+				CASE
+					WHEN #{ecsBasinDivCd} = '' OR #{ecsBasinDivCd} = 'ALL'
+					THEN inqire_iem_vu * 1.1
+					ELSE 0
+				END AS inqire_iem_vu
+			FROM
+				OVSEA_DATA_LIST
+			ORDER BY
+				yy,
+				iem_div_id
+		)
+		SELECT
+			yy AS inqire_de,
+			iem_div_id,
+			ROUND(inqire_iem_vu / 100 / 1000 / 1000, 2) AS inqire_iem_vu
+		FROM
+			DATA_LIST
+		UNION ALL
+		SELECT
+			yy AS inqire_de,
+			'total' AS iem_div_id,
+			ROUND(SUM(inqire_iem_vu) / 100 / 1000 / 1000, 2) AS inqire_iem_vu
+		FROM
+			DATA_LIST
+		WHERE
+			yy = SUBSTR(#{endDt}, 0, 4)
+		GROUP BY
+			yy
+		ORDER BY
+			inqire_de,
+			iem_div_id
+	</select>
+
+	<select id="DSBRD_CL_Dao_retrieveCnstnExcclcList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* DSBRD_CL_Dao_retrieveCnstnExcclcList */
+		WITH YEAR_LIST AS (
+			SELECT /*+ MATERIALZE */
+				TO_CHAR(TO_NUMBER(SUBSTR(#{strtDt}, 0, 4)) + LEVEL - 1) AS yy
+			FROM
+				DUAL
+			CONNECT BY
+				LEVEL &lt;= TO_CHAR(TO_NUMBER(SUBSTR(#{endDt}, 0, 4)) - TO_NUMBER(SUBSTR(#{strtDt}, 0, 4)) + 1)
+		), INIT_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(A B) */
+				A.dscfc_id,
+				A.dscfc_nm,
+				A.dscfc_lclhq_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						SCM.tc_sc_unif_cmmn_cd
+					WHERE
+						sys_div_cd = 'SC'
+						AND cls_cd = 'GHG_1001'
+						AND cmmn_cd = A.dscfc_lclhq_cd
+				) AS dscfc_lclhq_nm,
+				A.dscfc_bplc_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						SCM.tc_sc_unif_cmmn_cd
+					WHERE
+						sys_div_cd = 'SC'
+						AND cls_cd = 'GHG_1002'
+						AND cmmn_cd = A.dscfc_bplc_cd
+				) AS dscfc_bplc_nm,
+				A.dscfc_procs_ty_cd,
+				B.dscfc_use_de,
+				B.dscfc_use_slip_prcs_ty_cd,
+				B.dscfc_use_slip_no,
+				NVL(B.tot_amt, 0) AS tot_amt,
+				MAX(NVL(B.tot_amt, 0)) OVER(PARTITION BY B.dscfc_use_slip_no) AS max_tot_amt,
+				NVL(B.dscfc_usgqty, 0) AS dscfc_usgqty,
+				SUM(NVL(B.dscfc_usgqty, 0)) OVER(PARTITION BY B.dscfc_use_slip_no) AS sum_dscfc_usgqty,
+				COUNT(B.dscfc_use_slip_no) OVER(PARTITION BY B.dscfc_use_slip_no) AS count_dscfc_use_slip_no,
+				MAX(NVL(ABS(B.dscfc_usgqty), 0)) OVER(PARTITION BY B.dscfc_use_slip_no) AS max_abs_dscfc_usgqty
+			FROM (
+				SELECT /*+ RESULT_CACHE */
+					dscfc_id,
+					dscfc_nm,
+					dscfc_lclhq_cd,
+					dscfc_bplc_cd,
+					dscfc_procs_ty_cd
+				FROM
+					GHG.tm_gg01101
+				WHERE
+					dscfc_use_yn = '1'
+					AND dscfc_regist_stat_div_cd = '1'
+					AND dscfc_use_fuel_div_cd = '61' /* 전기 */
+					AND dscfc_lclhq_cd != '88888888' /* 위탁 */
+			) A, (
+				SELECT
+					ABC.dscfc_id,
+					ABC.dscfc_use_de,
+					MAX(ABC.dscfc_use_slip_prcs_ty_cd) AS dscfc_use_slip_prcs_ty_cd,
+					MAX(ABC.dscfc_use_slip_no) AS dscfc_use_slip_no,
+					NVL(MAX(ABC.tot_amt), 0) AS tot_amt,
+					NVL(MAX(ABC.dscfc_usgqty), 0) AS dscfc_usgqty
+				FROM (
+					SELECT
+						AA.dscfc_id,
+						AA.dscfc_use_de,
+						MAX(AA.dscfc_use_slip_prcs_ty_cd) AS dscfc_use_slip_prcs_ty_cd,
+						MAX(AA.dscfc_use_slip_no) AS dscfc_use_slip_no,
+						CASE
+							WHEN AA.dsqty_cfrml_parm_id IN ('2005', '2001')
+							THEN MAX(AA.tot_amt)
+						END AS tot_amt,
+						CASE
+							WHEN AA.dsqty_cfrml_parm_id IN ('2005', '2001')
+							THEN MAX(AA.dscfc_usgqty)
+						END AS dscfc_usgqty
+					FROM (
+						SELECT /*+ LEADING(B A) */
+							A.dscfc_id,
+							A.dscfc_use_de,
+							B.dsqty_cfrml_parm_id,
+							B.dsqty_cfrml_parm_nm,
+							A.dscfc_use_slip_prcs_ty_cd,
+							A.dscfc_use_slip_no,
+							A.tot_amt,
+							A.dscfc_usgqty
+						FROM
+							GHG.tm_rq01103 A,
+							GHG.tm_gg01104 B
+						WHERE
+							(
+								(A.dscfc_use_slip_no IS NOT NULL
+								AND A.dscfc_use_slip_no NOT LIKE 'TMP%')
+								OR A.dscfc_use_slip_prcs_ty_cd = '1'
+							)
+							AND A.dsqty_cfrml_parm_id IN ('2005', '2001')
+							AND
+								A.dscfc_use_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{endDt}, 0, 4) || '1231'
+							AND A.dsqty_cfrml_parm_id = B.dsqty_cfrml_parm_id
+					) AA
+					GROUP BY
+						AA.dscfc_id,
+						AA.dscfc_use_de,
+						AA.dsqty_cfrml_parm_id,
+						AA.dsqty_cfrml_parm_nm
+				) ABC
+				GROUP BY
+					ABC.dscfc_id,
+					ABC.dscfc_use_de
+			) B
+			WHERE
+				A.dscfc_id = B.dscfc_id(+)
+		), INIT_DATA_LIST2 AS (
+			SELECT
+				SUBSTR(dscfc_use_de, 0, 6) AS dscfc_use_de,
+				dscfc_id,
+				MAX(dscfc_nm) AS dscfc_nm,
+				MAX(dscfc_lclhq_cd) AS dscfc_lclhq_cd,
+				MAX(dscfc_lclhq_nm) AS dscfc_lclhq_nm,
+				MAX(dscfc_bplc_cd) AS dscfc_bplc_cd,
+				MAX(dscfc_bplc_nm) AS dscfc_bplc_nm,
+				MAX(dscfc_procs_ty_cd) AS dscfc_procs_ty_cd,
+				CASE
+					WHEN SUM(dscfc_usgqty) &lt; 0 AND SUM(tot_amt) &gt; 0
+					THEN SUM(tot_amt) * -1
+					ELSE SUM(tot_amt)
+				END AS tot_amt
+			FROM (
+				SELECT
+					dscfc_use_de,
+					dscfc_id,
+					dscfc_nm,
+					dscfc_lclhq_cd,
+					dscfc_lclhq_nm,
+					dscfc_bplc_cd,
+					dscfc_bplc_nm,
+					dscfc_procs_ty_cd,
+					CASE
+						WHEN max_abs_dscfc_usgqty = 0 AND count_dscfc_use_slip_no &gt; 1
+						THEN max_tot_amt / count_dscfc_use_slip_no
+						WHEN dscfc_use_slip_prcs_ty_cd != 0 AND (dscfc_usgqty != 0 OR count_dscfc_use_slip_no &gt; 1)
+						THEN (dscfc_usgqty / DECODE(NVL(sum_dscfc_usgqty, 0), 0, 1, sum_dscfc_usgqty)) * max_tot_amt
+						ELSE tot_amt
+					END AS tot_amt,
+					dscfc_usgqty
+				FROM
+					INIT_DATA_LIST
+			)
+			GROUP BY
+				SUBSTR(dscfc_use_de, 0, 6),
+				dscfc_id
+		), DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(A YEAR_LIST) */
+				YEAR_LIST.yy,
+				A.dscfc_procs_ty_cd,
+				A.dscfc_procs_ty_nm AS iem_div_id,
+				A.tot_amt AS inqire_iem_vu
+			FROM
+				YEAR_LIST, (
+					SELECT
+						dscfc_use_de,
+						dscfc_procs_ty_cd,
+						(
+							SELECT
+								usr_dfn_vu1
+							FROM (
+								SELECT
+									usr_dfn_vu1,
+									usr_dfn_vu2
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = 'ECS_1003'
+							) A, (
+								SELECT
+									cmmn_cd,
+									cmmn_cd_nm
+								FROM
+									SCM.tc_sc_unif_cmmn_cd
+								WHERE
+									sys_div_cd = 'SC'
+									AND cls_cd = 'GHG_0024'
+							) B
+							WHERE
+								A.usr_dfn_vu2 = B.cmmn_cd
+								AND cmmn_cd = dscfc_procs_ty_cd
+						) AS dscfc_procs_ty_nm,
+						NVL(SUM(tot_amt), 0) AS tot_amt
+					FROM (
+						SELECT
+							SUBSTR(dscfc_use_de, 0, 4) AS dscfc_use_de,
+							dscfc_id,
+							MAX(dscfc_nm) AS dscfc_nm,
+							MAX(dscfc_lclhq_cd) AS dscfc_lclhq_cd,
+							MAX(dscfc_lclhq_nm) AS dscfc_lclhq_nm,
+							MAX(dscfc_bplc_cd) AS dscfc_bplc_cd,
+							MAX(dscfc_bplc_nm) AS dscfc_bplc_nm,
+							DECODE(MAX(dscfc_procs_ty_cd),
+								'01', '01',
+								'02', '02',
+								'03', '03',
+							'99') AS dscfc_procs_ty_cd,
+							NVL(SUM(tot_amt), 0) AS tot_amt
+						FROM (
+							SELECT
+								dscfc_use_de,
+								dscfc_id,
+								dscfc_nm,
+								dscfc_lclhq_cd,
+								dscfc_lclhq_nm,
+								dscfc_bplc_cd,
+								dscfc_bplc_nm,
+								dscfc_procs_ty_cd,
+								tot_amt
+							FROM
+								INIT_DATA_LIST2
+						)
+						GROUP BY
+							SUBSTR(dscfc_use_de, 0, 4),
+							dscfc_id
+					)
+					WHERE
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin"></include> IN (
+							SELECT
+								objid
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_GHGHQMapping"></include>
+							)
+							WHERE
+								1 = 1
+								<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+								AND cmmn_cd = #{ecsBasinDivCd}
+								</if>
+						)
+					GROUP BY
+						dscfc_use_de,
+						dscfc_procs_ty_cd
+			) A
+			WHERE
+				YEAR_LIST.yy = dscfc_use_de(+)
+			ORDER BY
+				yy,
+				dscfc_procs_ty_cd
+		)
+		<if test='null != inqireDe and "" neq inqireDe'>
+		, INQIRE_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(A YEAR_LIST) */
+				YEAR_LIST.yy,
+				A.dscfc_procs_ty_cd,
+				A.dscfc_procs_ty_nm AS iem_div_id,
+				A.tot_amt AS inqire_iem_vu
+			FROM
+				YEAR_LIST, (
+					SELECT
+						dscfc_use_de,
+						dscfc_procs_ty_cd,
+						(
+							SELECT
+								usr_dfn_vu1
+							FROM (
+								SELECT
+									usr_dfn_vu1,
+									usr_dfn_vu2
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = 'ECS_1003'
+							) A, (
+								SELECT
+									cmmn_cd,
+									cmmn_cd_nm
+								FROM
+									SCM.tc_sc_unif_cmmn_cd
+								WHERE
+									sys_div_cd = 'SC'
+									AND cls_cd = 'GHG_0024'
+							) B
+							WHERE
+								A.usr_dfn_vu2 = B.cmmn_cd
+								AND cmmn_cd = dscfc_procs_ty_cd
+						) AS dscfc_procs_ty_nm,
+						NVL(SUM(tot_amt), 0) AS tot_amt
+					FROM (
+						SELECT
+							SUBSTR(dscfc_use_de, 0, 4) AS dscfc_use_de,
+							dscfc_id,
+							MAX(dscfc_nm) AS dscfc_nm,
+							MAX(dscfc_lclhq_cd) AS dscfc_lclhq_cd,
+							MAX(dscfc_lclhq_nm) AS dscfc_lclhq_nm,
+							MAX(dscfc_bplc_cd) AS dscfc_bplc_cd,
+							MAX(dscfc_bplc_nm) AS dscfc_bplc_nm,
+							DECODE(MAX(dscfc_procs_ty_cd),
+								'01', '01',
+								'02', '02',
+								'03', '03',
+							'99') AS dscfc_procs_ty_cd,
+							NVL(SUM(tot_amt), 0) AS tot_amt
+						FROM (
+							SELECT
+								dscfc_use_de,
+								dscfc_id,
+								dscfc_nm,
+								dscfc_lclhq_cd,
+								dscfc_lclhq_nm,
+								dscfc_bplc_cd,
+								dscfc_bplc_nm,
+								dscfc_procs_ty_cd,
+								tot_amt
+							FROM
+								INIT_DATA_LIST2
+							WHERE
+								dscfc_use_de BETWEEN SUBSTR(#{inqireDe}, 0, 4) || '01' AND SUBSTR(#{inqireDe}, 0, 6)
+						)
+						GROUP BY
+							SUBSTR(dscfc_use_de, 0, 4),
+							dscfc_id
+					)
+					WHERE
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin"></include> IN (
+							SELECT
+								objid
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_GHGHQMapping"></include>
+							)
+							WHERE
+								1 = 1
+								<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+								AND cmmn_cd = #{ecsBasinDivCd}
+								</if>
+						)
+					GROUP BY
+						dscfc_use_de,
+						dscfc_procs_ty_cd
+			) A
+			WHERE
+				YEAR_LIST.yy = dscfc_use_de(+)
+			ORDER BY
+				yy,
+				dscfc_procs_ty_cd
+		)
+		</if>
+		SELECT
+			yy AS inqire_de,
+			iem_div_id,
+			ROUND(inqire_iem_vu / 100 / 1000 / 1000, 2) AS inqire_iem_vu
+		FROM
+			DATA_LIST
+		UNION ALL
+		SELECT
+			yy AS inqire_de,
+			'total' AS iem_div_id,
+			ROUND(SUM(inqire_iem_vu) / 100 / 1000 / 1000, 2) AS inqire_iem_vu
+		FROM
+			DATA_LIST
+		WHERE
+			yy = SUBSTR(#{endDt}, 0, 4)
+		GROUP BY
+			yy
+		<if test='null != inqireDe and "" neq inqireDe'>
+		UNION ALL
+		SELECT
+			yy AS inqire_de,
+			iem_div_id || 'Inqire' AS iem_div_id,
+			ROUND(inqire_iem_vu / 100 / 1000 / 1000, 2) AS inqire_iem_vu
+		FROM
+			INQIRE_DATA_LIST
+		</if>
+		ORDER BY
+			inqire_de,
+			iem_div_id
+	</select>
+</mapper>

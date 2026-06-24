@@ -1,0 +1,590 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/modal.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSCN3100000.xml
+			* 설 명 : 소비_사업장 소비패턴 분석현황_차트 팝업
+			* 작성일 : 2023.11.02
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.11.02 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"chart" : {
+			"chartUnit" : 10,
+			"intervalCount" : 5,
+		},
+		"chartData" : [],
+		"observeEvent" : false
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		//scwin.param = JSON.parse($p.getPopupParam());
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSCN3100000");
+		scwin.searchDatas();
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 소비량 / 용수공급량 / 전력원단위 데이터를 설정한다. => 차트 생성
+		scwin.setChartData();
+
+		//ecsLib.setChartResizeObserver(this);
+	};
+
+	//============================================================================================
+	// 차트
+	//============================================================================================
+	/**
+	 * 소비량 / 용수공급량 / 전력원단위 데이터를 설정한다. => 차트 생성
+	 */
+	scwin.setChartData = function() {
+		var chartData = scwin.initData.chartData;
+		var dltData = $p.parent()["$p"].getComponentById("dltCnsmpPttrnList").getAllJSON();
+		var date = [];
+		date = new Set(dltData.map(obj => obj.ymd)); 
+
+		date.forEach(item => {
+			// 소비량
+			var cnstqyAcmtlSum = dltData.reduce(function(sum, obj) {
+				if (obj.ymd == item) {
+					return sum += Number(obj.cnstqyAcmtl);
+				} else {
+					return sum;
+				}
+			}, 0);
+
+			// 용수공급량
+			var uswtrSqtyAcmtlSum = dltData.reduce(function(sum, obj) {
+				if (obj.ymd == item) {
+					return sum += Number(obj.uswtrSqtyAcmtl);
+				} else {
+					return sum;
+				}
+			}, 0);
+
+			// 전력원단위
+			var epbuAcmtlSum = dltData.reduce(function(sum, obj) {
+				if (obj.ymd == item) {
+					//return sum += Number(obj.epbuAcmtl);
+					var epbuAcmtlSum = Number(cnstqyAcmtlSum / uswtrSqtyAcmtlSum);
+					return epbuAcmtlSum;
+				} else {
+					return sum;
+				}
+			}, 0);
+
+			chartData.push({
+				"date" : item,
+				"cnstqyAcmtlSum" : cnstqyAcmtlSum,
+				"uswtrSqtyAcmtlSum" : uswtrSqtyAcmtlSum,
+				"epbuAcmtlSum" : epbuAcmtlSum,
+			});
+		});
+
+		// 소비량 / 용수공급량 바 차트 생성
+		scwin.setTopChart();
+		// 전력원단위 꺾은선 차트 생성
+		scwin.setBottomChart();
+		// 소비량 / 용수공급량 연별 바 차트 생성_240111
+		scwin.setTopChart2();
+		// 전력원단위 연별 꺾은선 차트 생성_240111
+		scwin.setBottomChart2();
+	};
+
+	/**
+	 * 소비량 / 용수공급량 바 차트 생성
+	 */
+	scwin.setTopChart = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.topChartReadyHandler";
+		rMateChartH5.create($p.id + "topChart", grpTopChart.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * 소비량 차트 시리즈 색상 핸들러
+	 * @param {
+	 	seriesID : ID,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 색상
+	*/
+	scwin.cnstqyUswtrSqtyFillHandler = function(seriesID, index, data, values) {
+		var chartData = scwin.initData.chartData;
+
+		var id = seriesID;
+		var thisData = id == "cnstqy" ? chartData[index].cnstqyAcmtlSum : chartData[index].uswtrSqtyAcmtlSum;
+		var firstData = 0;
+		var secondData = 0;
+		var rankData = [...chartData].sort((b, a) => {
+			if (id == "cnstqy") {
+				return a.cnstqyAcmtlSum - b.cnstqyAcmtlSum
+			} else {
+				return a.uswtrSqtyAcmtlSum - b.uswtrSqtyAcmtlSum
+			}
+		});
+
+		if (rankData.length) {
+			firstData =  id == "cnstqy" ? rankData[0].cnstqyAcmtlSum : rankData[0].uswtrSqtyAcmtlSum;
+		}
+		if (rankData.length > 1) {
+			secondData = id == "cnstqy" ? rankData[1].cnstqyAcmtlSum : rankData[1].uswtrSqtyAcmtlSum;
+		}
+
+		if (firstData == thisData) {
+			return "#FF0000";
+		} else if (secondData == thisData) {
+			return "#FF7F00";
+		} else {
+			var color = id == "cnstqy" ? "#30A744" : "#BDE348";
+			return color;
+		}
+	};
+
+	/**
+	* 소비량 / 용수공급량 바 차트 설정
+	*/
+	scwin.topChartReadyHandler = function(id) {
+		var chartData = scwin.initData.chartData;
+
+		var cnstqyAcmtlMaxData = chartData.reduce((max, obj) => Math.max(max, obj.cnstqyAcmtlSum), 0);
+		var cnstqyAcmtlChartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(cnstqyAcmtlMaxData.toFixed(0)).length - 2));
+		var cnstqyAcmtlInterval = Math.ceil((cnstqyAcmtlMaxData / scwin.initData.chart.intervalCount) / cnstqyAcmtlChartUnit) * cnstqyAcmtlChartUnit;
+
+		var uswtrSqtyAcmtlMaxData = chartData.reduce((max, obj) => Math.max(max, obj.uswtrSqtyAcmtlSum) || 0, 0);
+		var uswtrSqtyAcmtlChartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(uswtrSqtyAcmtlMaxData.toFixed(0)).length - 2));
+		var uswtrSqtyAcmtlInterval = Math.ceil((uswtrSqtyAcmtlMaxData / scwin.initData.chart.intervalCount) / uswtrSqtyAcmtlChartUnit) * uswtrSqtyAcmtlChartUnit;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Legend />'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" />'
+			+ '	<Column2DChart showDataTips="true" type="clustered" dataTipDisplayMode="axis" maxColumnWidth="25">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="date" padding="0.5"/>'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + cnstqyAcmtlInterval + '" formatter="{numFmt}" title="kWh/일"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSeries id="cnstqy" color="#666666" fontWeight="bold" yField="cnstqyAcmtlSum" displayName="소비량 일누계(kWh/일)" fillJsFunction="' + $p.id + 'scwin.cnstqyUswtrSqtyFillHandler" selectable="false" halfWidthOffset="2">' 
+			+ '				<fill>'
+			+ '					<SolidColor color="#30A744" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '			<Column2DSeries id="uswtrSqty" color="#666666" fontWeight="bold" yField="uswtrSqtyAcmtlSum" displayName="용수공급량 일누계(㎥/일)" fillJsFunction="' + $p.id + 'scwin.cnstqyUswtrSqtyFillHandler" selectable="false" halfWidthOffset="2">' //labelPosition="outside" 
+			+ '				<fill>'
+			+ '					<SolidColor color="#BDE348" />'
+			+ '				</fill>'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxis2" interval="' + uswtrSqtyAcmtlInterval + '" formatter="{numFmt}" title="㎥/일"/>'
+			+ '				</verticalAxis>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '		</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false" />'
+			+ '			<Axis2DRenderer axis="{vAxis2}" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '	<horizontalAxisRenderers>'
+			+ '		<Axis2DRenderer axis="{hAxis}" showLine="true" labelRotation="45" canDropLabels="false" canStagger="true"/>'
+			+ '	</horizontalAxisRenderers>'
+			+ '	</Column2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartData);
+	};
+
+	/**
+	 * 전력원단위 꺾은선 차트 생성
+	 */
+	scwin.setBottomChart = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.bottomChartReadyHandler";
+		rMateChartH5.create($p.id + "bottomChart", grpBottomChart.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	* 전력원단위 꺾은선 차트 설정
+	*/
+	scwin.bottomChartReadyHandler = function(id) {
+		var chartData = scwin.initData.chartData;
+
+		var epbuMaxData = chartData.reduce((max, obj) => Math.max(max, obj.epbuAcmtlSum) || 0, 0);
+		var epbuChartUnit = Math.max(1, Math.pow(10, String(epbuMaxData.toFixed(0)).length - 2));
+		var epbuInterval = Math.ceil((epbuMaxData / scwin.initData.chart.intervalCount) / epbuChartUnit) * epbuChartUnit;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF"  borderStyle="none">'
+			+ '	<Options>'
+			+ '		<Legend defaultMouseOverAction="true"/>'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" precision="4"/>'
+			+ '	<Line2DChart showDataTips="true" dataTipDisplayMode="axis" dataTipFormatter="{numFmt}">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="date" padding="0.7"/>'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + epbuInterval + '" formatter="{numFmt}" title="kWh/㎥"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Line2DSeries form="curve" yField="epbuAcmtlSum" displayName="일별 전력원단위(kWh/㎥)" itemRenderer="CircleItemRenderer" >'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate duration="1000"/>'
+			+ '				</showDataEffect>'
+			+ '			</Line2DSeries>'
+			+ '		</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '	<horizontalAxisRenderers>'
+			+ '		<Axis2DRenderer axis="{hAxis}" showLine="true" labelRotation="45" canDropLabels="false" canStagger="true"/>'
+			+ '	</horizontalAxisRenderers>'
+			+ '	</Line2DChart>'
+			+ '</rMateChart>'
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartData);
+/*
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF"  borderStyle="none">'
+			+ '	<Options>'
+			+ '		<Legend defaultMouseOverAction="true"/>'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true"/>'
+			+ '	<Line2DChart showDataTips="true" dataTipDisplayMode="axis">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis categoryField="date" padding="0.7"/>'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + epbuInterval + '" formatter="{numFmt}"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>';
+			+ '			<Line2DSeries form="curve" yField="epbuAcmtlSum" displayName="전력원단위" itemRenderer="CircleItemRenderer">'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate duration="1000"/>'
+			+ '				</showDataEffect>'
+			+ '			</Line2DSeries>';
+			+ '		</series>'
+			+ '	</Line2DChart>'
+			+ '</rMateChart>';
+		*/
+	};
+
+	/**
+	 * 소비량 / 용수공급량 연별 바 차트 생성_240111
+	 */
+	scwin.setTopChart2 = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.topChartReadyHandler2";
+		rMateChartH5.create($p.id + "topChart2", grpTopChart2.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * 연별 소비량 차트 시리즈 색상 핸들러_240111
+	 * @param {
+	 	seriesID : ID,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 색상
+
+	scwin.cnstqyUswtrSqtyYyFillHandler = function(seriesID, index, data, values) {
+		var chartData = scwin.initData.chartData;
+
+		var id = seriesID;
+		var thisData = id == "cnstqy" ? chartData[index].cnstqyYyAcmtlSum : chartData[index].uswtrSqtyYyAcmtlSum;
+		var firstData = 0;
+		var secondData = 0;
+		var rankData = [...chartData].sort((b, a) => {
+			if (id == "cnstqy") {
+				return a.cnstqyYyAcmtlSum - b.cnstqyYyAcmtlSum
+			} else {
+				return a.uswtrSqtyYyAcmtlSum - b.uswtrSqtyYyAcmtlSum
+			}
+		});
+
+		if (rankData.length) {
+			firstData =  id == "cnstqy" ? rankData[0].cnstqyYyAcmtlSum : rankData[0].uswtrSqtyYyAcmtlSum;
+		}
+		if (rankData.length > 1) {
+			secondData = id == "cnstqy" ? rankData[1].cnstqyYyAcmtlSum : rankData[1].uswtrSqtyYyAcmtlSum;
+		}
+
+		if (firstData == thisData) {
+			return "#FF0000";
+		} else if (secondData == thisData) {
+			return "#FF7F00";
+		} else {
+			return "#30A744";
+		}
+	};
+	*/
+
+	/**
+	* 소비량 / 용수공급량 연별 바 차트 설정_240111
+	*/
+	scwin.topChartReadyHandler2 = function(id) {
+		var chartData = scwin.initData.chartData;
+		var chartList = [];
+		var dltData = $p.parent()["$p"].getComponentById("dltCnsmpPttrnList").getAllJSON();
+		var date = $p.parent().dmaSearchParam.getModifiedArray().value;
+		var dayYear = date[0].slice(0,4);
+		var endDayYear = date[1].slice(0,4);
+
+		// 같은년도일 때 일별 소비량/용수공급량 년누계
+		if (dayYear == endDayYear) {
+			var cnstqyYyAcmtlSum = $p.parent()["$p"].getComponentById("grdCnsmpPttrnList").getFooterData("fCnstqyAcmtl");
+			var uswtrSqtyYyAcmtlSum = $p.parent()["$p"].getComponentById("grdCnsmpPttrnList").getFooterData("fUswtrSqtyAcmtl");
+			chartList.push({
+				"date" : dayYear,
+				"cnstqyYyAcmtlSum" : cnstqyYyAcmtlSum,
+				"uswtrSqtyYyAcmtlSum" : uswtrSqtyYyAcmtlSum,
+			});
+		} else {
+			// 다른년도일 때 일별 소비량/용수공급량 년누계
+			var yearSums = {};
+			for (var item of dltData) {
+				var year = item.ymd.substring(0,4);
+				if (!yearSums[year]) {
+					yearSums[year] = {cnstqyYyAcmtlSum : 0, uswtrSqtyYyAcmtlSum : 0};
+				}
+				yearSums[year].cnstqyYyAcmtlSum += parseInt(item.cnstqyAcmtl);
+				yearSums[year].uswtrSqtyYyAcmtlSum += parseInt(item.uswtrSqtyAcmtl);
+			}
+
+			var chartList = Object.keys(yearSums).map(year => ({
+				"date" : year,
+				"cnstqyYyAcmtlSum" : yearSums[year].cnstqyYyAcmtlSum,
+				"uswtrSqtyYyAcmtlSum" : yearSums[year].uswtrSqtyYyAcmtlSum
+			}));
+		}
+
+		var cnstqyYyAcmtlMaxData = chartData.reduce((max, obj) => Math.max(max, obj.cnstqyYyAcmtlSum), 0);
+		var cnstqyYyAcmtlChartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(cnstqyYyAcmtlMaxData.toFixed(0)).length - 2));
+		var cnstqyYyAcmtlInterval = Math.ceil((cnstqyYyAcmtlMaxData / scwin.initData.chart.intervalCount) / cnstqyYyAcmtlChartUnit) * cnstqyYyAcmtlChartUnit;
+
+		var uswtrSqtyYyAcmtlMaxData = chartData.reduce((max, obj) => Math.max(max, obj.uswtrSqtyYyAcmtlSum) || 0, 0);
+		var uswtrSqtyYyAcmtlChartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(uswtrSqtyYyAcmtlMaxData.toFixed(0)).length - 2));
+		var uswtrSqtyYyAcmtlInterval = Math.ceil((uswtrSqtyYyAcmtlMaxData / scwin.initData.chart.intervalCount) / uswtrSqtyYyAcmtlChartUnit) * uswtrSqtyYyAcmtlChartUnit;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Legend />'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" />'
+			+ '	<Column2DChart showDataTips="true" type="clustered" dataTipDisplayMode="mouse" maxColumnWidth="25">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="date" padding="0.5"/>'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + cnstqyYyAcmtlInterval + '" formatter="{numFmt}" title="kWh/년"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSeries id="cnstqy" color="#666666" fontWeight="bold" yField="cnstqyYyAcmtlSum" displayName="소비량 년누계(kWh/년)" selectable="false">' //fillJsFunction="' + $p.id + 'scwin.cnstqyUswtrSqtyYyFillHandler" 
+			+ '				<fill>'
+			+ '					<SolidColor color="#30A744" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '			<Column2DSeries id="uswtrSqty" color="#666666" fontWeight="bold" yField="uswtrSqtyYyAcmtlSum" displayName="용수공급량 년누계(㎥/년)" selectable="false">' //labelPosition="outside" fillJsFunction="' + $p.id + 'scwin.cnstqyUswtrSqtyYyFillHandler"
+			+ '				<fill>'
+			+ '					<SolidColor color="#BDE348" />'
+			+ '				</fill>'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxis2" interval="' + uswtrSqtyYyAcmtlInterval + '" formatter="{numFmt}" title="㎥/년"/>'
+			+ '				</verticalAxis>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '		</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false" />'
+			+ '			<Axis2DRenderer axis="{vAxis2}" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '	<horizontalAxisRenderers>'
+			+ '		<Axis2DRenderer axis="{hAxis}" showLine="true" labelRotation="45" canDropLabels="false" canStagger="true"/>'
+			+ '	</horizontalAxisRenderers>'
+			+ '	</Column2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	};
+	
+	/**
+	 * 연별 전력원단위 꺾은선 차트 생성_240111
+	 */
+	scwin.setBottomChart2 = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.bottomChartReadyHandler2";
+		rMateChartH5.create($p.id + "bottomChart2", grpBottomChart2.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	* 연별 전력원단위 꺾은선 차트 설정_240111
+	*/
+	scwin.bottomChartReadyHandler2 = function(id) {
+		var chartData = scwin.initData.chartData;
+		var chartList = [];
+		var dltData = $p.parent()["$p"].getComponentById("dltCnsmpPttrnList").getAllJSON();
+		var date = $p.parent().dmaSearchParam.getModifiedArray().value;
+		var dayYear = date[0].slice(0,4);
+		var endDayYear = date[1].slice(0,4);
+
+		// 같은년도일 때 연별 전력원단위
+		if (dayYear == endDayYear) {
+			var cnstqyYyAcmtlSum = $p.parent()["$p"].getComponentById("grdCnsmpPttrnList").getFooterData("fCnstqyAcmtl");
+			var uswtrSqtyYyAcmtlSum = $p.parent()["$p"].getComponentById("grdCnsmpPttrnList").getFooterData("fUswtrSqtyAcmtl");
+			var epbuYyAcmtlSum = cnstqyYyAcmtlSum / uswtrSqtyYyAcmtlSum;
+
+			chartList.push({
+				"date" : dayYear,
+				"epbuYyAcmtlSum" : epbuYyAcmtlSum,
+			});
+		} else {
+			// 다른년도일 때 연별 전력원단위
+			var yearSums = {};
+			for (var item of dltData) {
+				var year = item.ymd.substring(0,4);
+				if (!yearSums[year]) {
+					yearSums[year] = {cnstqyYyAcmtlSum : 0, uswtrSqtyYyAcmtlSum : 0};
+				}
+				yearSums[year].cnstqyYyAcmtlSum += parseInt(item.cnstqyAcmtl);
+				yearSums[year].uswtrSqtyYyAcmtlSum += parseInt(item.uswtrSqtyAcmtl);
+			}
+
+			var chartList = Object.keys(yearSums).map(year => ({
+				"date" : year,
+				"epbuYyAcmtlSum" : yearSums[year].cnstqyYyAcmtlSum / yearSums[year].uswtrSqtyYyAcmtlSum
+			}));
+		}
+
+		var epbuYyAcmtlMaxData = chartData.reduce((max, obj) => Math.max(max, obj.epbuAcmtlSum) || 0, 0);
+		var epbuYyAcmtlChartUnit = Math.max(1, Math.pow(10, String(epbuYyAcmtlMaxData.toFixed(0)).length - 2));
+		var epbuYyAcmtlInterval = Math.ceil((epbuYyAcmtlMaxData / scwin.initData.chart.intervalCount) / epbuYyAcmtlChartUnit) * epbuYyAcmtlChartUnit;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF"  borderStyle="none">'
+			+ '	<Options>'
+			+ '		<Legend defaultMouseOverAction="true"/>'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" precision="4"/>'
+			+ '	<Line2DChart showDataTips="true" dataTipDisplayMode="axis" dataTipFormatter="{numFmt}">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="date" padding="0.7"/>'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + epbuYyAcmtlInterval + '" formatter="{numFmt}" title="kWh/㎥"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Line2DSeries form="curve" yField="epbuYyAcmtlSum" displayName="연별 전력원단위(kWh/년)" itemRenderer="CircleItemRenderer">'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate duration="1000"/>'
+			+ '				</showDataEffect>'
+			+ '			</Line2DSeries>'
+			+ '		</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '	<horizontalAxisRenderers>'
+			+ '		<Axis2DRenderer axis="{hAxis}" showLine="true" labelRotation="45" canDropLabels="false" canStagger="true"/>'
+			+ '	</horizontalAxisRenderers>'
+			+ '	</Line2DChart>'
+			+ '</rMateChart>'
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	}
+]]></script>
+	</head>
+	<body>
+		<!-- <w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe> -->
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<w2:wframe id="wframeLeft" src="/ui/common/content_board.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group class="popup-content-chart">
+				<xf:group class="con-box">
+					<xf:group class="list-box box">
+						<xf:group class="con-box">
+							<xf:group class="layout-float">
+								<xf:group class="float-con left-area cw14">
+									<xf:group class="con-box">
+										<xf:group class="chart-info">
+											<w2:span label="* "></w2:span>
+											<w2:span label="적색" style="color:#F00000;"></w2:span>
+											<w2:span label=": 제일 높은 누계량,&amp;ensp;"></w2:span>
+											<w2:span label="주황색" style="color:#F0A500"></w2:span>
+											<w2:span label=": 두번째로 높은 누계량"></w2:span>
+										</xf:group>
+										<!-- <w2:span class="chart-info" label="* 적색:제일 높은 누계량, 주황색: 두번째로 높은 누계량"></w2:span> -->
+										<xf:group id="grpTopChart" class="view-box box chart-wrap-padding"
+											style="width:100%;height:18.75rem;">
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="float-con right-area cw6" style="padding-left:0;">
+									<xf:group class="con-box">
+										<xf:group id="grpTopChart2" class="view-box box chart-wrap-padding"
+											style="width:100%;height:18.75rem;">
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="con-box">
+							<xf:group class="layout-float">
+								<xf:group class="float-con left-area cw14">
+									<xf:group class="con-box">
+										<xf:group id="grpBottomChart" class="view-box box chart-wrap-padding" style="width:100%;height:18.75rem;"></xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="float-con right-area cw6" style="padding-left:0;">
+									<xf:group class="con-box">
+									<xf:group id="grpBottomChart2" class="view-box box chart-wrap-padding" style="width:100%;height:18.75rem;padding-left:0;"></xf:group></xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

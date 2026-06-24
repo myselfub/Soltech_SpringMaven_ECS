@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Context Root + resources/css/*.css 로 include -->
+<?xml-stylesheet href="/resources/css/common.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+			</w2:dataCollection>
+		</xf:model>
+		<script lazy="false" type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"componentName": "time_picker",
+			"pluginName": "time_picker",
+			"company": "",
+			"developer": "",
+			"category": "Basic",
+			"notSupportBrowser": "",
+			"version": "",
+			"htmlRender": "",
+			"icon": "",
+			"disableIcon": "",
+			"description": "",
+			"width": "100px",
+			"height": "21px",
+			"properties": [
+			{
+			"name": "id",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"description": "udc 아이디"
+			},
+			{
+			"name": "date",
+			"default": "",
+			"type": "number",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 초기 값"
+			},
+			{
+			"name": "ref",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 Ref"
+			},
+			{
+			"name": "class",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "udc 클래스"
+			},
+			{
+			"name": "disabled",
+			"default": "",
+			"type": "combobox",
+			"option": "[true,false]",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "desc"
+			}
+			],
+			"events": [],
+			"apis": [
+			{
+			"name": "getDate",
+			"description": "desc",
+			"params": [],
+			"return": [{
+			"type": "String",
+			"description": "desc"
+			}]
+			},
+			{
+			"name": "setDate",
+			"description": "desc",
+			"params": [{
+			"type": "String",
+			"name": "strDate",
+			"description": "desc"
+			}],
+			"return": [{
+			"type": "String",
+			"description": "desc"
+			}]
+			}
+			]
+			}
+		-->
+		<xf:group class="gb_udc_cal time" id="" style="" pluginName="time_picker">
+			<xf:group class="" id="" style="">
+				<xf:group style="" id="" class="time_wrap">
+					<xf:input dataType="number" validator="" applyFormat="" style="cursor:pointer;" readOnly="false" id="ibx_Date" title=""
+						class="cal_from" mandatory="" ioFormat="" maxlength="11">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							udc_obj.showTimePicker();
+						]]></script>
+						<script ev:event="onkeyup(e)" type="text/javascript"><![CDATA[udc_obj.changeTime(ibx_Date.getValue()); ]]></script>
+						<script ev:event="onchange" type="text/javascript"><![CDATA[udc_obj.changeTime(ibx_Date.getValue());]]></script>
+					</xf:input>
+					<w2:anchor outerDiv="false" style="" id="btn_ShowTimePicker" class="btn_cal">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							udc_obj.showTimePicker();
+						]]></script>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="f_layer_m1" id="div_time" style="display:none" title="Title">
+				<xf:group class="cb" id="grp_Calendar" style="" ev:onblur="">
+					<xf:group class="time_cal_box" id="" style="">
+						<xf:group class="c_body" id="" style="">
+							<xf:group class="w2tb" id="" style="height: 70px;" tagname="table">
+								<w2:attributes>
+									<w2:summary></w2:summary>
+								</w2:attributes>
+								<xf:group tagname="colgroup">
+									<xf:group style="width:25.00%" tagname="col">
+									</xf:group>
+									<xf:group style="width:25.00%" tagname="col">
+									</xf:group>
+									<xf:group style="width:25.00%" tagname="col">
+									</xf:group>
+									<xf:group style="width:25.00%" tagname="col">
+									</xf:group>
+								</xf:group>
+								<xf:group tagname="tr">
+									<xf:group class="w2tb_td" style="height: 70px;" tagname="td">
+										<w2:spinner id="hour" style="" buttonSize="30" skin="type1" inputReadOnly="false" ref="" increment="1" displayFormat=""
+											min="1" max="12" displayFormatter="scwin.displayTimePicker">
+										</w2:spinner>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td">
+										<w2:spinner id="minute" style="" buttonSize="30" skin="type1" inputReadOnly="false" ref="" increment="1" displayFormat=""
+											min="0" max="59" displayFormatter="scwin.displayTimePicker">
+										</w2:spinner>
+									</xf:group>
+									<xf:group class="w2tb_td" style="" tagname="td">
+										<w2:spinner id="second" style="" buttonSize="30" skin="type1" inputReadOnly="false" ref="" increment="1" displayFormat=""
+											min="0" max="59" displayFormatter="scwin.displayTimePicker">
+										</w2:spinner>
+									</xf:group>
+									<xf:group class="w2tb_td" style="height: 70px;text-align: center;" tagname="td">
+										<w2:textbox label="" id="meridiem">
+										</w2:textbox>
+										<w2:anchor outerDiv="false" style="" id="btn_PrevStrtYear" class="prev">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.changeMeridiem();
+											]]></script>
+											<xf:label><![CDATA[<]]></xf:label>
+										</w2:anchor>
+										<w2:anchor outerDiv="false" style="" id="btn_NextStrtYear" class="next">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.changeMeridiem();
+											]]></script>
+											<xf:label><![CDATA[>]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group style="" id="" class="gb_btnarea">
+					<w2:anchor outerDiv="false" style="" id="" class="btn_cancle">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							div_time.setStyle("display", "none");
+						]]></script>
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+					<w2:anchor outerDiv="false" style="" id="" class="btn_ok">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							udc_obj.clickTimePicker();
+						]]></script>
+						<xf:label><![CDATA[확인]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+			/**
+			* //property handling
+			* $w.log("id:" + options.id);
+			* $w.log("date:" + options.date);
+			* $w.log("ref:" + options.ref);
+			*
+			* //event trigger
+			* udc_obj.trigger("onBtnCalendarClick"); 
+			*/
+
+			//초기 수행함수 
+			this.initQuarterCalendar = function() {
+				this.today = "";
+				this.selectedDate = "";
+
+				var tmpDate = new Date();
+				var hours = tmpDate.getHours();
+				var minutes = tmpDate.getMinutes();
+				var seconds = tmpDate.getSeconds();
+
+				if (parseInt(hours) > 12) {
+					hours = parseInt(hours) - 12;
+					meridiem.setValue("PM");
+				} else {
+					meridiem.setValue("AM");
+				}
+				// if(hours < 10) {
+					// hours = "0" + hours;
+				// }
+				hour.setValue(hours);
+				minute.setValue(minutes);
+				second.setValue(seconds);
+
+				// udc의 초기 설정값
+				if (ibx_Date.getValue() == "" && options.date != undefined) {
+					ibx_Date.setValue(options.date);
+				}
+				// ref 설젇 
+				if (options.ref != "") {
+					ibx_Date.setRef(options.ref);
+				}
+				this.changeTime(ibx_Date.getValue());
+			};
+
+			scwin.displayTimePicker = function(value) {
+					if(value.length < 2){
+						value = "0"+value;
+					}
+				return value;
+			};
+
+			udc_obj.changeMeridiem = function() {
+				if (meridiem.getValue() == "AM") {
+					meridiem.setValue("PM");
+				} else {
+					meridiem.setValue("AM");
+				}
+			};
+
+		this.changeTime = function(strDate) {
+			strDate = strDate.replaceAll(":", "");
+			if (strDate.length > 5) {
+				var time = "";
+				var hours = strDate.substr(0, 2);
+				var minutes = strDate.substr(2, 2);
+				var seconds = strDate.substr(4, 2);
+				var meridiemStr = strDate.substr(6, 2);
+
+				if (hours > 24) {
+					alert("잘못된 시간형식입니다.");
+					hour.setValue("01");
+					minute.setValue("01");
+					second.setValue("01");
+					meridiem.setValue("AM");
+					ibx_Date.setValue("01" + ":" + "01" + ":" + "01" + ":" + "AM");
+					return false;
+				}
+				if (minutes > 59) {
+					alert("잘못된 분형식입니다.");
+					hour.setValue("01");
+					minute.setValue("01");
+					second.setValue("01");
+					meridiem.setValue("AM");
+					ibx_Date.setValue("01" + ":" + "01" + ":" + "01" + ":" + "AM");
+					return false;
+				}
+				if (seconds > 59) {
+					alert("잘못된 초형식입니다.");
+					hour.setValue("01");
+					minute.setValue("01");
+					second.setValue("01");
+					meridiem.setValue("AM");
+					ibx_Date.setValue("01" + ":" + "01" + ":" + "01" + ":" + "AM");
+					return false;
+				}
+				if (meridiemStr == "AM" || meridiemStr == "PM") {
+						if (parseInt(strDate.substr(0, 2)) > 12) {
+							hours = parseInt(strDate.substr(0, 2)) - 12;
+						}
+						meridiem.setValue(meridiemStr);
+				} else {
+					if (parseInt(strDate.substr(0, 2)) > 12) {
+						hours = parseInt(strDate.substr(0, 2)) - 12;
+						meridiem.setValue("PM");
+						meridiemStr="PM";
+					} else {
+						meridiem.setValue("AM");
+						meridiemStr="AM";
+					}
+				}
+
+				hours = scwin.displayTimePicker(hours + "");
+				ibx_Date.setValue(hours + ":" + minutes + ":" + seconds + ":" + meridiemStr);
+				hour.setValue(hours);
+				minute.setValue(minutes);
+				second.setValue(seconds);
+				// meridiem.setValue(meridiemStr);
+			}
+		};
+
+		this.showTimePicker = function() {
+			if (div_time.getStyle("display") == "none") {
+				div_time.setStyle("display", "");
+			} else {
+				div_time.setStyle("display", "none");
+			}
+		};
+
+		// 확인 버튼 클릭시 
+		this.clickTimePicker = function() {
+			var hourStr = hour.getValue();
+			var minuteStr = minute.getValue();
+			var secondStr = second.getValue();
+
+			if (hourStr.length < 2) {
+				hourStr = "0" + hourStr;
+			}
+			if (minuteStr.length < 2) {
+				minuteStr = "0" + minuteStr;
+			}
+			if (secondStr.length < 2) {
+				secondStr = "0" + secondStr;
+			}
+
+			var time = hourStr + ":" + minuteStr + ":" + secondStr + ":" + meridiem.getValue();
+
+			ibx_Date.setValue(time);
+
+			div_time.setStyle("display", "none");
+		};
+
+		udc_obj.getDate = function() {
+			if (ibx_Date.getValue() == "") {
+				return null;
+			} else {
+				return ibx_Date.getValue();
+			}
+		};
+	
+		udc_obj.setDate = function(strDate) {
+			ibx_Date.setValue(strDate);
+		};
+
+		// 초기 실행함수 수행
+		this.initQuarterCalendar();
+		]]></script>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				* //property handling
+				*
+				* //event trigger
+				*/
+			]]></script>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+		</xf:group>
+	</body>
+</html>

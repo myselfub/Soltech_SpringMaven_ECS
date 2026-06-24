@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 정산 - REC, CER 정산종합 -->
+<mapper namespace="REC_CER_Dao">
+	<select id="REC_CER_Dao_retrieveRecCerList" parameterType="kw.ecs.cl.reccer.vo.RecCerVo" resultType="egovMap">
+		/* REC_CER_Dao_retrieveRecCerList */
+		WITH MONTH_LIST AS (
+			SELECT /*+ MATERIALZE */
+				TO_CHAR(ADD_MONTHS(TO_DATE(SUBSTR(#{strtDt} || '01', 0, 6), 'yyyyMM'), LEVEL - 1), 'yyyyMM') AS mt
+			FROM
+				DUAL
+			CONNECT BY
+				LEVEL &lt;= MONTHS_BETWEEN(TO_DATE(SUBSTR(#{strtDt} || '12', 0, 6), 'yyyyMM'), TO_DATE(SUBSTR(#{strtDt} || '01', 0, 6), 'yyyyMM')) + 1
+		)
+		SELECT
+			mt AS ym,
+			smlhp,
+			snpw,
+			wdpw,
+			tdpw,
+			ovsea,
+			ROUND((
+				NVL(smlhp, 0) + NVL(snpw, 0) + NVL(wdpw, 0) +
+				NVL(tdpw, 0) + NVL(ovsea, 0)
+			), 0) AS sum
+		FROM (
+			SELECT /*+ LEADING(MONTH_LIST DATAS) */
+				MONTH_LIST.mt,
+				DATAS.setcsc_nm,
+				DATAS.amt
+			FROM (
+				SELECT
+					(rec_delng_year || rec_delng_mt) AS mt,
+					cmmn_cd_nm AS setcsc_nm,
+					SUM(amt) AS amt
+				FROM (
+					SELECT /*+ LEADING(B D A C) */
+						A.rec_delng_year,
+						A.rec_delng_mt,
+						D.cmmn_cd_nm,
+						A.rec_accnut_snrn AS amt
+					FROM
+						tm_cl22001 A, (
+							SELECT
+								cmmn_cd,
+								usr_dfn_vu1
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = 'ECS_2003'
+						) B,
+						WRO.tc_eg10101 C,
+						(
+							SELECT
+								cmmn_cd,
+								DECODE(cmmn_cd,
+									'0004', '태양광',
+									'0005', '태양광',
+									'0007', '보소수력',
+									cmmn_cd_nm
+								) AS cmmn_cd_nm
+							FROM
+								SCM.tc_sc_unif_cmmn_cd
+							WHERE
+								sys_div_cd = 'WRO'
+								AND cls_cd = 'WRO_3003'
+						) D
+					WHERE
+						A.rec_eqp_cd_nm = B.cmmn_cd
+						AND B.usr_dfn_vu1 = C.elcpwstn_cd(+)
+						AND C.elcpwstn_cls_cd = D.cmmn_cd(+)
+						AND A.rec_delng_year = #{strtDt}
+					UNION ALL
+					SELECT /*+ LEADING(B D A C) */
+						A.rec_delng_year,
+						A.rec_delng_mt,
+						D.cmmn_cd_nm,
+						A.rec_excclc_tamt AS amt
+					FROM
+						tm_cl22002 A, (
+							SELECT
+								cmmn_cd,
+								usr_dfn_vu1
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = 'ECS_2003'
+						) B,
+						WRO.tc_eg10101 C, (
+							SELECT
+								cmmn_cd,
+								DECODE(cmmn_cd,
+									'0004', '태양광',
+									'0005', '태양광',
+									'0007', '소수력',
+									cmmn_cd_nm
+								) AS cmmn_cd_nm
+							FROM
+								SCM.tc_sc_unif_cmmn_cd
+							WHERE
+								sys_div_cd = 'WRO'
+								AND cls_cd = 'WRO_3003'
+						) D
+					WHERE
+						A.rec_eqp_cd_nm = B.cmmn_cd(+)
+						AND B.usr_dfn_vu1 = C.elcpwstn_cd(+)
+						AND C.elcpwstn_cls_cd = D.cmmn_cd(+)
+						AND A.rec_delng_year = #{strtDt}
+				)
+				GROUP BY
+					rec_delng_year || rec_delng_mt,
+					cmmn_cd_nm
+				UNION ALL
+				SELECT /*+ LEADING(B A) */
+					SUBSTR(A.cer_delng_de, 0, 6) AS cer_delng_mt,
+					MAX(B.cmmn_cd_nm) AS cmmn_cd_nm,
+					SUM(A.cer_amt) AS cer_amt
+				FROM
+					tm_cl23001 A, (
+						SELECT
+							cmmn_cd,
+							cmmn_cd_nm
+						FROM
+							tc_ecs_cd
+						WHERE
+							use_yn = 'Y'
+							AND cls_cd = 'ECS_9002'
+					) B
+				WHERE
+					A.ecs_elcpwstn_div_cd = B.cmmn_cd(+)
+					AND A.cer_delng_de BETWEEN #{strtDt} || '0101' AND #{strtDt} || '1231'
+				GROUP BY
+					SUBSTR(A.cer_delng_de, 0, 6),
+					B.cmmn_cd
+			) DATAS, MONTH_LIST
+			WHERE
+				MONTH_LIST.mt = DATAS.mt(+)
+		)
+		PIVOT (
+			SUM(amt) FOR setcsc_nm IN (
+				'소수력' AS smlhp,
+				'태양광' AS snpw,
+				'풍력' AS wdpw,
+				'시화조력' AS tdpw,
+				'파트린드' AS ovsea
+			)
+		)
+		ORDER BY
+			ym
+	</select>
+</mapper>

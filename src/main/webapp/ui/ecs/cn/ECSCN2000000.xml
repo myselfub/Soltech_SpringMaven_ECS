@@ -1,0 +1,801 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSCN2000000.xml
+			* 설 명 : 소비_사업장 소비전력 비교현황
+			* 작성일 : 2023.02.01
+			* 담당자 : Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.01 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="strtDtD" dataType="number" name="조회연월일"></w2:key>
+						<w2:key id="strtDtM" dataType="number" name="조회연월"></w2:key>
+						<w2:key id="stdrBasinCd" dataType="text" name="기준유역코드"></w2:key>
+						<w2:key id="stdrBplcCd" dataType="text" name="기준사업장코드"></w2:key>
+						<w2:key id="cmprBasinCd" dataType="text" name="비교유역코드"></w2:key>
+						<w2:key id="cmprBplcCd" dataType="text" name="비교사업장코드"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltAutoCondition1" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition2" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition3" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition4" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltEpbuSttusList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="deptNm" dataType="text" name="부서"></w2:column>
+						<w2:column id="eqpCcty" dataType="text" name="계약전력(kW)"></w2:column>
+						<w2:column id="fyerAcmlCnsmpElteng" dataType="text" name="연간 누적 소비 전력량(kWh)"></w2:column>
+						<w2:column id="preYyMtCnsmpElteng" dataType="text" name="비교 소비 전력(kWh)"></w2:column>
+						<w2:column id="thsmonCnsmpElteng" dataType="text" name="기준 소비 전력(kWh)"></w2:column>
+						<w2:column id="prvyySammVersusPwcspDcrsRt" dataType="text" name="전일대비 소비전력 증감률(%)"></w2:column>
+						<w2:column id="wntyPrvyySammVersusCnsmpRedcnRtRnk" dataType="text" name="전일대비 소비증감률 전국 순위"></w2:column>
+						<w2:column id="basinPrvyySammVersusCnsmpRedcnRtRnk" dataType="text" name="전일대비 소비증감률 유역 순위"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="bplcChartList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="deptNm" dataType="text" name="부서명"></w2:column>
+						<w2:column id="deptCd" dataType="text" name="부서코드"></w2:column>
+						<w2:column id="cnstscNm" dataType="text" name="사업장명"></w2:column>
+						<w2:column id="mtCnstn" dataType="number" name="월소비량"></w2:column>
+						<w2:column id="preYyMtCnstn" dataType="number" name="전월소비량"></w2:column>
+						<w2:column id="redcnRt" dataType="number" name="증감률"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"chart" : {
+			"chartUnit" : 10,
+			"intervalCount" : 5,
+		},
+		"radDisplayData" : [
+			{"name" : "일별", "tooltip" : "전일기준 실시간 한전 데이터 조회"},
+			{"name" : "월별", "tooltip" : "한전 고지서 데이터 조회"}
+		],
+		"observeEvent" : false
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSCN2000000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+		/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 조회조건 설정
+		scwin.initSearchParam();
+
+		//ecsLib.setChartResizeObserver(this);
+	};
+
+	/**
+	 * 조회조건 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initSearchParam = function() {
+		dmaSearchParam.set("strtDtD", utilLib.addDay(utilLib.getCurrentDate("yyyyMMdd"), -1));
+		dmaSearchParam.set("strtDtM", utilLib.addMonth(utilLib.getCurrentDate("yyyyMM"), -1));
+		dmaSearchParam.set("stdrBasinCd", "");
+		dmaSearchParam.set("cmprBasinCd", "");
+	};
+
+	/**
+	 * 라디오버튼별 툴팁을 설정한다.
+	 * @param
+	 * @return
+	 */
+	scwin.setSbxDisplayTooltip = function(label, index) {
+		return scwin.initData.radDisplayData.find(obj => obj.name == label).tooltip;
+	};
+
+	/**
+	 * 조회조건에 맞게 chartData, grdData를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var cnd = radMdBy.getValue();
+		var ecsChrgDeptId = dmaSearchParam.get("stdrBplcCd");
+		var cmprEcsChrgDeptId = dmaSearchParam.get("cmprBplcCd");
+
+		if (cnd == "D") {
+			var strtDate = dmaSearchParam.get("strtDtD");
+			var endDt = strtDate;
+
+			if (String(strtDate).length != 8) {
+				// 조회기간이 올바르지 않습니다.
+				alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+				return;
+			} else if (ecsChrgDeptId == "" || cmprEcsChrgDeptId == "") {
+				alert("사업장을 선택하세요.");
+				return;
+			} else if (ecsChrgDeptId == cmprEcsChrgDeptId) {
+				alert("같은 사업장을 선택할 수 없습니다.");
+				return;
+			}
+		} else {
+			var strtDate = dmaSearchParam.get("strtDtM");
+			var endDt = strtDate;
+
+			if (String(strtDate).length != 6) {
+			// 조회기간이 올바르지 않습니다.
+			alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+			return;
+			} else if (ecsChrgDeptId == "" || cmprEcsChrgDeptId == "") {
+				alert("사업장을 선택하세요.");
+				return;
+			} else if (ecsChrgDeptId == cmprEcsChrgDeptId) {
+				alert("같은 사업장을 선택할 수 없습니다.");
+				return;
+			}
+		}
+		cnd = cnd == "M" ? "mnby" : "daly";
+
+		// 라디오버튼 선택에 따라 그리드 타이틀을 변경한다_240104
+		var radMdByNm = radMdBy.getText();
+		spnSubTitle.setLabel("소비전력 증감률 비교" + "(" + radMdByNm + ")");
+
+		var queryString = `?strtDt=${strtDate}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&cnd=${cnd}`;
+		queryString += `&ecsChrgDeptId=${ecsChrgDeptId}`;
+		queryString += `&cmprEcsChrgDeptId=${cmprEcsChrgDeptId}`;
+
+		// 소비전력 증감률 비교 그리드 데이터 조회
+		var option = {
+			action : "cn/pwcspcmprsttus/retrieve-pwcsp-cmpr-sttus.do"
+				+ queryString,
+			method : "get",
+			resData : dltEpbuSttusList,
+			success : "scwin.inqireGrdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+
+		// 기준부서 차트 데이터 조회
+		var option = {
+			action : "cn/pwcspcmprsttus/retrieve-pwcsp-cmpr-sttus-chart.do"
+				+ queryString,
+			method : "get",
+			resData : bplcChartList,
+			success : "scwin.inqireChartCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 GrdCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireGrdCallback = function() {
+		spnTotalRow.setValue(dltEpbuSttusList.getRowCount());
+		var cnd = radMdBy.getValue();
+
+		if (cnd == "D") {
+			grdEpbuSttusList.setHeaderValue("hThsmonCnsmpElteng", dmaSearchParam.get("strtDtD").substr(0, 4) + "." + dmaSearchParam.get("strtDtD").substr(4, 2) + "." + dmaSearchParam.get("strtDtD").substr(6, 2) +" 소비전력(kWh)");
+			grdEpbuSttusList.setHeaderValue("hPreYyMtCnsmpElteng", dmaSearchParam.get("strtDtD").substr(0, 4) + "." + dmaSearchParam.get("strtDtD").substr(4, 2) + "." +  (Number(dmaSearchParam.get("strtDtD").substr(6, 2)) - 1) + " 소비전력(kWh)");
+			grdEpbuSttusList.setHeaderValue("hPrvyySammVersusPwcspDcrsRt", "전일대비 소비전력 증감률(%)");
+			grdEpbuSttusList.setHeaderValue("hWntyPrvyySammVersusCnsmpRedcnRtRnk", "전일대비 소비증감률 전국 순위");
+			grdEpbuSttusList.setHeaderValue("hBasinPrvyySammVersusCnsmpRedcnRtRnk", "전일대비 소비증감률 유역 순위");
+		} else {
+			grdEpbuSttusList.setHeaderValue("hThsmonCnsmpElteng", dmaSearchParam.get("strtDtM").substr(0, 4) + "." + dmaSearchParam.get("strtDtM").substr(4, 2) + " 소비전력(kWh)");
+			grdEpbuSttusList.setHeaderValue("hPreYyMtCnsmpElteng", (Number(dmaSearchParam.get("strtDtM").substr(0, 4)) - 1) + "." + dmaSearchParam.get("strtDtM").substr(4, 2) + " 소비전력(kWh)");
+			grdEpbuSttusList.setHeaderValue("hPrvyySammVersusPwcspDcrsRt", "전년 동월대비 소비전력 증감률(%)");
+			grdEpbuSttusList.setHeaderValue("hWntyPrvyySammVersusCnsmpRedcnRtRnk", "전년 동월대비 소비증감률 전국 순위");
+			grdEpbuSttusList.setHeaderValue("hBasinPrvyySammVersusCnsmpRedcnRtRnk", "전년 동월대비 소비증감률 유역 순위");
+		}
+	};
+
+	/**
+	 * 기준유역 조회박스 선택 값을 세팅한다.
+	 * @param info
+	 * @return
+	 */
+	scwin.acbStdrBasin_onviewchange = function(info) {
+		dmaSearchParam.set("stdrBasinCd", info.newValue);
+
+		var queryString = "?ecsBasinDivCd=" + info.newValue;
+
+		var option = {
+			action : "zz/cmmn/retrieve-cnsmp-sttus-cnd-kepco-dept.do"
+				+ queryString,
+			method : "get",
+			resData : dltAutoCondition2,
+			success : "",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 기준부서 조회박스 선택 값을 세팅한다.
+	 * @param info
+	 * @return
+	 */
+	scwin.acbStdrBplc_onviewchange = function(info) {
+		dmaSearchParam.set("stdrBplcCd", info.newValue);
+	};
+
+	/**
+	 * 비교유역 조회박스 선택 값을 세팅한다.
+	 * @param info
+	 * @return
+	 */
+	scwin.acbCmprBasin_onviewchange = function(info) {
+		dmaSearchParam.set("cmprBasinCd", info.newValue);
+
+		var queryString = "?ecsBasinDivCd=" + info.newValue;
+
+		var option = {
+			action : "zz/cmmn/retrieve-cnsmp-sttus-cnd-kepco-dept.do"
+				+ queryString,
+			method : "get",
+			resData : dltAutoCondition4,
+			success : "",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 비교부서 조회박스 선택 값을 세팅한다.
+	 * @param info
+	 * @return
+	 */
+	scwin.acbCmprBplc_onviewchange = function(info) {
+		dmaSearchParam.set("cmprBplcCd", info.newValue);
+	};
+
+	/**
+	 * 라디오버튼 선택에 따라 조회날짜를 변경한다.
+	 * @param
+	 * @return
+	 */
+	scwin.radMdBy_onviewchange = function(info) {
+		var cnd = radMdBy.getValue();
+
+		if (cnd == "D") {
+			grpCalDNm.setStyle("display", "");
+			grpCalDBox.setStyle("display", "");
+			grpCalMNm.setStyle("display", "none");
+			grpCalMBox.setStyle("display", "none");
+		} else if (cnd == "M") {
+			grpCalDNm.setStyle("display", "none");
+			grpCalDBox.setStyle("display", "none");
+			grpCalMNm.setStyle("display", "");
+			grpCalMBox.setStyle("display", "");
+		} else {
+			return;
+		}
+	};
+
+	/**
+	 * 그리드 소수점 첫째자리까지 표시 한다.
+	 * @param value
+	 * @return
+	 */
+	scwin.dsplZeroFrmt = function(value) {
+		if (value == "-") {
+			return value;
+		}
+		return ecsLib.dsplZeroFrmt(value, 1);
+	};
+
+	//============================================================================================
+	// 차트
+	//============================================================================================
+	 /**
+	 * 기준부서 차트 생성
+	 */
+	scwin.inqireChartCallback = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandler";
+		rMateChartH5.create($p.id + "ChartStdr", grpChartStdr.getID(), chartVars, "100%", "100%");
+
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandler";
+		rMateChartH5.create($p.id + "ChartCmpr", grpChartCmpr.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * 부서 차트 설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandler = function(id) {
+		var cnd = radMdBy.getValue();
+
+		if (cnd == "D") {
+			var date = new Date(dmaSearchParam.get("strtDtD").substr(0, 4), (dmaSearchParam.get("strtDtD").substr(4, 2) - 1), dmaSearchParam.get("strtDtD").substr(6, 2));
+			var mtCnstnLabel = date.getFullYear() + "년" + (date.getMonth() + 1) + "월" + date.getDate() + "일(kWh)";
+			date.setDate(date.getDate() - 1);
+			var preYyMtCnstnLabel = date.getFullYear() + "년" + (date.getMonth() + 1) + "월" + date.getDate() + "일(kWh)";
+		} else {
+			var preYyMtCnstnLabel = (Number(dmaSearchParam.get("strtDtM").substr(0, 4)) -1) + "년" + dmaSearchParam.get("strtDtM").substr(4, 2) + "월(kWh)";
+			var mtCnstnLabel = dmaSearchParam.get("strtDtM").substr(0, 4) + "년" + dmaSearchParam.get("strtDtM").substr(4, 2) + "월(kWh)";
+		}
+
+		var cmmnCd;
+		if (id.includes("ChartStdr")) {
+			cmmnCd = acbStdrBplc.getValue();
+			spnStdrBrffcNm.setValue(" " + acbStdrBplc.selectedItem.text);
+		} else if (id.includes("ChartCmpr")) {
+			cmmnCd = acbCmprBplc.getValue();
+			spnCmprBrffcNm.setValue(" " + acbCmprBplc.selectedItem.text);
+		} else {
+			return;
+		}
+
+		var data = bplcChartList.getAllJSON();
+
+		chartData = data.filter(obj => obj.deptCd == cmmnCd);
+		// chartData.forEach(obj => obj.redcnRt = Math.abs(item.redcnRt));
+
+		// 소비 전력량 interval
+		var maxMtData = chartData.reduce((max, obj) => Math.max(max, obj.mtCnstn), 0);
+		var maxPreMtData = chartData.reduce((max, obj) => Math.max(max, obj.preYyMtCnstn), 0);
+		var maxData = maxMtData > maxPreMtData ? maxMtData : maxPreMtData;
+		var chartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+		var interval = Math.ceil((maxData / scwin.initData.chart.intervalCount) / chartUnit) * chartUnit;
+
+		// 증감률 interval
+		maxData = chartData.reduce((max, obj) => Math.max(max, Math.abs(obj.redcnRt)), 0);
+		chartUnit = Math.max(5, Math.pow(5, String(maxData.toFixed(0)).length - 2));
+		var rtInterval = Math.ceil((maxData / scwin.initData.chart.intervalCount) / chartUnit) * chartUnit;
+
+		var solidColor1 = ecsLib.getSkinColors().chartSolidColor2;
+		var solidColor2 = ecsLib.getSkinColors().chartSolidColor3;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" borderStyle="none">'
+			+ '	<Options>'
+		//	+ '		<Caption text="발전원별 생산전력" textAlign="center" paddingTop="4.8" paddingRight="3.2" paddingBottom="4.8" paddingLeft="9.6" fontWeight="bold" fontSize="1rem" />'
+			+ '		<Legend defaultMouseOverAction="false" />'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true"/>'
+			+ '	<Combination2DChart showDataTips="true" dataTipDisplayMode="axis">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="cnstscNm" padding="0.7"/>'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + interval + '" formatter="{numFmt}" title="kWh"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSet type="clustered" maxColumnWidth="25">'
+			+ '				<series>'
+			+ '					<Column2DSeries yField="preYyMtCnstn" displayName="' + preYyMtCnstnLabel + '">'
+			+ '						<fill>'
+			+ '							<SolidColor color="' + solidColor1 + '"/>'
+			+ '						</fill>'
+			+ '						<showDataEffect>'
+			+ '							<SeriesInterpolate />'
+			+ '						</showDataEffect>'
+			+ '					</Column2DSeries>'
+			+ '					<Column2DSeries yField="mtCnstn" displayName="' + mtCnstnLabel + '">'
+			+ '						<fill>'
+			+ '							<SolidColor color="' + solidColor2 + '"/>'
+			+ '						</fill>'
+			+ '						<showDataEffect>'
+			+ '							<SeriesInterpolate />'
+			+ '						</showDataEffect>'
+			+ '					</Column2DSeries>'
+			+ '				</series>'
+			+ '			</Column2DSet>'
+			+ '			<Line2DSeries yField="redcnRt" radius="4.5" itemRenderer="CircleItemRenderer" displayName="증감률(%)" labelPosition="up"  upLabelJsFunction="' + $p.id + 'scwin.upLabelFontColor">'
+			+ '				<stroke>'
+			+ '					<Stroke color="#F9BD03" weight="3"/>'
+			+ '				</stroke>'
+			+ '				<lineStroke>'
+			+ '					<Stroke color="#F9BD03" weight="3"/>'
+			+ '				</lineStroke>'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxis2" interval="' + rtInterval + '" formatter="{numFmt}" title="%"/>'
+			+ '				</verticalAxis>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate/>'
+			+ '				</showDataEffect>'
+			+ '			</Line2DSeries>'
+			+ '		</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false" />'
+			+ '			<Axis2DRenderer axis="{vAxis2}" verticalAxisTitleAlignment="vertical" showLine="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '	</Combination2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartData);
+	};
+
+	/**
+	 * 차트 라벨 색상 설정
+	 * @seriesID : seriesID
+	 * @index : index
+	 * @data : data
+	 * @values : values
+	 */
+	scwin.upLabelFontColor = function(seriesID, index, data, values) {
+		var pre = data.preYyMtCnstn;
+		var mt = data.mtCnstn;
+		var rt = data.redcnRt;
+		var color = "";
+
+		if (pre < mt) {
+			color = "red";
+		} else if (pre > mt) {
+			color = "blue";
+		}
+		// eles 같거나 0 이라면 default (black)
+
+		return "<font color='" + color + "'>" + data.redcnRt + "</font>";
+	};
+
+	//============================================================================================
+	// 엑셀
+	//============================================================================================
+	/**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm = spnSubTitle.getValue();
+
+		// up, down 기호 제거 _231110
+		var grdData = grdEpbuSttusList.getAllDisplayJSON();
+		for(var i = 0; i < grdData.length; i++) {
+			var currentEqpCcty = grdData[i].eqpCcty;
+			var currentThsmonCnsmpElteng = grdData[i].thsmonCnsmpElteng;
+			var currentPreYyMtCnsmpElteng = grdData[i].preYyMtCnsmpElteng;
+			var currentPrvyySammVersusPwcspDcrsRt = grdData[i].prvyySammVersusPwcspDcrsRt;
+			var currentWntyPrvyySammVersusCnsmpRedcnRtRnk = grdData[i].wntyPrvyySammVersusCnsmpRedcnRtRnk;
+			var currentBasinPrvyySammVersusCnsmpRedcnRtRnk = grdData[i].basinPrvyySammVersusCnsmpRedcnRtRnk;
+
+			// up 기호 제거
+			if (currentEqpCcty.includes("&#9650;&nbsp;") || currentThsmonCnsmpElteng.includes("&#9650;&nbsp;") || currentPreYyMtCnsmpElteng.includes("&#9650;&nbsp;") || currentPrvyySammVersusPwcspDcrsRt.includes("&#9650;&nbsp;")) {
+				currentEqpCcty = currentEqpCcty.replace("<span style=\"color:#FF0024;\">&#9650;&nbsp;</span>", "").replace("%", "");
+				currentThsmonCnsmpElteng = currentThsmonCnsmpElteng.replace("<span style=\"color:#FF0024;\">&#9650;&nbsp;</span>", "").replace("%", "");
+				currentPreYyMtCnsmpElteng = currentPreYyMtCnsmpElteng.replace("<span style=\"color:#FF0024;\">&#9650;&nbsp;</span>", "").replace("%", "");
+				currentPrvyySammVersusPwcspDcrsRt = currentPrvyySammVersusPwcspDcrsRt.replace("<span style=\"color:#FF0024;\">&#9650;&nbsp;</span>", "").replace("%", "");
+				grdData[i].eqpCcty = currentEqpCcty;
+				grdData[i].thsmonCnsmpElteng = currentThsmonCnsmpElteng;
+				grdData[i].preYyMtCnsmpElteng = currentPreYyMtCnsmpElteng;
+				grdData[i].prvyySammVersusPwcspDcrsRt = currentPrvyySammVersusPwcspDcrsRt;
+			}
+			// down 기호 제거
+			if (currentEqpCcty.includes("&#9660;&nbsp;") || currentThsmonCnsmpElteng.includes("&#9660;&nbsp;") || currentPreYyMtCnsmpElteng.includes("&#9660;&nbsp;") || currentPrvyySammVersusPwcspDcrsRt.includes("&#9660;&nbsp;")) {
+				currentEqpCcty = currentEqpCcty.replace("<span style=\"color:#0082FF;\">&#9660;&nbsp;</span>", "").replace("%", "");
+				currentThsmonCnsmpElteng = currentThsmonCnsmpElteng.replace("<span style=\"color:#0082FF;\">&#9660;&nbsp;</span>", "").replace("%", "");
+				currentPreYyMtCnsmpElteng = currentPreYyMtCnsmpElteng.replace("<span style=\"color:#0082FF;\">&#9660;&nbsp;</span>", "").replace("%", "");
+				currentPrvyySammVersusPwcspDcrsRt = currentPrvyySammVersusPwcspDcrsRt.replace("<span style=\"color:#0082FF;\">&#9660;&nbsp;</span>", "").replace("%", "");
+				grdData[i].eqpCcty = currentEqpCcty;
+				grdData[i].thsmonCnsmpElteng = currentThsmonCnsmpElteng;
+				grdData[i].preYyMtCnsmpElteng = currentPreYyMtCnsmpElteng;
+				grdData[i].prvyySammVersusPwcspDcrsRt = currentPrvyySammVersusPwcspDcrsRt;
+			}
+		}
+		dltEpbuSttusList.setJSON(grdData, false);
+
+		// 엑셀 내부 타이틀 추가_240105
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 8,
+			text 		: `${menuNm}_` + `${subTitleNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		comLib.downloadExcel(grdEpbuSttusList, {
+			fileName : `${menuNm}_` + `${subTitleNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : "true",
+			colMerge : "true",
+			colMergeValue : "true"
+		}, infoArr);
+
+		// 다운로드 후 그리드에 기호 사라지는 거 방지
+		scwin.btnInqire_onclick();
+	};
+	]]></script>
+	</head>
+	<body>
+		<w2:wframe class="wfm_title" id="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group id="grpInqire" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw0" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:select1 id="radMdBy" appearance="full" cols="3" renderType="radiogroup" selectedIndex="0"
+									tooltipDisplay="true" tooltipShowAlways="true" tooltipFormatter="scwin.setSbxDisplayTooltip" ev:onviewchange="scwin.radMdBy_onviewchange">
+									<xf:choices>
+										<xf:item>
+											<xf:label><![CDATA[일별]]></xf:label>
+											<xf:value><![CDATA[D]]>
+											</xf:value>
+										</xf:item>
+										<xf:item>
+											<xf:label><![CDATA[월별]]></xf:label>
+											<xf:value><![CDATA[M]]>
+											</xf:value>
+										</xf:item>
+									</xf:choices>
+								</xf:select1>
+							</xf:group>
+							<xf:group id="grpCalDNm" class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회연월일"></w2:span>
+							</xf:group>
+							<xf:group id="grpCalDBox" class="w2tb_td cw2" tagname="td">
+								<!-- <w2:calendar ref="data:dmaSearchParam.strtDtD" calendarValueType="yearMonthDate"></w2:calendar> -->
+								<w2:inputCalendar ref="data:dmaSearchParam.strtDtD" renderDiv="true" calendarValueType="yearMonthDate" rightAlign="false"
+									renderType="component"></w2:inputCalendar>
+							</xf:group>
+							<xf:group id="grpCalMNm" class="w2tb_th cw1" tagname="th" style="display:none;">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회연월"></w2:span>
+							</xf:group>
+							<xf:group id="grpCalMBox" class="w2tb_td cw2" tagname="td" style="display:none;">
+								<w2:month_calendar ref="data:dmaSearchParam.strtDtM"></w2:month_calendar>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="기준유역"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete displayMode="label" editType="select" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL" ev:onviewchange="scwin.acbStdrBasin_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition1">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="기준부서"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="acbStdrBplc" displayMode="label" editType="select" search="contain" submenuSize="auto"
+									useKeywordHighlight="true" visibleRowNum="15" chooseOptionLabel="- 선택 -" chooseOption="true" ev:onviewchange="scwin.acbStdrBplc_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition2">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="비교유역"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete displayMode="label" editType="select" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL" ev:onviewchange="scwin.acbCmprBasin_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition3">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="비교부서"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="acbCmprBplc" displayMode="label" editType="select" search="contain" submenuSize="auto"
+									useKeywordHighlight="true" visibleRowNum="15" chooseOptionLabel="- 선택 -" chooseOption="true" ev:onviewchange="scwin.acbCmprBplc_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition4">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" userData1="Q" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[비교]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" outerDiv="false" userData1="E"
+						ev:onclick="scwin.btnDownExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="layout-float">
+					<xf:group class="float-con left-area cw10">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="기준부서 : "></w2:span>
+									<w2:span id="spnStdrBrffcNm" label="&quot;사업장을 선택하세요.&quot;"></w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group id="grpChartStdr" class="view-box box chart-wrap-padding" style="height:18.75rem;"></xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="float-con left-area cw10">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="비교부서 : "></w2:span>
+									<w2:span id="spnCmprBrffcNm" label="&quot;사업장을 선택하세요.&quot;"></w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group id="grpChartCmpr" class="view-box box chart-wrap-padding" style="height:18.75rem;"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span id="spnSubTitle" label="소비전력 증감률 비교(일별)"></w2:span>
+							<w2:span id="spnTotalRow" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+						</xf:group>
+					</xf:group>
+					<xf:group class="list-box box">
+						<w2:gridView id="grdEpbuSttusList" class="resized" dataList="dltEpbuSttusList" readOnly="true" checkReadOnlyOnPaste="true"
+							checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" sortable="false" tooltipDisplay="true" defaultCellHeight="35"
+							style="height:26.8rem;" mergeCells="bycolrec" mergeCol="deptNm">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hDeptNm" inputType="text" width="120" value="부서"></w2:column>
+									<w2:column id="hEqpCcty" inputType="text" width="70" value="계약전력(kW)"></w2:column>
+									<w2:column id="hFyerAcmlCnsmpElteng" inputType="text" width="130" value="연간 누적 소비 전력량(kWh)"></w2:column>
+									<w2:column id="hPreYyMtCnsmpElteng" inputType="text" width="130" value="비교 소비 전력(kWh)"></w2:column>
+									<w2:column id="hThsmonCnsmpElteng" inputType="text" width="130" value="기준 소비 전력(kWh)"></w2:column>
+									<w2:column id="hPrvyySammVersusPwcspDcrsRt" inputType="text" width="140" value="전일대비 소비전력 증감률(%)"></w2:column>
+									<w2:column id="hWntyPrvyySammVersusCnsmpRedcnRtRnk" inputType="text" width="140" value="전일대비 소비증감률 전국 순위"></w2:column>
+									<w2:column id="hBasinPrvyySammVersusCnsmpRedcnRtRnk" inputType="text" width="140" value="전일대비 소비증감률 유역 순위"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="deptNm" inputType="text" style="height:3rem;" colMerge="true"></w2:column>
+									<w2:column id="eqpCcty" class="grd-right" inputType="text" style="height:3rem;" textAlign="right"></w2:column>
+									<w2:column id="fyerAcmlCnsmpElteng" class="grd-right" inputType="text" style="height:3rem;" textAlign="right"></w2:column>
+									<w2:column id="preYyMtCnsmpElteng" class="grd-right" inputType="text" style="height:3rem;" textAlign="right"></w2:column>
+									<w2:column id="thsmonCnsmpElteng" class="grd-right" inputType="text" style="height:3rem;" textAlign="right"></w2:column>
+									<w2:column id="prvyySammVersusPwcspDcrsRt" class="grd-right" inputType="text" style="height:3rem;" textAlign="right"></w2:column>
+									<w2:column id="wntyPrvyySammVersusCnsmpRedcnRtRnk" inputType="text" style="height:3rem;"></w2:column>
+									<w2:column id="basinPrvyySammVersusCnsmpRedcnRtRnk" inputType="text" style="height:3rem;"></w2:column>
+								</w2:row>
+							</w2:gBody>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:tool="http://www.springframework.org/schema/tool" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	default-autowire="byName"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+	<!--
+		====================================================================
+		Enable MVC
+		====================================================================
+	-->
+	<mvc:annotation-driven />
+
+	<!--
+		====================================================================
+		Annotation 기반 Auto Proxy 사용시 CGLIB 프록시를 강제함
+		====================================================================
+	-->
+	<aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+
+	<!--
+		====================================================================
+		Annotation 설정 활성 (@Autowired 등)
+		====================================================================
+	-->
+	<context:annotation-config />
+
+	<!--
+		====================================================================
+		Default Servlet Handler
+		====================================================================
+	-->
+	<mvc:default-servlet-handler />
+
+	<!--
+		====================================================================
+		Resources
+		====================================================================
+	-->
+	<mvc:resources location="/resources/*" mapping="/resources/*" />
+	<mvc:resources location="/ui/*" mapping="/ui/*" />
+	<mvc:resources location="/wq/*" mapping="/wq/*" />
+
+	<!--
+		====================================================================
+		Component Scan
+		====================================================================
+	-->
+	<context:component-scan base-package="kw">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!--
+		====================================================================
+		Locale Setting
+		====================================================================
+	-->
+	<mvc:interceptors>
+		<bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
+
+	<!--
+		====================================================================
+		Multipart Resolver
+		====================================================================
+	-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="5000000" />
+		<property name="maxInMemorySize" value="5000000" />
+		<property name="uploadTempDir">
+			<bean class="org.springframework.core.io.FileSystemResource">
+				<constructor-arg>
+					<value>/tmp</value>
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="resolveLazily" value="true" />
+	</bean>
+
+	<!--
+		====================================================================
+		EgovFramework LeaveaTrace
+		====================================================================
+	-->
+	<bean id="antPathMater" class="org.springframework.util.AntPathMatcher" />
+	<bean name="deafaultTraceHandler" class="egovframework.rte.fdl.cmmn.trace.handler.DefaultTraceHandler" />
+	<bean id="traceHandlerService" class="egovframework.rte.fdl.cmmn.trace.manager.DefaultTraceHandleManager">
+		<property name="patterns">
+			<list>
+				<value>*</value>
+			</list>
+		</property>
+		<property name="handlers">
+			<list>
+				<ref bean="deafaultTraceHandler" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="leaveaTrace" class="egovframework.rte.fdl.cmmn.trace.LeaveaTrace">
+		<property name="traceHandlerServices">
+			<list>
+				<ref bean="traceHandlerService" />
+			</list>
+		</property>
+	</bean>
+
+	<!--
+		====================================================================
+		imports
+		====================================================================
+	-->
+	<import resource="classpath:/egovframework/spring/applicationPropertiesConfig.xml" />
+	<import resource="classpath:/egovframework/spring/applicationMessageSourceConfig.xml" />
+	<import resource="classpath:/egovframework/spring/applicationDataSourceConfig.xml" />
+	<import resource="classpath:/egovframework/spring/applicationValidatorConfig.xml" />
+	<import resource="classpath:/egovframework/spring/applicationEhCacheConfig.xml" />
+	<import resource="classpath:/egovframework/spring/applicationIdGenConfig.xml" />
+</beans>

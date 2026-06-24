@@ -1,0 +1,52 @@
+@charset "utf-8";
+body {background-size:cover;}
+body * {margin:0px; padding:0px;}
+/*
+.main-content {position:relative; padding:20px; min-height:890px; background-color:transparent;}
+.wrap {background-color:transparent;}
+.main-map {background:url("../images/system/map-icon.png") no-repeat center 30px; position:relative;}
+.main-map input[type="text"] {background:transparent; width:calc(100% - 22px) !important; text-align:right; height:18px; border:0px; min-width:0px !important; padding:0px !important;}
+.main-map * {box-sizing:border-box;}
+.main-map:after {content:""; display: block; clear: both;}
+.main-map .list-g {margin-bottom: 33px; border-radius:10px; overflow: hidden; box-shadow:1px 0px 6px rgba(0,0,0,0.2);}
+.main-map .list-g .g-table {padding:10px; background-color:#FFFFFF; border-top:1px solid #ECEEF0;}
+.main-map .list-g .g-table table {border:1px solid #ECEEF0; border-collapse: collapse;} // height: 100px;
+.main-map .list-g .g-table table td {text-align:right; font-size:12px; border:1px solid #ECEEF0; color:#747474;}
+.main-map .list-g .g-table table td em {display:inline-block; font-size:8px; position:relative; top:1px;}
+.main-map .list-g .g-table table th {border: 1px solid #ECEEF0; background-color:#F7F8F9; color:#747474;}
+.main-map .list-g h2 {padding:0 20px; height:30px; line-height:30px; background-color:#06CFB6; color:#FFFFFF; font-weight:normal;}
+.main-map .list-g.blue h2 {background-color: #3999F1;}
+.main-map .list-g.orange h2 {background-color:#F8A553;}
+.main-map .list-g h2:after {content:""; display:block; clear:both;}
+.main-map .list-g h2 .w2textbox {float:left; font-size:15px;}
+.main-map .list-g h2 .w2span {float:right; font-size:12px;}
+.main-map .g-left {width:30%; float:left; padding-right:30px; padding-top:15px;}
+.main-map .map-img {width:40%; float:left; padding:0px 84px; height: 100%;}
+.main-map .map-img .info-g {}
+.main-map .map-img .list-g {position: absolute; bottom:0px; width:calc(40% - 168px);}
+.main-map .g-table input[type="text"] {color:#747474 !important;}
+.main-map .map-img .map-info {padding:0 12px; position:relative; text-align:left;}
+.main-map .map-img .map-info:FIRST-CHILD {text-align:right;}
+.main-map .map-img .map-info:FIRST-CHILD .w2textbox {background-color:#74B4E4;}
+.main-map .map-img .map-info:FIRST-CHILD span {color:#317DBE;}
+.main-map .map-img .map-info:FIRST-CHILD:before {content:""; display:block; width:1px; height:30px; background-color:#C5D6E2; position:absolute; right:0px; bottom:0px; letter-spacing:2px;}
+.main-map .map-img .map-info .w2textbox {height:25px; line-height:25px; text-align:center; background-color:#B4ADF0; color:#FFFFFF; border-radius:40px; margin-bottom:25px; font-size:14px; display:inline-block; padding:0 30px; width:160px;}
+.main-map .map-img .map-info input {font-size: 25px; position: relative; color:#6759E4; display:inline-block; text-align:center; width:160px !important; box-sizing:border-box; padding-right:50px !important; height:28px; line-height:28px; text-align:right; top:-2px;}
+.main-map .map-img .map-info:FIRST-CHILD input {position:relative;}
+.main-map .map-img .map-info:FIRST-CHILD em {left:-25px;}
+.main-map .map-img .map-info span {}
+.main-map .map-img .map-info .g {position:relative; display:inline-block;}
+.main-map .map-img .map-info em {font-size:13px; margin-left:5px; position:absolute; top:0px; right:20px; color:#6759E4;}
+.main-map .g-right {width:30%; float:right; padding-left:30px; padding-top:15px;}
+.g-area {text-align:left;}
+.g-area .gg {display:inline-block; text-align:left; margin-left:10px; margin-top:3px; margin-bottom:3px; max-width:30px;}
+.g-area input[type="text"] {text-align: center; width: 100% !important; padding: 0px !important;}
+.g-area .gg .w2textbox {background:#00E0C4; height:29px; width:29px; text-align:center; line-height:29px; color:#FFFFFF; border-radius:180px; overflow:hidden; margin:0 auto;}
+.g-area .gg span {margin-top:1px; display:block; color:#747474;}
+.g-area .gg.orange .w2textbox {background-color:#F8A553;}
+.g-area .gg.g-small .w2textbox {height:22px; width:22px; text-align:center; line-height:22px;}
+.info-g {width:100%;}
+.info-g .map-info {width:50%; text-align:center; display:inline-block;}
+.info-g .map-info .w2textbox {}
+.info-g .map-info .w2span {}
+*/

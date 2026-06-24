@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSEC4200000.xml
+			* 설 명 : 전력에너지실적현황_K-water RE100
+			* 작성일 : 2023.02.01
+			* 담당자 : Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.01 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="strtDt" dataType="number" name="조회연도"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltRe100List" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="re100Year" dataType="text" name="해당년도"></w2:column>
+						<w2:column id="setcscNm" dataType="text" name="발전원"></w2:column>
+						<w2:column id="ecsElcpwstnDivNm" dataType="text" name="발전소명"></w2:column>
+						<w2:column id="ecsElcpwstnDivCd" dataType="text" name="발전소"></w2:column>
+						<w2:column id="iemNm" dataType="text" name="항목"></w2:column>
+						<w2:column id="iemCd" dataType="text" name="항목명"></w2:column>
+						<w2:column id="sum" dataType="text" name="합계"></w2:column>
+						<w2:column id="mon01IemVu" dataType="text" name="1월"></w2:column>
+						<w2:column id="mon02IemVu" dataType="text" name="2월"></w2:column>
+						<w2:column id="mon03IemVu" dataType="text" name="3월"></w2:column>
+						<w2:column id="mon04IemVu" dataType="text" name="4월"></w2:column>
+						<w2:column id="mon05IemVu" dataType="text" name="5월"></w2:column>
+						<w2:column id="mon06IemVu" dataType="text" name="6월"></w2:column>
+						<w2:column id="mon07IemVu" dataType="text" name="7월"></w2:column>
+						<w2:column id="mon08IemVu" dataType="text" name="8월"></w2:column>
+						<w2:column id="mon09IemVu" dataType="text" name="9월"></w2:column>
+						<w2:column id="mon10IemVu" dataType="text" name="10월"></w2:column>
+						<w2:column id="mon11IemVu" dataType="text" name="11월"></w2:column>
+						<w2:column id="mon12IemVu" dataType="text" name="12월"></w2:column>
+						<w2:column id="updtRsn" dataType="text" name="수정사유"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltRe100FlflRtData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="re100Year" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="total" dataType="text" name="값"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"valInfo" : [
+			{id : "mon01IemVu", maxByteLength : 22},
+			{id : "mon02IemVu", maxByteLength : 22},
+			{id : "mon03IemVu", maxByteLength : 22},
+			{id : "mon04IemVu", maxByteLength : 22},
+			{id : "mon05IemVu", maxByteLength : 22},
+			{id : "mon06IemVu", maxByteLength : 22},
+			{id : "mon07IemVu", maxByteLength : 22},
+			{id : "mon08IemVu", maxByteLength : 22},
+			{id : "mon09IemVu", maxByteLength : 22},
+			{id : "mon10IemVu", maxByteLength : 22},
+			{id : "mon11IemVu", maxByteLength : 22},
+			{id : "mon12IemVu", maxByteLength : 22}
+		],
+		"observeEvent" : false,
+		"chart" : {
+			"chartUnit" : 10,
+			"chartIntervalCount" : 12,
+			"flflRtChartUnit" : 10,
+			"flflRtChartIntervalCount" : 3
+		}
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSEC4200000", {"initScreenCallback" : scwin.searchDatas});
+		// ecsLib.setChartResizeObserver(this);
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 조회조건 초기 설정
+		dmaSearchParam.set("strtDt", utilLib.getCurrentDate("yyyy"));
+		// 화면 데이터 조회
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var strtDate = dmaSearchParam.get("strtDt");
+
+		if (String(strtDate).length != 4) {
+			// 조회기간이 올바르지 않습니다.
+			alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+			return;
+		}
+
+		var queryString = `?strtDt=${strtDate}`;
+		queryString += `&endDt=${strtDate}`;
+
+		var option = {
+			action : "ec/energyacmsltmng/re100/retrieve-re100.do"
+				+ queryString,
+			method : "get",
+			resData : dltRe100List,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+
+		// RE100 데이터 조회
+		scwin.searchChartRe100FlflRt();
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCallback = function() {
+		var strtDate = dmaSearchParam.get("strtDt");
+		// RE100 이행현황 년도 세팅
+		spnTitleYear.setLabel(strtDate);
+		// 엑셀 업로드 초기화
+		scwin.excelUp = false;
+
+		grdRe100List.setStyleAll({
+			"styleName" : "border-bottom",
+			"styleValue" : "1px solid var(--grid-division-border-color)",
+			"type" : "row",
+			"target" : "data",
+			"rowIndex" : "5"
+		});
+		grdRe100List.setCellClass(3, "setcscNm", "border-bottom border-bottom-width-important");
+		scwin.setGridReadOnly();
+
+		var dltRe100Data = dltRe100List.getAllJSON();
+		scwin.dataSet = [];
+		for (var idx = 0; idx < dltRe100List.getRowCount(); idx++) {
+			if (dltRe100Data[idx].iemNm) {
+				var data = {}
+				data.row = idx;
+				data.iemNm = dltRe100Data[idx].iemNm;
+				data.ecsElcpwstnDivCd = dltRe100Data[idx].ecsElcpwstnDivCd;
+				scwin.dataSet.push(data);
+			}
+		}
+
+		scwin.searchChartAchievementStatus();
+	};
+
+	/**
+	 * 그리드뷰 행을 읽기 전용으로 설정한다.
+	 * @param
+	 * @return
+	 */
+	scwin.setGridReadOnly = function() {
+		// readOnly, bgColor
+		var color = "#EDF3FB";
+		var dltRe100Data = dltRe100List.getAllJSON();
+		var mandatoryList = scwin.initData.valInfo.filter(obj => obj);
+		for (var idx = 0; idx < dltRe100List.getRowCount(); idx++) {
+			if (!dltRe100Data[idx].iemNm) {
+				mandatoryList.forEach(obj => {
+					grdRe100List.setCellReadOnly(idx, obj.id, true);
+					grdRe100List.setCellBackgroundColor(idx, Number(obj.id.substr(3, 2)) + 3, color);
+				});
+			}
+		}
+	};
+
+	/**
+	 * 그리드뷰의 내용을 수정/저장한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		if (!scwin.excelUp) {
+			if (dltRe100List.getModifiedData() == "") {
+				// 처리할 데이터가 없습니다.
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+				return;
+			}
+
+			if (utilLib.validateGridView(grdRe100List, scwin.initData.valInfo)) {
+				var columnList = scwin.initData.valInfo.filter(obj => obj).flatMap(obj => obj.id);
+				var addCount = 0;
+				var modifyCount = 0;
+				var delCount = 0;
+				dltRe100List.getModifiedJSON().forEach(obj => {
+					var rowStatus = obj.rowStatus;
+					switch(rowStatus) {
+						case "C":
+							// 추가
+							addCount++;
+							break;
+						case "U":
+							// 수정
+							modifyCount++;
+							break;
+						case "E":
+							// 삭제
+							delCount++;
+							break;
+						default:
+							break;
+					}
+				});
+				var extendMsg = ecsLib.extendCustomSaveMsg(addCount, modifyCount, delCount);
+				// 변경된 내역이 있습니다.\n저장 하시겠습니까? \n수정사유를 입력하세요.
+				ecsLib.saveRsn($p, `${dltRe100List.getID()}.updtRsn`, utilLib.getMessage("SCM.INFO.00239")[0] + extendMsg, "scwin.saveConfirmCallback");
+			}
+		} else {
+			// 변경된 내역이 있습니다.\n저장 하시겠습니까? \n수정사유를 입력하세요.
+			ecsLib.saveRsn($p, `${dltRe100List.getID()}.updtRsn`, utilLib.getMessage("SCM.INFO.00239")[0] + "<br>엑셀 업로드", "scwin.saveConfirmCallback");
+		}
+	};
+
+	/**
+	 * 수정/저장 ComfirmCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var requestData = {};
+		var dlt = dltRe100List.getAllJSON();
+
+		if (!scwin.excelUp) {
+			requestData.dltRe100List = dltRe100List.getModifiedJSON();
+		} else {
+			var mandatoryList = scwin.initData.valInfo.filter(obj => obj);
+			var list = [];
+			for (data of scwin.dataSet) {
+				mandatoryList.forEach(obj => {
+					if (dlt[data.row][obj.id] == "-") {
+						dlt[data.row][obj.id] = "";
+					} else {
+						dlt[data.row][obj.id] = Number(dlt[data.row][obj.id].replaceAll(",",""));
+					}
+				});
+				list.push(dlt[data.row]);
+			}
+			requestData.dltRe100List = list;
+		}
+		var option = {
+			action : "ec/energyacmsltmng/re100/save-re100.do",
+			reqData : requestData,
+			success : "scwin.saveConfirmSuccessCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 수정/저장 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.saveConfirmSuccessCallback = function(resBody) {
+		comLib.alert($p, resBody.message.code_name);
+
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 작업중이던 내용을 취소한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnCancl_onclick = function() {
+		scwin.btnInqire_onclick();
+	};
+
+	//============================================================================================
+	// 차트
+	//============================================================================================
+	/**
+	 * K-water RE100 달성현황 차트 생성
+	 */
+	scwin.searchChartAchievementStatus = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerAchievementStatus";
+		rMateChartH5.create($p.id + "chartAchievementStatus", grpChartAchievementStatus.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * K-water RE100 차트 시리즈 색상 핸들러
+	 * @param {
+	 	seriesID : ID,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 색상
+
+	scwin.fillHandler = function(seriesID, index, data, values) {
+		if (index >= (scwin.chartCount - 2)) {
+			return "#B2CCFF"; // 6799FF
+		} else {
+			return ecsLib.getSkinColors().chartSolidColor2;
+		}
+	};*/
+
+	/**
+	* K-water RE100 달성현황 차트 설정
+	*/
+	scwin.chartReadyHandlerAchievementStatus = function(id) {
+		var re100Data = dltRe100List.getAllJSON();
+		var flflRtList = re100Data.filter(obj => obj.iemCd.endsWith("(누적)"));
+		var cnstqyList = re100Data.filter(obj => obj.setcscNm == "전력소비량(합계)");
+		var elyrsQyList = re100Data.filter(obj => obj.setcscNm == "발전량(합계)");
+		var chartData = [];
+
+		for (var idx = 1; idx < 13; idx++) {
+			var month = idx < 10 ? `0${idx}` : `${idx}`;
+			var monthKey = `mon${month}IemVu`;
+			var flflRtData = flflRtList.find(obj => Object.keys(obj).some(key => key === monthKey));
+			var cnstqyData = cnstqyList.find(obj => Object.keys(obj).some(key => key === monthKey));
+			var elyrsQyData = elyrsQyList.find(obj => obj.iemCd == "발전량(kWh)" && Object.keys(obj).some(key => key === monthKey));
+
+			if(flflRtData) {
+				chartData.push({"month" : idx + "월", "flflRt" : Number(flflRtData[monthKey].replace("%", "")), "cnstqy" : Number(cnstqyData[monthKey]), "elyrsQy" : Number(elyrsQyData[monthKey])});
+			}
+		}
+
+		var maxData = chartData.reduce((max, obj) => Math.max(max, obj.cnstqy, obj.elyrsQy), 0);
+		var flflRtMaxData = chartData.reduce((max, obj) => Math.max(max, obj.flflRt), 0);
+
+		var chartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+		var interval = Math.ceil((maxData / scwin.initData.chart.chartIntervalCount) / chartUnit) * chartUnit;
+		var flflRtChartUnit = Math.max(scwin.initData.chart.flflRtChartUnit, Math.pow(10, String(flflRtMaxData.toFixed(0)).length - 2));
+		var flflRtInterval = Math.ceil((flflRtMaxData / scwin.initData.chart.flflRtChartIntervalCount) / flflRtChartUnit) * flflRtChartUnit;
+
+		var solidColor1 = ecsLib.getSkinColors().chartSolidColor1;
+		var solidColor2 = ecsLib.getSkinColors().chartSolidColor3;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" borderStyle="none">'
+			+ '	<Options>'
+			+ '		<Legend defaultMouseOverAction="true" />'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" />'
+			+ '	<Combination2DChart showDataTips="true" dataTipDisplayMode="axis">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis categoryField="month" padding="0.7" />'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + interval + '" formatter="{numFmt}" title="kWh"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSet type="clustered" maxColumnWidth="25">'
+			+ '				<series>'
+			+ '					<Column2DSeries yField="cnstqy" displayName="소비량(kWh)">'
+			+ '						<fill>'
+			+ '							<SolidColor color="' + solidColor1 + '" />'
+			+ '						</fill>'
+			+ '						<showDataEffect>'
+			+ '							<SeriesInterpolate />'
+			+ '						</showDataEffect>'
+			+ '					</Column2DSeries>'
+			+ '					<Column2DSeries yField="elyrsQy" displayName="발전량(kWh)">'
+			+ '						<fill>'
+			+ '							<SolidColor color="' + solidColor2 + '" />'
+			+ '						</fill>'
+			+ '						<showDataEffect>'
+			+ '							<SeriesInterpolate />'
+			+ '						</showDataEffect>'
+			+ '					</Column2DSeries>'
+			+ '				</series>'
+			+ '			</Column2DSet>'
+			+ '			<Line2DSeries yField="flflRt" radius="4.5" itemRenderer="CircleItemRenderer" displayName="RE100 누적달성률(%)" labelPosition="up">'
+			+ '				<stroke>'
+			+ '					<Stroke color="#F9BD03" weight="3" />'
+			+ '				</stroke>'
+			+ '				<lineStroke>'
+			+ '					<Stroke color="#F9BD03" weight="3" />'
+			+ '				</lineStroke>'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxis2" interval="' + flflRtInterval + '" formatter="{numFmt}" title="%"/>'
+			+ '				</verticalAxis>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Line2DSeries>'
+			+ '		</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" placement="left" verticalAxisTitleAlignment="vertical" titleGap="0" showLine="false"/>'
+			+ '			<Axis2DRenderer axis="{vAxis2}" placement="right" verticalAxisTitleAlignment="vertical" titleGap="0" showLine="false"/>'
+			+ '		</verticalAxisRenderers>'
+			+ '	</Combination2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartData);
+	};
+
+	/**
+	 * RE100 차트 데이터를 조회한다.
+	 */
+	scwin.searchChartRe100FlflRt = function() {
+		var strtDt = Number(utilLib.getCurrentDate("yyyy")) - 4;
+		var endDt = utilLib.getCurrentDate("yyyy");
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+
+		var option = {
+			action : "ec/main/retrieve-re100-flfl.do"
+				+ queryString,
+			method : "get",
+			resData : dltRe100FlflRtData,
+			success : "scwin.searchChartRe100FlflRtCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * RE100 차트 데이터 조회 콜백
+	 */
+	scwin.searchChartRe100FlflRtCallBack = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerRe100FlflRt";
+		rMateChartH5.create($p.id + "chartRe100FlflRt", grpMainChartRe100FlflRt.getID(), chartVars, "99%", "98%");
+	};
+
+	/**
+	 * RE100 차트 시리즈 안쪽 수치 핸들러
+	 * @param {
+	 	seriesID : ID,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 안쪽 수치 내용
+	 */
+	scwin.re100FlflRtInsideLabelHandler = function(seriesID, index, data, values) {
+		return values[1] + "%";
+	};
+
+	/**
+	 * RE100 차트 시리즈 바깥쪽 수치 핸들러
+	 * @param {
+	 	seriesID : ID,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 바깥쪽 수치 내용
+	 */
+	scwin.re100FlflRtOutsideLabelHandler = function(seriesID, index, data, values) {
+		return " " + values[0];
+	};
+
+	/**
+	 * RE100 차트 시리즈 색상 핸들러
+	 * @param {
+	 	seriesID : ID,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 색상
+	 */
+	scwin.re100FlflRtFillHandler = function(seriesID, index, data, values) {
+		if (index == (scwin.re100FlflRtChartCount - 1)) {
+			return "#B2CCFF"; // 6799FF
+		} else {
+			return ecsLib.getSkinColors().chartSolidColor2;
+		}
+	};
+
+	/**
+	 * RE100 차트 X축 라벨 핸들러
+	 * @param {
+	 	id : ID,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.re100FlflRtCategoryLabelHandler = function(id, value) {
+		return value;
+	};
+
+	/**
+	 * RE100 차트 Y축 라벨 핸들러
+	 * @param {
+	 	id : ID,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.re100FlflRtLinearLabelHandler = function(id, value) {
+		return "";
+	};
+
+	/**
+	 * RE100 차트 설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerRe100FlflRt = function(id) {
+		var re100FlflRtChartData = dltRe100FlflRtData.getAllJSON();
+		var interval = 25;
+		var totalMax = re100FlflRtChartData.reduce((max, obj) => max < Number(obj.total) ? Number(obj.total) : max, 0);
+		var max;
+		if (totalMax < 100) {
+			max = 100;
+		} else {
+			max = Math.round(totalMax / 100) * 100;
+		}
+
+		re100FlflRtChartData.forEach(obj => {
+			obj["goal"] = max;
+		});
+
+		// spnMainChartRe100FlflRtTitleData.setValue(re100FlflRtChartData.slice(-1)[0]["total"] + "%");
+
+		scwin.re100FlflRtChartCount = re100FlflRtChartData.length;
+
+		var solidColor = ecsLib.getSkinColors().chartSolidColor2;
+
+		var layoutStr = '<rMateChart backgroundColor="" cornerRadius="12">'
+			+ '	<Options>'
+			// + '		<Caption text="RE100 이행률" />'
+			// + '		<Legend position="center" />'
+			+ '	</Options>'
+			+ '	<Combination3DChart showDataTips="false" cubeAngleRatio="1" columnWidthRatio="0.6">'
+			+ '<backgroundElements>'
+			+ '</backgroundElements>'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="re100Year" ticksBetweenLabels="true" labelJsFunction="' + $p.id + 'scwin.re100FlflRtCategoryLabelHandler" padding="0.55" />'
+			+ '		</horizontalAxis>'
+			+ '		<horizontalAxisRenderers>'
+			+ '			<Axis3DRenderer axis="{hAxis}" visible="true" canDropLabels="false" showLine="false" tickPlacement="none" labelGap="7" fontSize="12" fontWeight="bolder" />'
+			+ '		</horizontalAxisRenderers>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis" maximum="' + (max + (interval / 1.3)) + '" interval="' + interval + '" labelJsFunction="' + $p.id + 'scwin.re100FlflRtLinearLabelHandler" />'
+			+ '		</verticalAxis>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis3DRenderer axis="{vAxis}" visible="false" />'
+			+ '		</verticalAxisRenderers>'
+			+ '		<series>'
+			+ '			<VTarget3DResultSeries itemRenderer="CylinderItemRenderer" labelPosition="inside" labelAlign="center" insideLabelJsFunction="' + $p.id + 'scwin.re100FlflRtInsideLabelHandler"'
+			+ '				outsideLabelJsFunction="' + $p.id + 'scwin.re100FlflRtOutsideLabelHandler" fillJsFunction="' + $p.id + 'scwin.re100FlflRtFillHandler"'
+			+ '				color="#222222" font-weight="bold" yField="total" displayName="이행률" columnWidthRatio="0.5">'
+			+ '				<fill>'
+			+ '					<SolidColor color="' + solidColor + '" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</VTarget3DResultSeries>'
+			+ '			<VTarget3DGoalSeries itemRenderer="CylinderTargetItemRederer" labelAlign="center"'
+			+ '				color="#222222" font-weight="bold" yField="goal" displayName="100%" columnWidthRatio="0.5">'
+			+ '				<fill>'
+			+ '					<SolidColor color="#B2CCFF" alpha="0.1" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</VTarget3DGoalSeries>'
+			+ '		</series>'
+			+ '	</Combination3DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(re100FlflRtChartData);
+	};
+
+	/**
+	 * 그리드 소수점 1자리까지 표시 한다.
+	 * @param value
+	 * @return
+	 */
+	scwin.dsplFrmt = function(data, formattedData, rowIndex, colIndex) {
+		if (rowIndex < 2) {
+			return ecsLib.dsplFrmt(formattedData, 1);
+		} else {
+			return ecsLib.dsplFrmt(data);
+		}
+	};
+
+	//============================================================================================
+	// 엑셀
+	//============================================================================================
+	/**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitle1 = spnTitleYear.getValue();
+		var subTitle2 = spnSubTitle.getValue();
+		var subTitleNm = subTitle1 + subTitle2;
+		/*
+		// <br> 제거_231023
+		var grdData = dltRe100List.getAllJSON();
+		for(var i = 0; i < grdData.length; i++) {
+			var currentIemCd = grdData[i].iemCd;
+			if(currentIemCd.includes("<br/>")) {
+				// <br>제거 + (MWh)옆의 공백 없애기
+				currentIemCd = currentIemCd.replace("<br/>", "").replace(/\s+\(MWh\)/, "(MWh)");
+				grdData[i].iemCd = currentIemCd;
+			}
+		}
+		dltRe100List.setJSON(grdData, false);
+		*/
+
+		// 다운로드 후 셀 색상 설정을 위한 dltRe100List.setJSON_231024
+		var dltData = dltRe100List.getAllJSON();
+		var strtDate = dmaSearchParam.get("strtDt");
+		for (data of scwin.dataSet) {
+			tempData = dltData[data.row];
+			tempData.re100Year = strtDate;
+			tempData.iemNm = data.iemNm;
+			tempData.ecsElcpwstnDivCd = data.ecsElcpwstnDivCd;
+			dltData[data.row] = tempData;
+		}
+		dltRe100List.setJSON(dltData);
+
+		// 엑셀 내부 타이틀 추가_240105
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 16,
+			text 		: `${menuNm}_` + `${subTitleNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		comLib.downloadExcel(grdRe100List, {
+			fileName : `${menuNm}_` + `${subTitleNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			useDataFormat: true,
+			applyDataFormat : true,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			colMerge : true,
+			colMergeValue : true,
+			mergeCell : true
+		}, infoArr);
+
+		// 다운로드 후 셀 색상 설정
+		scwin.setGridReadOnly();
+	};
+
+	/**
+	 * 엑셀의 내용을 그리드에 업로드 한다.
+	 * @return
+	 */
+	scwin.btnUploadExcel_onclick = function() {
+		var endColumnIndex = grdRe100List.getColumnCount();
+		var options = {
+			type : 1,
+			headerExist : 1,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			endColumnIndex : endColumnIndex,
+			status: "C",
+			useMaxByteLength : true
+		};
+		comLib.uploadExcel(grdRe100List, options);
+	};
+
+	/**
+	 * 엑셀 내용을 그리드에 저장한다.
+	 * @return
+	 */
+	scwin.grdRe100List_onfilereadend = function(value) {
+		var dltData = dltRe100List.getAllJSON();
+		var grdData = grdRe100List.getAllJSON();
+		var strtDate = dmaSearchParam.get("strtDt");
+
+		for (data of scwin.dataSet) {
+			tempData = dltData[data.row];
+			tempData.re100Year = strtDate;
+			tempData.iemNm = data.iemNm;
+			tempData.ecsElcpwstnDivCd = data.ecsElcpwstnDivCd;
+			dltData[data.row] = tempData;
+		}
+		dltRe100List.setJSON(dltData);
+
+		scwin.setGridReadOnly();
+		scwin.excelUp = true;
+	};
+]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group id="grpInqire" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회연도"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw1" tagname="td">
+								<w2:year_calendar ref="data:dmaSearchParam.strtDt"></w2:year_calendar>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" userData1="Q" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" outerDiv="false" userData1="E"
+						ev:onclick="scwin.btnDownExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnUploadExcel" class="excel-btn fa fa-long-arrow-up btn_sh" outerDiv="false" userData1="EU"
+						ev:onclick="scwin.btnUploadExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="layout-float">
+						<xf:group class="float-con left-area cw4">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="RE100 현황(5개년)" toolTip="RE100(Renewable Electricity 100%):&lt;br/&gt;기업이 사용하는 전력 100%를 재생에너지로 공급"></w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group class="con-box">
+								<xf:group id="grpMainChartRe100FlflRt" class="view-box box chart-wrap-padding" style="width:100%; height:17rem;">
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="float-con right-area cw16">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="달성 현황(월별)"></w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group class="con-box">
+								<xf:group id="grpChartAchievementStatus" class="view-box box chart-wrap-padding" style="width:100%; height:17rem;"></xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span id="spnTitleYear" label="0000"></w2:span>
+							<w2:span id="spnSubTitle" label="년 RE100 세부 이행실적"></w2:span>
+							<w2:span class="sub-title-l" label="&amp;emsp;* RE100(Renewable Electricity 100%): 기업이 사용하는 전력 100%를 재생에너지로 공급"></w2:span>
+						</xf:group>
+					</xf:group>
+					<xf:group class="list-box box">
+						<w2:gridView id="grdRe100List" class="resized" dataList="dltRe100List" checkReadOnlyOnPaste="true" checkReadOnlyOnCut="true"
+							focusMode="row" useShiftKey="true" sortable="false" tooltipDisplay="true" defaultCellHeight="35" ev:onfilereadend="scwin.grdRe100List_onfilereadend"
+							evenRowBackgroundColor="#FFFFFF" mergeCells="bycolrec" mergeCol="setcscNm,ecsElcpwstnDivNm" keyMoveEditMode="true" style="height:26.6rem;">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hSetcscNm" inputType="text" width="35" value="발전원" readOnly="true"></w2:column>
+									<w2:column id="hEcsElcpwstnDivNm" inputType="text" width="35" value="구분" readOnly="true"></w2:column>
+									<w2:column id="hIemCd" inputType="text" width="138" value="항목" readOnly="true"></w2:column>
+									<w2:column id="hSum" inputType="text" width="75" value="합계"></w2:column>
+									<w2:column id="hMon01IemVu" inputType="text" width="62" value="1월"></w2:column>
+									<w2:column id="hMon02IemVu" inputType="text" width="62" value="2월"></w2:column>
+									<w2:column id="hMon03IemVu" inputType="text" width="62" value="3월"></w2:column>
+									<w2:column id="hMon04IemVu" inputType="text" width="62" value="4월"></w2:column>
+									<w2:column id="hMon05IemVu" inputType="text" width="62" value="5월"></w2:column>
+									<w2:column id="hMon06IemVu" inputType="text" width="62" value="6월"></w2:column>
+									<w2:column id="hMon07IemVu" inputType="text" width="62" value="7월"></w2:column>
+									<w2:column id="hMon08IemVu" inputType="text" width="62" value="8월"></w2:column>
+									<w2:column id="hMon09IemVu" inputType="text" width="62" value="9월"></w2:column>
+									<w2:column id="hMon10IemVu" inputType="text" width="62" value="10월"></w2:column>
+									<w2:column id="hMon11IemVu" inputType="text" width="62" value="11월"></w2:column>
+									<w2:column id="hMon12IemVu" inputType="text" width="62" value="12월"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="setcscNm" inputType="text" blockSelect="true" readOnly="true" colMerge="true"></w2:column>
+									<w2:column id="ecsElcpwstnDivNm" inputType="text" blockSelect="true" readOnly="true" colMerge="true"></w2:column>
+									<w2:column id="iemCd" inputType="text" blockSelect="true" readOnly="true"></w2:column>
+									<w2:column id="sum" class="grd-right" inputType="text" blockSelect="true" readOnly="true" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon01IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon02IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon03IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon04IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon05IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon06IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon07IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon08IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon09IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon10IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon11IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon12IemVu" class="grd-right" inputType="text" maxByteLength="22" customFormatter="scwin.dsplFrmt"
+										textAlign="right"></w2:column>
+								</w2:row>
+							</w2:gBody>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+		<xf:group class="footer">
+			<xf:group class="btn-group">
+				<w2:anchor id="btnSave" ev:onclick="scwin.btnSave_onclick" outerDiv="false" userData1="S">
+					<xf:label><![CDATA[저장]]></xf:label>
+				</w2:anchor>
+				<w2:anchor id="btnCancl" ev:onclick="scwin.btnCancl_onclick" outerDiv="false" userData1="CC">
+					<xf:label><![CDATA[취소]]></xf:label>
+				</w2:anchor>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

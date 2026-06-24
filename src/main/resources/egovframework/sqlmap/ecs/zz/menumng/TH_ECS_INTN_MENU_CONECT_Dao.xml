@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TH_ECS_INTN_MENU_CONECT_Dao">
+	<insert id="TH_ECS_INTN_MENU_CONECT_Dao_insertMenuLogInfo" parameterType="map">
+		/* TH_ECS_INTN_MENU_CONECT_Dao_insertMenuLogInfo */
+		INSERT INTO
+			th_ecs_intn_menu_conect(menu_id, conctr_id, conect_dttm,
+				sys_div_cd, menu_nm, conect_parm_ctnt, conctr_ip)
+		VALUES (
+			#{menuId},
+			#{usrId},
+			LOCALTIMESTAMP,
+			#{sysDivCd},
+			#{menuNm},
+			#{conectParamCtnt},
+			#{conectIp}
+		)
+	</insert>
+</mapper>

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "K-Water 마크",
+			"version": "",
+			"apis": [],
+			"pluginName": "k_water_mark",
+			"width": "1550px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "k_water_mark",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "207px"
+			}
+		-->
+		<xf:group class="k-water-mark" pluginName="k_water_mark">
+			<w2:attributes>
+			</w2:attributes>
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initKWaterMark = function() {
+					// fill 설정
+					/*
+					var color = "";
+					if (options.fill && options.fill != "") {
+						color = options.fill;
+					} else {
+						color = "url(#" + grpMainBackArrowLlinearPaint.getID() + ")";
+					}
+					document.getElementById(grpMainBackArrowFill.getID()).setAttribute("fill", color);
+					*/
+
+					// 기본 설정
+					var kWaterMarkPatternUrl = "url(#" + grpKWaterMarkPattern.getID() + ")";
+
+					document.getElementById(grpRectPattern.getID()).setAttribute("fill", kWaterMarkPatternUrl);
+				};
+
+				// 초기 실행함수 수행
+				this.initKWaterMark();
+				]]></script>
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xl" width="53" height="25" viewBox="0 0 53 25"
+				preserveAspectRatio="xMidYMax meet" style="max-width:90%;max-height:90%;">
+				<style type="text/css"><![CDATA[ ]]></style>
+				<xf:group tagname="defs">
+					<xf:group id="grpKWaterMarkPattern" tagname="pattern">
+						<w2:attributes>
+							<!-- <w2:patternContentUnits>objectBoundingBox</w2:patternContentUnits> -->
+							<w2:width>51</w2:width>
+							<w2:height>23</w2:height>
+						</w2:attributes>
+						<use xlink:href="#kWaterMarkImage" transform="" />
+					</xf:group>
+					<image id="kWaterMarkImage" width="51" height="23"
+						xlink:href="data:image/png;base64,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"></image>
+				</xf:group>
+				<xf:group id="grpRectPattern" tagname="rect">
+					<w2:attributes>
+						<w2:x>0</w2:x>
+						<w2:y>0</w2:y>
+						<w2:width>53</w2:width>
+						<w2:height>25</w2:height>
+						<w2:fill>url(#grpKWaterMarkPattern)</w2:fill>
+					</w2:attributes>
+				</xf:group>
+			</svg>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 공통 전자문서관련 -->
+<mapper namespace="TM_ECS_ECTCC_LNK_Dao">
+	<select id="TM_ECS_ECTCC_LNK_Dao_retrieveEctccPrgsList" parameterType="kw.ecs.zz.cmmn.vo.CmmnEctccVo" resultType="egovMap">
+		<choose>
+			<when test='null != dsuseEsntlId and "" neq dsuseEsntlId'>
+			SELECT
+				ectcc_id,
+				ectcc_tit,
+				(
+					SELECT
+						cmmn_cd_dc
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2000'
+						AND cmmn_cd = ecs_bsns_prgs_div_cd
+				) AS bsns_prgs_div_dc,
+				(
+					SELECT
+						korname
+					FROM
+						HRM.vm_hr01601
+					WHERE
+						empno = drafter_empno
+				) AS emp_nm,
+				drft_de
+			FROM
+				tm_ecs_ectcc_lnk
+			WHERE
+				lnk_esntl_id = #{dsuseEsntlId}
+			ORDER BY
+				ecs_bsns_prgs_div_cd,
+				ectcc_seq
+			</when>
+			<otherwise>
+			SELECT
+				ectcc_id,
+				ectcc_tit,
+				bsns_prgs_div_dc,
+				emp_nm,
+				drft_de
+			FROM (
+				SELECT
+					ectcc_id,
+					ectcc_tit,
+					(
+						SELECT
+							cmmn_cd_dc
+						FROM
+							tc_ecs_cd
+						WHERE
+							use_yn = 'Y'
+							AND cls_cd = 'ECS_2000'
+							AND cmmn_cd = ecs_bsns_prgs_div_cd
+					) AS bsns_prgs_div_dc,
+					(
+						SELECT
+							korname
+						FROM
+							HRM.vm_hr01601
+						WHERE
+							empno = drafter_empno
+					) AS emp_nm,
+					drft_de
+				FROM
+					tm_ecs_ectcc_lnk
+				WHERE
+					lnk_esntl_id = #{planEsntlId}
+				ORDER BY
+					ecs_bsns_prgs_div_cd,
+					ectcc_seq
+			)
+			<if test='null != cnstrcEsntlId and "" neq cnstrcEsntlId'>
+			UNION ALL
+			SELECT
+				ectcc_id,
+				ectcc_tit,
+				bsns_prgs_div_dc,
+				emp_nm,
+				drft_de
+			FROM (
+				SELECT
+					ectcc_id,
+					ectcc_tit,
+					(
+						SELECT
+							cmmn_cd_dc
+						FROM
+							tc_ecs_cd
+						WHERE
+							use_yn = 'Y'
+							AND cls_cd = 'ECS_2000'
+							AND cmmn_cd = ecs_bsns_prgs_div_cd
+					) AS bsns_prgs_div_dc,
+					(
+						SELECT
+							korname
+						FROM
+							HRM.vm_hr01601
+						WHERE
+							empno = drafter_empno
+					) AS emp_nm,
+					drft_de
+				FROM
+					tm_ecs_ectcc_lnk
+				WHERE
+					lnk_esntl_id = #{cnstrcEsntlId}
+				ORDER BY
+					ecs_bsns_prgs_div_cd,
+					ectcc_seq
+			)
+			</if>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="TM_ECS_ECTCC_LNK_Dao_retrieveEctccList" parameterType="kw.ecs.zz.cmmn.vo.CmmnEctccVo" resultType="egovMap">
+		SELECT
+			lnk_esntl_id,
+			ecs_bsns_prgs_div_cd,
+			ectcc_id,
+			ectcc_tit,
+			relt_doc_no,
+			ectcc_seq,
+			drft_de,
+			drft_dept_cd,
+			drafter_empno,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id
+		FROM
+			tm_ecs_ectcc_lnk
+		WHERE
+			lnk_esntl_id = #{planEsntlId}
+			OR lnk_esntl_id = #{cnstrcEsntlId}
+			OR lnk_esntl_id = #{dsuseEsntlId}
+		ORDER BY
+			ectcc_seq
+	</select>
+
+	<insert id="TM_ECS_ECTCC_LNK_Dao_insertEctcc" parameterType="kw.ecs.zz.cmmn.vo.CmmnEctccVo">
+		/* TM_ECS_ECTCC_LNK_Dao_insertEctcc */
+		INSERT INTO tm_ecs_ectcc_lnk (
+			lnk_esntl_id,
+			ecs_bsns_prgs_div_cd,
+			ectcc_id,
+			ectcc_tit,
+			relt_doc_no,
+			ectcc_seq,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id,
+			drft_de,
+			drft_dept_cd,
+			drafter_empno
+		) VALUES (
+			#{lnkEsntlId},
+			#{ecsBsnsPrgsDivCd},
+			#{ectccId},
+			#{ectccTit},
+			#{reltDocNo},
+			(
+				SELECT
+					NVL(MAX(ectcc_seq) + 1, 0)
+				FROM
+					tm_ecs_ectcc_lnk
+				WHERE
+					lnk_esntl_id = #{lnkEsntlId}
+					AND ecs_bsns_prgs_div_cd = #{ecsBsnsPrgsDivCd}
+			),
+			sysdate,
+			#{frstRgstrId},
+			sysdate,
+			#{lastUpdusrId},
+			#{drftDe},
+			#{drftDeptCd},
+			#{drafterEmpno}
+		)
+	</insert>
+
+	<delete id="TM_ECS_ECTCC_LNK_Dao_deleteEctcc" parameterType="kw.ecs.zz.cmmn.vo.CmmnEctccVo">
+		/* TM_ECS_ECTCC_LNK_Dao_deleteEctcc */
+		DELETE FROM
+			tm_ecs_ectcc_lnk
+		WHERE
+			1 = 2
+			OR (
+			<choose>
+				<when test='null != planEsntlId and "" neq planEsntlId and null != cnstrcEsntlId and "" neq cnstrcEsntlId'>
+					lnk_esntl_id = #{planEsntlId} OR lnk_esntl_id = #{cnstrcEsntlId}
+				</when>
+				<otherwise>
+					lnk_esntl_id =
+					<if test='null != lnkEsntlId and "" neq lnkEsntlId'>
+					#{lnkEsntlId}
+					</if>
+					<if test='null != planEsntlId and "" neq planEsntlId'>
+					#{planEsntlId}
+					</if>
+					<if test='null != cnstrcEsntlId and "" neq cnstrcEsntlId'>
+					#{cnstrcEsntlId}
+					</if>
+					<if test='null != dsuseEsntlId and "" neq dsuseEsntlId'>
+					#{dsuseEsntlId}
+					</if>
+					<if test='null != ectccId and "" neq ectccId'>
+					AND ectcc_id = #{ectccId}
+					</if>
+					<if test='null != ecsBsnsPrgsDivCd and "" neq ecsBsnsPrgsDivCd'>
+					AND ecs_bsns_prgs_div_cd = #{ecsBsnsPrgsDivCd}
+					</if>
+				</otherwise>
+			</choose>
+			)
+	</delete>
+</mapper>

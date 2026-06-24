@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_INTN_ATHR_Dao">
+	<sql id="TM_ECS_INTN_ATHR_Dao_SORT">
+		CASE A.ATHR_ID 
+			WHEN 'ECSGN01' THEN '901'
+			WHEN 'ECSSU01' THEN '902'
+			ELSE SUBSTR(A.ATHR_ID, 6, 3)
+		END
+	</sql>
+
+	<select id="TM_ECS_INTN_ATHR_Dao_retrieveAthr" parameterType="kw.ecs.zz.authmng.vo.AthrGrpMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_ATHR_Dao_retrieveAthr */
+		SELECT
+			A.ATHR_ID,
+			A.INTN_SYS_DIV_CD,
+			A.ATHR_NM,
+			A.ATHR_DC,
+			A.IDVINFO_DEAL_YN,
+			TO_CHAR(A.FRST_REGIST_DT, 'YYYY-MM-DD HH:MM:DD') AS FRST_REGIST_DT,
+			A.FRST_RGSTR_ID,
+			(SELECT
+				DISTINCT KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.FRST_RGSTR_ID
+			) AS FRST_RGSTR_NM,
+			TO_CHAR(A.LAST_UPDT_DT, 'YYYY-MM-DD HH:MM:DD') AS LAST_UPDT_DT,
+			A.LAST_UPDUSR_ID,
+			(SELECT
+				DISTINCT KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.LAST_UPDUSR_ID
+			) AS LAST_UPDUSR_NM
+		FROM
+			tm_ecs_intn_athr A
+		<if test="intnSysDivCd == null or intnSysDivCd == ''">
+			, tm_ecs_intn_usr_athr B
+		WHERE
+			A.INTN_SYS_DIV_CD = SUBSTR(B.ATHR_ID, 0, 3)
+			AND B.USR_ID = #{usrId}
+		</if>
+		<if test="intnSysDivCd != null and intnSysDivCd != ''">
+		WHERE
+			1 = 1
+		</if>
+		<if test="athrNm != null and athrNm != ''">
+			AND A.ATHR_NM LIKE '%' || #{athrNm} || '%'
+		</if>
+		<if test="intnSysDivCd != null and intnSysDivCd != ''">
+			AND (A.INTN_SYS_DIV_CD = #{intnSysDivCd} OR A.INTN_SYS_DIV_CD = 'ECS')
+		</if>
+		<!-- 권한신청 불필요 권한 제외 및 정렬 변경 -->
+			AND A.ATHR_ID NOT IN('ECSGN01', 'ECSSU01')
+		ORDER BY
+			<include refid="TM_ECS_INTN_ATHR_Dao_SORT" />
+			, A.ATHR_ID
+	</select>
+
+	<select id="TM_ECS_INTN_ATHR_Dao_retrieveAthrEcs" parameterType="kw.ecs.zz.authmng.vo.AthrGrpMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_ATHR_Dao_retrieveAthrEcs */
+		SELECT
+			A.ATHR_ID,
+			A.INTN_SYS_DIV_CD,
+			A.ATHR_NM,
+			A.ATHR_DC,
+			A.IDVINFO_DEAL_YN,
+			TO_CHAR(A.FRST_REGIST_DT, 'YYYY-MM-DD HH:MM:DD') AS FRST_REGIST_DT,
+			A.FRST_RGSTR_ID,
+			(SELECT
+				DISTINCT KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.FRST_RGSTR_ID
+			) AS FRST_RGSTR_NM,
+			TO_CHAR(A.LAST_UPDT_DT, 'YYYY-MM-DD HH:MM:DD') AS LAST_UPDT_DT,
+			A.LAST_UPDUSR_ID,
+			(SELECT
+				DISTINCT KORNAME
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				EMPNO = A.LAST_UPDUSR_ID
+			) AS LAST_UPDUSR_NM
+		FROM
+			tm_ecs_intn_athr A
+		<if test="intnSysDivCd == null or intnSysDivCd == ''">
+			, tm_ecs_intn_usr_athr B
+		WHERE A.INTN_SYS_DIV_CD = SUBSTR(B.ATHR_ID, 0, 3)
+			AND B.USR_ID = #{usrId}
+		</if>
+		<if test="intnSysDivCd != null and intnSysDivCd != ''">
+		WHERE 1 = 1
+		</if>
+		<if test="athrNm != null and athrNm != ''">
+			AND A.ATHR_NM LIKE '%' || #{athrNm} || '%'
+		</if>
+		<if test="intnSysDivCd != null and intnSysDivCd != ''">
+			AND (A.INTN_SYS_DIV_CD = #{intnSysDivCd} OR A.INTN_SYS_DIV_CD = 'ECS')
+		</if>
+		ORDER BY 
+			<include refid="TM_ECS_INTN_ATHR_Dao_SORT" />
+			, A.ATHR_ID
+	</select>
+
+	<insert id="TM_ECS_INTN_ATHR_Dao_insertAthrMng" parameterType="kw.ecs.zz.authmng.vo.AthrGrpMngVo">
+		/* TM_ECS_INTN_ATHR_Dao_insertAthrMng */
+		INSERT INTO tm_ecs_intn_athr (
+				ATHR_ID,
+				INTN_SYS_DIV_CD,
+				ATHR_NM,
+				ATHR_DC,
+				USE_YN,
+				IDVINFO_DEAL_YN,
+				FRST_REGIST_DT,
+				FRST_RGSTR_ID,
+				LAST_UPDT_DT,
+				LAST_UPDUSR_ID
+		) VALUES (
+			#{athrId},
+			#{intnSysDivCd},
+			#{athrNm},
+			#{athrDc},
+			'Y',
+			DECODE( #{idvinfoDealYn}, '', 'N', 'Y'),
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<update id="TM_ECS_INTN_ATHR_Dao_updateAthrMng" parameterType="kw.ecs.zz.authmng.vo.AthrGrpMngVo">
+		/* TM_ECS_INTN_ATHR_Dao_updateAthrMng */
+		UPDATE
+			tm_ecs_intn_athr
+		SET
+			INTN_SYS_DIV_CD = #{intnSysDivCd},
+			ATHR_NM = #{athrNm},
+			ATHR_DC = #{athrDc},
+			IDVINFO_DEAL_YN = #{idvinfoDealYn},
+			LAST_UPDT_DT = SYSDATE,
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE
+			ATHR_ID = #{athrId}
+	</update>
+
+	<delete id="TM_ECS_INTN_ATHR_Dao_deleteAthrMng" parameterType="kw.ecs.zz.authmng.vo.AthrGrpMngVo">
+		/* TM_ECS_INTN_ATHR_Dao_deleteAthrMng */
+		DELETE FROM
+			tm_ecs_intn_athr 
+		WHERE
+			ATHR_ID = #{athrId}
+	</delete>
+
+	<select id="TM_ECS_INTN_ATHR_Dao_selectAthr" parameterType="kw.ecs.zz.authmng.vo.AthrGrpMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_ATHR_Dao_selectAthr */
+		SELECT
+			A.ATHR_ID,
+			A.ATHR_NM,
+			A.ATHR_DC,
+			A.IDVINFO_DEAL_YN
+		FROM
+			tm_ecs_intn_athr A 
+		WHERE
+			A.ATHR_ID = #{value}
+	</select>
+
+	<select id="TM_ECS_INTN_ATHR_Dao_selectAthrUse" parameterType="kw.ecs.zz.authmng.vo.AthrGrpMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_ATHR_Dao_selectAthrUse */
+		SELECT
+			A.ATHR_ID,
+			A.ATHR_NM,
+			(SELECT
+				COUNT(*)
+			FROM
+				tm_ecs_intn_athr_menu
+			WHERE
+				ATHR_ID = A.ATHR_ID
+			) AS MENU_CNT,
+			(SELECT
+				COUNT(*)
+			FROM
+				tm_ecs_intn_usr_athr
+			WHERE
+				ATHR_ID = A.ATHR_ID
+			) AS USR_CNT
+		FROM
+			TM_ECS_INTN_ATHR A 
+		WHERE
+			A.ATHR_ID = #{athrId}
+	</select>
+
+	<select id="TM_ECS_INTN_ATHR_Dao_retrieveAthrGrp" parameterType="kw.ecs.zz.authmng.vo.AthrGrpMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_ATHR_Dao_retrieveAthrGrp */
+		SELECT
+			INTN_SYS_DIV_CD,
+			SUBSTR(A.ATHR_ID,4,2) AS INTN_BIZN_DIV_CD,
+			ATHR_ID,
+			ATHR_NM,
+			ATHR_DC,
+			IDVINFO_DEAL_YN
+		FROM
+			tm_ecs_intn_athr A
+		WHERE
+			INTN_SYS_DIV_CD = #{intnSysDivCd}
+		<if test="athrNm != null and athrNm != ''">
+			AND ATHR_NM LIKE #{athrNm} || '%'
+		</if>
+		ORDER BY
+		<include refid="TM_ECS_INTN_ATHR_Dao_SORT" />
+			, A.ATHR_ID
+	</select>
+
+	<select id="TM_ECS_INTN_ATHR_Dao_retrieveAthrSysDivCd_Old" parameterType="Map" resultType="egovMap">
+		/* TM_ECS_INTN_ATHR_Dao_retrieveAthrSysDivCd */
+		SELECT
+			DISTINCT D.CMMN_CD AS SYS_DIV_CD,
+			D.CMMN_CD_NM AS SYS_DIV_CD_NM
+		FROM
+			HRM.vm_hr01601 A,
+			tm_ecs_intn_usr_athr B,
+			tm_ecs_intn_athr C,
+			tc_ecs_cd D
+		WHERE
+			A.EMPNO = B.USR_ID
+			AND B.ATHR_ID = C.ATHR_ID
+			AND C.INTN_SYS_DIV_CD = D.CMMN_CD
+			AND D.CLS_CD = #{sysDivCd}
+		<if test="usrId != '' and usrId != null">
+			AND A.EMPNO = #{usrId}
+		</if>
+		ORDER BY
+			D.CMMN_CD
+	</select>
+
+	<select id="TM_ECS_INTN_ATHR_Dao_retrieveAthrSysDivCd" parameterType="Map" resultType="egovMap">
+		/* 시스템 구분 조회 */
+		/* TM_ECS_INTN_ATHR_Dao_retrieveAthrSysDivCd */
+		SELECT
+			B.SYS_DIV_CD,
+			C.CMMN_CD_NM AS SYS_DIV_CD_NM
+		FROM
+			HRM.vm_hr01601 A,
+			tm_ecs_intn_usr_sys_athr B,
+			tc_ecs_cd C
+		WHERE
+			A.EMPNO = B.USR_ID
+			AND B.USE_YN = 'Y'
+			AND B.SYS_DIV_CD = C.CMMN_CD
+			AND C.CLS_CD = #{sysDivCd}
+		<if test="usrId != null and usrId != ''">
+			/* 사번으로 검색 */
+			AND B.USR_ID = #{usrId}
+		</if>
+		<if test="cmmnCd != null and cmmnCd != ''">
+			/* 시스템구분코드로 검색 */
+			AND C.CMMN_CD = #{cmmnCd}
+		</if>
+		ORDER BY
+			C.SORT_ORDR
+	</select>
+</mapper>

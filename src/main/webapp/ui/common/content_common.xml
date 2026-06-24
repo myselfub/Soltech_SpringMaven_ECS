@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataList baseNode="list" repeatNode="map" id="_dltRestdeList" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="mngStdrDe" name="mngStdrDe" dataType="text"></w2:column>
+						<w2:column id="restdeSeq" name="restdeSeq" dataType="text"></w2:column>
+						<w2:column id="restdeNm" name="restdeNm" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false">
+					</w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript" lazy="false"><![CDATA[
+		scwin.initStatus = true;
+
+		// skin css 설정
+		if (typeof utilLib.changeSkin != "undefined") {
+			utilLib.changeSkin(this);
+		}
+
+		// 휴일 데이터 설정
+		// _dltRestdeList.setJSON(top._dltRestdeList.getAllJSON());
+		]]></script>
+	</head>
+	<body>
+		<script type="javascript" ev:event="onpageunload"><![CDATA[
+		]]></script>
+	</body>
+</html>

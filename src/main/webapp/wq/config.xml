@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebSquare>
+	<allValue value="all" />
+	<docType value="standard" />
+	<!-- <debug value="true" remoteConsole="false" console="true" fixErrorLineNumber="true" errorConsole="true"/> -->
+	<debug value="false" remoteConsole="false" console="false" fixErrorLineNumber="true" errorConsole="true" />
+	<debugKey value="" />
+	<language value="ko" />
+
+	<!-- system : websquare(*) -->
+	<exceptionHandler value="websquare" />
+	<debugMenu value="use" />
+	<welcome-file></welcome-file>
+	<errorPage>
+		<!-- 404 등의 오류 발생 시 처리 -->
+		<errorHandler value="comLib.processError" />
+	</errorPage>
+	<date>
+		<requestInterval value="60000" />
+	</date>
+	<!--
+		화면 내의 스크립트를 비동기로 실행할지(하위호환), 동기로 실행할지(권장)에 대한 설정
+	-->
+	<postDrawMode value="synchronous"></postDrawMode>
+
+	<!--
+		xml model instance에 값을 넣으려할때, 대상 instance가 없을경우 해당 instance를 만들건지를 결정
+	-->
+	<forcedValueSetting value="true" />
+	<escape value="false" />
+	<!-- processMsg 하위호환 사이즈 80 / 180 -->
+	<processMsgHeight value="81" />
+	<processMsgWidth value="295" />
+	<processMsgBackground value="true" backgroundColor="#112233" />
+	<!--
+		string을 읽어서 byte를 셀 때의 default encoding을 설정해준다. ex: WebSquare.util.getStringByteSize
+	-->
+	<byteCheckEncoding value="utf-8" />
+
+	<initScript value="true"><![CDATA[
+		imports("uiplugin.popup");
+
+		if (typeof usrInfo !== "undefined" && usrInfo !== ""){
+			comLib.setDecodedValue(usrInfo);
+		}
+		if (typeof sysType !== "undefined" && sysType !== ""){
+			if (comLib.getUserInfo ("servertype" ) == null ) {
+				comLib.setUserInfo ("servertype", sysType);
+			}
+		}
+
+		if (typeof scwin.initScreen === "function") {
+			scwin.initScreen();
+		}
+
+		if (typeof scwin.initContent === "function") {
+			scwin.initContent();
+		}
+
+		$("[class*=card-box]").parent().addClass("card-m");
+
+		//skin css 설정
+		if (typeof utilLib.changeSkin != "undefined"){
+			utilLib.changeSkin(this);
+		}
+	]]></initScript>
+	<postScript value="true"><![CDATA[
+	]]></postScript>
+
+	<wframe>
+		<mode value="sync" />
+		<scope value="true" />
+		<initScript value="true"><![CDATA[		
+			if (typeof scwin.initScreen === "function") {
+				scwin.initScreen();
+			}
+			
+			if (typeof scwin.initContent === "function") {
+				scwin.initContent();
+			}
+		]]></initScript>
+		<postScript value="true"><![CDATA[
+		]]></postScript>
+		<delegateProcessMsg value="true" />
+	</wframe>
+
+	<clearMemory value="false" />
+	<!-- 공통 UDC 제작 파일을 읽어 들인다. requires하위 노드에 require src를 설정 한다. <udc> <requires> <require src="/ui/common/udc/monthcalendar.xml" /> <require src="/ui/common/udc/periodCalendar.xml"
+		/> <require src="/ui/common/udc/periodMonthcalendar.xml" /> <require src="/ui/common/udc/periodYearcalendar.xml" /> <require src="/ui/common/udc/quartercalendar.xml"
+		/> <require src="/ui/common/udc/timePicker.xml" /> <require src="/ui/common/udc/yearcalendar.xml" /> <require src="/ui/common/udc/longArrowRightSvg.xml"
+		/> </requires> <require src="/ui/common/udc/shortArrowRightSvg.xml" /></udc> -->
+	<!-- 공통 inherit 제작 파일을 읽어 들인다. requires하위 노드에 require src를 설정 한다. <inherit><requires><require src="/inherit.xml" /></requires></inherit> -->
+	<stylesheet value="stylesheet_ext.css" import="link" enable="true"
+		earlyImportList="/resources/css/content.css,/resources/css/content-layout.css,/resources/css/animate.css,/resources/css/font-awesome.min.css" />
+
+	<!-- removeClass, changeClass 적용하기 위해 value="true"로 설정 -->
+	<style>
+		<removeDefaultClass value="true" />
+	</style>
+
+	<engine></engine>
+	<ModelUtil>
+		<copyChildrenNodes refresh="false" />
+	</ModelUtil>
+	<preProcessor>
+		<systemPreProcessor value="WebSquare.util.setDomain('[BASE_DOMAIN]')" />
+		<businessPreProcessor value="" />
+	</preProcessor>
+
+	<workflow>
+		<processMsg value="" />
+		<makeGlobalObject value="true" />
+	</workflow>
+
+	<submission>
+		<processMsg value="" />
+		<showSubmissionTime value="true" />
+		<preSubmitFunction value="presubmit" />
+		<callbackSubmitFunction value="" />
+		<requestID value="true" />
+		<makeGlobalObject value="true" />
+	</submission>
+	<!--
+		웹스케어 렌더링을 body가 아닌 특정 영역에 할경우 처리할 함수지정.함수인자로 html string을 인자로 전달한다
+	-->
+	<visibleHelper>
+		<targetHandler value="" />
+	</visibleHelper>
+
+	<spa>
+		<onpageunload value="" />
+		<variable value="scwin" />
+		<scriptCache value="true" />
+		<autoReload value="true" count="50" />
+	</spa>
+
+	<scriptLoading merge="true" />
+	<scriptPrecedence value="true" />
+	<checkUpdate enable="false" interval="60000" mode="client" serverUrl="" />
+	<strictMode value="true" id="mf" />
+	<engineCache compression="true" enable="true" postfix="month" />
+	<userAgentPattern XPathParser="Edge" />
+	<preserveWhiteSpace value="false" />
+	<environment mode="production" cache="nocache" postfix="day" />
+	<script postfix="environment" />
+	<emptyTag value="area,base,basefont,br,col,frame,hr,img,input,link,meta,param" />
+	<engineLoadingMode ie="0" moz="0" opera="0" android="0" iphone="0" chrome="0" safari="0" />
+
+	<dataMap>
+		<firstSet value="true" />
+	</dataMap>
+	<dataList>
+		<removeDummyRowStatus value="true" />
+		<removedDataMatch value="true" />
+	</dataList>
+
+	<grid>
+		<rowNumStatusUniqueId value="true" />
+		<drilldownRealRowIndexAll value="true" />
+		<collectGarbage value="none" /> <!-- IE에서 grid에 가로 스크롤 이벤트가 발생하거나 데이터를 새로 그리는 경우 collectGarbage함수를 호출할지에 대한 여부. "both", "scroll", "draw", "none" 4가지 값이 존재 -->
+		<fastScroll value="true" />
+		<dataType>
+			<date displayFormat="yyyy-MM-dd" />
+		</dataType>
+		<editType value="focus" />
+		<rowNumBackgroundColor value="#E5EFF7" />
+		<selectedRowColor value="#FCF8E3" />
+		<oddEvenColorDisplay value="true" />
+		<evenRowBackgroundColor value="#F5F5F5" />
+		<oddRowBackgroundColor value="#FFFFFF" />
+		<rowMouseOver value="true" />
+		<rowMouseOverColor value="#EDF3FB" />
+		<tooltipStyle value="padding:1px 3px 0; line-height:14px; font-size:12px; border:0; background-color:#5C85D4; color:#FFFFFF;" />
+		<noResultMessageVisible value="true" />
+		<noResultMessage value="데이터가 없음" />
+		<noResultMessageStyle
+			value="position:absolute; left:50%; top:40%; border:1px solid #B3B3B3; COLOR:#383D41; font-size:12px; padding:5px; text-align:center; background:#FAFAFA;" />
+		<pasteMessage value="데이터 붙이는 중" />
+		<getColumnVisible useRealColIndex="true" />
+		<colIdToColIndex value="true" />
+		<column inputType="text">
+			<editType value="select" />
+		</column>
+		<column inputType="select">
+			<chooseOptionLabel value="-선택-" />
+		</column>
+		<column inputType="calendar">
+			<dataType value="date" />
+			<minYear value="1900" />
+			<maxYear value="2999" />
+			<displayFormat valueType="year" value="yyyy" />
+			<displayFormat valueType="yearMonth" value="yyyy-MM" />
+			<displayFormat valueType="yearMonthDate" value="yyyy-MM-dd" />
+			<displayFormat valueType="yearMonthDateTime" value="yyyy-MM-dd HH:mm" />
+			<displayFormat valueType="yearMonthDateTimeSec" value="yyyy-MM-dd HH:mm:SS" />
+		</column>
+	</grid>
+	<gridView>
+		<autoFit value="allColumn" /> <!-- 2020.10.08 크롬에서 숨김 컬럼 표시로 인한 설정 -->
+		<drilldownFooterExpressionAllData value="true" />
+		<rowNumStatusUniqueId value="true" />
+		<preventMultipleClick value="true" />
+		<drilldownRealRowIndexAll value="true" />
+		<collectGarbage value="none" /> <!-- IE에서 grid에 가로 스크롤 이벤트가 발생하거나 데이터를 새로 그리는 경우 collectGarbage함수를 호출할지에 대한 여부. "both", "scroll", "draw", "none" 4가지 값이 존재 -->
+		<fastScroll value="true" />
+		<dataType>
+			<date displayFormat="yyyy-MM-dd" />
+		</dataType>
+		<editType value="focus" />
+		<rowNumBackgroundColor value="#E5EFF7" />
+		<selectedRowColor value="#FCF8E3" />
+		<oddEvenColorDisplay value="true" />
+		<evenRowBackgroundColor value="#F5F5F5" />
+		<oddRowBackgroundColor value="#FFFFFF" />
+		<readOnlyBackgroundColor value="" /> <!-- #F0F0F0 -->
+		<rowMouseOver value="true" />
+		<rowMouseOverColor value="#EDF3FB" />
+		<tooltipStyle value="padding:1px 3px 0; line-height:14px; font-size:12px; border:0; background-color:#5C85D4; color:#FFFFFF;" />
+		<noResultMessageVisible value="true" />
+		<noResultMessage value="데이터가 없음" />
+		<noResultMessageStyle
+			value="position:absolute; left:40%; top:40%; border:1px solid #b3b3b3; color:#383D41; font-size:12px; padding:5px; text-align:center; background:#FAFAFA;" />
+		<pasteMessage value="데이터 붙이는 중" />
+		<getColumnVisible useRealColIndex="true" />
+		<colIdToColIndex value="true" />
+		<column inputType="text">
+			<editType value="select" />
+		</column>
+		<column inputType="select">
+			<chooseOptionLabel value="-선택-" />
+			<eventPriority value="oneditend" /> <!-- event 하위호환을 위한 설정. SP2를 처음부터 개발하거나 SKT인 경우에는 이 속성을 추가한다. -->
+		</column>
+		<column inputType="calendar">
+			<dataType value="date" />
+			<minYear value="1900" />
+			<maxYear value="2999" />
+			<displayFormat valueType="year" value="yyyy" />
+			<displayFormat valueType="yearMonth" value="yyyy-MM" />
+			<displayFormat valueType="yearMonthDate" value="yyyy-MM-dd" />
+			<displayFormat valueType="yearMonthDateTime" value="yyyy-MM-dd HH:mm" />
+			<displayFormat valueType="yearMonthDateTimeSec" value="yyyy-MM-dd HH:mm:SS" />
+		</column>
+		<scrollRowHeight value="true" />
+	</gridView>
+	<inputCalendar>
+		<minYear value="1900" />
+		<maxYear value="2999" />
+		<validCheck value="false" />
+		<dataType value="date" />
+		<delimiter value="-" />
+		<mask value="MM-dd-yyyy" />
+		<delimiterLocaleKey value="IC_Delimiter" />
+		<maskLocaleKey value="IC_Mask" />
+		<calendarImage value="" />
+		<calendarImageOver value="" />
+		<displaymessage value="true" />
+		<invalidMessageFunc value="utilLib.validateMsg" />
+		<holidayRef value="data:_dltRestdeList.mngStdrDe" />
+	</inputCalendar>
+	<input>
+		<displaymessage value="true" />
+		<invalidMessageFunc value="utilLib.validateMsg" />
+		<focusStyle value="" />
+		<dateMask value="yyyy-MM-dd" />
+		<timeMask value="HH:mm" />
+		<focusCalcSize value="false" />
+		<imeMode value="active" />
+	</input>
+	<textarea>
+		<displaymessage value="true" />
+		<invalidMessageFunc value="utilLib.validateMsg" />
+		<focusStyle value="" />
+	</textarea>
+	<calendar>
+		<minYear value="1900" />
+		<maxYear value="2999" />
+		<holidayRef value="data:_dltRestdeList.mngStdrDe" />
+	</calendar>
+	<selectbox>
+		<visibleRowNum value="5" />
+		<dataListAutoRefresh value="true" />
+		<displaymessage value="true" />
+		<invalidMessageFunc value="utilLib.validateMsg" />
+	</selectbox>
+	<autoComplete>
+		<displaymessage value="true" />
+		<invalidMessageFunc value="utilLib.validateMsg" />
+	</autoComplete>
+
+	<tabControl>
+		<processMsgFrame value="true" />
+		<delegateProcessMsg value="true" />
+	</tabControl>
+	<treeview>
+		<tooltipGroupClass value="false" />
+	</treeview>
+	<trigger>
+		<preventMultipleClick value="true" />
+	</trigger>
+	<anchor>
+		<preventMultipleClick value="true" />
+	</anchor>
+
+	<pageInherit>
+		<mode value="sync" />
+		<scope value="true" />
+	</pageInherit>
+
+	<windowContainer>
+		<tooltipGroupClass value="false" />
+		<getWindow searchTarget="windowId" />
+		<displayOnlyTopWindow value="true" />
+		<delegateProcessMsg value="true" />
+	</windowContainer>
+	<pageList></pageList>
+	<radio>
+		<nameScope value="true" />
+	</radio>
+	<body>
+		<toolTipSec value="1" />
+		<toolTipNoEffect value="true" />
+	</body>
+	<editor>
+		<version value="4.5.11" />
+	</editor>
+	<fusionchart></fusionchart>
+	<languagePack useLanguagePack="false">
+		<url lang="ko" value="/langpack/ko.js" />
+		<url lang="en" value="/langpack/en.js" />
+		<url lang="ch" value="/langpack/ch.js" />
+	</languagePack>
+	<license value="true" />
+</WebSquare>

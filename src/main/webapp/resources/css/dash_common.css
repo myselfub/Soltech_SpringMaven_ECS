@@ -1,0 +1,112 @@
+@CHARSET "UTF-8";
+
+:root {
+	--wrap-ecs-top-height: 45px;
+	--wrap-ecs-top-back-color: #33569A;
+	--wrap-ecs-top-info-back-color: #254480;
+	--default-black-color: #222222;
+	--default-gray-color: #A0A0A0;
+	--main-box-shadow-color: #AAAAAA;
+	--dash-box-back-color: #FAFAFA;
+	--dash-box-shadow-color: #BFBFBF;
+	--dash-square-width: 86%;
+	--dash-square-height: 45%;
+	--dash-square-radius: 0.4rem;
+	--dash-square-top: calc(var(--dash-square-height) / 3.5);
+	--dash-square-span-left: 12.5%;
+	--dash-text-white-color: #FDFDFD;
+	--dash-right-width: 40.25%;
+	--dash-title-right-margin: 0.6rem;
+	--dash-grd-border-white-color: #F0F0F0;
+	--dash-box-left-width: 8%;
+	--dash-box-center-width: 78%;
+	--dash-box-right-width: 11%;
+	--unit-font-size: 0.4rem;
+	--wrap-ecs-top-title-height: calc(var(--navigator-wrap-height) + 1px);
+	--dash-box-1-back-color: #6BA5EA;
+	--dash-box-1-back-opacity-color: #6BA5EAA0;
+	--dash-box-2-back-color: #84BAED;
+	--dash-box-2-back-opacity-color: #84BAEDA0;
+	--dash-box-3-back-color: #87A4EE;
+	--dash-box-3-back-opacity-color: #87A4EEA0;
+	--dash-box-4-back-color: #7D91D6;
+	--dash-box-4-back-opacity-color: #7D91D6A0;
+	--dash-grd-header-back-color: #3D98EA;
+	--dash-grd-subtotal-back-color: #BFDAF3;
+	--dash-box-con-title-back-color: #72AEE4;
+	--dash-water-drop-shape-back-color: #79A7ED;
+	--dash-belt-menu-back-color: #D4EBFF;
+	--dash-belt-menu-color: #288BE4;
+	--dash-cbn-ntrlt-sign-color: #63AAFF;
+	--dash-cbn-ntrlt-box-shadow-color: #70BBFF9E;
+	--pagination-item-active-color: #7FB5FF;
+	--pagination-item-color: #7FB5FF88;
+
+	--dash-square-top-plan-back-color: #65ADEC;
+	--dash-square-top-plan-back-color-hover: #65ADEC78;
+	--dash-square-top-cnstrc-back-color: #5EAAEF;
+	--dash-square-top-cnstrc-back-color-hover: #5EAAEF7D;
+	--dash-square-top-prdctn-back-color: #4BD8EF;
+	--dash-square-top-prdctn-back-color-hover: #4BD8EF7D;
+	--dash-square-top-cnstn-back-color: #4AD3E9;
+	--dash-square-top-cnstn-back-color-hover: #4AD3E982;
+	--dash-square-top-mng-back-color: #2C8EE6;
+	--dash-square-top-mng-back-color-hover: #2C8EE682;
+	--dash-square-top-excclc-back-color: #17B6CF;
+	--dash-square-top-excclc-back-color-hover: #17B6CF87;
+	--dash-square-top-dsuse-back-color: #0674D4;
+	--dash-square-top-dsuse-back-color-hover: #0674D487;
+};
+
+/*
+#79A7ED, #72AEE4
+#589FC7, #65A7F5, #65C4ED, #69D7E5, #86D7F1, #A0CDF8
+*/
+
+a:link {color:#4A4A4A;}
+a:visited {color:#4A4A4A;}
+
+/**********************************************************
+	ECS CSS
+***********************************************************/
+.dash-con-box {
+	height: calc(100vh - (var(--wrap-ecs-top-title-height) + var(--tool-bar-top-height) + var(--content-area-padding-top) + var(--content-area-padding-bottom) + var(--con-box-margin-bottom) - 1px));
+	min-height: 847px;
+	background: transparent;
+	padding: 0.5% 0.3% 0% 0.3%;
+	color: var(--default-black-color);
+}
+
+.dash-list-box {
+	display: inline-flex;
+	width: 100%;
+}
+
+.dash-list-box-title {
+	height: 4.5%;
+}
+
+.dash-box {
+	position: relative;
+	display: inline-flex;
+	justify-content: space-between;
+	align-content: space-between;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0.15rem 0.15rem 0.3rem 0.15rem var(--dash-box-shadow-color);
+	border-radius: var(--dash-square-radius);
+	background: var(--dash-box-back-color);
+	padding-left: 1.25%;
+	padding-right: 1.25%;
+}
+
+.dash-box-title {
+	font-size: 1rem;
+	font-weight: bold;
+	padding: 0.3rem 0.2rem 0 0.6rem;
+}
+
+.dash-box-chart {
+	width: 100%;
+	height: 93%;
+}

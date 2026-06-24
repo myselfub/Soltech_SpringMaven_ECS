@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "지도 안쪽 라벨",
+			"version": "",
+			"apis": [],
+			"pluginName": "map_in_label",
+			"width": "70px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "map_in_label",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "70px"
+			}
+		-->
+		<xf:group class="map-in-label" tagname="svg" pluginName="map_in_label">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수
+				this.initMapOutLabel = function() {
+					// fill 설정
+					if (options.fill && options.fill != "") {
+						var color = options.fill;
+						if (color == "H") {
+							color = "#F2FFDF";
+						} else if (color == "G") {
+							color = "#FFFADF";
+						} else if (color == "N") {
+							color = "#DBE9FF";
+						} else if (color == "Y") {
+							color = "#FFE3F4";
+						}
+						document.getElementById(grpMapInLabelFill.getID()).setAttribute("fill", color);
+					}
+				};
+
+				// 초기 실행함수 수행
+				this.initMapOutLabel();
+				]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>70</w2:width>
+				<w2:viewBox>0 0 70 70</w2:viewBox>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group id="grpMapInLabelFill" tagname="circle">
+				<w2:attributes>
+					<w2:cx>35</w2:cx>
+					<w2:cy>35</w2:cy>
+					<w2:r>35</w2:r>
+					<w2:fill></w2:fill>
+				</w2:attributes>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

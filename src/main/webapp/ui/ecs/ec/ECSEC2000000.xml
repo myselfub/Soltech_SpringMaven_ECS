@@ -1,0 +1,2178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/dash_pc_ecs.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSEC2000000.xml
+			* 설 명 : 종합 생산/소비 현황
+			* 작성일 : 2023.02.01
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.01 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaDashYear" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="dashYearSelected" dataType="number" name="선택된 년도"></w2:key>
+						<w2:key id="dashYear1" dataType="number" name="4년전년도"></w2:key>
+						<w2:key id="dashYear2" dataType="number" name="2년전년도"></w2:key>
+						<w2:key id="dashYear3" dataType="number" name="2년전년도"></w2:key>
+						<w2:key id="dashYear4" dataType="number" name="전년도"></w2:key>
+						<w2:key id="dashYear5" dataType="number" name="금년도"></w2:key>
+						<w2:key id="dashYear6" dataType="number" name="후년도"></w2:key>
+						<w2:key id="dashYear7" dataType="number" name="2년후년도"></w2:key>
+						<w2:key id="dashYear8" dataType="number" name="3년후년도"></w2:key>
+						<w2:key id="dashYear9" dataType="number" name="4년후년도"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap id="dmaDashBasin" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="dashBasinSelected" dataType="text" name="선택된 유역"></w2:key>
+						<w2:key id="dashBasin1" dataType="text" name="4번전 유역(숨겨짐)"></w2:key>
+						<w2:key id="dashBasin2" dataType="text" name="3번전 유역(숨겨짐)"></w2:key>
+						<w2:key id="dashBasin3" dataType="text" name="2번전 유역"></w2:key>
+						<w2:key id="dashBasin4" dataType="text" name="전 유역"></w2:key>
+						<w2:key id="dashBasin5" dataType="text" name="현 유역"></w2:key>
+						<w2:key id="dashBasin6" dataType="text" name="후 유역"></w2:key>
+						<w2:key id="dashBasin7" dataType="text" name="2번후 유역"></w2:key>
+						<w2:key id="dashBasin8" dataType="text" name="3번후 유역(숨겨짐)"></w2:key>
+						<w2:key id="dashBasin9" dataType="text" name="4번후 유역(숨겨짐)"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltEpwrEnergyData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltEpwrPrdctnData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltEpwrCnstnData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltPrdctnData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="elcpwstnClsNm" dataType="text" name="발전원"></w2:column>
+						<w2:column id="hqNm" dataType="text" name="유역"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCnstnData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="날짜"></w2:column>
+						<w2:column id="elcpwstnClsNm" dataType="text" name="발전원"></w2:column>
+						<w2:column id="hqNm" dataType="text" name="유역"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCbnNtrltData" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="inqireDe" dataType="text" name="년월"></w2:column>
+						<w2:column id="iemDivId" dataType="text" name="구분"></w2:column>
+						<w2:column id="inqireIemVu" dataType="text" name="데이터"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"chart" : {
+			"elctrnEngUnit" : 10,
+			"elctrnEngIntervalCount" : 3,
+			"prdctnUnit" : 10,
+			"prdctnIntervalCount" : 4,
+			"cnstnUnit" : 10,
+			"cnstnIntervalCount" : 4,
+			"prdctnLabel" : {
+				"prdctnH" : "한강유역",
+				"prdctnG" : "금강유역",
+				"prdctnY" : "영섬유역",
+				"prdctnN" : "낙동강유역"
+			},
+			"cnstnLabel" : {
+				"cnstnH" : "한강유역",
+				"cnstnG" : "금강유역",
+				"cnstnY" : "영섬유역",
+				"cnstnN" : "낙동강유역"
+			}
+		},
+		"dashBasin" : {
+			"dashBasin1" : "영섬유역",
+			"dashBasin2" : "낙동강유역",
+			"dashBasin3" : "한강유역",
+			"dashBasin4" : "금강유역",
+			"dashBasin5" : "전체",
+			"dashBasin6" : "영섬유역",
+			"dashBasin7" : "낙동강유역",
+			"dashBasin8" : "한강유역",
+			"dashBasin9" : "금강유역"
+		},
+		"dashBasinValue" : {
+			"전체" : "ALL",
+			"한강유역" : "H",
+			"금강유역" : "G",
+			"영섬유역" : "Y",
+			"낙동강유역" : "N"
+		},
+		"dashBasinCode" : {
+			"ALL" : "ALL",
+			"H" : "01",
+			"G" : "02",
+			"Y" : "03",
+			"N" : "04"
+		},
+		"parentTitleClickEvent" : {
+			"ECSEC410000" : "ECSEC000000",
+			"ECSPN400000" : "ECSPN000000",
+			"ECSPN200000" : "ECSPN000000",
+			"ECSCL110000" : "ECSCL000000",
+			"ECSCN500000" : "ECSCN000000",
+			"ECSCN100000" : "ECSCN000000"
+		},
+		"titleClickEvent" : {
+			"ntrlt" : "ECSEC410000",
+			"acmslt" : "ECSPN400000",
+			"prdctn_total" : "ECSPN200000",
+			"prdctn_excclc_total" : "ECSPN400000",
+			"cnstn_epbu" : "ECSCN500000",
+			"cnstn_excclc1" : "ECSCN100000",
+			"cnstn_excclc2" : "ECSCN100000"
+		},
+		"observeEvent" : false,
+		"minYear" : 1978,
+		"maxYear" : Number(utilLib.getCurrentDate("yyyy")) + 4,
+		"dashLeftEvent" : false
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSEC2000000", {"initScreenCallback" : scwin.initDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initDatas = function() {
+		var params = $p.getParameter("param");
+		var basinIdx = 0;
+		if (params && params.basin && params.basin != "ALL") {
+			var basinIdx = Object.keys(scwin.initData.dashBasinValue).slice(-4).reverse().findIndex(item => scwin.initData.dashBasinValue[item] == params.basin) - 1;
+			if (basinIdx <= 0) {
+				basinIdx--;
+			}
+		}
+
+		scwin.setDashYear();
+		scwin.setDashBasin(basinIdx, true);
+		scwin.setDashLeftEvent();
+		// grpPcCbnNtrltScaleSvg.setMainCbnNtrltData("none");
+
+		// 데이터 조회
+		scwin.searchDatas();
+		// ecsLib.setChartResizeObserver(this);
+	};
+
+	/**
+	 * 데이터들을 조회한다.
+	 */
+	scwin.searchDatas = function() {
+		// 전력에너지 운영현황
+		scwin.searchChartEpwrEnergyData();
+		// 탄소중립 현황 데이터 조회
+		scwin.searchCbnNtrltData();
+
+		// 유역별 생산현황 차트
+		scwin.searchChartPrdctnData();
+		// 전력생산 데이터 조회, 연간발전량, 연간발전수익
+		scwin.searchEpwrPrdctn();
+
+		// 유역별 소비현황 차트
+		scwin.searchChartCnstnData();
+		// 전력소비 데이터 조회, 연간소비량, 연간소비정산, 전력소비
+		scwin.searchEpwrCnstn();
+
+		// 탄소중립 현황 타이틀 클릭시 이동 이벤트 등록
+		scwin.setGrpChartCbnClickEvent();
+		// 전력생산/발전수익/전력소비/소비정산 타이틀 클릭시 이동 이벤트 등록
+		scwin.setPcSquareBoxClickEvent();
+	};
+
+	//============================================================================================
+	// 좌측 라벨(날짜, 유역 선택)
+	//============================================================================================
+	/**
+	 * 좌측 날짜 데이터 바인딩
+	 * @param {
+	 	num : 계산이나 셋팅할 숫자
+	 	type : ["clac", "year"]에 따라 현재 데이터에서 계산할지 직접 셋팅할지 설정
+	 }
+	 */
+	scwin.setDashYear = function(num, type) {
+		type = type || "calc";
+		var dashYear = dmaDashYear.getJSON();
+		var setYearFunc = function(year) {
+			var no = 1;
+			var count = Object.keys(dashYear).length - 1;
+			for (var idx = (Number(year) - Math.floor(count / 2)); idx <= (Number(year) + Math.floor(count / 2)); idx++) {
+				dashYear["dashYear" + no++] = Number(idx);
+			}
+			dashYear.dashYearSelected = Number(year);
+		};
+		if (!Object.values(dashYear).filter(obj => obj).length) {
+			var nowYear = utilLib.getCurrentDate("yyyy");
+			setYearFunc(nowYear);
+		}
+
+		if (num) {
+			if (type == "calc") {
+				var isChange = false;
+				var dashYearSelectedTemp = dashYear.dashYearSelected;
+				dashYear.dashYearSelected = "";
+				if (num < 0 && Object.values(dashYear).find(value => value && scwin.initData.minYear >= value)) {
+					isChange = true;
+				} else if (num > 0 && Object.values(dashYear).find(value => value && value >= scwin.initData.maxYear)) {
+					isChange = true;
+				}
+				if (!isChange) {
+					for (var key of Object.keys(dashYear)) {
+						if (!key.includes("Selected")) {
+							dashYear[key] = dashYear[key] + Number(num);
+						}
+					}
+				}
+				dashYear.dashYearSelected = dashYearSelectedTemp;
+			} else if (type == "year") {
+				setYearFunc(num);
+			}
+		}
+		dmaDashYear.setJSON(dashYear);
+
+		var selectedEmt = [...document.querySelectorAll("#" + $p.getFrameId() + " .dash-con-box-pc ul[id$='grpDashBeltYear'].dash-belt-text-group li")].find(emt => emt.textContent == dmaDashYear.get("dashYearSelected"));
+		document.querySelectorAll("#" + $p.getFrameId() + " .dash-con-box-pc ul[id$='grpDashBeltYear'].dash-belt-text-group li.dash-belt-text-color").forEach(emt => {
+			//emt.classList.remove("dash-belt-text-box");
+			emt.classList.remove("dash-belt-text-color");
+		});
+		if (selectedEmt) {
+			//selectedEmt.classList.add("dash-belt-text-box");
+			selectedEmt.classList.add("dash-belt-text-color");
+		}
+		var liEmt = [...document.querySelectorAll("#" + $p.getFrameId() + " .dash-con-box-pc ul[id$='grpDashBeltYear'].dash-belt-text-group li")];
+		liEmt.forEach(emt => {
+			emt.removeAttribute("style");
+		});
+		liEmt = liEmt.filter(emt => scwin.initData.minYear + 1 >= Number(emt.textContent) || Number(emt.textContent) >= scwin.initData.maxYear - 3);
+		liEmt.forEach(emt => {
+			emt.style.cursor = "not-allowed";
+		});
+	};
+
+	/**
+	 * 좌측 유역 데이터 바인딩
+	 * @param {
+	 	num : 계산할 숫자,
+	 	type : selected
+	 }
+	 */
+	scwin.setDashBasin = function(num, type) {
+		var dashBasin = dmaDashBasin.getJSON();
+		if (!Object.values(dashBasin).filter(obj => obj).length) {
+			for (var idx in Object.keys(dashBasin)) {
+				dashBasin["dashBasin" + (Number(idx) + 1)] = scwin.initData.dashBasin["dashBasin" + (Number(idx) + 1)];
+			}
+			dashBasin.dashBasinSelected = dashBasin["dashBasin" + Math.floor(Object.keys(dashBasin).length / 2)];
+			dmaDashBasin.setJSON(dashBasin);
+		}
+
+		var tempBasin = dmaDashBasin.getJSON();
+		if (num < 0) {
+			if (num == -1) { // 아래 1칸
+				if (type) {
+					dashBasin.dashBasinSelected = tempBasin.dashBasin6;
+				}
+				dashBasin.dashBasin1 = tempBasin.dashBasin2;
+				dashBasin.dashBasin2 = tempBasin.dashBasin3;
+				dashBasin.dashBasin3 = tempBasin.dashBasin4;
+				dashBasin.dashBasin4 = tempBasin.dashBasin5;
+				dashBasin.dashBasin5 = tempBasin.dashBasin6;
+				dashBasin.dashBasin6 = tempBasin.dashBasin7;
+				dashBasin.dashBasin7 = tempBasin.dashBasin8;
+				dashBasin.dashBasin8 = tempBasin.dashBasin9;
+				dashBasin.dashBasin9 = tempBasin.dashBasin5;
+			} else if (num == -2) { // 아래 2칸
+				if (type) {
+					dashBasin.dashBasinSelected = tempBasin.dashBasin7;
+				}
+				dashBasin.dashBasin1 = tempBasin.dashBasin3;
+				dashBasin.dashBasin2 = tempBasin.dashBasin4;
+				dashBasin.dashBasin3 = tempBasin.dashBasin5;
+				dashBasin.dashBasin4 = tempBasin.dashBasin6;
+				dashBasin.dashBasin5 = tempBasin.dashBasin7;
+				dashBasin.dashBasin6 = tempBasin.dashBasin8;
+				dashBasin.dashBasin7 = tempBasin.dashBasin9;
+				dashBasin.dashBasin8 = tempBasin.dashBasin5;
+				dashBasin.dashBasin9 = tempBasin.dashBasin1;
+			}
+		} else if (num > 0) {
+			if (num == 1) { // 위 1칸
+				if (type) {
+					dashBasin.dashBasinSelected = tempBasin.dashBasin4;
+				}
+				dashBasin.dashBasin1 = tempBasin.dashBasin5;
+				dashBasin.dashBasin2 = tempBasin.dashBasin1;
+				dashBasin.dashBasin3 = tempBasin.dashBasin2;
+				dashBasin.dashBasin4 = tempBasin.dashBasin3;
+				dashBasin.dashBasin5 = tempBasin.dashBasin4;
+				dashBasin.dashBasin6 = tempBasin.dashBasin5;
+				dashBasin.dashBasin7 = tempBasin.dashBasin6;
+				dashBasin.dashBasin8 = tempBasin.dashBasin7;
+				dashBasin.dashBasin9 = tempBasin.dashBasin3;
+			} else if (num == 2) { // 위 2칸
+				if (type) {
+					dashBasin.dashBasinSelected = tempBasin.dashBasin3;
+				}
+				dashBasin.dashBasin1 = tempBasin.dashBasin9;
+				dashBasin.dashBasin2 = tempBasin.dashBasin5;
+				dashBasin.dashBasin3 = tempBasin.dashBasin1;
+				dashBasin.dashBasin4 = tempBasin.dashBasin2;
+				dashBasin.dashBasin5 = tempBasin.dashBasin3;
+				dashBasin.dashBasin6 = tempBasin.dashBasin4;
+				dashBasin.dashBasin7 = tempBasin.dashBasin5;
+				dashBasin.dashBasin8 = tempBasin.dashBasin6;
+				dashBasin.dashBasin9 = tempBasin.dashBasin7;
+			}
+		} else if (num == 0) {
+			if (dashBasin.dashBasinSelected != tempBasin.dashBasin5) {
+				dashBasin.dashBasinSelected = tempBasin.dashBasin5;
+			}
+		}
+		dmaDashBasin.setJSON(dashBasin);
+
+		var selectedEmt = [...document.querySelectorAll("#" + $p.getFrameId() + " .dash-con-box-pc ul[id$='grpDashBeltBasin'].dash-belt-text-group li")].filter(emt => emt.textContent == dmaDashBasin.get("dashBasinSelected"));
+		document.querySelectorAll("#" + $p.getFrameId() + " .dash-con-box-pc ul[id$='grpDashBeltBasin'].dash-belt-text-group li.dash-belt-text-color").forEach(emt => {
+			//emt.classList.remove("dash-belt-text-box");
+			emt.classList.remove("dash-belt-text-color");
+		});
+		if (selectedEmt) {
+			//selectedEmt.classList.add("dash-belt-text-box");
+			for (emt of selectedEmt) {
+				emt.classList.add("dash-belt-text-color");
+			} 
+		}
+	};
+
+	/**
+	 * 좌측 메뉴 스크롤 이벤트
+	 */
+	scwin.setDashLeftEvent = function() {
+		// 날짜
+		var beltYearEmt = document.getElementById(grpDashBeltYear.getID());
+		setTimeout(() => {
+			var liYearEmt = document.getElementById(spnDashYear5.getID()).parentElement;
+			var scrollTop = (beltYearEmt.scrollHeight - liYearEmt.offsetTop) / 2 - liYearEmt.clientHeight;
+			beltYearEmt.scrollTo(0, scrollTop);
+		}, 300);
+		beltYearEmt.addEventListener("mousewheel", function(e) {
+			if (!scwin.initData.dashLeftEvent) {
+				scwin.initData.dashLeftEvent = true;
+				var ulEmt = e.target;
+				if (e.deltaY > 0) {
+					scwin.setDashYear(1);
+				} else {
+					scwin.setDashYear(-1);
+				}
+				setTimeout(() => {
+					scwin.initData.dashLeftEvent = false;
+				}, 10);
+			}
+		});
+		beltYearEmt.querySelectorAll("li").forEach(emt => {
+			emt.addEventListener("click", function(e) {
+				var selectedYear = Number(e.target.textContent);
+				if (scwin.initData.minYear + 1 < selectedYear && selectedYear < scwin.initData.maxYear - 3) {
+					if (!scwin.initData.dashLeftEvent) {
+						var liEmt = e.target;
+						var ulId = e.target;
+						if (ulId.tagName.toLowerCase() == "span") {
+							ulId = "#" + ulId.parentElement.parentElement.id;
+							liEmt = liEmt.parentElement;
+						} else if (ulId.tagName.toLowerCase() == "li") {
+							ulId = "#" + ulId.parentElement.id;
+						} else {
+							ulId = "#" + ulId.id;
+						}
+
+						var animateFunc = function() {
+							$(this).css("margin-top", "");
+							var direct = Number(this.getAttribute("data-direct"));
+							scwin.setDashYear(selectedYear, "year");
+							scwin.searchDatas();
+							setTimeout(() => {
+								scwin.initData.dashLeftEvent = false;
+							}, 100);
+						};
+						var animateRemoveStyleFunc = function() {
+							$(this).removeAttr("style");
+						};
+
+						scwin.initData.dashLeftEvent = true;
+
+						var dir = 5 - Number(liEmt.children[0].id.slice(-1));
+						var ulEmt = document.querySelector(ulId);
+						var count = ulEmt.childElementCount;
+						var liIndex = [...ulEmt.childNodes].indexOf(liEmt);
+						var fontSize1 = window.innerWidth > 1730 ? "1.3rem" : "1.1rem";
+						var fontSize2 = window.innerWidth > 1730 ? "1.15rem" : "1rem";
+						var fontSize3 = window.innerWidth > 1730 ? "0.95rem" : "0.85rem";
+
+						if (!liIndex) {
+							setTimeout(() => {
+								scwin.initData.dashLeftEvent = false;
+							}, 100);
+						} else if (Math.floor(count / 2) > liIndex) {
+							// 위로(위클릭)
+							ulEmt.setAttribute("data-direct", dir);
+							if (dir == 1) {
+								$(ulId + ">li:nth-child(2)").animate({
+									"opacity" : "0.85",
+									"transition" : "all 0.7s ease-in"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(3)").animate({
+									"font-size" : fontSize2,
+									"opacity" : "0.9"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(4)").animate({
+									"font-size" : fontSize1,
+									//"color" : "#288BE4",
+									"opacity" : "1"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(5)").animate({
+									"font-size" : fontSize2,
+									//"color" : "#BFBFBF",
+									"opacity" : "0.9"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(6)").animate({
+									"font-size" : fontSize3,
+									"opacity" : "0.85"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(7)").animate({
+									"opacity" : "0",
+									"transition" : "all 0.4s ease"
+								}, 400, animateRemoveStyleFunc);
+								var marginTop = window.innerWidth > 1730 ? "-75%" : "17%";
+								$(ulId).animate({
+									"marginTop" : marginTop
+								}, 700, animateFunc);
+							} else if (dir == 2) {
+								$(ulId + ">li:first-child").animate({
+									"font-size" : fontSize3,
+									"opacity" : "0.85"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(2)").animate({
+									"font-size" : fontSize2,
+									"opacity" : "0.9"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(3)").animate({
+									"font-size" : fontSize1,
+									//"color" : "#288BE4",
+									"opacity" : "1"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(4)").animate({
+									"font-size" : fontSize2,
+									"opacity" : "0.9"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(5)").animate({
+									"font-size" : fontSize3,
+									//"color" : "#BFBFBF",
+									"opacity" : "0.85"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(6)").animate({
+									"opacity" : "0",
+									"transition" : "all 0.4s ease"
+								}, 700, animateRemoveStyleFunc);
+								var marginTop = window.innerWidth > 1730 ? "-10%" : "82%";
+								$(ulId).animate({
+									"marginTop" : marginTop
+								}, 700, animateFunc);
+							}
+						} else if (Math.floor(count / 2) < liIndex) {
+							// 아래로(아래클릭)
+							ulEmt.setAttribute("data-direct", dir);
+							var ulEmt = document.querySelector(ulId);
+							if (dir == -1) {
+								$(ulId + ">li:nth-child(3)").animate({
+									"opacity" : "0",
+									"transition" : "all 0.4s ease"
+								}, 400, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(4)").animate({
+									"font-size" : fontSize3,
+									"opacity" : "0.85"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(5)").animate({
+									"font-size" : fontSize2,
+									//"color" : "#BFBFBF",
+									"opacity" : "0.9"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(6)").animate({
+									"font-size" : fontSize1,
+									//"color" : "#288BE4",
+									"opacity" : "1"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(7)").animate({
+									"font-size" : fontSize2,
+									"opacity" : "0.9"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(8)").animate({
+									"opacity" : "0.85",
+									"transition" : "all 0.7s ease-in"
+								}, 700, animateRemoveStyleFunc);
+								var marginTop = window.innerWidth > 1730 ? "-205%" : "-195%";
+								$(ulId).animate({
+									"marginTop" : marginTop
+								}, 700, animateFunc);
+							} else if (dir == -2) {
+								$(ulId + ">li:nth-child(4)").animate({
+									"opacity" : "0",
+									"transition" : "all 0.4s ease"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(5)").animate({
+									"font-size" : fontSize3,
+									//"color" : "#BFBFBF",
+									"opacity" : "0.85"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(6)").animate({
+									"font-size" : fontSize2,
+									//"color" : "#BFBFBF",
+									"opacity" : "0.9"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(7)").animate({
+									"font-size" : fontSize1,
+									//"color" : "#288BE4",
+									"opacity" : "1"
+								}, 700, animateRemoveStyleFunc);
+								$(ulId + ">li:nth-child(8)").animate({
+									"font-size" : fontSize2,
+									//"color" : "#BFBFBF",
+									"opacity" : "0.9"
+								}, 700, animateRemoveStyleFunc);
+								var marginTop = window.innerWidth > 1730 ? "-270%" : "-265%";
+								$(ulId).animate({
+									"marginTop" : marginTop
+								}, 700, animateFunc);
+							}
+						} else {
+							setTimeout(() => {
+								scwin.setDashYear(selectedYear, "year");
+								scwin.searchDatas();
+								scwin.initData.dashLeftEvent = false;
+							}, 100);
+						}
+					}
+				}
+			});
+		});
+
+		// 유역
+		var beltBasinEmt = document.getElementById(grpDashBeltBasin.getID());
+		setTimeout(() => {
+			var liBasinEmt = document.getElementById(spnDashBasin9.getID()).parentElement;
+			var scrollTop = (beltBasinEmt.scrollHeight - liBasinEmt.offsetTop) / 2 - liBasinEmt.clientHeight;
+			beltBasinEmt.scrollTo(0, scrollTop);
+		}, 300);
+		beltBasinEmt.addEventListener("mousewheel", function(e) {
+			if (!scwin.initData.dashLeftEvent) {
+				scwin.initData.dashLeftEvent = true;
+				var ulEmt = e.target;
+				if (e.deltaY > 0) {
+					scwin.setDashBasin(-1);
+				} else {
+					scwin.setDashBasin(1);
+				}
+				setTimeout(() => {
+					scwin.initData.dashLeftEvent = false;
+				}, 10);
+			}
+		});
+		document.querySelectorAll("#" + $p.getFrameId() + " .dash-con-box-pc .dash-belt-text-group[id$='grpDashBeltBasin'] > li").forEach(emt => {
+			emt.addEventListener("click", function(e) {
+				if (!scwin.initData.dashLeftEvent) {
+					var liEmt = e.target;
+					var ulId = e.target;
+					if (ulId.tagName.toLowerCase() == "span") {
+						ulId = "#" + ulId.parentElement.parentElement.id;
+						liEmt = liEmt.parentElement;
+					} else if (ulId.tagName.toLowerCase() == "li") {
+						ulId = "#" + ulId.parentElement.id;
+					} else {
+						ulId = "#" + ulId.id;
+					}
+
+					var animateFunc = function() {
+						$(this).css("margin-top", "");
+						/*
+						var childId = "#" + $(this).attr("id") + ">li:last-child";
+						$(childId).removeAttr("style");
+						var childEmt = $(childId).detach().prependTo(this);
+						childEmt.detach().appendTo(this);
+						*/
+						var direct = Number(this.getAttribute("data-direct"));
+						scwin.setDashBasin(direct, true);
+						scwin.searchDatas();
+						setTimeout(() => {
+							scwin.initData.dashLeftEvent = false;
+						}, 100);
+					};
+					var animateRemoveStyleFunc = function() {
+						$(this).removeAttr("style");
+					};
+
+					scwin.initData.dashLeftEvent = true;
+
+					var dir = 5 - Number(liEmt.children[0].id.slice(-1));
+					var ulEmt = document.querySelector(ulId);
+					var count = ulEmt.childElementCount;
+					var liIndex = [...ulEmt.childNodes].indexOf(liEmt);
+					var fontSize1 = window.innerWidth > 1730 ? "1.3rem" : "1.1rem";
+					var fontSize2 = window.innerWidth > 1730 ? "1.15rem" : "1rem";
+					var fontSize3 = window.innerWidth > 1730 ? "0.95rem" : "0.85rem";
+
+					if (!liIndex) {
+						setTimeout(() => {
+							scwin.initData.dashLeftEvent = false;
+						}, 100);
+					} else if (Math.floor(count / 2) > liIndex) {
+						// 위로(위클릭)
+						ulEmt.setAttribute("data-direct", dir);
+						if (dir == 1) {
+							$(ulId + ">li:nth-child(2)").animate({
+								"opacity" : "0.85",
+								"transition" : "all 0.7s ease-in"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(3)").animate({
+								"font-size" : fontSize2,
+								"opacity" : "0.9"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(4)").animate({
+								"font-size" : fontSize1,
+								//"color" : "#288BE4",
+								"opacity" : "1"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(5)").animate({
+								"font-size" : fontSize2,
+								//"color" : "#BFBFBF",
+								"opacity" : "0.9"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(6)").animate({
+								"font-size" : fontSize3,
+								"opacity" : "0.85"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(7)").animate({
+								"opacity" : "0",
+								"transition" : "all 0.4s ease"
+							}, 400, animateRemoveStyleFunc);
+							var marginTop = window.innerWidth > 1730 ? "-75%" : "17%";
+							$(ulId).animate({
+								"marginTop" : marginTop
+							}, 700, animateFunc);
+						} else if (dir == 2) {
+							$(ulId + ">li:first-child").animate({
+								"font-size" : fontSize3,
+								"opacity" : "0.85"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(2)").animate({
+								"font-size" : fontSize2,
+								"opacity" : "0.9"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(3)").animate({
+								"font-size" : fontSize1,
+								//"color" : "#288BE4",
+								"opacity" : "1"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(4)").animate({
+								"font-size" : fontSize2,
+								"opacity" : "0.9"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(5)").animate({
+								"font-size" : fontSize3,
+								//"color" : "#BFBFBF",
+								"opacity" : "0.85"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(6)").animate({
+								"opacity" : "0",
+								"transition" : "all 0.4s ease"
+							}, 700, animateRemoveStyleFunc);
+							var marginTop = window.innerWidth > 1730 ? "-10%" : "82%";
+							$(ulId).animate({
+								"marginTop" : marginTop
+							}, 700, animateFunc);
+						}
+					} else if (Math.floor(count / 2) < liIndex) {
+						// 아래로(아래클릭)
+						ulEmt.setAttribute("data-direct", dir);
+						var ulEmt = document.querySelector(ulId);
+						if (dir == -1) {
+							$(ulId + ">li:nth-child(3)").animate({
+								"opacity" : "0",
+								"transition" : "all 0.4s ease"
+							}, 400, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(4)").animate({
+								"font-size" : fontSize3,
+								"opacity" : "0.85"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(5)").animate({
+								"font-size" : fontSize2,
+								//"color" : "#BFBFBF",
+								"opacity" : "0.9"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(6)").animate({
+								"font-size" : fontSize1,
+								//"color" : "#288BE4",
+								"opacity" : "1"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(7)").animate({
+								"font-size" : fontSize2,
+								"opacity" : "0.9"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(8)").animate({
+								"opacity" : "0.85",
+								"transition" : "all 0.7s ease-in"
+							}, 700, animateRemoveStyleFunc);
+							var marginTop = window.innerWidth > 1730 ? "-205%" : "-195%";
+							$(ulId).animate({
+								"marginTop" : marginTop
+							}, 700, animateFunc);
+						} else if (dir == -2) {
+							$(ulId + ">li:nth-child(4)").animate({
+								"opacity" : "0",
+								"transition" : "all 0.4s ease"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(5)").animate({
+								"font-size" : fontSize3,
+								//"color" : "#BFBFBF",
+								"opacity" : "0.85"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(6)").animate({
+								"font-size" : fontSize2,
+								//"color" : "#BFBFBF",
+								"opacity" : "0.9"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(7)").animate({
+								"font-size" : fontSize1,
+								//"color" : "#288BE4",
+								"opacity" : "1"
+							}, 700, animateRemoveStyleFunc);
+							$(ulId + ">li:nth-child(8)").animate({
+								"font-size" : fontSize2,
+								//"color" : "#BFBFBF",
+								"opacity" : "0.9"
+							}, 700, animateRemoveStyleFunc);
+							var marginTop = window.innerWidth > 1730 ? "-270%" : "-265%";
+							$(ulId).animate({
+								"marginTop" : marginTop
+							}, 700, animateFunc);
+						}
+					} else {
+						setTimeout(() => {
+							scwin.setDashBasin(dir, true);
+							scwin.searchDatas();
+							scwin.initData.dashLeftEvent = false;
+						}, 100);
+					}
+				}
+			});
+		});
+	};
+
+	//============================================================================================
+	// 라벨
+	//============================================================================================
+	/**
+	 * 전력생산 데이터를 조회한다.
+	 */
+	scwin.searchEpwrPrdctn = function() {
+		var dashYear = dmaDashYear.getJSON();
+		var strtDt = dashYear.dashYearSelected + "01";
+		var endDt = dashYear.dashYearSelected + utilLib.getCurrentDate("MM");
+		if (dashYear.dashYearSelected != utilLib.getCurrentDate("yyyy")) {
+			endDt = dashYear.dashYearSelected + "12";
+		}
+		var dashBasin = dmaDashBasin.getJSON();
+		var basin = dashBasin.dashBasinSelected;
+
+		basin = scwin.initData.dashBasinCode[scwin.initData.dashBasinValue[basin]] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basin}`;
+
+		var option = {
+			action : "/ec/pc/retrieve-prdctn-epwr.do" +
+				queryString,
+			method : "get",
+			resData : dltEpwrPrdctnData,
+			success : "scwin.searchEpwrPrdctnCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전력생산 데이터 조회 콜백
+	 */
+	scwin.searchEpwrPrdctnCallBack = function() {
+		var dashYear = Number(dmaDashYear.getJSON().dashYearSelected);
+		var epwrPrdctnData = dltEpwrPrdctnData.getAllJSON();
+		// 발전단가
+		spnEpwrElyrsUpcAcmslt.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "elyrsUpcAcmslt") || 0).inqireIemVu, 2));
+		// 전력생산량 - 계획
+		spnEpwrPrdctnTotalPlan.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "prdctnTotalPlan") || 0).inqireIemVu, 2));
+		// 전력생산량 - 실적
+		spnEpwrPrdctnTotalAcmslt.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "prdctnTotalAcmslt") || 0).inqireIemVu,2));
+		// 전력생산량 - 대비
+		spnEpwrPrdctnTotalCmpr.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "prdctnTotalCmpr") || 0).inqireIemVu, 1));
+		// 발전수익
+		spnEpwrPrdctnExcclcTotal.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "prdctnExcclcTotal") || 0).inqireIemVu, 2));
+
+		// 우측 물방울 라벨(연간발전량) 데이터 설정
+		//spnWaterDropFyerEltrsQy.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == "fyer" && obj.iemDivId == "prdctnTotalAcmslt") || 0).inqireIemVu));
+		spnWaterDropFyerEltrsQy.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "prdctnTotalAcmslt") || 0).inqireIemVu, 2));
+		// 우측 물방울 라벨(연간발전수익) 데이터 설정
+		//spnWaterDropFyerElyrsErn.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == "fyer" && obj.iemDivId == "prdctnExcclcTotal") || 0).inqireIemVu));
+		spnWaterDropFyerElyrsErn.setLabel(ecsLib.dsplFrmt((epwrPrdctnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "prdctnExcclcTotal") || 0).inqireIemVu, 2));
+	};
+
+	/**
+	 * 전력소비 데이터를 조회한다.
+	 */
+	scwin.searchEpwrCnstn = function() {
+		var dashYear = dmaDashYear.getJSON();
+		var strtDt = String(Number(dashYear.dashYearSelected) - 1) + "01";
+		var endDt = dashYear.dashYearSelected + utilLib.getCurrentDate("MM");
+		if (dashYear.dashYearSelected != utilLib.getCurrentDate("yyyy")) {
+			endDt = dashYear.dashYearSelected + "12";
+		}
+		var dashBasin = dmaDashBasin.getJSON();
+		var basin = dashBasin.dashBasinSelected;
+
+		basin = scwin.initData.dashBasinCode[scwin.initData.dashBasinValue[basin]] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basin}`;
+
+		var option = {
+			action : "/ec/pc/retrieve-cnstn-epwr.do" +
+				queryString,
+			method : "get",
+			resData : dltEpwrCnstnData,
+			success : "scwin.searchEpwrCnstnCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전력소비 데이터 조회 콜백
+	 */
+	scwin.searchEpwrCnstnCallBack = function() {
+		var dashYear = dmaDashYear.getJSON().dashYearSelected;
+		var epwrCnstnData = dltEpwrCnstnData.getAllJSON();
+		var epbu = (epwrCnstnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "epbu") || 0).inqireIemVu;
+		var preData = (epwrCnstnData.find(obj => obj.inqireDe == (Number(dashYear) - 1) && obj.iemDivId == "cnstnTotal") || 0).inqireIemVu;
+		var thisData = (epwrCnstnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "cnstnTotal") || 0).inqireIemVu;
+		var cnstnExcclcTotal = (epwrCnstnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "cnstnExcclcTotal") || 0).inqireIemVu;
+
+		// 년도 설정
+		spnPreYear.setLabel((Number(dashYear) - 1) + "년");
+		spnThisYear.setLabel(dashYear + "년");
+		// 데이터 설정
+		spnEpwrCnstnEpbu.setLabel(ecsLib.dsplFrmt(epbu, 4));
+		spnEpwrPreCnstn.setLabel(ecsLib.dsplFrmt(preData, 2));
+		spnEpwrThisCnstn.setLabel(ecsLib.dsplFrmt(thisData, 2));
+		spnEpwrCnstnRt.setLabel(ecsLib.dsplFrmt(thisData / preData * 100, 1));
+		spnEpwrCnstnExcclc.setLabel(ecsLib.dsplFrmt(cnstnExcclcTotal, 2));
+
+		// 우측 물방울 라벨(연간소비량) 데이터를 설정한다.
+		//spnWaterDropFyerCnstqy.setLabel(ecsLib.dsplFrmt((epwrCnstnData.find(obj => obj.inqireDe == "fyer" && obj.iemDivId == "cnstnTotal") || 0).inqireIemVu));
+		spnWaterDropFyerCnstqy.setLabel(ecsLib.dsplFrmt((epwrCnstnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "cnstnTotal") || 0).inqireIemVu, 2));
+		// 우측 물방울 라벨(연간소비정산) 데이터를 설정한다.
+		//spnWaterDropFyerCnstnExcclc.setLabel(ecsLib.dsplFrmt((epwrCnstnData.find(obj => obj.inqireDe == "fyer" && obj.iemDivId == "cnstnExcclcTotal") || 0).inqireIemVu));
+		spnWaterDropFyerCnstnExcclc.setLabel(ecsLib.dsplFrmt((epwrCnstnData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "cnstnExcclcTotal") || 0).inqireIemVu, 2));
+	};
+
+	//============================================================================================
+	// 차트
+	//============================================================================================
+
+	/**
+	 * 전력에너지 운영현황 차트 데이터를 조회한다.
+	 */
+	scwin.searchChartEpwrEnergyData = function() {
+		var dashYear = dmaDashYear.getJSON();
+		var endDt = dashYear.dashYearSelected + utilLib.getCurrentDate("MM");
+		var strtDt = utilLib.addMonth(endDt, -11);
+		if (dashYear.dashYearSelected != utilLib.getCurrentDate("yyyy")) {
+			strtDt = dashYear.dashYearSelected + "01";
+			endDt = dashYear.dashYearSelected + "12";
+		}
+		var dashBasin = dmaDashBasin.getJSON();
+		var basin = dashBasin.dashBasinSelected;
+
+		basin = scwin.initData.dashBasinCode[scwin.initData.dashBasinValue[basin]] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basin}`;
+
+		var option = {
+			action : "ec/pc/retrieve-epwr-energy-oper-sttus.do" +
+				queryString,
+			method : "get",
+			resData : dltEpwrEnergyData,
+			success : "scwin.searchChartEpwrEnergyDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전력에너지 운영현황 차트 데이터 조회 콜백
+	 */
+	scwin.searchChartEpwrEnergyDataCallBack = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerEpwrEnergy";
+		rMateChartH5.create($p.id + "chartElctrnEng", grpChartEpwrEnergy.getID(), chartVars, "99%", "90%");
+	};
+
+	/**
+	 * 전력에너지 운영현황 차트 좌측 Y축 라벨 핸들러
+	 * @param {
+	 	id : ID,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.elctrnEngLeftLinearLabelHandler = function(id, value) {
+		return ecsLib.dsplFrmt(value);
+	};
+
+	/**
+	 * 전력에너지 운영현황 차트 우측 Y축 라벨 핸들러
+	 * @param {
+	 	id : ID,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.elctrnEngRightLinearLabelHandler = function(id, value) {
+		return ecsLib.dsplFrmt(value);
+	};
+
+	/**
+	 * 전력에너지 운영현황 차트 X축 라벨 핸들러
+	 * @param {
+	 	id : ID,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.elctrnEngCategoryLabelHandler = function(id, value) {
+		return value.substr(value.length - 2) + "월";
+	};
+
+	/**
+	 * 전력에너지 운영현황 차트 생산 시리즈 색상 핸들러
+	 * @param {
+	 	seriesID : ID,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 색상
+	 */
+	scwin.elctrnEngPrdctnFillHandler = function(seriesID, index, data, values) {
+		var dashYear = dmaDashYear.getJSON();
+		var dt = String(Number(dashYear.dashYearSelected) - 1);
+		if (data.month.startsWith(dt)) {
+			return { "color" : "#F8C597", "alpha" : 0.7 };
+		} else {
+			return "#F8C597";
+		}
+	};
+
+	/**
+	 * 전력에너지 운영현황 차트 소비 시리즈 색상 핸들러
+	 * @param {
+	 	seriesID : ID,
+	 	index : 인덱스,
+	 	data : 데이터 맵,
+	 	values : 값
+	 }
+	 * @return 시리즈 색상
+	 */
+	scwin.elctrnEngCnstnFillHandler = function(seriesID, index, data, values) {
+		var dashYear = dmaDashYear.getJSON();
+		var dt = String(Number(dashYear.dashYearSelected) - 1);
+		if (data.month.startsWith(dt)) {
+			return {"color" : "#8ECEF2", "alpha" : 0.7};
+		} else {
+			return "#8ECEF2";
+		}
+	};
+
+	/**
+	* 전력에너지 운영현황 차트 설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerEpwrEnergy = function(id) {
+		var elctrnEngData = dltEpwrEnergyData.getAllJSON();
+		var chartList = [];
+
+		var minMonth = String(elctrnEngData.reduce((minObj, obj) => Number(minObj.inqireDe) > Number(obj.inqireDe) ? obj : minObj).inqireDe);
+		/*
+		var minMonth = String(elctrnEngData.reduce((min, obj) => {
+			if (!min && (min > Number(obj.inqireDe))) {
+				return Number(obj.inqireDe);
+			} else {
+				return min;
+			}
+		}, null));
+		*/
+		var maxMonth = String(elctrnEngData.reduce((max, obj) => Math.max(max, Number(obj.inqireDe)), 0));
+		var diffYear = minMonth.substr(0, 4) != maxMonth.substr(0, 4) ? true : false;
+		elctrnEngData.forEach(data => {
+			var findObj = chartList.find(obj => obj.month == data.inqireDe);
+			if (findObj) {
+				findObj[data.iemDivId] = data.inqireIemVu;
+			} else {
+				var tempObj = { "month" : data.inqireDe };
+				if (data.iemDivId) {
+					if (data.inqireIemVu) {
+						tempObj[data.iemDivId] = data.inqireIemVu;
+					} else {
+						//tempObj[data.iemDivId] = 0;
+					}
+				}
+				chartList.push(tempObj);
+			}
+		});
+		chartList.map(obj => obj.cmpr = (obj.prdctn - obj.cnstn) ? obj.prdctn - obj.cnstn : 0);
+		var maxPData = chartList.reduce((max, obj) => obj.prdctn ? Math.max(max, Number(obj.prdctn)) : max, 0);
+		var maxCData = chartList.reduce((max, obj) => {
+			if (obj.cnstn) {
+				if (Number(obj.cnstn) < 0) {
+					return Math.max(max, Number(obj.cnstn) * -1);
+				} else {
+					return Math.max(max, Number(obj.cnstn));
+				}
+			} else {
+				return max;
+			}
+		}, 0);
+		var maxLeftData = Math.max(maxPData, maxCData);
+		var leftInterval = Math.ceil((maxLeftData / scwin.initData.chart.elctrnEngIntervalCount * 1.1) / scwin.initData.chart.elctrnEngUnit) * scwin.initData.chart.elctrnEngUnit;
+		chartList.flatMap(obj => {
+			if (Number(obj.cnstn) > 0) {
+				obj.cnstn = Number(obj.cnstn) * -1;
+			}
+		});
+		var leftMaximumData = leftInterval * scwin.initData.chart.elctrnEngIntervalCount;
+		var leftMinimumData = leftMaximumData * -1;
+		var maxRightData = chartList.reduce((max, obj) => obj.cmpr ? Math.max(max, Number(obj.cmpr) < 0 ? Number(obj.cmpr) * -1 : Number(obj.cmpr)) : max, 0);
+		var rightInterval = Math.ceil((maxRightData / scwin.initData.chart.elctrnEngIntervalCount * 1.1) / scwin.initData.chart.elctrnEngUnit) * scwin.initData.chart.elctrnEngUnit;
+		var rightMaximumData = rightInterval * scwin.initData.chart.elctrnEngIntervalCount;
+		var rightMinimumData = rightMaximumData * -1;
+
+		var layoutStr = '<rMateChart backgroundColor="" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Legend position="center" vAlign="top" hAlign="right" verticalGap="2" fontWeight="bold" border="0" background="transparent" />'
+			+ '	</Options>'
+			+ '	<Combination2DChart showDataTips="true" columnWidthRatinqireDe="0.65" dataTipDisplayMode="axis" type="stacked">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis id="hAxis" categoryField="month" labelJsFunction="' + $p.id + 'scwin.elctrnEngCategoryLabelHandler" />'
+			+ '		</horizontalAxis>'
+			+ '		<horizontalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{hAxis}" visible="true" textAlign="right" canDropLabels="false" />'
+			+ '		</horizontalAxisRenderers>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxisL" interval="' + leftInterval + '" baseAtZero="false" maximum="' + leftMaximumData + '" minimum="' + leftMinimumData + '" title="MWh" />'
+			+ '		</verticalAxis>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxisL}" visible="true" placement="left" verticalAxisTitleAlignment="vertical" titleGap="0" canDropLabels="false" showLine="false" labelJsFunction="' + $p.id + 'scwin.elctrnEngLeftLinearLabelHandler" />'
+			+ '			<Axis2DRenderer axis="{vAxisR}" visible="true" placement="right" verticalAxisTitleAlignment="top" titleGap="0" canDropLabels="false" showLine="false" labelJsFunction="' + $p.id + 'scwin.elctrnEngRightLinearLabelHandler" />'
+			+ '		</verticalAxisRenderers>'
+			+ '		<series>'
+			+ '			<Column2DSet type="stacked">'
+			+ '				<series>'
+			+ '					<Column2DSeries color="#222222" font-weight="bold" yField="prdctn" displayName="생산량" fillJsFunction="' + $p.id + 'scwin.elctrnEngPrdctnFillHandler">'
+			+ '						<fill>'
+			+ '							<SolidColor color="#F8C597" />'
+			+ '						</fill>'
+			+ '						<showDataEffect>'
+			+ '							<SeriesInterpolate />'
+			+ '						</showDataEffect>'
+			+ '					</Column2DSeries>'
+			+ '					<Column2DSeries color="#222222" font-weight="bold" yField="cnstn" displayName="소비량" fillJsFunction="' + $p.id + 'scwin.elctrnEngCnstnFillHandler">'
+			+ '						<fill>'
+			+ '							<SolidColor color="#8ECEF2" />'
+			+ '						</fill>'
+			+ '						<showDataEffect>'
+			+ '							<SeriesInterpolate />'
+			+ '						</showDataEffect>'
+			+ '					</Column2DSeries>'
+			+ '				</series>'
+			+ '			</Column2DSet>'
+			+ '			<Line2DSeries radius="5" color="#222222" font-weight="bold" yField="cmpr" displayName="차이" itemRenderer="CircleItemRenderer">'
+			+ '				<verticalAxis>'
+			+ '					<LinearAxis id="vAxisR" interval="' + rightInterval + '" baseAtZero="false" maximum="' + rightMaximumData + '" minimum="' + rightMinimumData + '" />'
+			+ '				</verticalAxis>'
+			+ '				<lineStroke>'
+			+ '					<Stroke color="#83DCCE" weight="3"/>'
+			+ '				</lineStroke>'
+			+ '				<stroke>'
+			+ '					<Stroke color="#219D9D" weight="2"/>'
+			+ '				</stroke>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Line2DSeries>'
+			+ '		</series>';
+		if (diffYear) {
+			layoutStr += '<backgroundElements>'
+				+ '			<GridLines/>'
+				+ '			<AxisMarker>'
+				+ '				<ranges>'
+				+ '					<AxisRange startValue="' + minMonth + '" endValue="' + minMonth.substr(0, 4) + '12" startRangePosition="left" endRangePosition="right" horizontal="false">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#CCCCCC" alpha="0.3"/>'
+				+ '						</fill>'
+				+ '					</AxisRange>'
+				+ '				</ranges>'
+				+ '			</AxisMarker>'
+				+ '		</backgroundElements>';
+		}
+		layoutStr += '	</Combination2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	};
+
+	/**
+	 * 유역별 생산현황 차트 데이터를 조회한다.
+	 */
+	scwin.searchChartPrdctnData = function() {
+		var dashYear = dmaDashYear.getJSON();
+		var strtDt = dashYear.dashYearSelected + "01";
+		var endDt = dashYear.dashYearSelected + utilLib.getCurrentDate("MM");
+		if (dashYear.dashYearSelected != utilLib.getCurrentDate("yyyy")) {
+			endDt = dashYear.dashYearSelected + "12";
+		}
+		var dashBasin = dmaDashBasin.getJSON();
+		var basin = dashBasin.dashBasinSelected;
+
+		basin = scwin.initData.dashBasinCode[scwin.initData.dashBasinValue[basin]] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basin}`;
+
+		var option = {
+			action : "ec/pc/retrieve-prdctn.do" +
+				queryString,
+			method : "get",
+			resData : dltPrdctnData,
+			success : "scwin.searchChartPrdctnDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 유역별 생산현황 차트 데이터를 조회 콜백
+	 */
+	scwin.searchChartPrdctnDataCallBack = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerPrdctn";
+		rMateChartH5.create($p.id + "chartPrdctn", grpChartPrdctn.getID(), chartVars, "99%", "90%");
+	};
+
+	/**
+	 * 합산값 라벨 설정
+	 * @param {
+	 	index : index,
+	 	data : 데이터,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.prdctnTotalLabelHandler = function(index, data, value) {
+		return ecsLib.dsplFrmt(value, 2);
+	};
+
+	/**
+	* 유역별 생산현황 차트 설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerPrdctn = function(id) {
+		var dashYear = Number(dmaDashYear.getJSON().dashYearSelected);
+		var prdctnData = dltPrdctnData.getAllJSON();
+		var dashBasin = dmaDashBasin.getJSON();
+		var basin = dashBasin.dashBasinSelected;
+		var chartList = [];
+
+		if (basin == "전체") {
+			Object.keys(scwin.initData.chart.prdctnLabel).forEach(source => {
+				var temp = prdctnData.filter(obj => obj.hqNm.startsWith(scwin.initData.chart.prdctnLabel[source]));
+				if (scwin.initData.chart.prdctnLabel[source] == "영섬유역") temp = prdctnData.filter(obj => obj.hqNm.endsWith(scwin.initData.chart.prdctnLabel[source].substr(1)));
+				// 유역, 대수력, 소수력, 조력, 태양광, 풍력, 수열
+				chartList.push({
+					"basin" : scwin.initData.chart.prdctnLabel[source],
+					"prdctnLgwtpw" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("대수력"))] || 0).inqireIemVu,
+					"prdctnSmlhp" : (temp.reduce((sum, obj) => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm == "보소수력" || Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm == "소수력" ? sum + Number(obj.inqireIemVu) : sum, 0) || 0),
+					"prdctnTdpw" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("조력"))] || 0).inqireIemVu,
+					"prdctnSnpw" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("태양광"))] || 0).inqireIemVu,
+					"prdctnWdpw" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("풍력"))] || 0).inqireIemVu,
+					"prdctnWtht" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("수열"))] || 0).inqireIemVu
+				});
+			});
+			var maxData = chartList.reduce((max, obj) => Math.max(max, Object.values(obj).reduce((sum, innerObj) => {
+				if (Number(innerObj)) {
+					sum += innerObj;
+				}
+				return sum;
+			}, 0)), 0);
+			var interval = Math.ceil((maxData / scwin.initData.chart.prdctnIntervalCount) / scwin.initData.chart.prdctnUnit) * scwin.initData.chart.prdctnUnit;
+
+			var layoutStr = '<rMateChart backgroundColor="" cornerRadius="12">'
+				+ '	<Options>'
+				+ '		<Legend position="center" vAlign="top" hAlign="right" verticalGap="2" fontWeight="bold" border="0" background="transparent" />'
+				+ '	</Options>'
+				+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" precision="2"/>'
+				+ '	<Column2DChart showDataTips="true" columnWidthRatio="0.45" dataTipDisplayMode="axis">'
+				+ '		<horizontalAxis>'
+				+ '			<CategoryAxis id="hAxis" categoryField="basin" />'
+				+ '		</horizontalAxis>'
+				+ '		<horizontalAxisRenderers>'
+				+ '			<Axis2DRenderer axis="{hAxis}" visible="true" textAlign="right" canDropLabels="false" />'
+				+ '		</horizontalAxisRenderers>'
+				+ '		<verticalAxis>'
+				+ '			<LinearAxis id="vAxis" interval="' + interval + '" title="MWh"/>'
+				+ '		</verticalAxis>'
+				+ '		<verticalAxisRenderers>'
+				+ '			<Axis2DRenderer axis="{vAxis}" visible="true" placement="left" verticalAxisTitleAlignment="vertical" titleGap="0" canDropLabels="false" showLine="false" />'
+				+ '		</verticalAxisRenderers>'
+				+ '		<series>'
+				+ '			<Column2DSet type="stacked" showTotalLabel="true" totalLabelJsFunction="'+ $p.id + 'scwin.prdctnTotalLabelHandler">'
+				+ '				<series>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="prdctnLgwtpw" displayName="대수력" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#7DD2FF" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="prdctnSmlhp" displayName="소수력" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#FFA0A7" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="prdctnTdpw" displayName="조력" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#D1D1D1" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="prdctnSnpw" displayName="태양광" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#FFCA7C" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="prdctnWdpw" displayName="풍력" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#9CA5F3" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="prdctnWtht" displayName="수열" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#68E1CE" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '				</series>'
+				+ '			</Column2DSet>'
+				+ '		</series>'
+				+ '	</Column2DChart>'
+				+ '</rMateChart>';
+		} else {
+			var elcpwstn = {
+				"prdctnLgwtpw" : "대수력",
+				"prdctnSmlhp" : "소수력",
+				"prdctnTdpw" : "조력",
+				"prdctnSnpw" : "태양광",
+				"prdctnWdpw" : "풍력",
+				"prdctnWtht" : "수열"
+			};
+			Object.keys(elcpwstn).forEach(source => {
+				var obj = {};
+				var temp = prdctnData.filter(obj => obj.elcpwstnClsNm == elcpwstn[source]);
+				obj["basin"] = elcpwstn[source];
+				obj["data"] = (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith(elcpwstn[source]))] || 0).inqireIemVu;
+				// 유역, 대수력, 소수력, 조력, 태양광, 풍력, 수열
+				chartList.push(obj);
+			});
+
+			var maxData = chartList.reduce((max, obj) => Math.max(max, obj.data ?? 0), 0);
+			var chartUnit = Math.max(scwin.initData.chart.prdctnUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+			var interval = Math.ceil((maxData / scwin.initData.chart.prdctnIntervalCount) / scwin.initData.chart.prdctnUnit) * scwin.initData.chart.prdctnUnit;
+
+			var layoutStr = '<rMateChart backgroundColor="" cornerRadius="12">'
+				+ '	<Options>'
+				+ '		<Legend position="center" vAlign="top" hAlign="right" verticalGap="2" fontWeight="bold" border="0" background="transparent" />'
+				+ '	</Options>'
+				+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true"/>'
+				+ '	<Column2DChart showDataTips="true" columnWidthRatio="0.45" dataTipDisplayMode="axis">'
+				+ '		<horizontalAxis>'
+				+ '			<CategoryAxis id="hAxis" categoryField="basin" />'
+				+ '		</horizontalAxis>'
+				+ '		<horizontalAxisRenderers>'
+				+ '			<Axis2DRenderer axis="{hAxis}" textAlign="right" canDropLabels="false" />'
+				+ '		</horizontalAxisRenderers>'
+				+ '		<verticalAxis>'
+				+ '			<LinearAxis id="vAxis" interval="' + interval + '" formatter="{numFmt}" title="MWh"/>'
+				+ '		</verticalAxis>'
+				+ '		<verticalAxisRenderers>'
+				+ '			<Axis2DRenderer axis="{vAxis}" visible="true" placement="left" verticalAxisTitleAlignment="vertical" titleGap="0" canDropLabels="false" showLine="false" />'
+				+ '		</verticalAxisRenderers>'
+				+ '		<series>'
+				+ '			<Column2DSeries color="#222222" font-weight="bold" yField="data" displayName="생산현황">'
+				+ '				<fill>'
+				+ '					<SolidColor color="#7DD2FF" />'
+				+ '				</fill>'
+				+ '				<showDataEffect>'
+				+ '					<SeriesInterpolate />'
+				+ '				</showDataEffect>'
+				+ '			</Column2DSeries>'
+				+ '		</series>'
+				+ '	</Column2DChart>'
+				+ '</rMateChart>';
+		}
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	};
+
+	/**
+	 * 유역별 소비현황 차트 데이터를 조회한다.
+	 */
+	scwin.searchChartCnstnData = function() {
+		var dashYear = dmaDashYear.getJSON();
+		var strtDt = dashYear.dashYearSelected + "01";
+		var endDt = dashYear.dashYearSelected + utilLib.getCurrentDate("MM");
+		if (dashYear.dashYearSelected != utilLib.getCurrentDate("yyyy")) {
+			endDt = dashYear.dashYearSelected + "12";
+		}
+		var dashBasin = dmaDashBasin.getJSON();
+		var basin = dashBasin.dashBasinSelected;
+
+		basin = scwin.initData.dashBasinCode[scwin.initData.dashBasinValue[basin]] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basin}`;
+
+		var option = {
+			action : "ec/pc/retrieve-cnstn.do" +
+				queryString,
+			method : "get",
+			resData : dltCnstnData,
+			success : "scwin.searchChartCnstnDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 유역별 소비현황 차트 데이터 조회 콜백
+	 */
+	scwin.searchChartCnstnDataCallBack = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerCnstn";
+		rMateChartH5.create($p.id + "chartCnstn", grpChartCnstn.getID(), chartVars, "99%", "90%");
+	};
+
+	/**
+	* 유역별 소비현황 차트를 설정한다.
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerCnstn = function(id) {
+		var dashYear = Number(dmaDashYear.getJSON().dashYearSelected);
+		var cnstnData = dltCnstnData.getAllJSON();
+		var dashBasin = dmaDashBasin.getJSON();
+		var basin = dashBasin.dashBasinSelected;
+		var chartList = [];
+		if (basin == "전체") {
+			Object.keys(scwin.initData.chart.cnstnLabel).forEach(source => {
+				var temp = cnstnData.filter(obj => obj.hqNm.startsWith(scwin.initData.chart.cnstnLabel[source]));
+				// 유역, 정수장, 가압장, 취수장, 기타
+				chartList.push({
+					"basin" : scwin.initData.chart.cnstnLabel[source],
+					"cnstnFltplt" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("정수장"))] || 0).inqireIemVu,
+					"cnstnPrnplc" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("가압장"))] || 0).inqireIemVu,
+					"cnstnItkpl" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("취수장"))] || 0).inqireIemVu,
+					"cnstnEtc" : (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith("기타"))] || 0).inqireIemVu
+				});
+			});
+
+			var maxData = chartList.reduce((max, obj) => Math.max(max, Object.values(obj).reduce((sum, innerObj) => {
+				if (Number(innerObj)) {
+					sum += innerObj;
+				}
+				return sum;
+			}, 0)), 0);
+			var interval = Math.ceil((maxData / scwin.initData.chart.cnstnIntervalCount) / scwin.initData.chart.cnstnUnit) * scwin.initData.chart.cnstnUnit;
+			var layoutStr = '<rMateChart backgroundColor="" cornerRadius="12">'
+				+ '	<Options>'
+				+ '		<Legend position="center" vAlign="top" hAlign="right" verticalGap="2" fontWeight="bold" border="0" background="transparent" />'
+				+ '	</Options>'
+				+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" precision="2" />'
+				+ '	<Column2DChart showDataTips="true" columnWidthRatio="0.45" dataTipDisplayMode="axis">'
+				+ '		<horizontalAxis>'
+				+ '			<CategoryAxis id="hAxis" categoryField="basin" />'
+				+ '		</horizontalAxis>'
+				+ '		<horizontalAxisRenderers>'
+				+ '			<Axis2DRenderer axis="{hAxis}" visible="true" textAlign="right" canDropLabels="false" />'
+				+ '		</horizontalAxisRenderers>'
+				+ '		<verticalAxis>'
+				+ '			<LinearAxis id="vAxis" interval="' + interval + '" title="MWh"/>'
+				+ '		</verticalAxis>'
+				+ '		<verticalAxisRenderers>'
+				+ '			<Axis2DRenderer axis="{vAxis}" visible="true" placement="left" verticalAxisTitleAlignment="vertical" titleGap="0" canDropLabels="false" showLine="false" />'
+				+ '		</verticalAxisRenderers>'
+				+ '		<series>'
+				+ '			<Column2DSet type="stacked" showTotalLabel="true" totalLabelJsFunction="'+ $p.id + 'scwin.prdctnTotalLabelHandler">'
+				+ '				<series>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="cnstnFltplt" displayName="정수장" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#7DD2FF" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="cnstnPrnplc" displayName="가압장" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#FFA0A7" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="cnstnItkpl" displayName="취수장" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#D1D1D1" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '					<Column2DSeries color="#222222" font-weight="bold" yField="cnstnEtc" displayName="기타" formatter="{numFmt}">'
+				+ '						<fill>'
+				+ '							<SolidColor color="#FFCA7C" />'
+				+ '						</fill>'
+				+ '						<showDataEffect>'
+				+ '							<SeriesInterpolate />'
+				+ '						</showDataEffect>'
+				+ '					</Column2DSeries>'
+				+ '				</series>'
+				+ '			</Column2DSet>'
+				+ '		</series>'
+				+ '	</Column2DChart>'
+				+ '</rMateChart>';
+		} else {
+			var elcpwstn = {
+				"cnstnFltplt" : "정수장",
+				"cnstnPrnplc" : "가압장",
+				"cnstnItkpl" : "취수장",
+				"cnstnEtc" : "기타"
+			};
+			Object.keys(elcpwstn).forEach(source => {
+				var obj = {};
+				var temp = cnstnData.filter(obj => obj.elcpwstnClsNm == elcpwstn[source]);
+				obj["basin"] = elcpwstn[source];
+				obj["data"] = (temp[temp.findIndex(obj => Number(obj.inqireDe) == dashYear && obj.elcpwstnClsNm.endsWith(elcpwstn[source]))] || 0).inqireIemVu;
+				// 유역, 정수장, 가압장, 취수장, 기타
+				chartList.push(obj);
+			});
+
+			var maxData = chartList.reduce((max, obj) => Math.max(max, obj.data ?? 0), 0);
+			var chartUnit = Math.max(scwin.initData.chart.prdctnUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+			var interval = Math.ceil((maxData / scwin.initData.chart.prdctnIntervalCount) / scwin.initData.chart.prdctnUnit) * scwin.initData.chart.prdctnUnit;
+
+			var layoutStr = '<rMateChart backgroundColor="" cornerRadius="12">'
+				+ '	<Options>'
+				+ '		<Legend position="center" vAlign="top" hAlign="right" verticalGap="2" fontWeight="bold" border="0" background="transparent" />'
+				+ '	</Options>'
+				+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true"/>'
+				+ '	<Column2DChart showDataTips="true" columnWidthRatio="0.45" dataTipDisplayMode="axis">'
+				+ '		<horizontalAxis>'
+				+ '			<CategoryAxis id="hAxis" categoryField="basin" />'
+				+ '		</horizontalAxis>'
+				+ '		<horizontalAxisRenderers>'
+				+ '			<Axis2DRenderer axis="{hAxis}" textAlign="right" canDropLabels="false" />'
+				+ '		</horizontalAxisRenderers>'
+				+ '		<verticalAxis>'
+				+ '			<LinearAxis id="vAxis" interval="' + interval + '" formatter="{numFmt}" title="MWh" />'
+				+ '		</verticalAxis>'
+				+ '		<verticalAxisRenderers>'
+				+ '			<Axis2DRenderer axis="{vAxis}" visible="true" placement="left" verticalAxisTitleAlignment="vertical" titleGap="0" canDropLabels="false" showLine="false" />'
+				+ '		</verticalAxisRenderers>'
+				+ '		<series>'
+				+ '			<Column2DSeries color="#222222" font-weight="bold" yField="data" displayName="소비현황">'
+				+ '				<fill>'
+				+ '					<SolidColor color="#7DD2FF" />'
+				+ '				</fill>'
+				+ '				<showDataEffect>'
+				+ '					<SeriesInterpolate />'
+				+ '				</showDataEffect>'
+				+ '			</Column2DSeries>'
+				+ '		</series>'
+				+ '	</Column2DChart>'
+				+ '</rMateChart>';
+		}
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartList);
+	};
+
+	/**
+	 * 전력에너지 탄소중립현황 데이터를 조회한다.
+	 */
+	scwin.searchCbnNtrltData = function() {
+		var nowYear = utilLib.getCurrentDate("yyyy");
+		var dashYear = dmaDashYear.getJSON();
+		var selectedYear = String(dashYear.dashYearSelected);
+		if (selectedYear == nowYear) {
+			var endDt = utilLib.addMonth(utilLib.getCurrentDate("yyyyMM"), -2);
+			var strtDt = endDt.substr(0, 4) + "01";
+		} else {
+			var strtDt = selectedYear + "01";
+			var endDt = selectedYear + "12";
+		}
+		var dashBasin = dmaDashBasin.getJSON();
+		var basin = dashBasin.dashBasinSelected;
+
+		// info 날짜 설정_240131
+		spnMainMapYearLabel.setLabel(endDt.substr(0, 4));
+		spnMainMapMonthLabel.setLabel(endDt.substr(4, 2));
+
+		basin = scwin.initData.dashBasinCode[scwin.initData.dashBasinValue[basin]] || "ALL";
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsBasinDivCd=${basin}`;
+
+		var option = {
+			action : "ec/pc/retrieve-cbn-ntrlt.do" +
+				queryString,
+			method : "get",
+			resData : dltCbnNtrltData,
+			success : "scwin.searchCbnNtrltDataCallBack",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 전력에너지 탄소중립현황 데이터 조회 콜백
+	 */
+	scwin.searchCbnNtrltDataCallBack = function() {
+		var bSize = "N";
+		var nowYear = utilLib.getCurrentDate("yyyy");
+		var selectedYear = String(dmaDashYear.getJSON().dashYearSelected);
+		if (selectedYear == nowYear) {
+			var dashYear = Number(utilLib.addMonth(utilLib.getCurrentDate("yyyyMM"), -2).substr(0, 4));
+		} else {
+			var dashYear = Number(selectedYear);
+		}
+
+		var cbnNtrltData = dltCbnNtrltData.getAllJSON();
+		var rqtyData = (cbnNtrltData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "rqtySum") || 0).inqireIemVu;
+		var dsqtyData = (cbnNtrltData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "dsqtySum") || 0).inqireIemVu;
+		var rqtyPer = Math.abs(Number(rqtyData.replaceAll(",", ""))) / (Math.abs(Number(rqtyData.replaceAll(",", ""))) + parseFloat(dsqtyData.replaceAll(",", "")));
+		//var cbnNtrltComp = $p.getComponentById(document.querySelector("#" + $p.getFrameId() + " .dash-cbn-ntrlt-tree .dash-cbn-ntrlt-tree").id);
+		// 탄소중립현황 감축량/배출량 라벨 값 설정
+		var selecotr = ".dash-con-box-pc .dash-box-con > .dash-box-con-cbn-ntrlt .main-cbn-ntrlt-scale > .main-cbn-ntrlt-data-box.main-cbn-ntrlt-data-box-";
+		$p.getComponentById(document.querySelector(selecotr + "rqty > span.main-cbn-ntrlt-data-box-data").id).setLabel(ecsLib.dsplFrmt(rqtyData, 2));
+		$p.getComponentById(document.querySelector(selecotr + "dsqty > span.main-cbn-ntrlt-data-box-data").id).setLabel(ecsLib.dsplFrmt(dsqtyData, 2));
+		// 우측 물방울 탄소중립율 라벨  값 설정
+		var acmtrtData = (cbnNtrltData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "acmtrt") || 0).inqireIemVu;
+		spnWaterDropCbnNtrlt.setLabel(ecsLib.dsplFrmt(acmtrtData, 0));
+		// 탄소중립현황 박스 안 데이터 값 설정_240126
+		spnMainChartCbnNtrltData.setLabel(ecsLib.dsplFrmt(acmtrtData, 0));
+
+		var cbnNtrlt = document.querySelector("#" + $p.getFrameId() + " .dash-con-box-pc .dash-box-con > .dash-box-con-cbn-ntrlt");
+		var bar = cbnNtrlt.querySelector("#" + $p.getFrameId() + " .main-cbn-ntrlt-stick");
+		var rqty = cbnNtrlt.querySelector("#" + $p.getFrameId() + " .main-cbn-ntrlt-earth");
+		var dsqty = cbnNtrlt.querySelector("#" + $p.getFrameId() + " .main-cbn-ntrlt-pollution");
+
+		var existStyleTime = 100;
+
+		var styles = {};
+		styles.rotate = 0;
+		styles.bar = {
+			"emt" : bar,
+			"translateX" : 0,
+			"translateY" : 0,
+		};
+		styles.rqty = {
+			"emt" : rqty,
+			"translateX" : 0,
+			"translateY" : 0,
+		};
+		styles.dsqty = {
+			"emt" : dsqty,
+			"translateX" : 0,
+			"translateY" : 0,
+		};
+
+		if (0.5 < rqtyPer) {
+			styles.rotate = -1.5;
+			styles.bar.translateX = -1;
+			styles.bar.translateY = 8;
+			styles.rqty.translateX = -4.5;
+			styles.rqty.translateY = 2;
+			styles.rqty.scale = 1.07;
+			styles.dsqty.translateX = -10;
+			styles.dsqty.translateY = 3;
+			styles.dsqty.scale = 0.93;
+		} else if (rqtyPer < 0.5) {
+			styles.rotate = 1.5;
+			styles.bar.translateX = -0.5;
+			styles.bar.translateY = -9.5;
+			styles.rqty.translateX = -2;
+			styles.rqty.translateY = 4;
+			styles.rqty.scale = 0.93;
+			styles.dsqty.translateX = 0;
+			styles.dsqty.translateY = 2;
+			styles.dsqty.scale = 1.07;
+		}
+
+		if ((0 <= rqtyPer && rqtyPer < 0.4)) {
+			styles.rotate *= 2;
+			styles.bar.translateX *= 2;
+			styles.bar.translateY *= 2;
+			styles.rqty.translateX *= 2;
+			styles.rqty.translateY *= 0.5;
+			styles.dsqty.translateX *= -0.5;
+			styles.dsqty.translateY *= 2;
+		} else if ((1 >= rqtyPer && rqtyPer > 0.6)) {
+			styles.rotate *= 2;
+			styles.bar.translateX *= 2;
+			styles.bar.translateY *= 2;
+			styles.rqty.translateX *= 2;
+			styles.rqty.translateY *= 1;
+			styles.dsqty.translateX *= 1;
+			styles.dsqty.translateY *= 0.5;
+		}
+
+		setTimeout(() => {
+			var selecotr = ".dash-con-box-pc .dash-box-con > .dash-box-con-cbn-ntrlt .main-cbn-ntrlt-scale > .main-cbn-ntrlt-data-box.main-cbn-ntrlt-data-box-";
+			var sign = "=";
+			if (styles.rotate > 0) {
+				sign = "<";
+			} else if (styles.rotate < 0) {
+				sign = ">";
+			}
+			spnMainChartCbnNtrltTitleData.setLabel(sign);
+			//grpMainCbnNtrltScaleSvg.setMainCbnNtrltData(acmtrtData);
+			//$p.getComponentById(document.querySelector(selecotr + "rqty > span.main-cbn-ntrlt-data-box-data").id).setLabel(ecsLib.dsplFrmt(rqtyData));
+			//$p.getComponentById(document.querySelector(selecotr + "dsqty > span.main-cbn-ntrlt-data-box-data").id).setLabel(ecsLib.dsplFrmt(dsqtyData));
+
+			for (var key of Object.keys(styles)) {
+				if (key != "rotate") {
+					var transformStyle = `rotate(${styles.rotate}deg) translateY(${styles[key].translateY}%) translateX(${styles[key].translateX}%)`;
+					transformStyle += styles[key]["scale"] ? ` scale(${styles[key]["scale"]})` : "";
+					styles[key]["emt"].style.transform = transformStyle;
+					styles[key]["emt"].style.transition = "all ease 2s 0.15s";
+				}
+			}
+		}, existStyleTime || 500);
+		/*
+		var bSize = "N";
+		var dashYear = Number(dmaDashYear.getJSON().dashYearSelected);
+		var cbnNtrltData = dltCbnNtrltData.getAllJSON();
+		var rqtyData = (cbnNtrltData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "rqtySum") || 0).inqireIemVu;
+		var dsqtyData = (cbnNtrltData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "dsqtySum") || 0).inqireIemVu;
+		var rqtyPer = Math.abs(Number(rqtyData)) / (Math.abs(Number(rqtyData)) + parseFloat(dsqtyData));
+		var cbnNtrltComp = $p.getComponentById(document.querySelector("#" + $p.getFrameId() + " .dash-cbn-ntrlt-tree .dash-cbn-ntrlt-tree").id);
+		// 탄소중립현황 감축량/배출량 라벨 값 설정
+		var selecotr = ".dash-box-con > .dash-box-con-cbn-ntrlt > .dash-cbn-ntrlt-";
+		$p.getComponentById(document.querySelector(selecotr + "tree > .dash-cbn-ntrlt-tree-data-box.dash-cbn-ntrlt-tree-data-box-rqty > span.dash-cbn-ntrlt-tree-data-box-data").id).setLabel(ecsLib.dsplFrmt(rqtyData));
+		$p.getComponentById(document.querySelector(selecotr + "factory > .dash-cbn-ntrlt-factory-data-box.dash-cbn-ntrlt-factory-data-box-dsqty > span.dash-cbn-ntrlt-factory-data-box-data").id).setLabel(ecsLib.dsplFrmt(dsqtyData));
+		// 우측 물방울 탄소중립율 라벨  값 설정
+		//var acmtrtData = (cbnNtrltData.find(obj => obj.inqireDe == "fyer" && obj.iemDivId == "acmtrt") || 0).inqireIemVu;
+		var acmtrtData = (cbnNtrltData.find(obj => obj.inqireDe == dashYear && obj.iemDivId == "acmtrt") || 0).inqireIemVu;
+		spnWaterDropCbnNtrlt.setLabel(ecsLib.dsplFrmt(acmtrtData));
+
+		// 탄소중립현황 이미지 크기 조정 이벤트
+		if ((Math.abs(Number(rqtyData)) < parseFloat(dsqtyData))) {
+			var bSize = "S";
+			cbnNtrltComp.setImageSize(bSize);
+		} else if (((Math.abs(Number(rqtyData)) > parseFloat(dsqtyData)))) {
+			var bSize = "B";
+			cbnNtrltComp.setImageSize(bSize);
+		} else if (((Math.abs(Number(rqtyData)) == parseFloat(dsqtyData)))) {
+			var bSize = "N";
+			cbnNtrltComp.setImageSize(bSize);
+		};
+
+		// 방울이 팔 움직임 이벤트_0911
+		var selecotr = ".dash-box-con > .dash-box-con-cbn-ntrlt > .dash-cbn-ntrlt-tree > .dash-cbn-ntrlt-tree-data-box.dash-cbn-ntrlt-tree-data-box-";
+		$p.getComponentById(document.querySelector(selecotr + "rqty > span.dash-cbn-ntrlt-tree-data-box-data").id).setLabel(ecsLib.dsplFrmt(rqtyData));
+		$p.getComponentById(document.querySelector(selecotr + "dsqty > span.dash-cbn-ntrlt-tree-data-box-data").id).setLabel(ecsLib.dsplFrmt(dsqtyData));
+
+		var rqtyPer = Math.abs(Number(rqtyData)) / (Math.abs(Number(rqtyData)) + parseFloat(dsqtyData));
+		var rotate = 0;
+		var translateX = 0;
+		var translateY = 0;
+		if (0.5 < rqtyPer) {
+			rotate = -1.5;
+			translateX = -0.5;
+		} else if (rqtyPer < 0.5) {
+			rotate = 1.5;
+			translateX = 1.1;
+		}
+
+		if (rqtyPer > 0.4 || 0.6 > rqtyPer) {
+			rotate *= 6;
+			translateX *= 2;
+		}
+		if (rqtyPer > 0.5) {
+			translateY = rotate * -2.5;
+		} else if (0.5 > rqtyPer) {
+			translateY = rotate * -2;
+		}
+
+		var cbnNtrlt = document.querySelector("#" + $p.getFrameId() + " .dash-con-box-pc .dash-box-con-cbn-ntrlt .dash-cbn-ntrlt-bangul");
+		var bangulLHand = cbnNtrlt.querySelector(".cbn-ntrlt-l-hand");
+		var bangulRHand = cbnNtrlt.querySelector(".cbn-ntrlt-r-hand");
+
+		for (var emt of [bangulLHand, bangulRHand]) {
+			emt.style.transform = `rotate(${rotate}deg) translateY(${translateY}%) translateX(${translateX}%)`;
+			emt.style.transition = "all ease 2s 0.75s";
+		}
+		*/
+	};
+
+	/**
+	 * 탄소중립 현황 타이틀 클릭시 이동 이벤트 등록
+	 */
+	scwin.setGrpChartCbnClickEvent = function() {
+		ecsLib.setMenuClickEvent("#" + $p.getFrameId() + " .dash-box-con.chart-cbn-ntrlt",
+			"chart-cbn-ntrlt",
+			"ECSEC000000",
+			{
+				"ntrlt" : "ECSEC410000"
+			},
+			{
+				"ym" : dmaDashYear.getJSON().dashYearSelected + "12",
+				"basinCd" : scwin.initData.dashBasinCode[scwin.initData.dashBasinValue[dmaDashBasin.getJSON().dashBasinSelected]] || "ALL"
+			}
+		);
+	};
+
+	/**
+	 * 전력생산/발전수익/전력소비/소비정산 타이틀 클릭시 이동 이벤트 등록
+	 */
+	scwin.setPcSquareBoxClickEvent = function() {
+		ecsLib.setMenuClickEvent("#" + $p.getFrameId() + " .dash-square-box",
+			"square-box-",
+			scwin.initData.parentTitleClickEvent,
+			scwin.initData.titleClickEvent,
+			{
+				"type" : "Y",
+				"year" : dmaDashYear.getJSON().dashYearSelected,
+				"basinCd" : scwin.initData.dashBasinCode[scwin.initData.dashBasinValue[dmaDashBasin.getJSON().dashBasinSelected]] || "ALL"
+			}
+		);
+	};]]></script>
+	</head>
+	<body>
+		<w2:wframe class="wfm_title" id="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="dash-con-box dash-con-box-pc">
+						<xf:group class="dash-list-box dash-list-box-left">
+							<xf:group class="dash-box">
+								<xf:group class="dash-box-con">
+									<w2:belt_menu></w2:belt_menu>
+									<w2:group class="dash-belt-text-box"></w2:group>
+									<xf:group id="grpDashBeltYear" class="dash-belt-text-group" tagname="ul">
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear1" label="-" ref="data:dmaDashYear.dashYear1"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear2" label="-" ref="data:dmaDashYear.dashYear2"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear3" label="-" ref="data:dmaDashYear.dashYear3"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear4" label="-" ref="data:dmaDashYear.dashYear4"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear5" label="-" ref="data:dmaDashYear.dashYear5"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear6" label="-" ref="data:dmaDashYear.dashYear6"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear7" label="-" ref="data:dmaDashYear.dashYear7"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear8" label="-" ref="data:dmaDashYear.dashYear8"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashYear9" label="-" ref="data:dmaDashYear.dashYear9"></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<w2:belt_menu></w2:belt_menu>
+									<w2:group class="dash-belt-text-box"></w2:group>
+									<xf:group id="grpDashBeltBasin" class="dash-belt-text-group" tagname="ul">
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin1" label="-" ref="data:dmaDashBasin.dashBasin1"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin2" label="-" ref="data:dmaDashBasin.dashBasin2"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin3" label="-" ref="data:dmaDashBasin.dashBasin3"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin4" label="-" ref="data:dmaDashBasin.dashBasin4"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin5" label="-" ref="data:dmaDashBasin.dashBasin5"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin6" label="-" ref="data:dmaDashBasin.dashBasin6"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin7" label="-" ref="data:dmaDashBasin.dashBasin7"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin8" label="-" ref="data:dmaDashBasin.dashBasin8"></w2:span>
+										</xf:group>
+										<xf:group tagname="li">
+											<w2:span id="spnDashBasin9" label="-" ref="data:dmaDashBasin.dashBasin9"></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="dash-list-box dash-list-box-center">
+							<xf:group class="dash-box">
+								<xf:group id="grpChartCbn" class="dash-box-con chart-cbn-ntrlt">
+									<xf:group class="dash-box-title">
+										<w2:span label="전력에너지 탄소중립현황"></w2:span>
+										<xf:group id="grpDashCbnNtrltInfo" class="dash-box-title-info">
+											<w2:span label="&amp;emsp;* "></w2:span>
+											<w2:span id="spnMainMapYearLabel" label="0000"></w2:span>
+											<w2:span label="년 "></w2:span>
+											<w2:span id="spnMainMapMonthLabel" label="00"></w2:span>
+											<w2:span label="월까지의 연누계 데이터입니다."></w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group class="dash-box-con-cbn-ntrlt">
+										<xf:group style="position:relative;">
+											<w2:main_cbn_ntrlt_scale id="grpPcCbnNtrltScaleSvg" width="460" height="230"></w2:main_cbn_ntrlt_scale>
+											<w2:main_cbn_ntrlt_earth width="135"></w2:main_cbn_ntrlt_earth>
+											<w2:main_cbn_ntrlt_pollution width="135"></w2:main_cbn_ntrlt_pollution>
+										</xf:group>
+										<xf:group class="dash-box-data-title">
+											<w2:span id="spnMainChartCbnNtrltTitleData" class="main-box-title-data none-drag" label="-"></w2:span>
+												<xf:group class="dash-cbn-ntrlt-data-box none-drag">
+													<w2:span class="dash-cbn-ntrlt-data none-drag" label="&amp;emsp;"></w2:span>
+													<w2:span id="spnMainChartCbnNtrltData" class="dash-cbn-ntrlt-data none-drag" label="-"></w2:span>
+													<w2:span class="dash-cbn-ntrlt-data none-drag" label="%&amp;emsp;"></w2:span>
+												</xf:group>
+										</xf:group>
+										<!-- <xf:group class="dash-cbn-ntrlt-tree">
+											<w2:dash_cbn_ntrlt_tree></w2:dash_cbn_ntrlt_tree>
+										</xf:group>
+										<xf:group class="dash-cbn-ntrlt-bangul">
+											<xf:group class="dash-cbn-ntrlt-l-hand">
+												<w2:dash_cbn_ntrlt_l_hand></w2:dash_cbn_ntrlt_l_hand>
+											</xf:group>
+											<xf:group class="dash-cbn-ntrlt-body">
+												<w2:dash_cbn_ntrlt_body></w2:dash_cbn_ntrlt_body>
+											</xf:group>
+											<xf:group class="dash-cbn-ntrlt-r-hand">
+												<w2:dash_cbn_ntrlt_r_hand></w2:dash_cbn_ntrlt_r_hand>
+											</xf:group>
+										</xf:group>
+										<xf:group class="dash-cbn-ntrlt-factory">
+											<w2:dash_cbn_ntrlt_factory></w2:dash_cbn_ntrlt_factory>
+										</xf:group> -->
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-box-title">
+										<w2:span label="전력에너지 운영현황"></w2:span>
+									</xf:group>
+									<xf:group id="grpChartEpwrEnergy" class="dash-box-chart chart-wrap-padding"></xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-box-title">
+										<w2:span label="전력생산 / 발전수익"></w2:span>
+									</xf:group>
+									<xf:group class="dash-box-con-elctrn">
+										<xf:group class="dash-square-box square-box-acmslt">
+											<xf:group class="dash-square-title">
+												<w2:span label="발전단가&lt;br/&gt;(원)"></w2:span>
+											</xf:group>
+											<xf:group class="dash-square-data" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-99" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td" class="dash-square-data-font">
+														<w2:span id="spnEpwrElyrsUpcAcmslt" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="dash-square-box square-box-prdctn_total">
+											<xf:group class="dash-square-title">
+												<w2:span label="전력생산량&lt;br/&gt;(GWh)"></w2:span>
+											</xf:group>
+											<xf:group class="dash-square-data" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">계획</xf:group>
+													<xf:group tagname="td">실적</xf:group>
+													<xf:group tagname="td">대비</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnEpwrPrdctnTotalPlan" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnEpwrPrdctnTotalAcmslt" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnEpwrPrdctnTotalCmpr" label="-"></w2:span>
+														<w2:span label="%"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="dash-square-box square-box-prdctn_excclc_total">
+											<xf:group class="dash-square-title">
+												<w2:span label="발전수익&lt;br/&gt;(억원)"></w2:span>
+											</xf:group>
+											<xf:group class="dash-square-data" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-99" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td" class="dash-square-data-font">
+														<w2:span id="spnEpwrPrdctnExcclcTotal" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-box-title">
+										<w2:span label="전력소비 / 소비정산"></w2:span>
+									</xf:group>
+									<xf:group class="dash-box-con-elctrn">
+										<xf:group class="dash-square-box square-box-cnstn_epbu">
+											<xf:group class="dash-square-title">
+												<w2:span label="전력원단위&lt;br/&gt;(kWh/㎥)"></w2:span>
+											</xf:group>
+											<xf:group class="dash-square-data" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-99" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td" class="dash-square-data-font">
+														<w2:span id="spnEpwrCnstnEpbu" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="dash-square-box square-box-cnstn_excclc1">
+											<xf:group class="dash-square-title">
+												<w2:span label="전력소비량&lt;br/&gt;(GWh)"></w2:span>
+											</xf:group>
+											<xf:group class="dash-square-data" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+													<xf:group class="wd-33" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnPreYear" label="0000년"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnThisYear" label="0000년"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">대비</xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td">
+														<w2:span id="spnEpwrPreCnstn" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnEpwrThisCnstn" label="-"></w2:span>
+													</xf:group>
+													<xf:group tagname="td">
+														<w2:span id="spnEpwrCnstnRt" label="-"></w2:span>
+														<w2:span label="%"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="dash-square-box square-box-cnstn_excclc2">
+											<xf:group class="dash-square-title">
+												<w2:span label="소비정산&lt;br/&gt;(억원)"></w2:span>
+											</xf:group>
+											<xf:group class="dash-square-data" tagname="table">
+												<xf:group tagname="colgroup">
+													<xf:group class="wd-99" tagname="col"></xf:group>
+												</xf:group>
+												<xf:group tagname="tr">
+													<xf:group tagname="td" class="dash-square-data-font">
+														<w2:span id="spnEpwrCnstnExcclc" label="-"></w2:span>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-box-title">
+										<w2:span label="유역별 연간생산현황"></w2:span>
+									</xf:group>
+									<xf:group id="grpChartPrdctn" class="dash-box-chart chart-wrap-padding"></xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-box-title">
+										<w2:span label="유역별 연간소비현황"></w2:span>
+									</xf:group>
+									<xf:group id="grpChartCnstn" class="dash-box-chart chart-wrap-padding"></xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<xf:group class="dash-list-box dash-list-box-right">
+							<xf:group class="dash-box">
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-water-drop">
+										<xf:group class="dash-water-drop-label">
+											<w2:span class="dash-box-title-p" label="탄소중립율"></w2:span>
+											<w2:span class="dash-box-sub-title-p" label="(%)"></w2:span>
+										</xf:group>
+										<xf:group class="dash-water-drop-data">
+											<w2:span id="spnWaterDropCbnNtrlt" label="-"></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-water-drop">
+										<xf:group class="dash-water-drop-label">
+											<w2:span class="dash-box-title-p" label="연간발전량"></w2:span>
+											<w2:span class="dash-box-sub-title-p" label="(GWh)"></w2:span>
+										</xf:group>
+										<xf:group class="dash-water-drop-data">
+											<w2:span id="spnWaterDropFyerEltrsQy" label="-"></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-water-drop">
+										<xf:group class="dash-water-drop-label">
+											<w2:span class="dash-box-title-p" label="연간발전수익"></w2:span>
+											<w2:span class="dash-box-sub-title-p" label="(억원)"></w2:span>
+										</xf:group>
+										<xf:group class="dash-water-drop-data">
+											<w2:span id="spnWaterDropFyerElyrsErn" label="-"></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-water-drop">
+										<xf:group class="dash-water-drop-label">
+											<w2:span class="dash-box-title-p" label="연간소비량"></w2:span>
+											<w2:span class="dash-box-sub-title-p" label="(GWh)"></w2:span>
+										</xf:group>
+										<xf:group class="dash-water-drop-data">
+											<w2:span id="spnWaterDropFyerCnstqy" label="-"></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group class="dash-box-con">
+									<xf:group class="dash-water-drop">
+										<xf:group class="dash-water-drop-label">
+											<w2:span class="dash-box-title-p" label="연간소비정산"></w2:span>
+											<w2:span class="dash-box-sub-title-p" label="(억원)"></w2:span>
+										</xf:group>
+										<xf:group class="dash-water-drop-data">
+											<w2:span id="spnWaterDropFyerCnstnExcclc" label="-"></w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_INTN_MENU_Dao">
+
+	<select id="TM_ECS_INTN_MENU_Dao_retrieveUsrMenu" parameterType="kw.ecs.zz.authmng.vo.PersonAuthorityVo" resultType="egovMap">
+		/* TM_ECS_INTN_MENU_Dao_retrieveUsrMenu */
+		SELECT DISTINCT
+			A.menu_sys_div_cd,
+			A.menu_id,
+			A.scrin_id,
+			B.scrin_url,
+			A.menu_nm,
+			A.menu_lvl - 1 AS menu_lvl,
+			A.upper_menu_id,
+			A.menu_ordr,
+			A.menu_dc,
+			A.menu_hide_yn,
+			A.popup_yn,
+			A.menu_execut_yn,
+			A.use_yn,
+			A.menu_applc_de,
+			A.menu_end_de,
+			A.call_parm
+		FROM
+			tm_ecs_intn_menu A,
+			tm_ecs_intn_scrin B
+		WHERE
+			A.scrin_id = B.scrin_id(+)
+			AND A.menu_sys_div_cd = #{menuSysDivCd}
+			AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN A.menu_applc_de AND A.menu_end_de
+		START WITH
+			A.menu_id IN (
+				(
+					SELECT DISTINCT
+						menu_id
+					FROM
+						tm_ecs_intn_athr_menu
+					WHERE
+						athr_id IN (
+							SELECT
+								athr_id
+							FROM
+								tm_ecs_intn_usr_athr
+							WHERE
+								usr_id = #{usrId}
+								AND (applc_strt_de IS NULL OR TO_CHAR(SYSDATE,'YYYYMMDD') BETWEEN applc_strt_de AND applc_end_de)
+							UNION
+							SELECT
+								#{menuSysDivCd} || 'GN01'
+							FROM
+								DUAL
+						)
+						AND TO_CHAR(SYSDATE,'YYYYMMDD') BETWEEN applc_strt_de AND applc_end_de
+					UNION ALL
+					SELECT DISTINCT
+						menu_id
+					FROM
+						tm_ecs_intn_usr_menu
+					WHERE
+						usr_id = #{usrId}
+						AND TO_CHAR(SYSDATE, 'YYYYMMDD') BETWEEN applc_strt_de AND applc_end_de
+				)
+				MINUS
+				SELECT
+					menu_id
+				FROM
+					tm_ecs_intn_usr_menu
+				WHERE
+					usr_id = #{usrId}
+					AND (applc_strt_de <![CDATA[>]]> TO_CHAR(SYSDATE, 'YYYYMMDD') OR applc_end_de <![CDATA[<]]> TO_CHAR(SYSDATE, 'YYYYMMDD'))
+			)
+			AND A.menu_execut_yn = 'Y'
+		CONNECT BY PRIOR
+			A.upper_menu_id = A.menu_id AND A.menu_lvl <![CDATA[>]]> 1
+		ORDER BY
+			A.menu_ordr
+	</select>
+
+</mapper>

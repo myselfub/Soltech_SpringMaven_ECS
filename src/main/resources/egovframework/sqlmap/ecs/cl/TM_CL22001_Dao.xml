@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 정산 - REC 정산(태양광) -->
+<mapper namespace="TM_CL22001_Dao">
+	<sql id="TM_CL22001_Dao_Common">
+		SELECT /*+ LEADING(A B) */
+			cmmn_cd,
+			<choose>
+				<when test='null == ecsSetcscDivCd or "" eq ecsSetcscDivCd or "ALL" eq ecsSetcscDivCd'>
+			cmmn_cd_nm,
+			cmmn_cd_dc,
+				</when>
+				<otherwise>
+			cmmn_cd_dc AS cmmn_cd_nm,
+			cmmn_cd_nm AS cmmn_cd_dc,
+				</otherwise>
+			</choose>
+			upper_cmmn_cd,
+			usr_dfn_vu1,
+			elcpwstn_cd,
+			elcpwstn_nm,
+			elcpwstn_cls_cd,
+			dsply_ordr,
+			hq_cd,
+			sap_bplc_vu,
+			cstct_vu,
+			cstct_nm
+		FROM (
+			SELECT
+				cmmn_cd,
+				cmmn_cd_nm,
+				cmmn_cd_dc,
+				upper_cmmn_cd,
+				usr_dfn_vu1
+			FROM
+				tc_ecs_cd
+			WHERE
+				use_yn = 'Y'
+				AND cls_cd = 'ECS_2003'
+		) A, (
+			SELECT
+				elcpwstn_cd,
+				elcpwstn_nm,
+				elcpwstn_cls_cd,
+				dsply_ordr,
+				hq_cd,
+				sap_bplc_vu,
+				cstct_vu,
+				(
+					SELECT
+						stext
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						SYSDATE BETWEEN strdt AND enddt
+						AND objid IN (
+							SELECT
+								DISTINCT
+								CASE
+									WHEN MIN(depth) OVER(PARTITION BY kostl) = depth
+									THEN objid
+									ELSE NULL
+								END
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								SYSDATE BETWEEN strdt AND enddt
+								AND TRIM(kostl) IS NOT NULL
+						)
+						AND kostl = LPAD(cstct_vu, 10, '0')
+				) AS cstct_nm
+			FROM
+				WRO.tc_eg10101
+		) B
+		WHERE
+			A.usr_dfn_vu1 = B.elcpwstn_cd(+)
+			<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+			AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> IN (
+				SELECT
+					objid
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+				)
+				WHERE
+					1 = 1
+					AND cmmn_cd = #{ecsBasinDivCd}
+			)
+			</if>
+			<choose>
+				<when test='null == ecsSetcscDivCd or "" eq ecsSetcscDivCd or "ALL" eq ecsSetcscDivCd'>
+				</when>
+				<when test='null != ecsSetcscDivCd and ecsSetcscDivCd.startsWith("0")'>
+				AND A.upper_cmmn_cd
+					<choose>
+						<when test='null != ecsSetcscDivCd and "01" == ecsSetcscDivCd'>
+				 IN 
+						</when>
+						<otherwise>
+				 NOT IN 
+						</otherwise>
+					</choose>
+					(
+						SELECT
+							elcpwstn_cls_cd
+						FROM (
+							SELECT /*+ LEADING(B A) */
+								A.cmmn_cd AS elcpwstn_cls_cd,
+								A.cmmn_cd_nm AS elcpwstn_cls_cd_nm,
+								B.cmmn_cd,
+								B.cmmn_cd_nm
+							FROM (
+								SELECT
+									cmmn_cd,
+									REGEXP_SUBSTR(cmmn_cd_nm, '[^(]+') AS cmmn_cd_nm
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = 'ECS_1001'
+							) A LEFT JOIN (
+								SELECT
+									cmmn_cd,
+									cmmn_cd_nm
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = 'ECS_9003'
+							) B
+							ON
+								A.cmmn_cd_nm = B.cmmn_cd_nm
+							WHERE
+								B.cmmn_cd IS NOT NULL
+						)
+					)
+				</when>
+				<otherwise>
+				AND elcpwstn_cls_cd = (
+					SELECT
+						elcpwstn_cls_cd
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+					)
+					WHERE
+						cmmn_cd = #{ecsSetcscDivCd}
+				)
+				</otherwise>
+			</choose>
+			ORDER BY
+				dsply_ordr
+	</sql>
+
+	<select id="TM_CL22001_Dao_retrieveRecExcclcSnpwList" parameterType="kw.ecs.cl.recexcclc.vo.RecExcclcVo" resultType="egovMap">
+		/* TM_CL22001_Dao_retrieveRecExcclcSnpwList */
+		SELECT
+			rec_delng_year,
+			rec_eqp_cd_nm,
+			(
+				SELECT
+					cmmn_cd_dc
+				FROM
+					tc_ecs_cd
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_2003'
+					AND cmmn_cd = rec_eqp_cd_nm
+			) AS elcpwstn_nm,
+			mon01_sbmt_qy,
+			mon01_tm1s_amt,
+			mon01_tm2s_amt,
+			mon01_tm3s_amt,
+			mon01_tm4s_amt,
+			mon01_accnut_snrn,
+			mon02_sbmt_qy,
+			mon02_tm1s_amt,
+			mon02_tm2s_amt,
+			mon02_tm3s_amt,
+			mon02_tm4s_amt,
+			mon02_accnut_snrn,
+			mon03_sbmt_qy,
+			mon03_tm1s_amt,
+			mon03_tm2s_amt,
+			mon03_tm3s_amt,
+			mon03_tm4s_amt,
+			mon03_accnut_snrn,
+			mon04_sbmt_qy,
+			mon04_tm1s_amt,
+			mon04_tm2s_amt,
+			mon04_tm3s_amt,
+			mon04_tm4s_amt,
+			mon04_accnut_snrn,
+			mon05_sbmt_qy,
+			mon05_tm1s_amt,
+			mon05_tm2s_amt,
+			mon05_tm3s_amt,
+			mon05_tm4s_amt,
+			mon05_accnut_snrn,
+			mon06_sbmt_qy,
+			mon06_tm1s_amt,
+			mon06_tm2s_amt,
+			mon06_tm3s_amt,
+			mon06_tm4s_amt,
+			mon06_accnut_snrn,
+			mon07_sbmt_qy,
+			mon07_tm1s_amt,
+			mon07_tm2s_amt,
+			mon07_tm3s_amt,
+			mon07_tm4s_amt,
+			mon07_accnut_snrn,
+			mon08_sbmt_qy,
+			mon08_tm1s_amt,
+			mon08_tm2s_amt,
+			mon08_tm3s_amt,
+			mon08_tm4s_amt,
+			mon08_accnut_snrn,
+			mon09_sbmt_qy,
+			mon09_tm1s_amt,
+			mon09_tm2s_amt,
+			mon09_tm3s_amt,
+			mon09_tm4s_amt,
+			mon09_accnut_snrn,
+			mon10_sbmt_qy,
+			mon10_tm1s_amt,
+			mon10_tm2s_amt,
+			mon10_tm3s_amt,
+			mon10_tm4s_amt,
+			mon10_accnut_snrn,
+			mon11_sbmt_qy,
+			mon11_tm1s_amt,
+			mon11_tm2s_amt,
+			mon11_tm3s_amt,
+			mon11_tm4s_amt,
+			mon11_accnut_snrn,
+			mon12_sbmt_qy,
+			mon12_tm1s_amt,
+			mon12_tm2s_amt,
+			mon12_tm3s_amt,
+			mon12_tm4s_amt,
+			mon12_accnut_snrn,
+			ROUND((
+				NVL(mon01_sbmt_qy, 0) + NVL(mon02_sbmt_qy, 0) + NVL(mon03_sbmt_qy, 0) + NVL(mon04_sbmt_qy, 0) +
+				NVL(mon05_sbmt_qy, 0) + NVL(mon06_sbmt_qy, 0) + NVL(mon07_sbmt_qy, 0) + NVL(mon08_sbmt_qy, 0) +
+				NVL(mon09_sbmt_qy, 0) + NVL(mon10_sbmt_qy, 0) + NVL(mon11_sbmt_qy, 0) + NVL(mon12_sbmt_qy, 0)
+			), 0) AS totqy,
+			ROUND((
+				NVL(mon01_accnut_snrn, 0) + NVL(mon02_accnut_snrn, 0) + NVL(mon03_accnut_snrn, 0) + NVL(mon04_accnut_snrn, 0) +
+				NVL(mon05_accnut_snrn, 0) + NVL(mon06_accnut_snrn, 0) + NVL(mon07_accnut_snrn, 0) + NVL(mon08_accnut_snrn, 0) +
+				NVL(mon09_accnut_snrn, 0) + NVL(mon10_accnut_snrn, 0) + NVL(mon11_accnut_snrn, 0) + NVL(mon12_accnut_snrn, 0)
+			), 0) AS tamt
+		FROM (
+			SELECT
+				rec_delng_year,
+				LPAD(rec_delng_mt, 2, '0') AS rec_delng_mt,
+				rec_eqp_cd_nm,
+				rec_excclc_sbmt_qy,
+				rec_excclc_tm1s_amt,
+				rec_excclc_tm2s_amt,
+				rec_excclc_tm3s_amt,
+				rec_excclc_tm4s_amt,
+				rec_accnut_snrn
+			FROM
+				tm_cl22001
+			WHERE
+				rec_delng_year = SUBSTR(#{strtDt}, 0, 4)
+				AND rec_eqp_cd_nm IN (
+					SELECT
+						cmmn_cd
+					FROM (
+						<include refid="TM_CL22001_Dao.TM_CL22001_Dao_Common"></include>
+					)
+				)
+				<if test='null != ecsElcpwstnDivCd and "" neq ecsElcpwstnDivCd and "ALL" neq ecsElcpwstnDivCd'>
+				AND rec_eqp_cd_nm = #{ecsElcpwstnDivCd}
+				</if>
+		)
+		PIVOT (
+			MAX(rec_excclc_sbmt_qy) AS sbmt_qy,
+			MAX(rec_excclc_tm1s_amt) AS tm1s_amt,
+			MAX(rec_excclc_tm2s_amt) AS tm2s_amt,
+			MAX(rec_excclc_tm3s_amt) AS tm3s_amt,
+			MAX(rec_excclc_tm4s_amt) AS tm4s_amt,
+			MAX(rec_accnut_snrn) AS accnut_snrn
+			FOR rec_delng_mt IN (
+				'01' AS mon01,
+				'02' AS mon02,
+				'03' AS mon03,
+				'04' AS mon04,
+				'05' AS mon05,
+				'06' AS mon06,
+				'07' AS mon07,
+				'08' AS mon08,
+				'09' AS mon09,
+				'10' AS mon10,
+				'11' AS mon11,
+				'12' AS mon12
+			)
+		)
+		ORDER BY
+			rec_delng_year,
+			rec_eqp_cd_nm
+	</select>
+
+	<update id="TM_CL22001_Dao_saveRecExcclcSnpwList" parameterType="kw.ecs.cl.recexcclc.vo.RecExcclcVo">
+		/* TM_CL22001_Dao_saveRecExcclcSnpwList */
+		MERGE INTO
+			tm_cl22001 A
+		USING (
+			SELECT
+				#{recDelngYear} AS rec_delng_year,
+				LPAD(#{recDelngMt}, 2, '0') AS rec_delng_mt,
+				#{recEqpCdNm} AS rec_eqp_cd_nm,
+				#{recExcclcSbmtQy} AS rec_excclc_sbmt_qy,
+				#{recExcclcTm1sAmt} AS rec_excclc_tm1s_amt,
+				#{recExcclcTm2sAmt} AS rec_excclc_tm2s_amt,
+				#{recExcclcTm3sAmt} AS rec_excclc_tm3s_amt,
+				#{recExcclcTm4sAmt} AS rec_excclc_tm4s_amt,
+				#{recAccnutSnrn} AS rec_accnut_snrn,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.rec_delng_year = B.rec_delng_year
+			AND A.rec_delng_mt = B.rec_delng_mt
+			AND A.rec_eqp_cd_nm = B.rec_eqp_cd_nm
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.rec_excclc_sbmt_qy = B.rec_excclc_sbmt_qy,
+				A.rec_excclc_tm1s_amt = B.rec_excclc_tm1s_amt,
+				A.rec_excclc_tm2s_amt = B.rec_excclc_tm2s_amt,
+				A.rec_excclc_tm3s_amt = B.rec_excclc_tm3s_amt,
+				A.rec_excclc_tm4s_amt = B.rec_excclc_tm4s_amt,
+				A.rec_accnut_snrn = B.rec_accnut_snrn,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.rec_delng_year,
+				A.rec_delng_mt,
+				A.rec_eqp_cd_nm,
+				A.rec_excclc_sbmt_qy,
+				A.rec_excclc_tm1s_amt,
+				A.rec_excclc_tm2s_amt,
+				A.rec_excclc_tm3s_amt,
+				A.rec_excclc_tm4s_amt,
+				A.rec_accnut_snrn,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.rec_delng_year,
+				B.rec_delng_mt,
+				B.rec_eqp_cd_nm,
+				B.rec_excclc_sbmt_qy,
+				B.rec_excclc_tm1s_amt,
+				B.rec_excclc_tm2s_amt,
+				B.rec_excclc_tm3s_amt,
+				B.rec_excclc_tm4s_amt,
+				B.rec_accnut_snrn,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<delete id="TM_CL22001_Dao_deleteRecExcclcSnpwList" parameterType="kw.ecs.cl.recexcclc.vo.RecExcclcVo">
+		/* TM_CL22001_Dao_deleteRecExcclcSnpwList */
+		DELETE FROM
+			tm_cl22001
+		WHERE
+			rec_delng_year = #{recDelngYear}
+			AND rec_delng_mt = #{recDelngMt}
+			AND rec_eqp_cd_nm = #{recEqpCdNm}
+	</delete>
+</mapper>

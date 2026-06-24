@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "생산/소비 종합현황 대시보드 탄소중립현황_왼손",
+			"version": "",
+			"apis": [],
+			"pluginName": "dash_cbn_ntrlt_l_hand",
+			"width": "1550px",
+			"company": "Soltech",
+			"developer": "WHS",
+			"componentName": "dash_cbn_ntrlt_l_hand",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "207px"
+			}
+		-->
+		<xf:group class="dash-cbn-ntrlt-l-hand" tagname="svg" pluginName="dash_cbn_ntrlt_l_hand">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initDashCbnNtrltLHand = function() {
+					// 기본 설정
+					var dashCbnNtrltLHandFillUrl = "url(#" + grpDashCbnNtrltLHand.getID() + ")";
+
+					document.getElementById(grpFill.getID()).setAttribute("fill", dashCbnNtrltLHandFillUrl);
+				};
+
+				// 초기 실행함수 수행
+				this.initDashCbnNtrltLHand();
+		]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>50</w2:width>
+				<w2:height>20</w2:height>
+				<w2:viewBox>0 0 60 20</w2:viewBox>
+				<w2:fill>none</w2:fill>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="g">
+				<xf:group tagname="defs">
+					<xf:group id="grpDashCbnNtrltLHand" tagname="radialGradient">
+						<w2:attributes>
+							<w2:cx>0</w2:cx>
+							<w2:cy>0</w2:cy>
+							<w2:r>1</w2:r>
+							<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+							<w2:gradientTransform>translate(14.5741 -8.80489) rotate(-8.31356) scale(63.5942 42.6099)</w2:gradientTransform>
+						</w2:attributes>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:stop-color>white</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:offset>0.506578</w2:offset>
+								<w2:stop-color>#7ECEF4</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:offset>0.778456</w2:offset>
+								<w2:stop-color>#64BEEC</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+						<xf:group tagname="stop">
+							<w2:attributes>
+								<w2:offset>1</w2:offset>
+								<w2:stop-color>#4EAEE3</w2:stop-color>
+							</w2:attributes>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpObjLHand" class="cbn-ntrlt-l-hand" tagname="g">
+					<xf:group id="grpFill" tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M11.2626 1.19842L53.289 4.33031C55.3593 4.8431 59.5 6.96869 59.5 11.3687C59.5 16.8687 54.2406 18.8639 47.8703
+								18.8639H10.811C5.39239 18.8639 1 14.4833 1 9.0793C1 4.82158 2.49834 2.81554 6.2955 1.46453C7.87594 0.911847 9.60006 0.891376 11.2626
+								1.19842Z
+							</w2:d>
+							<w2:fill>url(#grpDashCbnNtrltLHand)</w2:fill>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="path">
+						<w2:attributes>
+							<w2:d>
+								M53.289 4.33031L11.2626 1.19842C9.60006 0.891376 7.87594 0.911847 6.2955 1.46453C2.49834 2.81554 1 4.82158 1 9.0793C1 14.4833
+								5.39239 18.8639 10.811 18.8639H47.8703
+							</w2:d>
+							<w2:stroke>#BAE3F9</w2:stroke>
+							<w2:stroke-width>0.75</w2:stroke-width>
+							<w2:stroke-linecap>round</w2:stroke-linecap>
+							<w2:stroke-linejoin>round</w2:stroke-linejoin>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

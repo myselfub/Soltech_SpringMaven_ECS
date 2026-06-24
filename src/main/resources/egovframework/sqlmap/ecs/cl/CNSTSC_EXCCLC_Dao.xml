@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 정산 - 소비원 정산 -->
+<mapper namespace="CNSTSC_EXCCLC_Dao">
+	<select id="CNSTSC_EXCCLC_Dao_retrieveCnstscExcclcList" parameterType="kw.ecs.cl.cnstscexcclc.vo.CnstscExcclcVo" resultType="egovMap">
+		/* CNSTSC_EXCCLC_Dao_retrieveCnstscExcclcList */
+		<include refid="CNSMP_STTUS_Dao.CNSMP_STTUS_Dao_Default"></include>
+		, BASIN_MAPPING_LIST AS (
+			<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+		)
+		SELECT
+			MAX(dscfc_lclhq_cd) AS dscfc_lclhq_cd,
+			MAX(basin_nm) AS dscfc_lclhq_nm,
+			dscfc_bplc_cd,
+			MAX(dscfc_bplc_nm) AS dscfc_bplc_nm,
+			ROUND(NVL(SUM(dscfc_usgqty), 0), 2) AS usgqty,
+			ROUND(NVL(SUM(tot_amt), 0), 2) AS amt,
+			MAX(basin_sort_ordr) AS basin_sort_ordr,
+			MAX(dscfc_bplc_sort_ordr) AS dscfc_bplc_sort_ordr
+		FROM (
+			SELECT
+				dscfc_lclhq_cd,
+				dscfc_lclhq_nm,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						BASIN_MAPPING_LIST
+					WHERE
+						DECODE(objid, '10000000', '20060557', '50029610', '10990028', objid) = dscfc_lclhq_cd
+				) AS basin_nm,
+				(
+					SELECT
+						sort_ordr
+					FROM
+						BASIN_MAPPING_LIST
+					WHERE
+						DECODE(objid, '10000000', '20060557', '50029610', '10990028', objid) = dscfc_lclhq_cd
+				) AS basin_sort_ordr,
+				dscfc_bplc_cd,
+				dscfc_bplc_nm,
+				dscfc_bplc_sort_ordr,
+				dscfc_usgqty,
+				tot_amt
+			FROM
+				GHG_DATA_LIST
+			WHERE
+				1 = 1
+				<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+				AND dscfc_bplc_cd = #{ecsChrgDeptId}
+				</if>
+				<if test='null != cnd and "mnby" eq cnd'>
+				AND dscfc_use_de BETWEEN SUBSTR(#{strtDt}, 0, 6) AND SUBSTR(#{endDt}, 0, 6)
+				</if>
+		)
+		GROUP BY
+			dscfc_bplc_cd
+		ORDER BY
+			basin_sort_ordr,
+			dscfc_bplc_sort_ordr
+	</select>
+
+	<select id="CNSTSC_EXCCLC_Dao_retrieveCnstscExcclcChartList" parameterType="kw.ecs.cl.cnstscexcclc.vo.CnstscExcclcVo" resultType="egovMap">
+		/* CNSTSC_EXCCLC_Dao_retrieveCnstscExcclcChartList */
+		<include refid="CNSMP_STTUS_Dao.CNSMP_STTUS_Dao_Default"></include>
+		, BASIN_MAPPING_LIST AS (
+			<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+		)
+		SELECT
+			<choose>
+				<when test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+					MAX(dscfc_nm) AS nm,
+					0 AS sort_ordr,
+				</when>
+				<when test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+					MAX(dscfc_bplc_nm) AS nm,
+					MAX(dscfc_bplc_sort_ordr) AS sort_ordr,
+				</when>
+				<otherwise>
+					MAX(dscfc_lclhq_nm) AS nm,
+					(
+						SELECT
+							sort_ordr
+						FROM
+							BASIN_MAPPING_LIST
+						WHERE
+							DECODE(objid, '10000000', '20060557', '50029610', '10990028', objid) = dscfc_lclhq_cd
+					) AS sort_ordr,
+				</otherwise>
+			</choose>
+			ROUND(NVL(SUM(dscfc_usgqty), 0), 2) AS usgqty,
+			ROUND(NVL(SUM(tot_amt), 0), 2) AS amt
+		FROM
+			GHG_DATA_LIST
+		WHERE
+			1 = 1
+			<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+			AND dscfc_bplc_cd = #{ecsChrgDeptId}
+			</if>
+			<if test='null != cnd and "mnby" eq cnd'>
+			AND dscfc_use_de BETWEEN SUBSTR(#{strtDt}, 0, 6) AND SUBSTR(#{endDt}, 0, 6)
+			</if>
+		GROUP BY
+			<choose>
+				<when test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+					dscfc_id
+				</when>
+				<when test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+					dscfc_bplc_cd
+				</when>
+				<otherwise>
+					dscfc_lclhq_cd
+				</otherwise>
+			</choose>
+		ORDER BY
+			sort_ordr,
+			nm
+	</select>
+
+	<select id="CNSTSC_EXCCLC_Dao_retrieveCnstscExcclcCsmtBplcList" parameterType="kw.ecs.cl.cnstscexcclc.vo.CnstscExcclcVo" resultType="egovMap">
+		/* CNSTSC_EXCCLC_Dao_retrieveCnstscExcclcCsmtBplcList */
+		SELECT
+			MAX(dscfc_nm) AS dscfc_nm,
+			dscfc_id,
+			MAX(dscfc_procs_ty_cd) AS dscfc_procs_ty_cd,
+			MAX(dscfc_procs_ty_nm) AS cnsmp_div,
+			ROUND(SUM(amt), 2) AS amt,
+			ROUND(SUM(dscfc_usgqty), 2) AS usgqty
+		FROM (
+			SELECT
+				SUBSTR(dscfc_use_de, 0, 6) AS dscfc_use_de,
+				dscfc_id,
+				MAX(dscfc_nm) AS dscfc_nm,
+				MAX(dscfc_procs_ty_cd) AS dscfc_procs_ty_cd,
+				MAX(dscfc_procs_ty_nm) AS dscfc_procs_ty_nm,
+				CASE
+					WHEN SUM(dscfc_usgqty) &lt; 0 AND SUM(tot_amt) &gt; 0
+					THEN SUM(tot_amt) * -1
+					ELSE SUM(tot_amt)
+				END AS amt,
+				SUM(dscfc_usgqty) AS dscfc_usgqty
+			FROM (
+				SELECT
+					dscfc_nm,
+					dscfc_id,
+					dscfc_procs_ty_cd,
+					dscfc_procs_ty_nm,
+					dscfc_use_de,
+					CASE
+						WHEN max_abs_dscfc_usgqty = 0 AND count_dscfc_use_slip_no &gt; 1
+						THEN max_tot_amt / count_dscfc_use_slip_no
+						WHEN dscfc_use_slip_prcs_ty_cd != 0 AND (dscfc_usgqty != 0 OR count_dscfc_use_slip_no &gt; 1)
+						THEN (dscfc_usgqty / DECODE(NVL(sum_dscfc_usgqty, 0), 0, 1, sum_dscfc_usgqty)) * max_tot_amt
+						ELSE tot_amt
+					END AS tot_amt,
+					dscfc_usgqty
+				FROM (
+					SELECT /*+ MATERIALZE LEADING(A B) */
+						A.dscfc_id,
+						A.dscfc_nm,
+						A.dscfc_lclhq_cd,
+						A.dscfc_bplc_cd,
+						A.dscfc_procs_ty_cd,
+						(
+							SELECT
+								cmmn_cd_nm
+							FROM
+								SCM.tc_sc_unif_cmmn_cd
+							WHERE
+								sys_div_cd = 'SC'
+								AND cls_cd = 'GHG_0024'
+								AND cmmn_cd = A.dscfc_procs_ty_cd
+						) AS dscfc_procs_ty_nm,
+						B.dscfc_use_de,
+						B.dscfc_use_slip_prcs_ty_cd,
+						B.dscfc_use_slip_no,
+						NVL(B.tot_amt, 0) AS tot_amt,
+						MAX(NVL(B.tot_amt, 0)) OVER(PARTITION BY B.dscfc_use_slip_no) AS max_tot_amt,
+						NVL(B.dscfc_usgqty, 0) AS dscfc_usgqty,
+						SUM(NVL(B.dscfc_usgqty, 0)) OVER(PARTITION BY B.dscfc_use_slip_no) AS sum_dscfc_usgqty,
+						COUNT(B.dscfc_use_slip_no) OVER(PARTITION BY B.dscfc_use_slip_no) AS count_dscfc_use_slip_no,
+						MAX(NVL(ABS(B.dscfc_usgqty), 0)) OVER(PARTITION BY B.dscfc_use_slip_no) AS max_abs_dscfc_usgqty
+					FROM (
+						SELECT
+							dscfc_id,
+							dscfc_nm,
+							dscfc_lclhq_cd,
+							dscfc_bplc_cd,
+							dscfc_procs_ty_cd
+						FROM
+							GHG.tm_gg01101
+						WHERE
+							dscfc_use_yn = '1'
+							AND dscfc_regist_stat_div_cd = '1'
+							AND dscfc_use_fuel_div_cd = '61' /* 전기 */
+							AND dscfc_lclhq_cd = '88888888' /* 위탁 */
+					) A, (
+						SELECT
+							ABC.dscfc_id,
+							ABC.dscfc_use_de,
+							MAX(ABC.dscfc_use_slip_prcs_ty_cd) AS dscfc_use_slip_prcs_ty_cd,
+							MAX(ABC.dscfc_use_slip_no) AS dscfc_use_slip_no,
+							NVL(MAX(ABC.tot_amt), 0) AS tot_amt,
+							NVL(MAX(ABC.dscfc_usgqty), 0) AS dscfc_usgqty
+						FROM (
+							SELECT
+								AA.dscfc_id,
+								AA.dscfc_use_de,
+								MAX(AA.dscfc_use_slip_prcs_ty_cd) AS dscfc_use_slip_prcs_ty_cd,
+								MAX(AA.dscfc_use_slip_no) AS dscfc_use_slip_no,
+								CASE
+									WHEN AA.dsqty_cfrml_parm_id IN ('2005', '2001')
+									THEN MAX(AA.tot_amt)
+								END AS tot_amt,
+								CASE
+									WHEN AA.dsqty_cfrml_parm_id IN ('2005', '2001')
+									THEN MAX(AA.dscfc_usgqty)
+								END AS dscfc_usgqty
+							FROM (
+								SELECT /*+ LEADING(B A) */
+									A.dscfc_id,
+									A.dscfc_use_de,
+									B.dsqty_cfrml_parm_id,
+									B.dsqty_cfrml_parm_nm,
+									A.dscfc_use_slip_prcs_ty_cd,
+									A.dscfc_use_slip_no,
+									A.tot_amt,
+									A.dscfc_usgqty
+								FROM
+									GHG.tm_rq01103 A,
+									GHG.tm_gg01104 B
+								WHERE
+									(
+										B.dsqty_cfrml_parm_nm LIKE '%CH4배출계수'
+										OR B.dsqty_cfrml_parm_nm LIKE '%CO2배출계수'
+										OR B.dsqty_cfrml_parm_nm LIKE '%N2O배출계수'
+										OR A.dsqty_cfrml_parm_id IN ('2005', '2001')
+									)
+									AND (
+										(A.dscfc_use_slip_no IS NOT NULL
+										AND A.dscfc_use_slip_no NOT LIKE 'TMP%')
+										OR A.dscfc_use_slip_prcs_ty_cd = '1'
+									)
+									AND A.dsqty_cfrml_parm_id IN ('2005', '2001')
+									<choose>
+										<when test='null != cnd and "mnby" eq cnd'>
+									AND A.dscfc_use_de BETWEEN SUBSTR(#{strtDt}, 0, 6) || '01' AND SUBSTR(#{endDt}, 0, 6) || '31'
+										</when>
+										<otherwise>
+									AND A.dscfc_use_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{endDt}, 0, 4) || '1231'
+										</otherwise>
+									</choose>
+									AND A.dsqty_cfrml_parm_id = B.dsqty_cfrml_parm_id
+							) AA
+							GROUP BY
+								AA.dscfc_id,
+								AA.dscfc_use_de,
+								AA.dsqty_cfrml_parm_id,
+								AA.dsqty_cfrml_parm_nm
+						) ABC
+						GROUP BY
+							ABC.dscfc_id,
+							ABC.dscfc_use_de
+					) B
+					WHERE
+						A.dscfc_id = B.dscfc_id(+)
+				)
+			)
+			WHERE
+				dscfc_use_de IS NOT NULL
+			GROUP BY
+				SUBSTR(dscfc_use_de, 0, 6),
+				dscfc_id
+		)
+		GROUP BY
+			dscfc_id,
+			dscfc_procs_ty_cd
+		ORDER BY
+			dscfc_procs_ty_cd,
+			dscfc_nm
+	</select>
+</mapper>

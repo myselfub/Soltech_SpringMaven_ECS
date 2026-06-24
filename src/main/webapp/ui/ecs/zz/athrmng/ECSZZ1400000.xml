@@ -1,0 +1,1170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSZZ1400000.xml
+			* 설 명 : 에너지공통_권한관리_권한관리
+			* 작성일 : 2023.02.09
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.09 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltAthrList" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="athrId" name="권한ID" dataType="text"></w2:column>
+						<w2:column id="intnSysDivCd" name="시스템구분" dataType="text"></w2:column>
+						<w2:column id="athrNm" name="권한명" dataType="text"></w2:column>
+						<w2:column id="idvinfoDealYn" name="개인정보취급여부" dataType="text"></w2:column>
+						<w2:column id="athrDc" name="권한설명" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap id="dmaInqireParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="intnSysDivCd" name="시스템구분" dataType="text"></w2:key>
+						<w2:key id="athrNm" name="권한명" dataType="text"></w2:key>
+						<w2:key id="usrId" name="사용자ID" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap id="dmaInqireAthrUse" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="athrId" dataType="text" name="권한ID"></w2:key>
+						<w2:key id="athrNm" dataType="text" name="권한명"></w2:key>
+						<w2:key id="menuCnt" dataType="text" name="메뉴설정건수"></w2:key>
+						<w2:key id="usrCnt" dataType="text" name="사용자수"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap id="dmaSaveAthr" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="intnSysDivCd" dataType="text" name="시스템구분"></w2:key>
+						<w2:key id="athrId" dataType="text" name="권한ID"></w2:key>
+						<w2:key id="athrNm" dataType="text" name="권한명"></w2:key>
+						<w2:key id="athrDc" dataType="text" name="권한설명"></w2:key>
+						<w2:key id="useYn" dataType="text" name="사용여부"></w2:key>
+						<w2:key id="lastInfo" dataType="text" name="최종수정정보"></w2:key>
+						<w2:key id="rowStatus" dataType="text" name="상태값"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltMenuAthrList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="chk" dataType="text" name="선택"></w2:column>
+						<w2:column id="athrId" dataType="text" name="권한ID"></w2:column>
+						<w2:column id="athrNm" dataType="text" name="권한명"></w2:column>
+						<w2:column id="menuId" dataType="text" name="메뉴ID"></w2:column>
+						<w2:column id="menuNm" dataType="text" name="메뉴명"></w2:column>
+						<w2:column id="menuDc" dataType="text" name="메뉴설명"></w2:column>
+						<w2:column id="grantYn" dataType="text" name="부여여부"></w2:column>
+						<w2:column id="btnAthrList" dataType="text" name="버튼권한리스트"></w2:column>
+						<w2:column id="applcStrtDe" dataType="text" name="적용시작일"></w2:column>
+						<w2:column id="applcEndDe" dataType="text" name="적용종료일"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false">
+					</w2:data>
+				</w2:dataList>
+				<w2:dataMap id="dmaInqireMenuAthr" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="athrId" dataType="text" name="권한ID"></w2:key>
+						<w2:key id="intnSysDivCd" dataType="text" name="시스템구분코드"></w2:key>
+						<w2:key id="menuNm" dataType="text" name="메뉴명"></w2:key>
+						<w2:key id="menuId" dataType="text" name="메뉴ID"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltBtnAthrList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="intnSysDivCd" name="내부시스템구분코드" dataType="text"></w2:column>
+						<w2:column id="btnSeq" name="버튼순번" dataType="text"></w2:column>
+						<w2:column id="btnNm" name="버튼명" dataType="text"></w2:column>
+						<w2:column id="btnAthrVu" name="버튼권한값" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false">
+					</w2:data>
+				</w2:dataList>
+				<w2:dataList id="dltUsrAthrList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="chk" dataType="text" name="선택"></w2:column>
+						<w2:column id="athrId" dataType="text" name="권한그룹ID"></w2:column>
+						<w2:column id="athrNm" dataType="text" name="권한그룹명"></w2:column>
+						<w2:column id="usrDeptCd" dataType="text" name="부서코드"></w2:column>
+						<w2:column id="usrDeptNm" dataType="text" name="부서명"></w2:column>
+						<w2:column id="usrEmpno" dataType="text" name="사번"></w2:column>
+						<w2:column id="usrId" dataType="text" name="사용자ID"></w2:column>
+						<w2:column id="usrNm" dataType="text" name="사용자명"></w2:column>
+						<w2:column id="usrOfcpsCd" dataType="text" name="직위코드"></w2:column>
+						<w2:column id="usrOfcpsNm" dataType="text" name="직위명"></w2:column>
+						<w2:column id="usrJgrdCd" dataType="text" name="직급코드"></w2:column>
+						<w2:column id="usrJgrdNm" dataType="text" name="직급명"></w2:column>
+						<w2:column id="applcStrtDe" dataType="text" name="적용시작일"></w2:column>
+						<w2:column id="applcEndDe" dataType="text" name="적용종료일"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap id="dmaInqireUsrAthr" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="athrId" dataType="text" name="권한ID"></w2:key>
+						<w2:key id="usrDeptNm" dataType="text" name="부서명"></w2:key>
+						<w2:key id="usrNm" dataType="text" name="사용자명"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltSysDivCdList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="sysDivCd" name="시스템구분코드" dataType="text"></w2:column>
+						<w2:column id="sysDivCdNm" name="시스템구분코드명" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.selectRow;
+	scwin.usrId;
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSZZ1400000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 로그인한 사용자 ID 변수설정
+		scwin.usrId = comLib.getUsrId();
+
+		for (var t = tabControl.getTabCount() - 1; t >= 0; t--) {
+			tabControl.setSelectedTabIndex(t);
+		}
+
+		// 사용자에게 부여된 권한의 시스템구분코드를 조회한다.
+		scwin.setAthrSysDivCd();
+	};
+
+	/**
+	 * 공통 코드 조회 콜백
+	 * @param
+	 * @return
+	 */
+	scwin.setAthrSysDivCd = function() {
+		var requestData = {};
+		requestData.data = {"usrId" : scwin.usrId, "sysDivCd" : "SCM_0000"};
+
+		var option = {action : "sc/authmng/retrieveAthrSysDivCd.do",
+			reqData : requestData,
+			resData : dltSysDivCdList,
+			success : "scwin.retrieveAthrSysDivCdCallback",
+			isShowMeg : false
+		};
+		ajaxLib.requestAjaxSyncCode($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.retrieveAthrSysDivCdCallback = function(resBody, e) {
+		if (dltSysDivCdList.getRowCount() == 0) {
+			// 시스템관리자만 접근이 가능합니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00343"), "utilLib.winContainerClose");
+			return;
+		}
+
+		var sysDivCd = comLib.getSysDivCd();
+
+		dmaInqireParam.set("intnSysDivCd", sysDivCd);
+		dmaInqireParam.set("usrId", scwin.usrId);
+
+		scwin.inqireBtnInfo();
+	};
+
+	/**
+	 * 버튼권한값 DB 가져오기
+	 * @param
+	 * @return
+	 */
+	scwin.inqireBtnInfo = function() {
+		var requestData = {};
+		requestData.dmaInqireParam = dmaInqireParam.getJSON();
+
+		var option = {action : "zz/authmng/retrieveBtnInfo.do",
+			reqData : requestData,
+			resData : dltBtnAthrList,
+			success : "scwin.inqireBtnInfoCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 버튼권한값 DB 가져오기
+	 * @param
+	 * @return
+	*/
+	scwin.inqireBtnInfoCallback = function(resBody, e) {
+		if (resBody.message.code == "success") {
+			if (dltBtnAthrList.getRowCount() > 0) {
+				//console.log("조회된 데이터는 총 " + dltBtnAthrList.getRowCount() + " 건 입니다.");
+			}
+		}
+
+		// 화면 오픈시 자동조회를 한다.
+		comLib.setEnterKeyEvent(grpInqire, scwin.btnInqire_onclick);
+		comLib.setEnterKeyEvent(grpInqireMenu, scwin.btnInqireMenu_onclick);
+		comLib.setEnterKeyEvent(grpInqireUsr, scwin.btnInqireUsr_onclick);
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 권한목록을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var requestData = {};
+		requestData.dmaInqireParam = dmaInqireParam.getJSON();
+		var option = {
+			//action : "zz/authmng/retrieveAthr.do",
+			action : "zz/authmng/retrieveAthrEcs.do",
+			reqData : requestData,
+			resData : dltAthrList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireCallback = function(resBody) {
+		if (resBody.message.code == "success") {
+			txtCnt.setValue(dltAthrList.getRowCount());
+
+			// 권한ID는 읽기 속성으로 설정 변경
+			for (var idx = 0; idx < dltAthrList.getRowCount(); idx++) {
+				grdAthrList.setCellReadOnly(idx, "athrId", true);
+				grdAthrList.setCellReadOnly(idx, "idvinfoDealYn", true);
+			}
+		} else {
+			comLib.alert($p, "fail");
+		}
+	};
+
+	/**
+	 * 권한그룹 행 추가
+	 * @param
+	 * @return
+	 */
+	scwin.btnAddRowAthr_onclick = function() {
+		var insertIndex = dltAthrList.insertRow();
+		dltAthrList.setCellData(insertIndex, "intnSysDivCd", comLib.getSysDivCd());
+		grdAthrList.setFocusedCell(insertIndex, "athrId", true);
+	};
+
+	/**
+	 * 권한그룹 행 삭제
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelRowAthr_onclick = function() {
+		var selectRowIndex = grdAthrList.getFocusedRowIndex();
+		var rowStat = dltAthrList.getRowStatus(selectRowIndex);
+		var strAthrId = "";
+
+		if (rowStat != "C") {
+			//dltAthrList.deleteRow(selectRowIndex);
+			strAthrId = dltAthrList.getCellData(selectRowIndex, "athrId");
+
+			if (strAthrId != null || strAthrId != "") {
+				dmaSaveAthr.setJSON(dltAthrList.getRowJSON(selectRowIndex));
+				scwin.inqireAthrUse(selectRowIndex);
+			} else {
+				// 삭제하고자 하는 데이터 선택 후 삭제하도록 알림
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00252"));
+			}
+		} else {
+			dltAthrList.removeRow(selectRowIndex);
+		}
+	};
+
+	/**
+	 * 권한 삭제전 등록된 정보가 있는지 확인한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireAthrUse = function(rowIndex) {
+		var requestData = {};
+		requestData.dmaSaveAthr = dmaSaveAthr.getJSON();
+
+		scwin.selectRow = rowIndex;
+
+		var option = {action : "zz/authmng/selectAthrUse.do",
+			reqData : requestData,
+			resData : dmaInqireAthrUse,
+			success : "scwin.inqireAthrUseCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 권한 삭제전 등록된 정보조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireAthrUseCallback = function(resBody) {
+		var menuCnt = 0;
+		var usrCnt = 0;
+
+		if (resBody.message.code == "success") {
+			menuCnt = dmaInqireAthrUse.get("menuCnt");
+			usrCnt = dmaInqireAthrUse.get("usrCnt");
+
+			if (menuCnt == 0 && usrCnt == 0) {
+				dltAthrList.deleteRow(scwin.selectRow);
+				// scwin.btnDel_onclick();
+			} else {
+				// 사용중인 권한그룹은 삭제 못하도록 메세지 알림
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00246", dltAthrList.getCellData(grdAthrList.getFocusedRowIndex(), "athrNm")));
+			}
+		}
+	};
+
+	/**
+	 * 권한그룹그리드에서 특정권한그룹을 선택시 해당 그룹의 메뉴조회를 한다.
+	 * @param <Int> row
+	 * @param <Int> col
+	 * @return
+	 */
+	scwin.grdAthrList_oncellclick = function(row, col) {
+		var rowIndex = row;
+		var colIndex = col;
+
+		var strAthrId = dltAthrList.getCellData(rowIndex, "athrId");
+		var tabIndex = tabControl.getSelectedTabIndex();
+
+		if (colIndex == 0) {
+			if (strAthrId != null && strAthrId != "" && dltAthrList.getRowStatus(rowIndex) != "C") {
+				dmaInqireMenuAthr.set("athrId", strAthrId);
+				dmaInqireMenuAthr.set("intnSysDivCd", comLib.getSysDivCd());
+				dmaInqireMenuAthr.set("menuNm", "");
+
+				dmaInqireUsrAthr.set("athrId", strAthrId);
+				dmaInqireUsrAthr.set("intnSysDivCd", comLib.getSysDivCd());
+
+				if (tabIndex == 0) {
+					scwin.btnInqireMenu_onclick();
+				} else {
+					scwin.btnInqireUsr_onclick();
+				}
+			} else {
+				dmaInqireMenuAthr.reset();
+				dmaInqireUsrAthr.reset();
+				utilLib.clearDcObj(dltMenuAthrList);
+				utilLib.clearDcObj(dltUsrAthrList);
+			}
+		}
+	};
+
+	/**
+	 * 탭 변경에 따라 조회
+	 * @param
+	 * @return
+	 */
+	scwin.tabControl_ontabclick = function(tabID, idx) {
+		if (idx == 0) {
+			scwin.btnInqireMenu_onclick();
+		} else {
+			scwin.btnInqireUsr_onclick();
+		}
+	};
+
+	/**
+	 * 권한그룹에서 선택한 권한을 기준으로 메뉴에 설정된 정보를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqireMenu_onclick = function() {
+		var athrId = dmaInqireMenuAthr.get("athrId");
+		var intnSysDivCd = dmaInqireMenuAthr.get("intnSysDivCd");
+
+		if (athrId == "" || intnSysDivCd == "") {
+			// comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "권한ID"));
+			return;
+		}
+
+		var requestData = {};
+		requestData.dmaInqireMenuAthr = dmaInqireMenuAthr.getJSON();
+
+		var option = {action : "zz/authmng/retrieveIntnAthrMenu.do",
+			reqData : requestData,
+			resData : dltMenuAthrList,
+			success : "scwin.inqireMenuCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.inqireMenuCallback = function(resBody) {
+		if (resBody.message.code == "success") {
+			//console.log("조회된 데이터는 총 " + dltMenuAthrList.getRowCount() + " 건 입니다.");
+
+			if (dltMenuAthrList.getRowCount() > 0) {
+				var inqireAthrId = dmaInqireMenuAthr.get("athrId");
+
+				for (var idx = 0; idx < dltMenuAthrList.getRowCount(); idx++) {
+					var athrId = dltMenuAthrList.getCellData(idx, "athrId");
+
+					if (athrId != null && athrId != "") {
+						dltMenuAthrList.setCellData(idx, "grantYn", "Y");
+						grdMenuAthrList.setCellReadOnly(idx, "btnAthrList", false);
+					} else {
+						dltMenuAthrList.setCellData(idx, "athrId", inqireAthrId);
+						dltMenuAthrList.setCellData(idx, "grantYn", "N");
+						grdMenuAthrList.setCellReadOnly(idx, "btnAthrList", true);
+					}
+				}
+
+				dltMenuAthrList.modifyAllStatus("R");
+			}
+		} else {
+			comLib.alert($p,  "fail");
+		}
+	};
+
+	 /**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm1 = spnSubTitle.getValue();
+		var subTitleNm2 = document.getElementById($p.id + "tabControl_tab_tabLogin_tabHTML").title;
+		// 엑셀 내부 타이틀 추가_240108
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 7,
+			text 		: `${menuNm}_` + `${subTitleNm1}(` + `${subTitleNm2})`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		comLib.downloadExcel(grdMenuAthrList, {
+			fileName : `${menuNm}_` + `${subTitleNm1}(` + `${subTitleNm2}).xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			useDataFormat: true,
+			applyDataFormat : true,
+			useHeaderCheckBoxLabel : true,
+			useHeaderDataFormat : true
+		}, infoArr);
+	};
+
+	/**
+	 * 해더 클릭 시 자동 체크되도록 한다.
+	 * @param <Object> info
+	 * @return
+	 */
+	scwin.grdMenuAthrList_onheaderclick = function(headerId) {
+		if (headerId == "hGrantYn") {
+			for (var idx = 0; idx < dltMenuAthrList.getRowCount(); idx++) {
+				if (dltMenuAthrList.getCellData(idx, "grantYn") == "Y") {
+					grdMenuAthrList.setCellReadOnly(idx, "btnAthrList", false);
+					dltMenuAthrList.setCellData(idx, "btnAthrList", "Q,S,D,N,CC,E,EU");
+					dltMenuAthrList.modifyRowStatus(idx, "C");
+				} else {
+					grdMenuAthrList.setCellReadOnly(idx, "btnAthrList", true);
+					dltMenuAthrList.setCellData(idx, "btnAthrList", "");
+					dltMenuAthrList.deleteRow(idx);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 체크박스 이벤트
+	 * @param
+	 * @return
+	 */
+	scwin.grdMenuAthrList_onviewchange = function(info) {
+		var targetRow = info.rowIndex;
+		var targetCol = info.colIndex;
+		var oldValue = info.oldValue;
+		var newValue = info.newValue;
+
+		if (targetCol == 2) {
+			if (newValue == "Y") {
+				grdMenuAthrList.setCellReadOnly(targetRow, "btnAthrList", false);
+				dltMenuAthrList.setCellData(targetRow, "btnAthrList", "Q,S,D,N,CC,E,EU");
+				dltMenuAthrList.modifyRowStatus(targetRow, "C");
+			} else {
+				grdMenuAthrList.setCellReadOnly(targetRow, "btnAthrList", true);
+				dltMenuAthrList.setCellData(targetRow, "btnAthrList", "");
+				dltMenuAthrList.deleteRow(targetRow); // "D"
+			}
+		}
+	};
+
+	/**
+	 * 권한그룹에서 선택한 권한을 기준으로 메뉴에 설정된 정보를 조회한다. 
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqireUsr_onclick = function() {
+		// 권한ID를 지정하고 조회하도록 한다.
+		var athrId = dmaInqireUsrAthr.get("athrId");
+
+		if (athrId == "") {
+			// comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "권한ID"));
+			return;
+		}
+
+		var requestData = {};
+		requestData.dmaInqireUsrAthr = dmaInqireUsrAthr.getJSON();
+
+		var option = {action : "zz/authmng/retriebeUsrAthrGrp.do",
+			reqData : requestData,
+			resData : dltUsrAthrList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 사용자권한 추가
+	 * @param
+	 * @return
+	 */
+	scwin.btnAddRowUsr_onclick = function() {
+		scwin.inqireUsr();
+	};
+
+	/**
+	 * 사용자 조회
+	 * @param
+	 * @return
+	 */
+	scwin.inqireUsr = function() {
+		var url = comLib.HRM_POP_URL + "/ui/hrm/zz/searchmng/HRMZZ20000007.xml";
+
+		//팝업창 옵션
+		var option = {popupID : "HRMZZ20000007",
+			width : 800,
+			height : 500,
+			title : "사원 조회"
+		};
+
+		var strEnc = comLib.dataDecEnc(utilLib.getDate(), "E"); //암호화 키값
+		var usrInfo; //세션정보 및 윈도우 타이틀
+
+		usrInfo = JSON.stringify(comLib.getUserInfo4Param(strEnc, encodeURI(option.title)));
+
+		var jsonObj = {
+			// 필수값
+			userInfo : usrInfo,
+			closeCallbackFncName : "scwin.inqireUsrCallback",
+			popupId : option.popupID,
+			// 선택값(팝업에 따라 적용)
+			//, topDeptCd : "50041064"	// 특정 부서의 하위 부서만 조회하고 싶은 경우 입력
+			//, selectedDeptCd : "50041580"	// 자동선택될 부서 ID, defaultDeptYn 보다 우선순위가 높음
+			defaultDeptYn : "Y",	// 초기 로딩 시 로그인한 사용자 부서 자동 선택 여부
+			multiCheckYn : "N",	// 다건 선택 여부
+			treeCheckYn : "N"	// 조직트리 다건 선택 여부
+		};
+
+		comLib.openPostWinPopup($p, url, option, jsonObj);
+	};
+
+	/**
+	 * 사용자 검색 CallBack 실행
+	 * @param <Object> retirnValue
+	 * @param <String> popupId
+	 * @return
+	 */
+	scwin.inqireUsrCallback = function(returnValue, popupId) {
+		var selectedOrg =  returnValue[0];
+
+		// 사용자 중복체크
+		for (var j = 0; j < dltUsrAthrList.getRowCount(); j++) {
+			if (selectedOrg.usrId == dltUsrAthrList.getCellData(j, "usrId")) {
+				// {0}(은/는) 중복될 수 없습니다.
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00068", "사번"));
+				return;
+			}
+		}
+
+		var insertIndex = dltUsrAthrList.insertRow();
+
+		grdUsrAthrList.setFocusedCell(insertIndex, "usrNm", true);
+		dltUsrAthrList.setCellData(insertIndex, "athrId", dmaInqireUsrAthr.get("athrId"));
+		dltUsrAthrList.setCellData(insertIndex, "usrId", selectedOrg.usrEmpno);
+		dltUsrAthrList.setCellData(insertIndex, "usrEmpno", selectedOrg.usrEmpno);
+		dltUsrAthrList.setCellData(insertIndex, "usrNm", selectedOrg.usrNm);
+		dltUsrAthrList.setCellData(insertIndex, "usrDeptNm", selectedOrg.usrDeptNm);
+		dltUsrAthrList.setCellData(insertIndex, "usrOfcpsNm", selectedOrg.usrOfcpsNm);
+		dltUsrAthrList.setCellData(insertIndex, "usrJgrdNm", selectedOrg.usrJgrdNm);
+		dltUsrAthrList.setCellData(insertIndex, "applcStrtDe", utilLib.getCurrentDate());
+		dltUsrAthrList.setCellData(insertIndex, "applcEndDe", scwin.getEndDe());
+	};
+
+	/**
+	 * 사용자권한 행 삭제
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelRowUsr_onclick = function() {
+		var selectRowIndex = grdUsrAthrList.getFocusedRowIndex();
+		var rowStat = dltUsrAthrList.getRowStatus(selectRowIndex);
+
+		if (rowStat != "C") {
+			dltUsrAthrList.deleteRow(selectRowIndex);
+		} else {
+			dltUsrAthrList.removeRow(selectRowIndex);
+		}
+	};
+
+	/**
+	 * 다음 해의 1월말을 가져온다.
+	 */
+	scwin.getEndDe = function() {
+		var today = new Date();
+		var year = today.getFullYear();
+
+		// 1월이면 년도를 바꾸지 않고 날짜만 31일로 바꾼다.(?)
+		if (today.getMonth() > 0) {
+			year++;
+		}
+
+		return year + "0131";
+	}
+
+	/**
+	* 변경된 데이터 저장, 수정한다.
+	* @param
+	* @return
+	*/
+	scwin.btnSave_onclick = function() {
+		var valInfo = [
+			{id : "athrId", mandatory : true},
+			{id : "intnSysDivCd", mandatory : true},
+			{id : "athrNm", mandatory : true}
+		];
+
+		var valInfoMenu = [
+			{id : "menuId", mandatory : true}
+		];
+
+		var valInfoUsr = [
+			{id : "athrId", mandatory : true},
+			{id : "usrId", mandatory : true}
+		];
+
+		if ((dltAthrList.getModifiedData() == "") &&
+			(dltMenuAthrList.getModifiedData() == "") &&
+			(dltUsrAthrList.getModifiedData() == "")) {
+			// 처리할 데이터가 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+			return;
+		}
+
+		// 중복체크
+		var insertList = dltAthrList.getInsertedJSON();
+
+		if (insertList != null && insertList.length > 0) {
+			for (var idx = 0; idx < insertList.length; idx++) {
+				for (var j = 0; j < dltAthrList.getRowCount(); j++) {
+					if (dltAthrList.getRowStatus(j) != "C" && insertList[idx].athrId == dltAthrList.getCellData(j, "athrId")) {
+						// {0}(은/는) 중복될 수 없습니다.
+						comLib.alert($p, utilLib.getMessage("SCM.INFO.00068", "권한ID"));
+						return;
+					}
+				}
+			}
+		}
+
+		if ((utilLib.validateGridView(grdAthrList, valInfo)) &&
+			(utilLib.validateGridView(grdMenuAthrList, valInfoMenu)) &&
+			(utilLib.validateGridView(grdUsrAthrList, valInfoUsr))) {
+			// 저장할것인지 confirm
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00239"), "scwin.saveConfirmCallback");
+		}
+	};
+
+	/**
+	 * 수정/저장 saveConfirmCallback 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var requestData = {};
+		requestData.dltAthrList = dltAthrList.getModifiedJSON();
+		requestData.dltMenuAthrList = dltMenuAthrList.getModifiedJSON();
+		requestData.dltUsrAthrList = dltUsrAthrList.getModifiedJSON();
+
+		var option = {action : "zz/authmng/saveAthrMng.do",
+			reqData : requestData,
+			success : "scwin.saveAthrMngCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 수정/저장 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.saveAthrMngCallback = function(resBody) {
+		comLib.alert($p, resBody.message.code_name);
+
+		if (dltAthrList.getModifiedJSON().length > 0) {
+			scwin.btnCancl_onclick();
+		} else {
+			dltMenuAthrList.setJSON([]);
+			dltUsrAthrList.setJSON([]);
+
+			if (tabControl.getSelectedTabIndex() == 0) {
+				scwin.btnInqireMenu_onclick();
+			} else {
+				scwin.btnInqireUsr_onclick();
+			}
+		}
+	};
+
+	/**
+	 * 작업내용 취소
+	 * @param
+	 * @return
+	 */
+	scwin.btnCancl_onclick = function() {
+//		dmaInqireParam.reset();
+		dmaInqireMenuAthr.reset();
+		dmaInqireUsrAthr.reset();
+
+		dltAthrList.removeAll();
+		dltMenuAthrList.removeAll();
+		dltUsrAthrList.removeAll();
+
+//		dmaInqireParam.set("intnSysDivCd", comLib.getSysDivCd());
+
+		scwin.btnInqire_onclick();
+	};
+
+	scwin.btnDel_onclick = function() {
+		if ((dltMenuAthrList.getModifiedData() == "") &&
+			(dltUsrAthrList.getModifiedData() == "")) {
+			// 처리할 데이터가 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+			return;
+		}
+
+		if (dltMenuAthrList.getModifiedData() != "") {
+			comLib.deleteGridView(grdMenuAthrList);
+		}
+
+		if (dltUsrAthrList.getModifiedData() != "") {
+			comLib.deleteGridView(grdUsrAthrList);
+		}
+
+		// 삭제할것인지 confirm
+		comLib.confirm($p, utilLib.getMessage("SCM.INFO.00251"), "scwin.saveConfirmCallback");
+	};
+]]></script>
+	</head>
+	<body>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<xf:group class="wrap">
+			<xf:group id="grpInqire" class="search-box">
+				<xf:group class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="권한명"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<xf:input id="ibxAthrNm1" ref="data:dmaInqireParam.athrNm"></xf:input>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="시스템구분" style="display:none;"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:attributes>
+									<w2:colspan>1</w2:colspan>
+									<w2:rowspan>1</w2:rowspan>
+								</w2:attributes>
+								<w2:autoComplete id="actIntnSysdivCd1" chooseOptionLabel="- 전체 -" displayMode="label" editType="select"
+									ev:onviewchange="scwin.actIntnSysdivCd1_onviewchange" ref="data:dmaInqireParam.intnSysDivCd" search="contain"
+									style="display:none;" submenuSize="auto" useKeywordHighlight="false" visibleRowNum="5">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltSysDivCdList">
+											<w2:label ref="sysDivCdNm"></w2:label>
+											<w2:value ref="sysDivCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" ev:onclick="scwin.btnInqire_onclick" userData1="Q">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="layout-float">
+					<xf:group class="float-con left-area cw7" style="height:600px;">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span label="권한목록"></w2:span>
+									<w2:span id="txtCnt" label="0" class="title-num"></w2:span>
+									<w2:span class="sub-title-l" label="&amp;emsp;* 권한ID : ECSOP(운영자), ECSGN(일반사용자), ECSSU(관리자)"></w2:span>
+								</xf:group>
+								<xf:group class="com-area">
+									<xf:group class="btn-group">
+										<w2:anchor id="btnAddRowAthr" class="add_row fa fa-plus" ev:onclick="scwin.btnAddRowAthr_onclick" outerDiv="false"
+											userData1="S">
+											<xf:label><![CDATA[행추가]]></xf:label>
+										</w2:anchor>
+										<w2:anchor id="btnDelRowAthr" class="del_row fa fa-minus" ev:onclick="scwin.btnDelRowAthr_onclick" outerDiv="false"
+											userData1="D">
+											<xf:label><![CDATA[행삭제]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+									<xf:group class="info-box"></xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="list-box box">
+								<w2:gridView id="grdAthrList" scrollByColumnAdaptive="false" summaryAuto="false" useShiftKey="true" scrollByColumn="false"
+									focusMode="row" fixedColumnWithHidden="true" dataList="dltAthrList" ignoreCellClick="false" visibleRowNum="16"
+									ignoreToggleOnDisabled="false" sortable="true" tooltipDisplay="true" ev:oncellclick="scwin.grdAthrList_oncellclick" style="height:45.4rem"
+									keyMoveEditMode="true" defaultCellHeight="35">
+									<w2:caption></w2:caption>
+									<w2:header>
+										<w2:row>
+											<w2:column id="hAthrId" inputType="text" value="권한ID" width="100">
+											</w2:column>
+											<w2:column id="hAthrNm" inputType="text" value="권한명" width="150">
+											</w2:column>
+											<w2:column id="hIdvinfoDealYn" inputType="text" value="개인정보취급여부" width="50">
+											</w2:column>
+											<w2:column id="hAthrDc" width="100" inputType="text" value="권한설명">
+											</w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody>
+										<w2:row>
+											<w2:column id="athrId" inputType="text" width="100" textAlign="left">
+											</w2:column>
+											<w2:column id="athrNm" inputType="text" width="150" textAlign="left">
+											</w2:column>
+											<w2:column id="idvinfoDealYn" inputType="checkbox" width="150" checkboxLabel="&amp;nbsp" dataType="boolean"
+												defaultValue="N" falseValue="N" trueValue="Y" valueType="other">
+											</w2:column>
+											<w2:column id="athrDc" width="150" inputType="text" textAlign="left">
+											</w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="float-con right-area cw13">
+						<xf:group class="con-box">
+							<xf:group class="title-group">
+								<xf:group tagname="h3">
+									<w2:span id="spnSubTitle" label="권한상세"></w2:span>
+								</xf:group>
+							</xf:group>
+							<xf:group class="tab-box box">
+								<w2:tabControl id="tabControl" class="cm_tab" confirmTrueAction="exist" confirmFalseAction="new" useTabKeyOnly="true"
+									useMoveNextTabFocus="false" useConfirmMessage="false" alwaysDraw="false" style="height:44.4rem;" ev:ontabclick="scwin.tabControl_ontabclick">
+									<w2:tabs id="tabLogin" ev:onclick="scwin.tabs4_onclick" disabled="false" label="권한별 메뉴관리"></w2:tabs>
+									<w2:tabs id="tabMenu" disabled="false" label="권한별 사용자관리"></w2:tabs>
+									<w2:content id="cntAthrMenu" alwaysDraw="false">
+										<xf:group id="grpInqireMenu" class="search-box">
+											<xf:group class="list">
+												<xf:group class="w2tb" tagname="table">
+													<w2:attributes>
+														<w2:summary></w2:summary>
+													</w2:attributes>
+													<xf:group tagname="colgroup">
+														<xf:group class="cw3" tagname="col"></xf:group>
+														<xf:group tagname="col"></xf:group>
+														<xf:group class="cw3" tagname="col"></xf:group>
+														<xf:group tagname="col"></xf:group>
+														<xf:group class="cw3" tagname="col"></xf:group>
+														<xf:group tagname="col"></xf:group>
+													</xf:group>
+													<xf:group tagname="tr">
+														<xf:group class="w2tb_th" tagname="th">
+															<w2:span label="메뉴명"></w2:span>
+														</xf:group>
+														<xf:group class="w2tb_td" tagname="td">
+															<xf:input id="ibxMenuNm" ref="data:dmaInqireMenuAthr.menuNm">
+															</xf:input>
+														</xf:group>
+														<xf:group class="w2tb_th" tagname="th">
+															<w2:span label="메뉴ID">
+															</w2:span>
+														</xf:group>
+														<xf:group class="w2tb_td" tagname="td">
+															<xf:input id="ibxMenuId" ref="data:dmaInqireMenuAthr.menuId">
+															</xf:input>
+														</xf:group>
+														<xf:group class="w2tb_th" tagname="th"></xf:group>
+														<xf:group class="w2tb_td" tagname="td"></xf:group>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="btn-group">
+												<w2:anchor id="btnInqireMenu" class="fa fa-search btn_sh" ev:onclick="scwin.btnInqireMenu_onclick" outerDiv="false"
+													userData1="Q">
+													<xf:label><![CDATA[조회]]></xf:label>
+												</w2:anchor>
+												<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" outerDiv="false" ev:onclick="scwin.btnDownExcel_onclick"
+													userData1="E">
+													<xf:label><![CDATA[엑셀]]></xf:label>
+												</w2:anchor>
+											</xf:group>
+										</xf:group>
+										<w2:gridView id="grdMenuAthrList" ignoreToggleOnDisabled="false" useShiftKey="true" useFilterList="false"
+											scrollByColumn="false" showSortableUseFilter="false" scrollByColumnAdaptive="false" summaryAuto="false" fixedColumnWithHidden="true"
+											summaryOnlyAuto="false" dataList='dltMenuAthrList' ignoreCellClick="false" visibleRowNum="16" fixedColumn="4"
+											ev:onheaderclick="scwin.grdMenuAthrList_onheaderclick" ev:onviewchange="scwin.grdMenuAthrList_onviewchange" keyMoveEditMode="true"
+											tooltipDisplay="true" defaultCellHeight="35" focusMode="row">
+											<w2:header>
+												<w2:row>
+													<w2:column id="hMenuNm" width="150" inputType="text" value="메뉴명">
+													</w2:column>
+													<w2:column id="hMenuId" width="120" inputType="text" value="메뉴ID">
+													</w2:column>
+													<w2:column id="hGrantYn" checkboxLabel="&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;부여" dataType="boolean"
+														falseValue="N" trueValue="Y" width="70" inputType="checkbox" style="padding-left:15px;height:20px" textAlign="left" value="부여">
+													</w2:column>
+													<w2:column id="hBtnAthrList" width="170" inputType="text" value="버튼권한">
+													</w2:column>
+													<w2:column id="hApplcStrtDe" width="100" inputType="text" value="적용일자">
+													</w2:column>
+													<w2:column id="hApplcEndDe" width="100" inputType="text" value="종료일자">
+													</w2:column>
+													<w2:column id="hMenuDc" width="60" inputType="text" value="메뉴설명">
+													</w2:column>
+												</w2:row>
+											</w2:header>
+											<w2:gBody>
+												<w2:row>
+													<w2:column id="menuNm" width="150" inputType="text" textAlign="left" readOnly="true">
+													</w2:column>
+													<w2:column id="menuId" width="120" inputType="text" readOnly="true">
+													</w2:column>
+													<w2:column id="grantYn" width="70" inputType="checkbox" checkboxLabel="&amp;nbsp" dataType="boolean" defaultValue="N"
+														falseValue="N" trueValue="Y" valueType="other">
+													</w2:column>
+													<w2:column id="btnAthrList" width="170" inputType="checkcombobox" separator=",">
+														<w2:choices>
+															<w2:itemset nodeset="data:dltBtnAthrList">
+																<w2:label ref="btnNm"></w2:label>
+																<w2:value ref="btnAthrVu"></w2:value>
+															</w2:itemset>
+														</w2:choices>
+													</w2:column>
+													<w2:column id="applcStrtDe" width="100" inputType="calendar">
+													</w2:column>
+													<w2:column id="applcEndDe" width="100" inputType="calendar">
+													</w2:column>
+													<w2:column id="menuDc" width="90" inputType="text" textAlign="left" readOnly="true">
+													</w2:column>
+												</w2:row>
+											</w2:gBody>
+										</w2:gridView>
+									</w2:content>
+									<w2:content id="conMenuConect" alwaysDraw="false">
+										<xf:group id="grpInqireUsr" class="search-box">
+											<xf:group class="list">
+												<xf:group class="w2tb" tagname="table">
+													<w2:attributes>
+														<w2:summary></w2:summary>
+													</w2:attributes>
+													<xf:group tagname="colgroup">
+														<xf:group class="cw3" tagname="col"></xf:group>
+														<xf:group tagname="col"></xf:group>
+														<xf:group class="cw3" tagname="col"></xf:group>
+														<xf:group tagname="col"></xf:group>
+														<xf:group class="cw3" tagname="col"></xf:group>
+														<xf:group tagname="col"></xf:group>
+													</xf:group>
+													<xf:group tagname="tr">
+														<xf:group class="w2tb_th" tagname="th">
+															<w2:span label="부서명"></w2:span>
+														</xf:group>
+														<xf:group class="w2tb_td" tagname="td">
+															<xf:input id="ibxDeptNm" ref="data:dmaInqireUsrAthr.usrDeptNm">
+															</xf:input>
+														</xf:group>
+														<xf:group class="w2tb_th" tagname="th">
+															<w2:span label="사용자명"></w2:span>
+														</xf:group>
+														<xf:group class="w2tb_td" tagname="td">
+															<xf:input id="ibxUsrNm" ref="data:dmaInqireUsrAthr.usrNm">
+															</xf:input>
+														</xf:group>
+														<xf:group class="w2tb_th" tagname="th"></xf:group>
+														<xf:group class="w2tb_td" tagname="td"></xf:group>
+													</xf:group>
+												</xf:group>
+											</xf:group>
+											<xf:group class="btn-group">
+												<w2:anchor class="fa fa-search btn_sh" ev:onclick="scwin.btnInqireUsr_onclick" id="btnInqireUsr" outerDiv="false"
+													userData1="Q">
+													<xf:label><![CDATA[조회]]></xf:label>
+												</w2:anchor>
+											</xf:group>
+										</xf:group>
+										<xf:group class="title-group">
+											<xf:group tagname="h4">
+												<w2:span></w2:span>
+											</xf:group>
+											<xf:group class="com-area">
+												<xf:group class="btn-group">
+													<w2:anchor id="btnAddRowUsr" class="add_row fa fa-plus" ev:onclick="scwin.btnAddRowUsr_onclick" outerDiv="false"
+														userData1="S">
+														<xf:label><![CDATA[행추가]]></xf:label>
+													</w2:anchor>
+													<w2:anchor id="btnDelRowUsr" class="del_row fa fa-minus" ev:onclick="scwin.btnDelRowUsr_onclick" outerDiv="false"
+														userData1="D">
+														<xf:label><![CDATA[행삭제]]></xf:label>
+													</w2:anchor>
+												</xf:group>
+												<xf:group class="info-box"></xf:group>
+											</xf:group>
+										</xf:group>
+										<w2:gridView id="grdUsrAthrList" autoFit="allColumn" dataList="dltUsrAthrList" fixedColumnWithHidden="true"
+											ignoreCellClick="false" ignoreToggleOnDisabled="false" scrollByColumn="false" scrollByColumnAdaptive="false" summaryAuto="false"
+											useShiftKey="true" visibleRowNum="16" focusMode="row" keyMoveEditMode="true" defaultCellHeight="35">
+											<w2:caption></w2:caption>
+											<w2:header>
+												<w2:row>
+													<w2:column id="chkHeader" blockSelect="false" checkboxLabel="&amp;nbsp" displayMode="label" inputType="checkbox"
+														value="선택" width="50">
+													</w2:column>
+													<w2:column id="usrNm" inputType="text" value="사용자명" width="110">
+													</w2:column>
+													<w2:column id="usrId" width="120" inputType="text" value="사번">
+													</w2:column>
+													<w2:column id="usrDeptNm" width="110" inputType="text" value="부서명">
+													</w2:column>
+													<w2:column id="usrOfcpsNm" inputType="text" value="직위" width="100">
+													</w2:column>
+													<w2:column id="usrJgrdNm" inputType="text" value="직급" width="100">
+													</w2:column>
+													<w2:column id="hApplcStrtDe" width="100" inputType="text" value="적용일자">
+													</w2:column>
+													<w2:column id="hApplcEndDe" width="100" inputType="text" value="종료일자">
+													</w2:column>
+												</w2:row>
+											</w2:header>
+											<w2:gBody>
+												<w2:row>
+													<w2:column id="chk" blockSelect="false" checkboxLabel="&amp;nbsp" dataType="boolean" falseValue="N" inputType="checkbox"
+														trueValue="Y" width="50">
+													</w2:column>
+													<w2:column id="usrNm" inputType="text" readOnly="true" width="110">
+													</w2:column>
+													<w2:column id="usrId" width="120" inputType="text" readOnly="true">
+													</w2:column>
+													<w2:column id="usrDeptNm" width="110" inputType="text" readOnly="true">
+													</w2:column>
+													<w2:column id="usrOfcpsNm" inputType="text" readOnly="true" width="100">
+													</w2:column>
+													<w2:column id="usrJgrdNm" inputType="text" readOnly="true" width="100">
+													</w2:column>
+													<w2:column id="applcStrtDe" width="100" inputType="calendar">
+													</w2:column>
+													<w2:column id="applcEndDe" width="100" inputType="calendar">
+													</w2:column>
+												</w2:row>
+											</w2:gBody>
+										</w2:gridView>
+									</w2:content>
+								</w2:tabControl>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnSave" outerDiv="false" ev:onclick="scwin.btnSave_onclick" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnCancl" outerDiv="false" ev:onclick="scwin.btnCancl_onclick" userData1="CC">
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDel" outerDiv="false" ev:onclick="scwin.btnDel_onclick" userData1="D"
+						toolTip="선택한 권한이 사용자권한관리, 권한별메뉴관리에 데이터가 1건이라도 등록이 되어 있으면 삭제가 불가능합니다. ">
+						<xf:label><![CDATA[삭제]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

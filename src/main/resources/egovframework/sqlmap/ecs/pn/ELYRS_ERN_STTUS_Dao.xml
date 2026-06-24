@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 생산 - 계획대비 발전수익 현황 -->
+<mapper namespace="ELYRS_ERN_STTUS_Dao">
+	<select id="ELYRS_ERN_STTUS_Dao_retrieveElyrsErnSttusList" parameterType="kw.ecs.pn.elyrsernsttus.vo.ElyrsErnSttusVo" resultType="egovMap">
+		/* ELYRS_ERN_STTUS_Dao_retrieveElyrsErnSttusList */
+		WITH YEAR_LIST AS (
+			SELECT /*+ MATERIALZE */
+				TO_CHAR(TO_NUMBER(SUBSTR(#{strtDt}, 0, 4)) + LEVEL - 1) AS yy
+			FROM
+				DUAL
+			CONNECT BY
+				LEVEL &lt;= TO_CHAR(TO_NUMBER(SUBSTR(#{endDt}, 0, 4)) - TO_NUMBER(SUBSTR(#{strtDt}, 0, 4)) + 1)
+		)
+		SELECT
+			SUBSTR(yy, 0, 4) AS year, /* inqire_de, */
+			ROUND(SUM(s2) / 1000 / 1000, 1) AS epwr_delng_qy_plan,
+			ROUND(SUM(r2) / 1000 / 1000, 1) AS epwr_delng_qy_acmslt,
+			CASE
+				WHEN SUM(r2) &gt; 0 AND SUM(s2) &gt; 0
+				THEN ROUND(SUM(r2) / SUM(s2) * 100, 1)
+				ELSE 0
+			END AS epwr_delng_qy_acmtrt,
+			ROUND(SUM(s3) / 1000 / 1000 / 100, 1) AS elyrs_ern_plan,
+			ROUND(SUM(r3) / 1000 / 1000 / 100, 1) AS elyrs_ern_acmslt,
+			CASE
+				WHEN SUM(r3) &gt; 0 AND SUM(s3) &gt; 0
+				THEN ROUND(SUM(r3) / SUM(s3) * 100, 1)
+				ELSE 0
+			END AS elyrs_ern_acmtrt,
+			CASE
+				WHEN SUM(s3) &gt; 0 AND SUM(s2) &gt; 0
+				THEN ROUND(SUM(s3) / SUM(s2), 1)
+				ELSE 0
+			END AS sle_upc_plan,
+			CASE
+				WHEN SUM(r3) &gt; 0 AND SUM(r2) &gt; 0
+				THEN ROUND(SUM(r3) / SUM(r2), 1)
+				ELSE 0
+			END AS sle_upc_acmslt,
+			CASE
+				WHEN SUM(r3) &gt; 0 AND SUM(r2) &gt; 0 AND SUM(s3) &gt; 0 AND SUM(s2) &gt; 0
+				THEN ROUND((SUM(r3) / SUM(r2)) / (SUM(s3) / SUM(s2)) * 100, 1)
+				ELSE 0
+			END AS sle_upc_acmtrt
+		FROM (
+			SELECT
+				yy,
+				elcpwstn_cls_nm,
+				elcpwstn_cd,
+				elcpwstn_nm,
+				s2,
+				r2,
+				s3,
+				r3,
+				dsply_ordr
+			FROM (
+				SELECT /*+ LEADING(LST HST MPF) */
+					LST.yy,
+					DECODE(LST.elcpwstn_cls_cd, '0005', '0004', LST.elcpwstn_cls_cd) AS elcpwstn_cls_cd,
+					CASE
+						WHEN MAX(LST.elcpwstn_cls_nm) = '한전거래'
+						THEN '태양광'
+						ELSE MAX(LST.elcpwstn_cls_nm)
+					END AS elcpwstn_cls_nm,
+					LST.elcpwstn_cd,
+					CASE
+						WHEN MAX(LST.elcpwstn_cls_nm) = '한전거래'
+						THEN MAX(LST.elcpwstn_nm) || '(한전거래)'
+						ELSE MAX(LST.elcpwstn_nm)
+					END AS elcpwstn_nm,
+					MAX(LST.hq_cd) AS hq_cd,
+					MAX(LST.cstct_vu) AS cstct_vu,
+					MAX(LST.cstct_nm) AS cstct_nm,
+					MAX(LST.elcpwstn_cpcty) AS elcpwstn_cpcty,
+					ROUND(NVL(SUM(LST.s2val), 0), 0) AS s2,
+					ROUND(NVL(SUM(LST.s3val), 0), 0) AS s3,
+					ROUND(NVL(SUM(LST.r2val), 0), 0) AS r2,
+					ROUND(NVL(SUM(LST.r3val + NVL(MPF.epwr_indust_fnd_fund_amt, 0)), 0) - NVL(SUM(HST.etc_dstb_profit_amt), 0)) AS r3,
+					MAX(dsply_ordr) AS dsply_ordr
+				FROM (
+					SELECT /*+ LEADING(BASE YEAR_LIST LT1 LT2 LT3 LT4) */
+						YEAR_LIST.yy,
+						BASE.elcpwstn_nm,
+						BASE.elcpwstn_cd,
+						BASE.centr_elyrs_yn,
+						LT1.elyrs_plan_qy * 1000 AS s2val, /* mW * 1000 => kW */
+						LT3.expect_ern_upc * 1000 AS s3val,
+						LT2.elyrs_plan_qy / 1000 AS r2val, /* W / 1000 => kW */
+						DECODE(BASE.centr_elyrs_yn,
+							'N', NVL(LT4.sep_amt, LT2.excclc_amt),
+							DECODE(LT2.excclc_amt,
+								'', LT4.excclc_amt,
+								DECODE(LT2.excclc_amt,
+									0, LT4.excclc_amt,
+									LT2.excclc_amt
+								)
+							)
+						) AS r3val,
+						BASE.hq_cd,
+						BASE.cstct_vu,
+						BASE.cstct_nm,
+						BASE.elcpwstn_cls_cd,
+						BASE.elcpwstn_cls_nm,
+						BASE.elcpwstn_cpcty,
+						BASE.dsply_ordr
+					FROM
+						YEAR_LIST, (
+						SELECT
+							elcpwstn_cd,
+							elcpwstn_nm,
+							DECODE(centr_elyrs_yn,
+								'X', 'N',
+								centr_elyrs_yn
+							) AS centr_elyrs_yn,
+							hq_cd,
+							cstct_vu,
+							(
+								SELECT
+									stext
+								FROM
+									HRM.vm_hr01a01
+								WHERE
+									SYSDATE BETWEEN strdt AND enddt
+									AND objid IN (
+										SELECT
+											DISTINCT
+											CASE
+												WHEN MIN(depth) OVER(PARTITION BY kostl) = depth
+												THEN objid
+												ELSE NULL
+											END
+										FROM
+											HRM.vm_hr01a01
+										WHERE
+											SYSDATE BETWEEN strdt AND enddt
+											AND TRIM(kostl) IS NOT NULL
+									)
+									AND kostl = LPAD(cstct_vu, 10, '0')
+							) AS cstct_nm,
+							elcpwstn_cls_cd,
+							(
+								SELECT
+									DECODE(cmmn_cd,
+										'0004', '태양광',
+										'0005', '태양광',
+										'0007', '보소수력',
+										cmmn_cd_nm
+									) AS cmmn_cd_nm
+								FROM
+									SCM.tc_sc_unif_cmmn_cd
+								WHERE
+									sys_div_cd = 'WRO'
+									AND cls_cd = 'WRO_3003'
+									AND cmmn_cd = elcpwstn_cls_cd
+							) AS elcpwstn_cls_nm,
+							elcpwstn_cpcty,
+							sap_bplc_vu,
+							accnut_acnt_cd,
+							dsply_ordr
+						FROM
+							WRO.tc_eg10101
+						WHERE
+							<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> IN (
+								SELECT
+									objid
+								FROM (
+									<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+								)
+								WHERE
+									1 = 1
+									<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+									AND cmmn_cd = #{ecsBasinDivCd}
+									</if>
+							)
+							AND elcpwstn_cls_cd IN (
+								SELECT
+									DISTINCT REGEXP_SUBSTR(elcpwstn_cls_cd, '[^,]+', 1, LEVEL) AS elcpwstn_cls_cd
+								FROM (
+									SELECT
+										elcpwstn_cls_cd
+									FROM (
+										<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+									)
+									WHERE
+										1 = 1
+										<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+										AND cmmn_cd = #{ecsSetcscDivCd}
+										</if>
+								)
+								CONNECT BY
+									LEVEL &lt;= LENGTH(REGEXP_REPLACE(elcpwstn_cls_cd, '[^,]+', '')) + 1
+							)
+							AND centr_elyrs_yn IN ('Y', 'N', 'X')
+							AND accnut_acnt_cd LIKE '' || '%'
+					) BASE, (
+						SELECT
+							SUBSTR(stdr_plan_ym, 0, 4) AS stdr_plan_ym,
+							elcpwstn_cd,
+							ROUND(SUM(elyrs_plan_qy), 3) AS elyrs_plan_qy
+						FROM (
+							SELECT
+								stdr_plan_ym,
+								elcpwstn_cd,
+								SUM(elyrs_plan_qy) AS elyrs_plan_qy
+							FROM
+								WRO.tc_eg10112
+							WHERE
+								stdr_plan_ym BETWEEN SUBSTR(#{strtDt}, 0, 4) || '01' AND SUBSTR(#{endDt}, 0, 4) || '12'
+							GROUP BY
+								stdr_plan_ym,
+								elcpwstn_cd
+							/*
+							UNION ALL
+							SELECT
+								elcpwstn_cd,
+								(SUM(elyrs_plan_qy) / '99') * '01' AS elyrs_plan_qy
+							FROM
+								WRO.tc_eg10112
+							WHERE
+								stdr_plan_ym = '299999'
+							GROUP BY
+								elcpwstn_cd
+							*/
+						)
+						GROUP BY
+							SUBSTR(stdr_plan_ym, 0, 4),
+							elcpwstn_cd
+					) LT1, (
+						SELECT
+							stdr_de,
+							elcpwstn_cd,
+							ROUND(elyrs_plan_qy, 3) AS elyrs_plan_qy,
+							ROUND(excclc_amt, 3) AS excclc_amt
+						FROM (
+							SELECT
+								SUBSTR(stdr_de, 0, 4) AS stdr_de,
+								elcpwstn_cd,
+								SUM(elyrs_qy) AS elyrs_plan_qy,
+								SUM(excclc_amt) AS excclc_amt
+							FROM
+								WRO.tm_eg04105
+							WHERE
+								stdr_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{endDt}, 0, 4) || '1231'
+								AND excclc_div_cd = '0001' /* 자체 */
+							GROUP BY
+								SUBSTR(stdr_de, 0, 4),
+								elcpwstn_cd
+							UNION ALL
+							SELECT
+								SUBSTR(stdr_plan_ym, 0, 4) AS stdr_plan_ym,
+								elcpwstn_cd,
+								SUM(elyrs_qy) * 1000 AS elyrs_plan_qy,
+								SUM(splval_amt) AS excclc_amt
+							FROM
+								WRO.tm_eg04117
+							WHERE
+								stdr_plan_ym BETWEEN SUBSTR(#{strtDt}, 0, 4) || '01' AND SUBSTR(#{endDt}, 0, 4) || '12'
+							GROUP BY
+								SUBSTR(stdr_plan_ym, 0, 4),
+								elcpwstn_cd
+						)
+					) LT2, (
+						SELECT
+							stdr_plan_ym,
+							elcpwstn_cd,
+							ROUND(SUM(expect_ern_upc), 3) AS expect_ern_upc
+						FROM (
+							SELECT
+								SUBSTR(stdr_plan_ym, 0, 4) AS stdr_plan_ym,
+								elcpwstn_cd,
+								SUM(expect_ern_upc_vu) AS expect_ern_upc
+							FROM
+								WRO.tm_eg01104
+							WHERE
+								stdr_plan_ym BETWEEN SUBSTR(#{strtDt}, 0, 4) || '01' AND SUBSTR(#{endDt}, 0, 4) || '12'
+							GROUP BY
+								SUBSTR(stdr_plan_ym, 0, 4),
+								elcpwstn_cd
+							/*
+							UNION ALL
+							SELECT
+								elcpwstn_cd,
+								(SUM(expect_ern_upc_vu) / '99') * '01' AS expect_ern_upc
+							FROM
+								WRO.tm_eg01104
+							WHERE
+								stdr_plan_ym = '299999'
+							GROUP BY
+								elcpwstn_cd
+							*/
+						)
+						GROUP BY
+							stdr_plan_ym,
+							elcpwstn_cd
+					) LT3, (
+						SELECT
+							SUBSTR(stdr_de, 0, 4) AS stdr_de,
+							elcpwstn_cd,
+							ROUND(SUM(sep_amt), 3) AS sep_amt,
+							ROUND(SUM(excclc_sum_amt), 3) AS excclc_amt
+						FROM
+							WRO.tm_eg03121
+						WHERE
+							stdr_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{endDt}, 0, 4) || '1231'
+							AND excclc_div_cd = '0001'
+						GROUP BY
+							SUBSTR(stdr_de, 0, 4),
+							elcpwstn_cd
+					) LT4
+					WHERE
+						LT1.elcpwstn_cd(+) = BASE.elcpwstn_cd
+						AND LT2.elcpwstn_cd(+) = BASE.elcpwstn_cd
+						AND LT3.elcpwstn_cd(+) = BASE.elcpwstn_cd
+						AND LT4.elcpwstn_cd(+) = BASE.elcpwstn_cd
+						AND LT1.stdr_plan_ym(+) = YEAR_LIST.yy
+						AND LT2.stdr_de(+) = YEAR_LIST.yy
+						AND LT3.stdr_plan_ym(+) = YEAR_LIST.yy
+						AND LT4.stdr_de(+) = YEAR_LIST.yy
+				) LST, (
+					SELECT
+						SUBSTR(stdr_plan_ym, 0, 4) AS stdr_plan_ym,
+						elcpwstn_cd,
+						ROUND(SUM(etc_dstb_profit_amt), 3) AS etc_dstb_profit_amt
+					FROM
+						WRO.tm_eg05115
+					WHERE
+						stdr_plan_ym BETWEEN SUBSTR(#{strtDt}, 0, 4) || '01' AND SUBSTR(#{endDt}, 0, 4) || '12'
+					GROUP BY
+						SUBSTR(stdr_plan_ym, 0, 4),
+						elcpwstn_cd
+				) HST, (
+					SELECT
+						SUBSTR(stdr_de, 0, 4) AS stdr_de,
+						elcpwstn_cd,
+						ROUND(TRUNC(SUM(TO_NUMBER(epwr_indust_fnd_fund_amt)) - TO_NUMBER(TRUNC(SUM(epwr_indust_fnd_rdcamt_vu), -1)), -1), 3) AS epwr_indust_fnd_fund_amt
+					FROM
+						WRO.tm_eg05106
+					WHERE
+						stdr_de BETWEEN SUBSTR(#{strtDt}, 0, 4) || '0101' AND SUBSTR(#{endDt}, 0, 4) || '1231'
+					GROUP BY
+						SUBSTR(stdr_de, 0, 4),
+						elcpwstn_cd
+				) MPF
+				WHERE
+					HST.elcpwstn_cd(+) = LST.elcpwstn_cd
+					AND MPF.elcpwstn_cd(+) = LST.elcpwstn_cd
+					AND HST.stdr_plan_ym(+) = LST.yy
+					AND MPF.stdr_de(+) = LST.yy
+					<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+					AND cstct_vu = #{ecsChrgDeptId}
+					</if>
+				GROUP BY
+					LST.yy,
+					LST.elcpwstn_cls_cd,
+					LST.elcpwstn_cd
+			)
+		)
+		GROUP BY
+			SUBSTR(yy, 0, 4)
+		ORDER BY
+			SUBSTR(yy, 0, 4)
+	</select>
+</mapper>

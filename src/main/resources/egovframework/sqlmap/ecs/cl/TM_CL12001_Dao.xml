@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 정산 - 수열 설비현황 -->
+<mapper namespace="TM_CL12001_Dao">
+	<select id="TM_CL12001_Dao_retrieveWthtEqpSttusList" parameterType="kw.ecs.cl.wthtexcclc.vo.WthtEqpSttusVo" resultType="egovMap">
+		/* TM_CL12001_Dao_retrieveWthtEqpSttusList */
+		SELECT
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_AllBasinMapping"></include>
+				)
+				WHERE
+					objid = (
+						SELECT
+							<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnAllBasin"></include>
+						FROM (
+							SELECT
+								upobj AS objid
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMDeptMapping"></include>
+							)
+							WHERE
+								objid = ecs_chrg_dept_id
+						)
+					)
+			) AS basin_nm,
+			(
+				SELECT
+					stext
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMDeptMapping"></include>
+				)
+				WHERE
+					objid = ecs_chrg_dept_id
+			) AS dept_nm,
+			ecs_chrg_dept_id,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM
+					tc_ecs_cd
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_9001'
+					AND cmmn_cd = iem_div_nm
+			) AS iem_div_cd,
+			iem_div_nm,
+			wtht_suply_begin_de,
+			eqp_nm,
+			eqp_cpcty,
+			invt_cst,
+			<!--
+			(
+				SELECT
+					CASE
+						WHEN no > 0
+						THEN NVL(excclc_amt, 0)
+						ELSE NULL
+					END
+				FROM (
+					SELECT
+						MAX(ROWNUM) AS no,
+						SUM(excclc_amt) AS excclc_amt
+					FROM
+						tm_cl12002
+					WHERE
+						wtht_suply_begin_de = A.wtht_suply_begin_de
+						AND eqp_nm = A.eqp_nm
+				)
+			) AS total,
+			-->
+			wtht_useful_yycnt,
+			CASE
+				WHEN
+					FLOOR(MONTHS_BETWEEN(
+						TO_DATE(TO_CHAR(SYSDATE, 'yyyyMM'), 'yyyyMM'), TO_DATE(SUBSTR(wtht_suply_begin_de, 0, 6), 'yyyyMM')
+					) / 12) &gt;= 0
+				THEN
+					FLOOR(MONTHS_BETWEEN(
+						TO_DATE(TO_CHAR(SYSDATE, 'yyyyMM'), 'yyyyMM'), TO_DATE(SUBSTR(wtht_suply_begin_de, 0, 6), 'yyyyMM')
+					) / 12)
+				ELSE
+					0
+			END AS wtht_elapse_yycnt,
+			rm_ctnt,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id,
+			updt_rsn
+		FROM
+			tm_cl12001 A
+		WHERE
+			wtht_suply_begin_de BETWEEN SUBSTR(#{strtDt}, 0, 6) AND SUBSTR(#{endDt}, 0, 6)
+			<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+			AND ecs_chrg_dept_id IN (
+				SELECT
+					obj
+				FROM (
+					SELECT
+						upobj AS objid,
+						objid AS obj
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMDeptMapping"></include>
+					)
+				)
+				WHERE
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnAllBasin"></include> IN (
+						SELECT
+							objid
+						FROM (
+							<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_AllBasinMapping"></include>
+						)
+						WHERE
+							cmmn_cd = #{ecsBasinDivCd}
+					)
+			)
+			</if>
+			<if test='null != iemDivNm and "" neq iemDivNm and "ALL" neq iemDivNm'>
+			AND iem_div_nm = #{iemDivNm}
+			</if>
+		ORDER BY
+			wtht_suply_begin_de,
+			eqp_nm
+	</select>
+
+	<update id="TM_CL12001_Dao_saveWthtEqpSttusList" parameterType="kw.ecs.cl.wthtexcclc.vo.WthtEqpSttusVo">
+		/* TM_CL12001_Dao_saveWthtEqpSttusList */
+		MERGE INTO
+			tm_cl12001 A
+		USING (
+			SELECT
+				#{ecsChrgDeptId} AS ecs_chrg_dept_id,
+				#{iemDivNm} AS iem_div_nm,
+				#{wthtSuplyBeginDe} AS wtht_suply_begin_de,
+				#{eqpNm} AS eqp_nm,
+				#{eqpCpcty} AS eqp_cpcty,
+				#{invtCst} AS invt_cst,
+				#{wthtUsefulYycnt} AS wtht_useful_yycnt,
+				#{rmCtnt} AS rm_ctnt,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.wtht_suply_begin_de = B.wtht_suply_begin_de
+			AND A.eqp_nm = B.eqp_nm
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.ecs_chrg_dept_id = B.ecs_chrg_dept_id,
+				A.iem_div_nm = B.iem_div_nm,
+				A.eqp_cpcty = B.eqp_cpcty,
+				A.invt_cst = B.invt_cst,
+				A.wtht_useful_yycnt = B.wtht_useful_yycnt,
+				A.rm_ctnt = B.rm_ctnt,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.ecs_chrg_dept_id,
+				A.iem_div_nm,
+				A.wtht_suply_begin_de,
+				A.eqp_nm,
+				A.eqp_cpcty,
+				A.invt_cst,
+				A.wtht_useful_yycnt,
+				A.rm_ctnt,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.ecs_chrg_dept_id,
+				B.iem_div_nm,
+				B.wtht_suply_begin_de,
+				B.eqp_nm,
+				B.eqp_cpcty,
+				B.invt_cst,
+				B.wtht_useful_yycnt,
+				B.rm_ctnt,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<delete id="TM_CL12001_Dao_deleteWthtEqpSttusList" parameterType="kw.ecs.cl.wthtexcclc.vo.WthtEqpSttusVo">
+		/* TM_CL12001_Dao_deleteWthtEqpSttusList */
+		DELETE FROM
+			tm_cl12001
+		WHERE
+			wtht_suply_begin_de = #{wthtSuplyBeginDe}
+			AND eqp_nm = #{eqpNm}
+	</delete>
+</mapper>

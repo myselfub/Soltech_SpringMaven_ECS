@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<w2:model></w2:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"disableIcon": "",
+			"notSupportBrowser": "",
+			"htmlRender": "",
+			"icon": "",
+			"description": "메인 배경 화살표",
+			"version": "",
+			"apis": [],
+			"pluginName": "main_back_arrow",
+			"width": "1550px",
+			"company": "Soltech",
+			"developer": "KYB",
+			"componentName": "main_back_arrow",
+			"category": "Basic",
+			"properties": [
+			{
+			"default": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"name": "id",
+			"description": "Component id",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "style",
+			"description": "Component style",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "class",
+			"description": "Component class",
+			"type": "string",
+			"bindparent": "",
+			"option": ""
+			},
+			{
+			"default": "",
+			"necessary": "N",
+			"hidden": "N",
+			"name": "ref",
+			"description": "Component ref",
+			"type": "bindColumn",
+			"bindparent": "",
+			"option": ""
+			}
+			],
+			"events": [],
+			"height": "207px"
+			}
+		-->
+		<xf:group class="main-back-arrow" tagname="svg" pluginName="main_back_arrow">
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				 * //property handling
+				 * $w.log("id:" + options.id);
+				 * $w.log("style:" + options.style);
+				 * $w.log("class:" + options.class);
+				 * $w.log("ref:" + options.ref);
+				 *
+				 * //event trigger
+				*/
+				// 초기 수행함수 
+				this.initMainBackArrow = function() {
+					// fill 설정
+					var color = "";
+					if (options.fill && options.fill != "") {
+						color = options.fill;
+					} else {
+						color = "url(#" + grpMainBackArrowLlinear.getID() + ")";
+					}
+					document.getElementById(grpMainBackArrowFill.getID()).setAttribute("fill", color);
+				};
+
+				// 초기 실행함수 수행
+				this.initMainBackArrow();
+				]]></script>
+			<w2:attributes>
+				<w2:xmlns>http://www.w3.org/2000/svg</w2:xmlns>
+				<w2:width>1550</w2:width>
+				<w2:viewBox>0 0 1550 207</w2:viewBox>
+				<w2:preserveAspectRatio>xMidYMid meet</w2:preserveAspectRatio>
+			</w2:attributes>
+			<style type="text/css"><![CDATA[ ]]></style>
+			<xf:group tagname="defs">
+				<xf:group id="grpMainBackArrowLlinear" tagname="linearGradient">
+					<w2:attributes>
+						<w2:x1>1547.9</w2:x1>
+						<w2:y1>207</w2:y1>
+						<w2:x2>0</w2:x2>
+						<w2:y2>207</w2:y2>
+						<w2:gradientUnits>userSpaceOnUse</w2:gradientUnits>
+					</w2:attributes>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:stop-color>#5482F7</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>0.484375</w2:offset>
+							<w2:stop-color>#84D3FF</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+					<xf:group tagname="stop">
+						<w2:attributes>
+							<w2:offset>1</w2:offset>
+							<w2:stop-color>#CEF3FB</w2:stop-color>
+						</w2:attributes>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group id="grpMainBackArrowFill" tagname="path">
+				<w2:attributes>
+					<w2:opacity>0.2</w2:opacity>
+					<w2:d>
+						M0 4.31979V71.1124C209.699 58.0837 675.154 54.5875 859.382 144.832C1071.91 248.937 1331.4 197.548 1484.53 167.224C1496.44 164.865
+						1507.71 162.634 1518.27 160.613V179.756C1518.27 181.287 1520.29 181.834 1521.06 180.512L1549.8 131.261C1550.07 130.794 1550.07 130.217
+						1549.8 129.75L1521.06 80.499C1520.29 79.1766 1518.27 79.7239 1518.27 81.2549V105.321C1359.76 140.516 1043.48 183.024 912.243
+						102.282C747.38 0.856464 487.262 -8.04922 0 4.31979Z
+					</w2:d>
+					<w2:fill></w2:fill>
+				</w2:attributes>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

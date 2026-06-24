@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSPN6000000.xml
+			* 설 명 : 생산_CER 발급량
+			* 작성일 : 2023.02.13
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.13 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="strtDt" dataType="number" name="조회시작년"></w2:key>
+						<w2:key id="endDt" dataType="number" name="조회종료년"></w2:key>
+						<w2:key id="elcpwstnCd" dataType="text" name="발전소코드"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltAutoCondition1" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltCerIssList" baseNode="list" repeatNode="map" saveRemovedData="true" ev:oncelldatachange="scwin.dltCerIssList_ondatachange"
+					ev:onremoverow="scwin.dltCerIssList_ondatachange" ev:oninsertrow="scwin.dltCerIssList_ondatachange">
+					<w2:columnInfo>
+						<w2:column id="elcpwstnNm" dataType="text" name="발전소명"></w2:column>
+						<w2:column id="ecsElcpwstnDivCd" dataType="text" name="ECS발전소구분코드"></w2:column>
+						<w2:column id="cerDelngDivNm" dataType="text" name="구분"></w2:column>
+						<w2:column id="cerMntrngStrtYm" dataType="number" name="모니터링 시작연월"></w2:column>
+						<w2:column id="cerMntrngEndYm" dataType="number" name="모니터링 종료연월"></w2:column>
+						<w2:column id="crtfcMons" dataType="text" name="인증개월"></w2:column>
+						<w2:column id="cerAmt" dataType="number" name="CER요청"></w2:column>
+						<w2:column id="cerIssQy" dataType="number" name="CER발급"></w2:column>
+						<w2:column id="rmCtnt" dataType="text" name="비고"></w2:column>
+						<w2:column id="updtRsn" dataType="text" name="수정사유"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"isValidate" : false,
+		"isSaveProcess" : false,
+		"acbMappingCdObj" : {
+			"elcpwstnNm" : "cmmnCd"
+		},
+		"acbMappingNmObj" : {
+		},
+		"valInfo" : [
+			{id : "elcpwstnNm", maxLength : 40, mandatory : true},
+			{id : "cerDelngDivNm", maxByteLength : 40, mandatory : true},
+			{id : "cerMntrngStrtYm", minLength : 6, maxByteLength : 6, number : true, dateFunc : ecsLib.validatorYearMonth},
+			{id : "cerMntrngEndYm", maxByteLength : 6, number : true, dateFunc : ecsLib.validatorYearMonth},
+			{id : "cerAmt", maxByteLength : 15, number : true},
+			{id : "cerIssQy", maxByteLength : 22, number : true},
+			{id : "rmCtnt", maxByteLength : 4000}
+		]
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSPN6000000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 조회조건 초기 설정
+		scwin.initSearchParam();
+		// 화면 데이터 조회
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 조회조건 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initSearchParam = function() {
+		dmaSearchParam.set("strtDt" , String(Number(utilLib.getCurrentDate("yyyy")) - 4));
+		dmaSearchParam.set("endDt" , utilLib.getCurrentDate("yyyy"));
+		dmaSearchParam.set("elcpwstnCd", "ALL");
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var strtDt = dmaSearchParam.get("strtDt");
+		var endDt = dmaSearchParam.get("endDt");
+		var ecsElcpwstnDivCd = dmaSearchParam.get("elcpwstnCd");
+
+		if (String(strtDt).length != 4 || String(endDt).length != 4) {
+			// 조회기간이 올바르지 않습니다.
+			alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+			return;
+		} else if (utilLib.minusYears(strtDt, endDt) > 15 ? true : false) {
+			// 조회기간은 {0}을 넘어갈 수 없습니다. 다시 설정해 주세요.
+			alert(utilLib.getMessage("ECS.INFO.00012", "15년")[0]);
+			return;
+		} else if (parseInt(strtDt) > parseInt(endDt)) {
+			// 시작년이 종료년보다 클수 없습니다.
+			alert(utilLib.getMessage("ECS.INFO.00015")[0]);
+			return;
+		}
+
+		var queryString = `?strtDt=${strtDt}`;
+		queryString += `&endDt=${endDt}`;
+		queryString += `&ecsElcpwstnDivCd=${ecsElcpwstnDivCd}`;
+
+		var option = {
+			action : "pn/ceriss/retrieve-cer-iss.do"
+				+ queryString,
+			method : "get",
+			resData : dltCerIssList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCallback = function() {
+		spnTotalRow.setValue(dltCerIssList.getRowCount());
+		var mandatoryList = scwin.initData.valInfo.filter(obj => obj.mandatory);
+		for (var i = 0; i < dltCerIssList.getRowCount(); i++) {
+			mandatoryList.forEach(obj => {
+				grdCerIssList.setCellReadOnly(i, obj.id, true);
+			});
+		}
+		scwin.initData.isValidate = false;
+	};
+
+	/**
+	 * 그리드뷰 행을 추가한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnAddRow_onclick = function() {
+		var newIndex = dltCerIssList.insertRow();
+
+		grdCerIssList.setFocusedCell(newIndex, "elcpwstnNm", true);
+	};
+
+	/**
+	 * 그리드뷰 행을 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelRow_onclick = function() {
+		var rowIndexList = grdCerIssList.getAllFocusedRowIndex();
+
+		dltCerIssList.removeRows(rowIndexList);
+	};
+
+	/**
+	 * 그리드뷰의 내용을 검증한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnValidate_onclick = function(confirmValue) {
+		if (confirmValue == true || confirmValue == undefined) {
+			if (dltCerIssList.getModifiedData() == "") {
+				// 처리할 데이터가 없습니다.
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+				return;
+			}
+
+			if (utilLib.validateGridView(grdCerIssList, scwin.initData.valInfo)) {
+				var columnList = scwin.initData.valInfo.filter(obj => obj.mandatory).flatMap(obj => obj.id.replace("elcpwstnNm", "ecsElcpwstnDivCd"));
+				if (ecsLib.gridViewPkDuplicationCheck(grdCerIssList, dltCerIssList, columnList)) {
+					// 중복 데이터가 있습니다.
+					return;
+				}
+
+				if (ecsLib.validateGridViewAcb(grdCerIssList, dltAutoCondition1, scwin.initData.acbMappingCdObj, scwin.initData.acbMappingNmObj)) {
+					// 해당하는 {컬럼명}이(가) 존재하지 않습니다.
+					return;
+				}
+				scwin.initData.isValidate = true;
+				if (scwin.initData.isSaveProcess) {
+					scwin.initData.isSaveProcess = false;
+					scwin.btnSave_onclick();
+				} else {
+					// 데이터 검증이 완료되었습니다.
+					comLib.alert($p, utilLib.getMessage("ECS.INFO.00102"));
+				}
+			}
+		} else {
+			scwin.initData.isSaveProcess = false;
+		}
+	};
+
+	/**
+	 * 그리드뷰의 내용을 수정/저장한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		scwin.initData.isSaveProcess = false;
+		if (dltCerIssList.getModifiedData() == "") {
+			// 처리할 데이터가 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+			return;
+		}
+
+		if (scwin.initData.isValidate) {
+			var addCount = 0;
+			var modifyCount = 0;
+			var delCount = 0;
+			dltCerIssList.getModifiedJSON().forEach(obj => {
+				var rowStatus = obj.rowStatus;
+				switch(rowStatus) {
+					case "C":
+						// 추가
+						addCount++;
+						break;
+					case "U":
+						// 수정
+						modifyCount++;
+						break;
+					case "E":
+						// 삭제
+						delCount++;
+						break;
+					default:
+						break;
+				}
+			});
+			var extendMsg = ecsLib.extendCustomSaveMsg(addCount, modifyCount, delCount);
+			// 변경된 내역이 있습니다.\n저장 하시겠습니까? \n수정사유를 입력하세요.
+			ecsLib.saveRsn($p, `${dltCerIssList.getID()}.updtRsn`, utilLib.getMessage("SCM.INFO.00239")[0] + extendMsg, "scwin.saveConfirmCallback");
+		} else {
+			scwin.initData.isSaveProcess = true;
+			// 데이터 검증 후 저장 가능합니다.\n검증하시겠습니까?
+			comLib.confirm($p, utilLib.getMessage("ECS.INFO.00101"), "scwin.btnValidate_onclick", true);
+			return;
+		}
+	};
+
+	/**
+	 * 수정/저장 ComfirmCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var requestData = {};
+		requestData.dltCerIssList = dltCerIssList.getModifiedJSON();
+
+		var option = {
+			action : "pn/ceriss/process-cer-iss.do",
+			reqData : requestData,
+			success : "scwin.saveConfirmSuccessCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 수정/저장 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.saveConfirmSuccessCallback = function(resBody) {
+		comLib.alert($p, resBody.message.code_name);
+
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 작업중이던 내용을 취소한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnCancl_onclick = function() {
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 데이터컬렉션의 추가/변경/삭제 시 이벤트
+	 * @param
+	 * @return
+	 */
+	scwin.dltCerIssList_ondatachange = function(info) {
+		scwin.initData.isValidate = false;
+	};
+
+	/**
+	 * 조회박스 선택별 값을 세팅한다.
+	 * @param
+	 * @return
+	 */
+	scwin.acbElcpwstn_onviewchange = function(info) {
+		dmaSearchParam.set("elcpwstnCd", info.newValue);
+	};
+
+	//============================================================================================
+	// 엑셀
+	//============================================================================================
+	/**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm = spnSubTitle.getValue();
+		// 엑셀 내부 타이틀 추가_240105
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 8,
+			text 		: `${menuNm}_` + `${subTitleNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		// 데이터가 없어도 탬플릿만 다운받을 수 있게 comLib.downloadExcel 말고 grdID.advancedExcelDownload 적용_231113
+		options = {
+			fileName : `${menuNm}_` + `${subTitleNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			rowHeight : 40,
+			useDataFormat: false,
+			useStyle: true,
+			hidden: 1
+		}
+		grdCerIssList.advancedExcelDownload(options, infoArr);
+	};
+
+	/**
+	 * 엑셀의 내용을 그리드에 업로드 한다.
+	 * @return
+	 */
+	 scwin.btnUploadExcel_onclick = function() {
+		 var options = {
+			type : 1,
+			headerExist : 1,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			endColumnIndex : 7,
+			sheetNo : 0,
+			append : 0,
+			status: "C",
+			useMaxByteLength : true
+		};
+		comLib.uploadExcel(grdCerIssList, options);
+	};
+
+	/**
+	 * 엑셀 내용을 그리드에 저장한다.
+	 * @return
+	 */
+	scwin.grdCerIssList_onfilereadend = function(value) {
+		var dltData = dltCerIssList.getAllJSON();
+		var dltAuto1 = dltAutoCondition1.getAllJSON();
+		// set JSON
+		for (var idx = 0; idx < dltData.length; idx++) {
+			var elcpwstnNm = (dltAuto1.find(obj => obj.cmmnCd == dltData[idx].elcpwstnNm) || 0).cmmnCd;
+			dltCerIssList.setCellData(idx, "elcpwstnNm", elcpwstnNm);
+		}
+	};
+]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group id="grpInqire" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회기간"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2_2" tagname="td">
+								<w2:period_year_calendar id="calDt" strtDateRef="data:dmaSearchParam.strtDt" endDateRef="data:dmaSearchParam.endDt">
+								</w2:period_year_calendar>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="발전소"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete displayMode="label" editType="select" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL" ev:onviewchange="scwin.acbElcpwstn_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition1">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" userData1="Q" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" outerDiv="false" userData1="E"
+						ev:onclick="scwin.btnDownExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnUploadExcel" class="excel-btn fa fa-long-arrow-up btn_sh" outerDiv="false" userData1="EU"
+						ev:onclick="scwin.btnUploadExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span id="spnSubTitle" toolTip="CER (Certified Emission Reducation):&lt;br/&gt;탄소 배출권, 탄소 인증 감축량" label="CER 발급"></w2:span>
+							<w2:span id="spnTotalRow" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+							<w2:span class="sub-title-l" label="&amp;emsp;* CER (Certified Emission Reducation): 탄소 배출권, 탄소 인증 감축량"></w2:span>
+						</xf:group>
+						<xf:group class="com-area">
+							<xf:group class="btn-group">
+								<w2:anchor id="btnAddRow" class="add_row fa fa-plus" ev:onclick="scwin.btnAddRow_onclick" outerDiv="false" userData1="S">
+									<xf:label><![CDATA[행추가]]></xf:label>
+								</w2:anchor>
+								<w2:anchor id="btnDelRow" class="del_row fa fa-minus" ev:onclick="scwin.btnDelRow_onclick" outerDiv="false" userData1="D">
+									<xf:label><![CDATA[행삭제]]></xf:label>
+								</w2:anchor>
+							</xf:group>
+							<xf:group class="info-box"></xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="list-box box height-sam">
+						<w2:gridView id="grdCerIssList" class="resized" dataList="dltCerIssList" checkReadOnlyOnPaste="true" checkReadOnlyOnCut="true"
+							focusMode="row" useShiftKey="true" keyMoveEditMode="true" sortable="true" tooltipDisplay="true" defaultCellHeight="35" style="height:45.6rem;"
+							ev:onfilereadend="scwin.grdCerIssList_onfilereadend">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hElcpwstnNm" class="req" inputType="text" width="110" value="발전소"></w2:column>
+									<w2:column id="hCerDelngDivNm" class="req" inputType="text" width="80" value="구분"></w2:column>
+									<w2:column id="hCerMntrngStrtYm" class="req" inputType="text" width="120" value="모니터링 시작연월"></w2:column>
+									<w2:column id="hCerMntrngEndYm" inputType="text" width="120" value="모니터링 종료연월"></w2:column>
+									<w2:column id="hCrtfcMons" inputType="text" width="80" value="인증개월"></w2:column>
+									<w2:column id="hCerAmt" inputType="text" width="160" value="CER 요청"></w2:column>
+									<w2:column id="hCerIssQy" inputType="text" width="160" value="CER 발급 (2% 공제)"></w2:column>
+									<w2:column id="hRmCtnt" inputType="text" width="170" value="비고"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="elcpwstnNm" inputType="autoComplete" maxLength="40" selectedData="false" visibleRowNum="8" chooseOption="true">
+										<w2:choices>
+											<w2:itemset nodeset="data:dltAutoCondition1">
+												<w2:label ref="cmmnCdNm"></w2:label>
+												<w2:value ref="cmmnCd"></w2:value>
+											</w2:itemset>
+										</w2:choices>
+									</w2:column>
+									<w2:column id="cerDelngDivNm" inputType="text" maxByteLength="40"></w2:column>
+									<w2:column id="cerMntrngStrtYm" inputType="calendar" calendarValueType="yearMonth" maxByteLength="6"
+										validator="ecsLib.validatorYearMonth"></w2:column>
+									<w2:column id="cerMntrngEndYm" inputType="calendar" calendarValueType="yearMonth" maxByteLength="6"
+										validator="ecsLib.validatorYearMonth"></w2:column>
+									<w2:column id="crtfcMons" inputType="text" readOnly="true"></w2:column>
+									<w2:column id="cerAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="cerIssQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="rmCtnt" inputType="text" maxByteLength="4000"></w2:column>
+								</w2:row>
+							</w2:gBody>
+							<w2:footer>
+								<w2:row>
+									<w2:column id="fElcpwstnNm" inputType="text" value="합계" width="120"></w2:column>
+									<w2:column id="fCerDelngDivNm" inputType="text"></w2:column>
+									<w2:column id="fCerMntrngStrtYm" inputType="text"></w2:column>
+									<w2:column id="fCerMntrngEndYm" inputType="text"></w2:column>
+									<w2:column id="fCrtfcMons" inputType="text" textAlign="right"></w2:column>
+									<w2:column id="fCerAmt" inputType="expression" expression="sum('cerAmt')" displayFormatter="ecsLib.dsplFrmt" textAlign="right"></w2:column>
+									<w2:column id="fCerIssQy" inputType="expression" expression="sum('cerIssQy')" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fRmCtnt" inputType="text"></w2:column>
+								</w2:row>
+							</w2:footer>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnValidate" ev:onclick="scwin.btnValidate_onclick" outerDiv="false" userData1="S">
+						<xf:label><![CDATA[검증]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnSave" ev:onclick="scwin.btnSave_onclick" outerDiv="false" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnCancl" ev:onclick="scwin.btnCancl_onclick" outerDiv="false" userData1="CC">
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <w2:userPalette defaultIcon="mix.png" desc=""/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[ ]]></script>
+    </head>
+    <body><xf:group class="search-box toggle-box" id="" style="">
+	<w2:anchor class="toggle-btn" ev:onclick="" id="" outerDiv="false" style="">
+		<xf:label>
+<![CDATA[열기/닫기]]></xf:label>
+</w2:anchor>
+	<xf:group class="list" id="" style="">
+		<xf:group class="w2tb" id="" style="" tagname="table">
+			<w2:attributes>
+				<w2:summary>
+				</w2:summary>
+</w2:attributes>
+			<xf:group tagname="caption">
+			</xf:group>
+			<xf:group tagname="colgroup">
+				<xf:group class="" tagname="col">
+				</xf:group>
+				<xf:group tagname="col">
+				</xf:group>
+				<xf:group class="" tagname="col">
+				</xf:group>
+				<xf:group tagname="col">
+				</xf:group>
+				<xf:group class="" tagname="col">
+				</xf:group>
+				<xf:group tagname="col">
+				</xf:group>
+				<xf:group class="" tagname="col">
+				</xf:group>
+				<xf:group class="" tagname="col">
+				</xf:group>
+</xf:group>
+			<xf:group style="" tagname="tr">
+				<xf:group class="w2tb_th cw2" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+</w2:attributes>
+					<w2:span id="" label="InputBox" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td cw3" style="" tagname="td">
+					<xf:input id="" style="">
+					</xf:input>
+</xf:group>
+				<xf:group class="w2tb_th cw2" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+</w2:attributes>
+					<w2:span id="" label="Input Search" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td cw3" style="" tagname="td">
+					<xf:group class="input_search " id="" pluginName="input_Search" style="">
+						<w2:inheritOverride type="text/javascript">
+<![CDATA[ ]]></w2:inheritOverride>
+						<script ev:event="oncreated(options)" type="text/javascript">
+<![CDATA[
+										/**
+										* //property handling
+										*
+										* //event trigger
+										*/
+						
+									]]></script>
+						<xf:input id="" style="">
+						</xf:input>
+						<w2:anchor class="fa fa-search" id="" outerDiv="false" style="">
+							<xf:label>
+<![CDATA[조회]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+				<xf:group class="w2tb_th cw2" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+</w2:attributes>
+					<w2:span id="" label="Calendar udc" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td cw3" tagname="td">
+					<w2:period_Cal style="">
+					</w2:period_Cal>
+</xf:group>
+				<xf:group class="w2tb_th cw2" tagname="th">
+					<w2:span id="" label="Selectbox" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td cw3" tagname="td">
+					<xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="" optionOrder="false" selectedData="true" style="" submenuSize="auto">
+						<xf:choices>
+							<xf:item>
+								<xf:label>
+<![CDATA[전체]]></xf:label>
+								<xf:value>
+								</xf:value>
+</xf:item>
+</xf:choices>
+</xf:select1>
+</xf:group>
+</xf:group>
+			<xf:group style="" tagname="tr">
+				<xf:group class="w2tb_th cw2" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+</w2:attributes>
+					<w2:span id="" label="Checkbox" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td cw3" style="" tagname="td">
+					<xf:select appearance="full" cols="1" disabled="" displaymessage="true" id="" renderType="checkboxgroup" rows="" selectedindex="-1" style="">
+						<xf:choices>
+							<xf:item>
+								<xf:label>
+<![CDATA[체크1]]></xf:label>
+								<xf:value>
+								</xf:value>
+</xf:item>
+							<xf:item>
+								<xf:label>
+<![CDATA[체크2]]></xf:label>
+								<xf:value>
+								</xf:value>
+</xf:item>
+</xf:choices>
+</xf:select>
+</xf:group>
+				<xf:group class="w2tb_th cw2" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+</w2:attributes>
+					<w2:span id="" label="Radio" style="">
+					</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td cw3" style="" tagname="td">
+					<xf:select1 appearance="full" cols="" id="" renderType="radiogroup" rows="1" selectedIndex="-1" style="">
+						<xf:choices>
+							<xf:item>
+								<xf:label>
+<![CDATA[라디오1]]></xf:label>
+								<xf:value>
+								</xf:value>
+</xf:item>
+							<xf:item>
+								<xf:label>
+<![CDATA[라디오2]]></xf:label>
+								<xf:value>
+								</xf:value>
+</xf:item>
+</xf:choices>
+</xf:select1>
+</xf:group>
+				<xf:group class="w2tb_th cw2" tagname="th">
+					<w2:attributes>
+						<w2:scope>row</w2:scope>
+</w2:attributes>
+					<w2:span id="" label="Inputcalendar" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td cw3" tagname="td">
+					<w2:inputCalendar calendarValueType="yearMonthDate" focusOnDateSelect="false" footerDiv="false" id="" renderDiv="true" renderType="component" rightAlign="false" style="" weekStartsOn="0">
+</w2:inputCalendar>
+</xf:group>
+				<xf:group class="w2tb_th cw2" tagname="th">
+					<w2:span id="" label="Spinner" style="">
+</w2:span>
+</xf:group>
+				<xf:group class="w2tb_td cw3" tagname="td">
+					<w2:spinner buttonSize="" id="" inputReadOnly="false" skin="type1" style="">
+</w2:spinner>
+</xf:group>
+</xf:group>
+</xf:group>
+</xf:group>
+	<xf:group class="btn-group">
+		<w2:anchor class="fa fa-search btn_sh" id="" outerDiv="false" style="">
+			<xf:label>
+<![CDATA[조회]]></xf:label>
+</w2:anchor>
+</xf:group>
+</xf:group>
+</body>
+</html>

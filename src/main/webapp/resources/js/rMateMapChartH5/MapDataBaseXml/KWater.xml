@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="utf-8"?>						
+<Map>      
+<Province code="0" symbol="SouthKorea" gisLeftLng="125.727531" gisTopLat="39.305006" gisScaleX="690.1196782213174" gisScaleY="845.1392657701942">
+</Province>
+<Province code="10" label="한강수계" symbol="Han-River" gisLeftLng="126.202817" gisTopLat="39.225006" gisScaleX="690.1196782213174" gisScaleY="845.1392657701942"> 
+	<Country code="101" label=" " symbol="Han-bg" event="none"/>
+	<Country code="1004310" label="괴산" symbol="GoiSan-dam" gisLeftLng="127.679350" gisTopLat="36.569510" gisScaleX="7650.539555010922" gisScaleY="11903.204181495727"/> 
+	<Country code="1302210" label="달방" symbol="Dalbang-dam" gisLeftLng="128.926052" gisTopLat="37.553339" gisScaleX="19932.211499203717" gisScaleY="22487.850269935396"/> 
+	<Country code="1006110" label="횡성" symbol="HwoingSung-dam" gisLeftLng="128.028391" gisTopLat="37.649209" gisScaleX="700.311949071585" gisScaleY="1000.23857644209"> 
+		<Dam code="10401" label="봉덕" symbol="BongDuk"/> 
+		<Dam code="10402" label="횡성댐" symbol="HweongSung-dam"/> 
+		<Dam code="10403" label="춘당" symbol="ChoonDang"/> 
+		<Dam code="1006777" label=" " symbol="HwoengSungDamWater" event="none"/>
+	</Country>      
+        <Country code="1003110" label="충주" symbol="ChoongJu-dam" gisLeftLng="127.901530" gisTopLat="37.802281" gisScaleX="630.9384565719715" gisScaleY="900.655710959731"> 
+		<Dam code="10501" label="진부" symbol="JinBoo"/> 
+		<Dam code="10502" label="횡계" symbol="HwoengGye"/> 
+		<Dam code="10503" label="봉평" symbol="BongPyung"/> 
+		<Dam code="10504" label="하동" symbol="Hadong"/> 
+		<Dam code="10505" label="덕산" symbol="DukSan"/> 
+		<Dam code="10506" label="충주댐" symbol="ChoongJuDam"/> 
+		<Dam code="10507" label="단양" symbol="DanYang"/> 
+		<Dam code="10508" label="청풍" symbol="ChungPoong"/> 
+		<Dam code="10509" label="백운" symbol="BaekWoon"/> 
+		<Dam code="10510" label="봉양" symbol="BongYang"/> 
+		<Dam code="10511" label="제천" symbol="JeChun"/> 
+		<Dam code="10512" label="어상천" symbol="EuSangChun"/> 
+		<Dam code="10513" label="영춘" symbol="YoungChoon"/> 
+		<Dam code="10514" label="상동" symbol="SangDong"/> 
+		<Dam code="10515" label="영월1" symbol="YoungWul"/> 
+		<Dam code="10516" label="수주" symbol="SooJoo"/> 
+		<Dam code="10517" label="신림" symbol="SinRim"/> 
+		<Dam code="10518" label="안흥" symbol="AnHeong"/> 
+		<Dam code="10519" label="운학" symbol="MoonHak"/> 
+		<Dam code="10520" label="방림" symbol="BangRim"/> 
+		<Dam code="10521" label="평창" symbol="PyungChang"/> 
+		<Dam code="10522" label="판운" symbol="PanMoonGo"/> 
+		<Dam code="10523" label="사북" symbol="Sabook"/> 
+		<Dam code="10524" label="문곡" symbol="MoonGok"/> 
+		<Dam code="10525" label="미탄" symbol="MiTan"/> 
+		<Dam code="10526" label="청옥산" symbol="ChungMokSan"/> 
+		<Dam code="10527" label="대화" symbol="DaeHwa"/> 
+		<Dam code="10528" label="수향" symbol="SuHang"/> 
+		<Dam code="10529" label="정선" symbol="JungSun"/> 
+		<Dam code="10530" label="덕암" symbol="DukAm"/> 
+		<Dam code="10531" label="하장" symbol="HaJang"/> 
+		<Dam code="10532" label="유천" symbol="YouChun"/> 
+		<Dam code="10533" label="임계" symbol="YimGye"/> 
+		<Dam code="10534" label="왕산" symbol="WangSan"/> 
+		<Dam code="1003777" label=" " symbol="ChoonJuDamWater" event="none"/>
+	</Country>      
+	<Country code="1001210" label="광동" symbol="GwangDong-dam" gisLeftLng="128.881219" gisTopLat="37.406999" gisScaleX="300.556062" gisScaleY="1200.21621528607"> 
+		<Dam code="10601" label="광동댐" symbol="GyangDong-dam"/> 
+		<Dam code="10602" label="사미" symbol="Sami"/> 
+		<Dam code="1001777" label=" " symbol="GyangDongWater" event="none"/>
+	</Country>      
+	<Country code="1017310" label="팔당" symbol="PalDang-area" gisLeftLng="127.153904" gisTopLat="37.956721" gisScaleX="2455.229766300281" gisScaleY="1879.9732009238826"/> 
+	<Country code="1015310" label="청평" symbol="ChungPyung-dam" gisLeftLng="127.384535" gisTopLat="38.057905" gisScaleX="2438.033578888725" gisScaleY="4746.212031334734"/> 
+	<Country code="1010320" label="춘천" symbol="ChunChun-dam" gisLeftLng="127.410844" gisTopLat="38.296930" gisScaleX="5850.510361199833" gisScaleY="6592.252615548626"/> 
+	<Country code="1013310" label="의암" symbol="UiAm-dam" gisLeftLng="127.604724" gisTopLat="37.986948" gisScaleX="9397.273898757709" gisScaleY="13503.127156940041"/> 
+	<Country code="1010310" label="화천" symbol="HwaChun-dam" gisLeftLng="127.758482" gisTopLat="38.364434" gisScaleX="5658.953076280739" gisScaleY="6398.984286256739"/> 
+	<Country code="1012110" label="소양강" symbol="SoYangGang-dam" gisLeftLng="127.775122" gisTopLat="38.441126" gisScaleX="1000.99990779141" gisScaleY="1350.10085349693"> 
+		<Dam code="11201" label="창촌" symbol="HyangNam"/> 
+		<Dam code="11202" label="방동" symbol="BangDong"/> 
+		<Dam code="11203" label="현리" symbol="HyunRi"/> 
+		<Dam code="11204" label="귀둔" symbol="QuiDoon"/> 
+		<Dam code="11205" label="군량2" symbol="GoonRyang"/> 
+		<Dam code="11206" label="용대" symbol="YongDae"/> 
+		<Dam code="11207" label="원통" symbol="WonTong"/> 
+		<Dam code="11208" label="서화" symbol="SeoHwa"/> 
+		<Dam code="11209" label="상남" symbol="SangNam"/> 
+		<Dam code="11210" label="신풍" symbol="SinPoong"/> 
+		<Dam code="11211" label="인제" symbol="Inje"/> 
+		<Dam code="11212" label="추양" symbol="ChooYang"/> 
+		<Dam code="1017777" label=" " symbol="SoYangDamWater" event="none"/>
+	</Country>      
+	<Country code="1009710" label="평화" symbol="PyungHwa-dam" gisLeftLng="127.939350" gisTopLat="38.532574" gisScaleX="-3697.8876591112307" gisScaleY="1215.2290118285168"/> 
+	<Country code="107777" label=" " symbol="Han-Water" event="none"/>
+</Province>      
+<Province code="10777" label=" " symbol="HanWater" event="none"/>
+<Province code="20" label="낙동강수계" symbol="NakDong-River"  gisLeftLng="127.473149" gisTopLat="37.243436" gisScaleX="707.074815123603" gisScaleY="865.434592307339">
+	<Country code="201" label=" " symbol="Nakdong-BG" event="none"/>
+	<Country code="2004101" label="영주" symbol="Young_Ju-dam" gisLeftLng="127.850192" gisTopLat="38.122798" gisScaleX="500.4715556893825" gisScaleY="500.470417585052"> 
+		<Dam code="30201" label="영주댐" symbol="YoungJu-dam"/> 
+		<Dam code="30202" label="상운" symbol="SangWoon"/> 
+		<Dam code="30203" label="도촌" symbol="DoChon"/> 
+		<Dam code="2004777" label=" " symbol="YoungJuDamWater" event="none"/>
+	</Country>      
+	<Country code="2001110" label="안동" symbol="AnDong-dam" gisLeftLng="128.699520" gisTopLat="37.223436" gisScaleX="1000.412100756312" gisScaleY="1250.676419288136"> 
+		<Dam code="30301" label="태백" symbol="TaeBak"/> 
+		<Dam code="30302" label="백천" symbol="BakChun"/> 
+		<Dam code="30303" label="서면(안동)" symbol="SuMyun"/> 
+		<Dam code="30304" label="고선2" symbol="GoSun"/> 
+		<Dam code="30305" label="춘양" symbol="ChoonYang"/> 
+		<Dam code="30306" label="갈산" symbol="GilSan"/> 
+		<Dam code="30307" label="명호" symbol="MyungHo"/> 
+		<Dam code="30308" label="의촌" symbol="UiChon"/> 
+		<Dam code="30309" label="예안(안동)" symbol="YeAn"/> 
+		<Dam code="2001777" label=" " symbol="AnDongDamWater" event="none"/>
+	</Country>      
+	<Country code="2002110" label="임하" symbol="ImHa-dam" gisLeftLng="128.867332" gisTopLat="36.721820" gisScaleX="800.2599493146436" gisScaleY="1500.557263044706"> 
+		<Dam code="30401" label="수비2" symbol="SuBi"/> 
+		<Dam code="30402" label="일월" symbol="IlWol"/> 
+		<Dam code="30403" label="영양" symbol="YoungYang"/> 
+		<Dam code="30404" label="석보" symbol="SukBo"/> 
+		<Dam code="30405" label="예안(임하)" symbol="YeAn_Imha"/> 
+		<Dam code="30406" label="진보" symbol="JinBo"/> 
+		<Dam code="30407" label="청송" symbol="ChungSong"/> 
+		<Dam code="30408" label="부동" symbol="BooDong"/> 
+		<Dam code="30409" label="부남" symbol="BooNam"/> 
+	</Country>      
+	<Country code="2012210" label="영천" symbol="YoungChun-dam" gisLeftLng="128.979549" gisTopLat="36.267838" gisScaleX="3000.809570641188" gisScaleY="2500.907697874965"> 
+		<Dam code="30501" label="가사" symbol="GaSa"/> 
+		<Dam code="30502" label="현내" symbol="HyunNae"/> 
+		<Dam code="30503" label="지동리" symbol="Jidong"/> 
+		<Dam code="30504" label="영천댐" symbol="YoungChun"/> 
+		<Dam code="2012777" label=" " symbol="YoungChunDamWater" event="none"/>
+	</Country>      
+	<Country code="2002111" label="성덕" symbol="SungDuk-dam" gisLeftLng="128.911265" gisTopLat="36.240931" gisScaleX="1000.006838322895" gisScaleY="1000.64551998875"> 
+		<Dam code="30601" label="무계" symbol="MooGye"/> 
+		<Dam code="30602" label="갈천(성덕)" symbol="GilChun"/> 
+		<Dam code="30603" label="성덕댐" symbol="SungDukDam"/> 
+		<Dam code="2002777" label=" " symbol="SungDukDamWater" event="none"/>
+	</Country>      
+	<Country code="2012101" label="보현산" symbol="BoHyunSan-dam" gisLeftLng="128.580763" gisTopLat="43.396513" gisScaleX="1000.641205309286" gisScaleY="50.144772900996"> 
+		<Dam code="30701" label="보현산댐" symbol="BoHyunSanDam"/> 
+		<Dam code="30702" label="하송" symbol="Hasong"/> 
+		<Dam code="2012777" label=" " symbol="BoHyunSanDamWater" event="none"/>
+	</Country>      
+	<Country code="2008101" label="군위" symbol="GoonWee-dam" gisLeftLng="127.799743" gisTopLat="36.270907" gisScaleX="500.076736745435" gisScaleY="1300.0458923424"> 
+		<Dam code="30801" label="군위댐" symbol="GoonWi-dam"/> 
+		<Dam code="30802" label="석산" symbol="SukSan"/> 
+		<Dam code="2008777" label=" " symbol="GoonWiDAmWater" event="none"/>
+	</Country>      
+	<Country code="2021210" label="운문" symbol="YongMoon-dam" gisLeftLng="128.909987" gisTopLat="35.840317" gisScaleX="2000.364466160489" gisScaleY="2300.465910660094"> 
+		<Dam code="30901" label="산내(운문)" symbol="SanNae_wm"/> 
+		<Dam code="30902" label="대현" symbol="DaeHyun"/> 
+		<Dam code="30903" label="운문댐" symbol="WoonMoon"/> 
+		<Dam code="30904" label="운문(소문)" symbol="SoMoon"/> 
+		<Dam code="2021777" label=" " symbol="WoonMoonDamWater" event="none"/>
+	</Country>      
+	<Country code="2201231" label="대곡" symbol="DaeGok-dam" gisLeftLng="129.057968" gisTopLat="35.715359" gisScaleX="1500.003315830877" gisScaleY="2500.336639219935"> 
+		<Dam code="31001" label="대곡(상)" symbol="DaeGok-Sang"/> 
+		<Dam code="31002" label="대곡(하)" symbol="DaeGok-Ha"/> 
+		<Dam code="2201777" label=" " symbol="DaeGokDamWater" event="none"/>
+	</Country>      
+	<Country code="2021110" label="밀양" symbol="MilYang-dam" gisLeftLng="128.914286" gisTopLat="35.590985" gisScaleX="2700.167275908178" gisScaleY="3600.71350013917"> 
+		<Dam code="31101" label="재약산" symbol="JeYakSan"/> 
+		<Dam code="31102" label="선리" symbol="SunRi"/> 
+		<Dam code="31103" label="대리" symbol="DaeRi"/> 
+		<Dam code="2021777" label=" " symbol="MilYangDamWater" event="none"/>
+	</Country>      
+	<Country code="2201230" label="대암" symbol="DaeAm-dam" gisLeftLng="129.084315" gisTopLat="35.543738" gisScaleX="11303.138932045282" gisScaleY="21931.80243156891"/> 
+	<Country code="2301210" label="선암" symbol="SunAm-dam" gisLeftLng="129.314603" gisTopLat="35.530271" gisScaleX="55055.04374227178" gisScaleY="25338.598400770716"/> 
+	<Country code="2101210" label="안계" symbol="InGye-dam" gisLeftLng="129.246462" gisTopLat="36.052130" gisScaleX="51399.57026617139" gisScaleY="32240.740973248634"/> 
+	<Country code="2403201" label="감포" symbol="GamPo-dam" gisLeftLng="129.473398" gisTopLat="35.893143" gisScaleX="33142.57619061303" gisScaleY="110578.6331900273"/> 
+	<Country code="2503210" label="연초" symbol="YunCho-dam" gisLeftLng="128.654631" gisTopLat="34.949681" gisScaleX="38501.963543849015" gisScaleY="45216.539261739556"/> 
+	<Country code="2503220" label="구천" symbol="GooChun-dam" gisLeftLng="128.621431" gisTopLat="34.848004" gisScaleX="28029.0131511697" gisScaleY="58963.79447478924"/> 
+	<Country code="2015110" label="합천" symbol="HabChun-dam" gisLeftLng="127.677799" gisTopLat="35.990267" gisScaleX="1000.5878002619943" gisScaleY="1000.556894411055"> 
+		<Dam code="31801" label="가북" symbol="Gabook"/> 
+		<Dam code="31802" label="웅양" symbol="WoongYang"/> 
+		<Dam code="31803" label="북상" symbol="BookSang"/> 
+		<Dam code="31804" label="거창2" symbol="GuChang2"/> 
+		<Dam code="31805" label="지산" symbol="JiSan"/> 
+		<Dam code="31806" label="청연" symbol="ChungYun"/> 
+	</Country>      
+	<Country code="2018110" label="남강" symbol="NamGang-dam" gisLeftLng="126.739999" gisTopLat="35.652155" gisScaleX="1200.683405495379" gisScaleY="1300.2688366478965"> 
+		<Dam code="31901" label="안의" symbol="AnUi"/> 
+		<Dam code="31902" label="서하" symbol="SeoHa"/> 
+		<Dam code="31903" label="함양" symbol="HamYang"/> 
+		<Dam code="31904" label="아영" symbol="AYoung"/> 
+		<Dam code="31905" label="운봉" symbol="WoonBong"/> 
+		<Dam code="31906" label="산내(남강)" symbol="SanNae"/> 
+		<Dam code="31907" label="마천" symbol="MaChun"/> 
+		<Dam code="31908" label="임천" symbol="ImChun"/> 
+		<Dam code="31909" label="구평" symbol="GooPyung"/> 
+		<Dam code="31910" label="차황" symbol="ChaHwang"/> 
+		<Dam code="31911" label="산청" symbol="SanChung"/> 
+		<Dam code="31912" label="삼장" symbol="SamJang"/> 
+		<Dam code="31913" label="시천" symbol="SaChun"/> 
+		<Dam code="31914" label="태수" symbol="TaeSoo"/> 
+		<Dam code="31915" label="신안" symbol="SinAn"/> 
+		<Dam code="31916" label="신등" symbol="SinDong"/> 
+		<Dam code="31917" label="삼가" symbol="SamGa"/> 
+		<Dam code="31918" label="수곡" symbol="SooGok"/> 
+		<Dam code="31919" label="청암" symbol="ChungAm"/> 
+		<Dam code="31920" label="창촌" symbol="ChangChon"/> 
+		<Dam code="2018777" label=" " symbol="NamGangDamWater" event="none"/>
+	</Country>      
+	<Country code="2010101" label="김천부항댐" symbol="HooHang-dam" gisLeftLng="127.767913" gisTopLat="36.094731" gisScaleX="1500.950910822236" gisScaleY="2000.642906780435"> 
+		<Dam code="32001" label="부항2" symbol="BooHang2"/> 
+		<Dam code="32002" label="부항1" symbol="BooHang1"/> 
+		<Dam code="32003" label="부항댐" symbol="BooHang-dam"/> 
+	</Country>      
+	<Country code="207777" label=" " symbol="NakDong-Water" event="none"/>
+</Province>      
+<Province code="20777" label=" " symbol="NakDongWater" event="none"/>
+<Province code="30" label="금강수계" symbol="Guem-River" gisLeftLng="126.125144" gisTopLat="37.063272" gisScaleX="704.478073860417" gisScaleY="846.934405818035" >
+	<Country code="301" label=" " symbol="Guem-Area" event="none"/>
+	<Country code="3008110" label="대청" symbol="DaeChung-dam" gisLeftLng="127.170833" gisTopLat="36.554661" gisScaleX="200.6091944761645" gisScaleY="850.2679010462214"> 
+		<Dam code="20201" label="무주(대청)" symbol="무주"/> 
+		<Dam code="20202" label="보은2" symbol="보은2"/> 
+		<Dam code="20203" label="신함" symbol="신함"/> 
+		<Dam code="20204" label="문의" symbol="대청댐"/> 
+		<Dam code="20205" label="모서2" symbol="모서"/>7
+		<Dam code="20206" label="황간" symbol="황간"/> 
+		<Dam code="20207" label="청성" symbol="청성"/> 
+		<Dam code="20208" label="안남" symbol="안남"/> 
+		<Dam code="20209" label="군북" symbol="군북"/> 
+		<Dam code="20210" label="추부" symbol="추부"/> 
+		<Dam code="20211" label="대성산" symbol="대성산"/> 
+		<Dam code="20212" label="이원(대청)" symbol="이원"/> 
+		<Dam code="20213" label="영동" symbol="영동"/> 
+		<Dam code="20214" label="상촌" symbol="상촌"/> 
+		<Dam code="20215" label="무풍" symbol="무풍"/> 
+		<Dam code="20216" label="설천" symbol="설천"/> 
+		<Dam code="20217" label="금산" symbol="금산"/> 
+		<Dam code="3008777" label=" " symbol="DaeChungDamWater" event="none"/>
+	</Country>      
+	<Country code="3001110" label="용담" symbol="YongDam-dam" gisLeftLng="127.380683" gisTopLat="36.011000" gisScaleX="1000.8198248975186" gisScaleY="1000.5474227820337"> 
+		<Dam code="20301" label="장계" symbol="JangGye"/> 
+		<Dam code="20302" label="천천2" symbol="ChunChun"/> 
+		<Dam code="20303" label="주천" symbol="JuChun"/> 
+		<Dam code="20304" label="안천" symbol="AnChun"/> 
+		<Dam code="20305" label="부귀" symbol="BuGui"/> 
+		<Dam code="20306" label="무주(용담)" symbol="MuJu"/> 
+		<Dam code="20307" label="계북2" symbol="GyeBook"/> 
+		<Dam code="20308" label="상전" symbol="SangJun"/> 
+		<Dam code="3001777" label=" " symbol="YongDamDamWater" event="none"/>
+	</Country>      
+	<Country code="3203110" label="보령" symbol="BoRyung-dam" gisLeftLng="126.610626" gisTopLat="36.360884" gisScaleX="700.730570554939" gisScaleY="1000.438696561518"> 
+		<Dam code="20401" label="외산" symbol="WeSan"/> 
+		<Dam code="20402" label="도화담" symbol="DoWhaDam"/> 
+		<Dam code="20403" label="미산" symbol="MiSan"/> 
+		<Dam code="3203777" label=" " symbol="BoryeongDamWater" event="none"/>
+	</Country>      
+	<Country code="3303110" label="부안" symbol="BooAn-dam" gisLeftLng="126.468631" gisTopLat="35.706087" gisScaleX="6533.851166712668" gisScaleY="11462.924694119502"/> 
+	<Country code="307777" label=" " symbol="Guem-Water" event="none"/>
+</Province>      
+<Province code="30777" label=" " symbol="GuemWater" event="none"/>
+<Province code="40" label="영.섬수계" symbol="YoungSum-River"  gisLeftLng="126.027531" gisTopLat="35.868892" gisScaleX="824.746890388009" gisScaleY="852.159532093829">
+	<Country code="401" label=" " symbol="YoungSum-BG" event="none"/>
+	<Country code="4001110" label="섬진강" symbol="SumKinGang-dam" gisLeftLng="126.888839" gisTopLat="35.828892" gisScaleX="800.844489353618" gisScaleY="900.901752397931"> 
+		<Dam code="40201" label="성수" symbol="SungSu"/> 
+		<Dam code="40202" label="쌍치" symbol="SsangChi"/> 
+		<Dam code="40203" label="운암" symbol="WoonAm"/> 
+		<Dam code="40204" label="신평" symbol="SinPyung"/> 
+		<Dam code="40777" label=" " symbol="SumJinGangDamWater" event="none"/>
+	</Country>      
+	<Country code="4007110" label="주암" symbol="JooAm-dam" gisLeftLng="126.833111" gisTopLat="35.268632" gisScaleX="600.1878062381816" gisScaleY="800.4354106679766"> 
+		<Dam code="40301" label="맹리" symbol="MangRi"/> 
+		<Dam code="40302" label="장동" symbol="JangDong"/> 
+		<Dam code="40303" label="승주" symbol="SeungJu"/> 
+		<Dam code="40304" label="복래" symbol="BolRae"/> 
+		<Dam code="40305" label="동가" symbol="DongGa"/> 
+		<Dam code="40306" label="우산" symbol="WooSan"/> 
+		<Dam code="40307" label="주암댐" symbol="JuAm"/> 
+		<Dam code="40308" label="동북" symbol="DongBuk"/> 
+		<Dam code="4007777" label=" " symbol="JuAmDamWater" event="none"/>
+	</Country>      
+	<Country code="4104610" label="주암조절지" symbol="JooAmJoJulJi-dam" gisLeftLng="127.312866" gisTopLat="35.076308" gisScaleX="11834.372572155968" gisScaleY="8885.175982475464"/> 
+	<Country code="5101110" label="장흥" symbol="JangHeoung-dam" gisLeftLng="126.599003" gisTopLat="35.358935" gisScaleX="1000.890187298435" gisScaleY="500.41095787461"> 
+		<Dam code="40501" label="운월" symbol="WoonWol"/> 
+		<Dam code="40502" label="한대" symbol="HanDae"/> 
+		<Dam code="40503" label="장흥댐" symbol="JangHueng"/> 
+		<Dam code="4104777" label=" " symbol="JangHeungDamWater" event="none"/>
+	</Country>      
+	<Country code="5002201" label="평림" symbol="PyungRim-dam" gisLeftLng="126.626508" gisTopLat="35.355128" gisScaleX="4300.63998931788" gisScaleY="7000.500828219057"> 
+		<Dam code="40601" label="평림(AWS)" symbol="PyungRim-AWS"/> 
+		<Dam code="40602" label="평림댐" symbol="PyungRimDam"/> 
+		<Dam code="5002777" label=" " symbol="PyungRimDamWater" event="none"/>
+	</Country>      
+	<Country code="4105210" label="수어" symbol="Soou-dam" gisLeftLng="127.508704" gisTopLat="35.203500" gisScaleX="1500.752121064985" gisScaleY="2050.172281320687"> 
+		<Dam code="40701" label="수어댐" symbol="Sooue-dam"/> 
+		<Dam code="40702" label="지계" symbol="JiGye"/> 
+		<Dam code="4105777" label=" " symbol="SooueDamWater" event="none"/>
+	</Country>      
+	<Country code="407777" label=" " symbol="YoungSum-Water" event="none"/>
+	</Province>      
+<Province code="40777" label=" " symbol="YoungSumWater" event="none"/>
+</Map>      

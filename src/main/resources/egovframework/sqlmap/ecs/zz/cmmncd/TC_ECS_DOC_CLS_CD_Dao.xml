@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TC_ECS_DOC_CL_CD_Dao">
+	<select id="TC_ECS_DOC_CLS_CD_Dao_retrieveDocClCd" parameterType="kw.ecs.zz.cmmncd.vo.DocClsCdVo" resultType="egovMap">
+		/* TC_ECS_DOC_CLS_CD_Dao_retrieveDocClCd */
+		SELECT
+			LEVEL AS lv,
+			A.DOC_CLS_CD,
+			A.DOC_CLS_NM,
+			A.UPPER_DOC_CLS_CD,
+			A.SYS_DIV_CD,
+			A.FILE_MAIN_PATH,
+			A.MENU_ID
+		FROM
+			TC_ECS_DOC_CLS_CD A
+		WHERE
+			1 = 1
+			<if test="sysDivCd != null and sysDivCd !=''">
+			AND A.SYS_DIV_CD = #{sysDivCd}
+			</if>
+			<if test="upperDocClsCd == null or upperDocClsCd == ''">
+			START WITH A.UPPER_DOC_CLS_CD IS NULL
+			</if>
+			<if test="upperDocClsCd != null and upperDocClsCd != ''">
+			START WITH A.UPPER_DOC_CLS_CD = #{upperDocClsCd}
+			</if>
+			CONNECT BY
+				A.UPPER_DOC_CLS_CD = PRIOR A.DOC_CLS_CD
+				ORDER SIBLINGS BY A.DOC_CLS_CD
+	</select>
+
+	<!-- 문서분류등록 -->
+	<insert id="TC_ECS_DOC_CLS_CD_Dao_insertDocClsCd" parameterType="kw.ecs.zz.cmmncd.vo.DocClsCdVo">
+		/*TC_ECS_DOC_CLS_CD_Dao_insertDocClsCd*/
+		INSERT INTO
+			TC_ECS_DOC_CLS_CD (
+				DOC_CLS_CD,
+				DOC_CLS_NM,
+				UPPER_DOC_CLS_CD,
+				SYS_DIV_CD,
+				FILE_MAIN_PATH,
+				MENU_ID,
+				FRST_REGIST_DT,
+				FRST_RGSTR_ID,
+				LAST_UPDT_DT,
+				LAST_UPDUSR_ID
+		) VALUES (
+			#{docClsCd},
+			#{docClsNm},
+			#{upperDocClsCd},
+			#{sysDivCd},
+			#{fileMainPath},
+			#{menuId},
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<!-- 문서분류코드 수정 -->
+	<update id="TC_ECS_DOC_CLS_CD_Dao_updateDocClsCd" parameterType="kw.ecs.zz.cmmncd.vo.DocClsCdVo">
+		/*TC_ECS_DOC_CLS_CD_Dao_updateDocClsCd*/
+		UPDATE
+			TC_ECS_DOC_CLS_CD
+		SET
+			DOC_CLS_NM = #{docClsNm},
+			UPPER_DOC_CLS_CD = #{upperDocClsCd},
+			LAST_UPDT_DT = SYSDATE,
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE
+			DOC_CLS_CD = #{docClsCd}
+	</update>
+	
+	<!-- 문서분류를 삭제 -->
+	<delete id="TC_ECS_DOC_CLS_CD_Dao_deleteDocClsCd" parameterType="kw.ecs.zz.cmmncd.vo.DocClsCdVo">
+		/*TC_ECS_DOC_CLS_CD_Dao_deleteDocClsCd*/
+		DELETE
+			TC_ECS_DOC_CLS_CD
+		WHERE
+			DOC_CLS_CD = #{docClsCd}
+	</delete>
+	
+	<!-- 문서분류코드 사용건수 -->
+	<select id="TC_ECS_DOC_CLS_CD_Dao_selectDocClsInfo" parameterType="kw.ecs.zz.cmmncd.vo.DocClsCdVo" resultType="egovMap">
+		/*TC_ECS_DOC_CLS_CD_Dao_selectDocClsInfo*/
+		SELECT
+			A.DOC_CLS_CD,
+			(
+				SELECT
+					COUNT(*)
+				FROM
+					TM_ECS_ATCHFL
+				WHERE
+					DOC_CLS_CD = A.DOC_CLS_CD
+			) AS USE_CNT ,
+			(
+				SELECT
+					COUNT(*)
+				FROM
+					TC_ECS_DOC_CLS_CD
+				WHERE
+					UPPER_DOC_CLS_CD = A.DOC_CLS_CD
+			) AS DOC_CNT
+		FROM
+			TC_ECS_DOC_CLS_CD A
+		WHERE
+			A.DOC_CLS_CD = #{docClsCd}
+	</select>
+
+	<!-- 저장경로 찾아오기 -->
+	<select id="TC_ECS_DOC_CLS_CD_Dao_selectDocSavePath" parameterType="kw.ecs.zz.cmmncd.vo.DocClsCdVo" resultType="String">
+		/*TC_ECS_DOC_CLS_CD_Dao_selectDocSavePath*/
+		SELECT
+			REPLACE(
+				REPLACE(
+					REPLACE(FILE_MAIN_PATH, '년', TO_CHAR(SYSDATE,'YYYY')),
+				'월', TO_CHAR(SYSDATE,'MM')),
+			'일', TO_CHAR(SYSDATE, 'DD')) AS FILE_MAIN_PATH
+		FROM
+			TC_ECS_DOC_CLS_CD
+		WHERE
+			DOC_CLS_CD = #{docClsCd}
+	</select>
+</mapper>

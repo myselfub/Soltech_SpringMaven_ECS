@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_INTN_SCRIN_Dao">
+	<select id="TM_ECS_INTN_SCRIN_Dao_retrieveScrin" parameterType="kw.ecs.zz.authmng.vo.ScrinMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_SCRIN_Dao_retrieveScrin */
+		SELECT
+			'0' AS CHK,
+			A.scrin_id, --화면ID
+			A.intn_sys_div_cd, --대내시스템구분코드
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM
+					SCM.tc_sc_cd
+				WHERE
+					cls_cd = 'SCM_0000'
+					AND cmmn_cd = A.INTN_SYS_DIV_CD
+			) AS intn_sys_div_nm, --대내시스템구분코드명
+			A.scrin_nm, --화면명
+			A.scrin_url, --화면URL
+			A.scrin_dc, --화면설명
+			A.hpcm_file_nm, --도움말파일명
+			A.pge_no, --페이지번호
+			A.hpcm_vido_file_nm, --도움말영상파일명
+			A.use_yn, --사용여부
+			TO_CHAR(A.frst_regist_dt, 'YYYY-MM-DD HH:MM:DD') AS frst_regist_dt,
+			A.frst_rgstr_id,
+			(
+				SELECT
+					DISTINCT korname
+				FROM
+					HRM.vm_hr01601
+				WHERE
+					empno = A.frst_rgstr_id
+			) AS frst_rgstr_nm,
+			TO_CHAR(A.last_updt_dt, 'YYYY-MM-DD HH:MM:DD') AS last_updt_dt,
+			A.last_updusr_id,
+			(
+				SELECT
+					DISTINCT korname
+				FROM
+					HRM.vm_hr01601
+				WHERE
+					empno = A.last_updusr_id
+			) AS last_updusr_nm,
+			A.parm_vu
+		FROM
+			tm_ecs_intn_scrin A
+		<if test="intnSysDivCd == null or intnSysDivCd == ''">
+			, tm_ecs_intn_usr_athr B 
+		WHERE
+			A.intn_sys_div_cd = SUBSTR(B.ATHR_ID, 0, 3)
+			AND B.usr_id = #{usrId}
+		</if>
+		<if test="intnSysDivCd != null and intnSysDivCd != ''">
+		WHERE
+			1 = 1
+		</if>
+		<if test="scrinId != null and scrinId != ''">
+			AND A.scrin_id LIKE '%' || #{scrinId} || '%'
+		</if>
+		<if test="scrinNm != null and scrinNm != ''">
+			AND A.scrin_nm LIKE '%' || #{scrinNm} || '%'
+		</if>
+		<if test="intnSysDivCd != null and intnSysDivCd != ''">
+			AND A.intn_sys_div_cd = #{intnSysDivCd}
+		</if>
+		<if test="useYn != null and useYn != ''">
+			AND A.use_yn = #{useYn}
+		</if>
+	ORDER BY
+		A.intn_sys_div_cd,
+		A.scrin_id
+	</select>
+
+	<insert id="TM_ECS_INTN_SCRIN_Dao_insertScrinMng" parameterType="kw.ecs.zz.authmng.vo.ScrinMngVo">
+		/* TM_ECS_INTN_SCRIN_Dao_insertScrinMng */
+		INSERT INTO tm_ecs_intn_scrin (
+			scrin_id,
+			intn_sys_div_cd,
+			scrin_nm,
+			scrin_url,
+			scrin_dc,
+			hpcm_file_nm,
+			pge_no,
+			hpcm_vido_file_nm,
+			use_yn,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id,
+			parm_vu
+		) VALUES (
+			#{scrinId},
+			#{intnSysDivCd},
+			#{scrinNm},
+			#{scrinUrl},
+			#{scrinDc},
+			#{hpcmFileNm},
+			#{pgeNo},
+			#{hpcmVidoFileNm},
+			#{useYn},
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId},
+			#{parmVu}
+		)
+	</insert>
+
+	<update id="TM_ECS_INTN_SCRIN_Dao_updateScrinMng" parameterType="kw.ecs.zz.authmng.vo.ScrinMngVo">
+		/* TM_ECS_INTN_SCRIN_Dao_updateScrinMng */
+		UPDATE
+			tm_ecs_intn_scrin
+		SET
+			intn_sys_div_cd = #{intnSysDivCd},
+			scrin_nm = #{scrinNm},
+			scrin_url = #{scrinUrl},
+			scrin_dc = #{scrinDc},
+			hpcm_file_nm = #{hpcmFileNm},
+			pge_no = #{pgeNo},
+			hpcm_vido_file_nm = #{hpcmVidoFileNm},
+			use_yn = #{useYn},
+			last_updt_dt = SYSDATE,
+			last_updusr_id = #{lastUpdusrId},
+			parm_vu = #{parmVu}
+		WHERE
+			scrin_id = #{scrinId}
+	</update>
+
+	<delete id="TM_ECS_INTN_SCRIN_Dao_deleteScrinMng" parameterType="kw.ecs.zz.authmng.vo.ScrinMngVo">
+		/* TM_ECS_INTN_SCRIN_Dao_deleteScrinMng */
+		DELETE FROM
+			tm_ecs_intn_scrin
+		WHERE
+			scrin_id = #{scrinId}
+	</delete>
+
+	<select id="TM_ECS_INTN_SCRIN_Dao_selectScrinInfo" parameterType="kw.ecs.zz.authmng.vo.ScrinMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_SCRIN_Dao_selectScrinInfo */
+		SELECT
+			A.scrin_id,
+			A.scrin_nm,
+			(
+				SELECT
+					COUNT(*)
+				FROM
+					tm_ecs_intn_menu
+				WHERE
+					scrin_id = A.scrin_id
+			) AS menu_cnt
+		FROM
+			tm_ecs_intn_scrin A 
+		WHERE
+			A.scrin_id = #{scrinId}
+	</select>
+
+	<select id="TM_ECS_INTN_SCRIN_Dao_selectScrinConditionInfo" parameterType="kw.ecs.zz.authmng.vo.ScrinMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_SCRIN_Dao_selectScrinConditionInfo */
+		SELECT
+			A.parm_vu
+		FROM
+			tm_ecs_intn_scrin A 
+		WHERE
+			A.scrin_id = #{scrinId}
+	</select>
+
+	<select id="TM_ECS_INTN_SCRIN_Dao_selectLnkSys" parameterType="kw.ecs.zz.authmng.vo.ScrinMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_SCRIN_Dao_selectLnkSys */
+		SELECT
+			scrin_id,
+			scrin_nm,
+			scrin_url,
+			parm_vu,
+			menu_id,
+			menu_nm,
+			popup_yn,
+			call_parm,
+			#{usrId} AS usr_id
+		FROM (
+			SELECT
+				ROWNUM AS rn,
+				A.scrin_id,
+				A.scrin_nm,
+				A.scrin_url,
+				A.parm_vu,
+				B.menu_id,
+				B.menu_nm,
+				B.popup_yn,
+				B.call_parm
+			FROM
+				tm_ecs_intn_scrin A,
+				tm_ecs_intn_menu B
+			WHERE
+				A.scrin_id = B.scrin_id(+)
+				AND A.intn_sys_div_cd = B.menu_sys_div_cd
+				AND A.use_yn = 'Y'
+				AND B.use_yn = 'Y'
+				AND A.intn_sys_div_cd = #{intnSysDivCd}
+				AND B.menu_sys_div_cd = #{intnSysDivCd}
+				AND A.scrin_id LIKE '%' || #{scrinId} || '%'
+		)
+		WHERE
+			rn = 1
+	</select>
+
+	<select id="TM_ECS_INTN_SCRIN_Dao_retrieveHpcm" parameterType="kw.ecs.zz.authmng.vo.ScrinMngVo" resultType="egovMap">
+		/* TM_ECS_INTN_SCRIN_Dao_retrieveHpcm */
+		SELECT
+			A.menu_id,
+			A.menu_nm,
+			A.scrin_id,
+			(
+				SELECT
+					hpcm_file_nm
+				FROM
+					tm_ecs_intn_scrin
+				WHERE
+					intn_sys_div_cd = 'ECS'
+					AND use_yn = 'Y'
+					AND scrin_id = A.scrin_id
+			) AS hpcm_file_nm,
+			(
+				SELECT
+					pge_no
+				FROM
+					tm_ecs_intn_scrin
+				WHERE
+					intn_sys_div_cd = 'ECS'
+					AND use_yn = 'Y'
+					AND scrin_id = A.scrin_id
+			) AS pge_no
+		FROM
+			tm_ecs_intn_menu A
+		WHERE
+			A.menu_sys_div_cd = 'ECS'
+			AND A.use_yn = 'Y'
+			AND A.menu_id != 'ECS000000'
+			AND A.popup_yn = 'N'
+		ORDER BY
+			A.menu_ordr,
+			A.scrin_id
+	</select>
+</mapper>

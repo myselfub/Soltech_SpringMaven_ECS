@@ -1,0 +1,700 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltLeftMenuList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="menuId" name="메뉴ID" dataType="text"></w2:column>
+						<w2:column id="menuNm" name="메뉴명" dataType="text"></w2:column>
+						<w2:column id="upperMenuId" name="상위메뉴ID" dataType="text"></w2:column>
+						<w2:column id="menuLvl" name="메뉴LEVEL" dataType="text"></w2:column>
+						<w2:column id="sortOrdr" name="메뉴정렬순서" dataType="text"></w2:column>
+						<w2:column id="scrinId" name="화면ID" dataType="text"></w2:column>
+						<w2:column id="scrinUrl" name="화면URL" dataType="text"></w2:column>
+						<w2:column id="menuDc" name="메뉴설명" dataType="text"></w2:column>
+						<w2:column id="menuHideYn" name="메뉴숨김여부" dataType="text"></w2:column>
+						<w2:column id="popupYn" name="팝업여부" dataType="text"></w2:column>
+						<w2:column id="menuExecutYn" name="메뉴실행여부" dataType="text"></w2:column>
+						<w2:column id="useYn" name="사용여부" dataType="text"></w2:column>
+						<w2:column id="menuSysDivCd" name="시스템구분" dataType="text"></w2:column>
+						<w2:column id="menuApplcDe" name="적용시작일" dataType="text"></w2:column>
+						<w2:column id="menuEndDe" name="적용종료일" dataType="text"></w2:column>
+						<w2:column id="callParm" name="호출파라미터" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataList id="dltCurrShift" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="MANDT" name="MANDT" dataType="text"></w2:column>
+						<w2:column id="WAERS" name="WAERS" dataType="text"></w2:column>
+						<w2:column id="ZSHIFT" name="ZSHIFT" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltMsgMng" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="msgId" dataType="text" name="메시지ID"></w2:column>
+						<w2:column id="msgLangCd" dataType="text" name="메시지언어코드"></w2:column>
+						<w2:column id="sysDivCd" dataType="text" name="시스템구분코드"></w2:column>
+						<w2:column id="msgMngFomNm" dataType="text" name="메시지관리형식명"></w2:column>
+						<w2:column id="msgCtnt" dataType="text" name="메시지내용"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataMap id="dmaScrinBtnAthr" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="btnAthrList" dataType="text" name="버튼권한리스트"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltUsrBkMk" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="bkmkMenuId" dataType="text" name="즐겨찾기메뉴ID"></w2:column>
+						<w2:column id="usrId" dataType="text" name="사용자ID"></w2:column>
+						<w2:column id="menuNm" dataType="text" name="메뉴명"></w2:column>
+						<w2:column id="menuLvlNm" dataType="text" name="메뉴레벨명"></w2:column>
+						<w2:column id="scrinUrl" dataType="text" name="화면URL"></w2:column>
+						<w2:column id="sortOrdr" dataType="text" name="정렬순서"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script src="/resources/js/common/jquery.mCustomScrollbar.concat.min.js" type="javascript" />
+		<script type="text/javascript" lazy="false"><![CDATA[
+	scwin.trvMenu_onclick = function(value, nodeElement, index) {
+		var tmpRs = trvMenu.getSelectedNode();
+		if (!tmpRs) {
+			return;
+		}
+		var childNode = tmpRs.childNodes;
+
+		for (var i = 0; i < childNode.length; i++) {
+			if (childNode[i].isLeaf()) {
+				// console.log(eval("trvMenu_label_" + childNode[i].index).classList);
+				eval(comLib.getFrameId($p) + "trvMenu_label_" + childNode[i].index).classList.add("none-childlo");
+			}
+			// if(tmpRs[i].index != tmpRs.index){
+				// trvMenu.spanNode(depth1[i].index, false , true);
+			// }
+			// eval("trvMenu_label_" + childNode[i].index).classList.removeClass("w2treeview_label");
+		}
+
+		$p.$(".w2treeview_label").removeClass("w2treeview_select_node");
+
+		if (tmpRs.depth == 1) {
+			var depth1 = tmpRs.parentNode.childNodes;
+			for (var i = 0; i < depth1.length; i++) {
+				if (depth1[i].index != tmpRs.index) {
+					trvMenu.spanNode(depth1[i].index, false , true);
+				}
+			}
+		}
+
+		if (tmpRs.depth == 2) {
+			var depth2 = tmpRs.parentNode.childNodes;
+			for (var i = 0; i < depth2.length; i++) {
+				if (depth2[i].index != tmpRs.index) {
+					trvMenu.spanNode(depth2[i].index, false, true);
+				}
+			}
+		}
+
+		if (tmpRs.depth == 3) {
+			var depth3 = tmpRs.parentNode.childNodes;
+			for (var i = 0; i < depth3.length; i++) {
+				if (depth3[i].index != tmpRs.index) {
+					trvMenu.spanNode(depth3[i].index, false, true);
+				}
+			}
+		}
+
+		if (tmpRs.depth == 4) {
+			var depth4 = tmpRs.parentNode.childNodes;
+			for (var i = 0; i < depth4.length; i++) {
+				if (depth4[i].index != tmpRs.index) {
+					trvMenu.spanNode(depth4[i].index, false, true);
+				}
+			}
+		}
+
+		if (tmpRs.parentNode.index != 0) {
+			if (tmpRs.parentNode.parentNode.parentNode != null && tmpRs.parentNode.parentNode.parentNode.depth != 0) {
+				eval(comLib.getFrameId($p) + "trvMenu_label_" + tmpRs.parentNode.parentNode.parentNode.index).classList.add("w2treeview_select_node");
+			}
+
+			if (tmpRs.parentNode.parentNode != null && tmpRs.parentNode.parentNode.depth != 0) {
+				eval(comLib.getFrameId($p) + "trvMenu_label_" + tmpRs.parentNode.parentNode.index).classList.add("w2treeview_select_node");
+			}
+
+			if (tmpRs.parentNode != null && tmpRs.parentNode.depth != 0) {
+				eval(comLib.getFrameId($p) + "trvMenu_label_" + tmpRs.parentNode.index).classList.add("w2treeview_select_node");
+			}
+		}
+
+		if (trvMenu.isLeaf() == true) {
+			// 메뉴 JSON 객체
+			var jsonObj = dltLeftMenuList.getMatchedJSON("menuId", value, true)[0];
+
+			if (jsonObj != undefined && jsonObj != null) {
+				if (value == "ECSWD160000") { // 주요정보
+					// comLib.initBoard($p, "02");
+					$(".btn_m_icon2").trigger("click");
+				} else if (jsonObj.callParm.indexOf("ntt") == 0) {
+					comLib.initBoard($p, jsonObj.callParm);
+				} else {
+					// 윈도우 컨테이너 Maxnum 체크
+					if ($p.top().wdcMain.currentWindowNum == $p.top().wdcMain.options.windowMaxNum - 1) {
+						// 화면은 총 {0}개까지만 허용됩니다.
+						// alert(utilLib.getMessage("ECS.INFO.00010", "10")[0]);
+						$p.top().wdcMain.windows[1].window.close();
+					}
+
+					var existWindow = false;
+					for (var i = 0; i < $p.top().wdcMain.currentWindowNum; i++) {
+						if ($p.top().wdcMain.getWindowByWindowId(jsonObj.scrinId) != null) {
+							existWindow = true;
+							$p.top().wdcMain.getWindowByWindowId(jsonObj.scrinId, true);
+							break;
+						}
+					}
+
+					// 하위메뉴가 없고 scrinUrl 있는 경우 화면 오픈
+					if (existWindow == false) {
+						var menuInfo = {
+							"menuId" : jsonObj.menuId,
+							"menuNm" : jsonObj.menuNm,
+							"scrinId" : jsonObj.scrinId,
+							"conectParamCtnt" : jsonObj.callParm
+						};
+						var param = jsonObj.callParm;
+
+						if (param == null || param == "") {
+							param = "";
+						} else {
+							param = "?" + param;
+						}
+
+						if (value == "ECSZZ510000" || value == "ECSZZ520000" || value == "ECSZZ530000" || value == "ECSZZ540000" || value == "ECSZZ550000") {
+							scwin.oldSysCall(value);
+							return;
+						} else if (value == "ECSEC510000" || value == "ECSEC520000" || value == "ECSEC530000" || value == "ECSEC540000" ) {
+							if (jsonObj.scrinUrl != null && jsonObj.scrinUrl != "") {
+								var dataObj = {
+									"type" : "json",
+									"name" : "param",
+									"data" : {
+										"basin" : jsonObj.callParm
+									}
+								};
+								scwin.createWindow(jsonObj.menuDc, null, jsonObj.scrinUrl, jsonObj.menuDc, "main_ecs_detail", "existWindow", null, null, null, null, "wframe", dataObj);
+								return;
+							}
+						}
+						/*
+						else if(value == "ECSEG321000") { //전력입찰수행 크롬->익스로 오픈
+							if (navigator.userAgent.indexOf("Chrome") != -1) { // 크롬이면
+								scwin.ieSysCall(value);
+								return;
+							}
+						} else if (value == "ECSPG990000") {
+						}
+						*/
+
+						if (jsonObj.popupYn == null || jsonObj.popupYn != "Y") {
+							// 화면 오픈
+							// setTimeout(function() {
+								// createWindow(title, iconUrl, src, windowTitle, windowId, openAction, closeAction, windowTooltip)
+								if (jsonObj.scrinUrl != null && jsonObj.scrinUrl != "") {
+									scwin.createWindow(jsonObj.menuNm, null, jsonObj.scrinUrl + param, jsonObj.menuNm, jsonObj.scrinId, null, null, null, null, null, null, null);
+								}
+							// }, 200);
+						} else {
+							// 팝업창
+							var option = scwin.makePopupOption(jsonObj); // {popupID : jsonObj.scrinId, width : 1300, height : 830, title : jsonObj.menuNm};
+							var usrInfo = comLib.getUserInfo4Param(comLib.dataDecEnc(utilLib.getDate(), "E"), encodeURI(option.title));
+							var jsonPopupObj = {
+								"userInfo" : usrInfo,
+								"closeCallbackFncName" : "",
+								"popupId" : option.popupID
+							};
+							if (jsonObj.scrinUrl != null && jsonObj.scrinUrl != "") {
+								if (jsonObj.scrinUrl.indexOf("http") == 0) {
+									comLib.openGetWinPopup($p, jsonObj.scrinUrl + param, option, jsonPopupObj);
+								} else {
+									if (jsonObj.scrinUrl.endsWith("guide.xml")) {
+										var jsonPopupParam = ecsLib.queryStringToJSON(param);
+
+										var options = {
+											type : "window", // window, wframePopup
+											title : "온라인 도움말",
+											width : 1500,
+											height : 900,
+											modal : false,
+											popupParam : {
+												data : jsonPopupParam
+											}
+										};
+										comLib.openPopup($p, option.popupID, jsonObj.scrinUrl + param, options);
+									} else {
+										comLib.openGetWinPopup($p, comLib.ECS_POP_URL + jsonObj.scrinUrl + param, option, jsonPopupObj);
+									}
+								}
+							}
+						}
+						// 메뉴 로그
+						comLib.insertMenuLog($p, menuInfo);
+					}
+				}
+			}
+		} else {
+			// 하위 메뉴가있고 jsonObj.scrinUrl 있는경우 화면 오픈
+			var jsonObj = dltLeftMenuList.getMatchedJSON("menuId", value, true)[0];
+
+			if (jsonObj != undefined && jsonObj != null) {
+				if(jsonObj.scrinUrl != undefined && jsonObj.scrinUrl != null && jsonObj.scrinUrl != "") {
+					if ($p.top().wdcMain.currentWindowNum == $p.top().wdcMain.options.windowMaxNum - 1) {
+						$p.top().wdcMain.windows[1].window.close();
+					}
+					var existWindow = false;
+					for (var i = 0; i < $p.top().wdcMain.currentWindowNum; i++) {
+						if ($p.top().wdcMain.getWindowByWindowId(jsonObj.scrinId) != null) {
+							existWindow = true;
+							$p.top().wdcMain.getWindowByWindowId(jsonObj.scrinId, true);
+							break;
+						}
+					}
+
+					if (existWindow == false) {
+						var menuInfo = {
+							"menuId" : jsonObj.menuId,
+							"menuNm" : jsonObj.menuNm,
+							"scrinId" : jsonObj.scrinId,
+							"conectParamCtnt" : jsonObj.callParm
+						};
+						var param = jsonObj.callParm;
+
+						if (param == null || param == "") {
+							param = "";
+						} else {
+							param = "?" + param;
+						}
+
+						if (jsonObj.popupYn == null || jsonObj.popupYn != "Y") {
+							// 화면 오픈
+							// setTimeout(function() {
+								// createWindow(title, iconUrl, src, windowTitle, windowId, openAction, closeAction, windowTooltip)
+								if (jsonObj.scrinUrl != null && jsonObj.scrinUrl != "") {
+									scwin.createWindow(jsonObj.menuNm, null, jsonObj.scrinUrl + param, jsonObj.menuNm, jsonObj.scrinId, null, null, null, null, null, null, null);
+								}
+							// }, 200);
+						} else {
+							// 팝업창
+							var option = scwin.makePopupOption(jsonObj); // { popupID : jsonObj.scrinId, width : 1300, height : 830, title : jsonObj.menuNm};
+							var usrInfo = comLib.getUserInfo4Param(comLib.dataDecEnc(utilLib.getDate(), "E"), encodeURI(option.title));
+							var jsonPopupObj = {
+								"userInfo" : usrInfo,
+								"closeCallbackFncName" : "",
+								"popupId" : option.popupID
+							};
+
+							if (jsonObj.scrinUrl != null && jsonObj.scrinUrl != "") {
+								if (jsonObj.scrinUrl.indexOf("http") == 0) {
+									comLib.openGetWinPopup($p, jsonObj.scrinUrl + param, option, jsonPopupObj);
+								} else {
+									comLib.openGetWinPopup($p, comLib.SCM_POP_URL + jsonObj.scrinUrl + param, option, jsonPopupObj);
+								}
+							}
+						}
+
+						// 메뉴 로그
+						comLib.insertMenuLog($p, menuInfo);
+					}
+				}
+			}
+		}
+	};
+
+	// 윈도우 컨테이너 생성
+	scwin.createWindow = function(title, iconUrl, src, windowTitle, windowId, openAction, closeAction, windowTooltip, windowHeaderHTML, options, m_frameMode, dataObj) {
+		// 윈도우 컨테이너 Maxnum 체크
+		if ($p.top().wdcMain.currentWindowNum == $p.top().wdcMain.options.windowMaxNum - 1) {
+			// 화면은 총 {0}개까지만 허용됩니다.
+			// alert(utilLib.getMessage("ECS.INFO.00010", "10")[0]);
+			$p.top().wdcMain.windows[1].window.close();
+		}
+		if (src.indexOf("/openOthrSysScrn.do") === 0) {
+			$p.top().wdcMain.createWindow(title , iconUrl , comLib.getContextPath() + src, windowTitle, windowId,
+				openAction, closeAction, windowTooltip, windowHeaderHTML, options, m_frameMode || "iframe", dataObj);
+		} else {
+			setTimeout(function() { 
+				$p.top().wdcMain.createWindow(title , iconUrl , comLib.getContextPath() + src, windowTitle, windowId,
+					openAction, closeAction, windowTooltip, windowHeaderHTML, options, m_frameMode || "wframe", dataObj);
+			}, 200);
+		}
+	};
+
+	// 팝업창 사이즈 및 타이틀 설정
+	scwin.makePopupOption = function(menu) {
+		var title = menu.menuNm;
+		var width = 1300; // 일반창의 기본 width (협의 후 알맞게 수정해 주세요.)
+		var height = 770; // 일반창의 기본 height (협의 후 알맞게 수정해 주세요.)
+
+		var param = menu.callParm;
+
+		if (param != null && param != "") {
+			var params = param.split("&");
+
+			for (var i = 0; i < params.length; i++) {
+				var obj = params[i].split("="); // key, value 로 분리
+				var value = obj[1];
+
+				switch (obj[0]) {
+					case "width":
+						if (!isNaN(value)) {
+							width = parseInt(value);
+						}
+						break;
+
+					case "height":
+						if (!isNaN(value)) {
+							height = parseInt(value);
+						}
+						break;
+
+					case "title":
+						title = value;
+				}
+			}
+		}
+
+		var option = {
+			popupID : menu.scrinId,
+			width : width,
+			height : height,
+			title : title
+		};
+
+		return option;
+	};
+
+	scwin.navHeight = function() {
+		var wheight= $(window).height() - 112;
+		$p.$("#navi").css({"height": wheight + "px"});
+	};
+
+	scwin.usermenu = function() {
+		$p.$(".usermenu ul li a").click(function () {
+			$p.$(".usermenu ul li").removeClass("m-on");
+			$(this).parent().addClass("m-on");
+		});
+		$p.$(".btn_m_star").click(function () { 
+			$p.$(".navi-tree").css("display","none");
+			$p.$(".favorate").css("display","block");
+			scwin.selectUsrBkMk();
+		});
+		$p.$(".btn_m_menu").click(function () {
+			$p.$(".navi-tree").css("display","block");
+			$p.$(".mCSB_container").css("width","240px");
+			$p.$(".favorate").css("display","none");
+		});
+		/**
+		 * 사이트맵 20181116
+		 */
+		$(".btn_m_grid").click(function() {
+			if ($p.top().wdcMain.getWindowByWindowId("사이트맵") != null) {
+				$p.top().wdcMain.getWindowByWindowId("사이트맵", true);
+			} else {
+				scwin.createWindow("사이트맵", null, "/ui/common/sitemap.xml", "사이트맵", "site_map", null, null, null, null, null, "wframe", null);
+			}
+		});
+		/*
+		$(".btn_m_grid").click(function () {
+			scwin.createWindow("사이트맵", null, "/ui/common/sitemap.xml", "사이트맵", "site_map");
+		});
+		*/
+	};
+
+	// 윈도우 리사이즈
+	window.onresize = function() {
+		scwin.navHeight();
+
+		$p.$("#grpFav").mCustomScrollbar({
+			axis : "yx",
+			theme : "minimal",
+			setHeight : parseInt($p.$(".usermenu").css("height").replace("px", "")) - 112,
+			setWidth : "240px"
+		});
+
+		$p.$("#grpFav").mCustomScrollbar().css("height", parseInt($p.$(".usermenu").css("height").replace("px", "")) - 112);
+		$p.$("#grpFav").mCustomScrollbar().css("width", "240px");
+	};
+
+	/**
+	 * 메뉴검색
+	 */
+	scwin.ibxMenuSearch_onkeyup = function(e) {
+		comLib.searchMenu($p);
+	};
+
+	/**
+	 * 메뉴검색 삭제
+	 */
+	scwin.ibxMenuSearch_onmouseup = function(e) {
+		$p.setTimeout(function() {
+			comLib.searchMenu();
+		}, 100);
+	};
+
+	/**
+	 * 메뉴즐겨찾기
+	 */
+	scwin.selectUsrBkMk = function() {
+		comLib.selectUsrBkMkList();
+	};
+
+	/**
+	 * sap 실행
+	 */
+	scwin.anchorSAP_onclick = function() {
+		//comLib.btnCallSSO_onclick($p);
+	};
+
+	 /**
+	 * 시스템명 클릭
+	 */
+	scwin.grpMain_onclick = function(e) {
+		var mainId = "main_ecs";
+		if($p.top().wdcMain.getWindowByWindowId(mainId) != null) {
+			$p.top().wdcMain.getWindowByWindowId(mainId, true);
+			// 메인화면 재조회
+			$p.top().wdcMain.getWindow(mainId).scwin.searchDatas();
+		} else {
+			scwin.createWindow("에너지전주기", null, "/ui/main/main_ecs.xml", "에너지전주기", mainId, null, null, null, null, null, "wframe", null);
+			// wdcMain.createWindow("에너지전주기", null, "/ui/main/main_ecs.xml", "에너지전주기", mainId, null, "scwin.mainEcsClose", null, null, null, "wframe", null);
+		}
+	};
+
+	/**
+	 * 구시스템 호출하기
+	 */
+	scwin.oldSysCall = function(value){
+		var requestData = {
+			"dmaInqireParam" : {
+				"intnSysDivCd" : comLib.getSysDivCd(),
+				"useYn" : "Y",
+				"scrinId" : value
+			}
+		};
+		var option = {
+			action : "zz/authmng/selectLnkSys.do",
+			reqData : requestData,
+			success : function(res) {
+				var url = "";
+				if (res.data.menuId == "ECSZZ510000" || res.data.menuId == "ECSZZ520000") {
+					url = res.data.scrinUrl + "?empno=" + res.data.usrId;
+				} else {
+					url = res.data.scrinUrl;
+				}
+				if (res.data.popupYn == "Y") {
+					var callParm = (dltLeftMenuList.getAllJSON().find(obj => obj.scrinId == res.data.scrinId) || 0).callParm
+						|| "toolbar=no,menubar=yes,location=no,directories=yes,status=yes,scrollbars=yes,resizable=yes,width=1300,height=830,fullscreen=yes";
+					window.open(url, "ecslink", callParm);
+				}
+			},
+			isselectAsisCmsPageLinkShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 크롬IE호출(기상) 
+	 */
+	scwin.ieSysWiCall = function(value){
+		var jsonObj = dltLeftMenuList.getMatchedJSON("menuId", value, true)[0];
+
+		// var  lnkUrl = "https://ecs.[BASE_DOMAIN]/openOthrSysScrn.do?screenId="+jsonObj.scrinUrl.replace("/ui","")+"&targetSystem=ECS&menuId="+value;
+		var lnkUrl = "https://ecs.[BASE_DOMAIN]/openOthrSysMnu.do?screenId="+jsonObj.scrinUrl.replace("/ui","")+"&targetSystem=ECS&menuId="+value;
+
+		lnkUrl += "&usrId=" + comLib.getUsrId();
+		lnkUrl += "&docNo=";
+
+		// IE_OPEN.setSrc("ieecshttp:// + " + lnkUrl);
+		IE_OPEN.setSrc("ieoasisportalhttp:// + " + lnkUrl);
+	};
+
+	/**
+	 * 크롬IE호출
+	 */
+	scwin.ieSysCall = function(value) {
+		var jsonObj = dltLeftMenuList.getMatchedJSON("menuId", value, true)[0];
+		// var lnkUrl  =location.origin + "/openOthrSysScrn.do?screenId=" + jsonObj.scrinUrl.replace("/ui","") + "&targetSystem=ECS&menuId=" + value;
+		// var lnkUrl  =comLib.ECS_POP_URL.replace("/wq/winPopup.jsp?w2xPath=","") + "/openOthrSysScrn.do?screenId=" + jsonObj.scrinUrl.replace("/ui", "") + "&targetSystem=ECS&menuId=" + value;
+
+		var lnkUrl = "https://ecs.[BASE_DOMAIN]/openOthrSysScrn.do?screenId=" + jsonObj.scrinUrl.replace("/ui", "") + "&targetSystem=ECS&menuId=" + value;
+		// var lnkUrl = "https://ecs.[BASE_DOMAIN]/openOthrSysMnu.do?screenId=" + jsonObj.scrinUrl.replace("/ui", "") + "&targetSystem=ECS&menuId=" + value;
+
+		lnkUrl += "&usrId=" + comLib.getUsrId();
+		lnkUrl += "&docNo=";
+
+		// IE_OPEN.setSrc("ieecshttp:// + " + lnkUrl);
+		IE_OPEN.setSrc("ieoasisportalhttp:// + " + lnkUrl);
+	};
+	]]></script>
+		<w2:require src="/ui/common/udc/kWaterMarkSvg.xml"></w2:require>
+	</head>
+	<body>
+		<header id="header">
+			<xf:group class="usermenu">
+				<xf:group class="logo">
+					<w2:anchor outerDiv="false">
+						<xf:label></xf:label>
+					</w2:anchor>
+				</xf:group>
+				<xf:group tagname="ul">
+					<xf:group class="m-on" tagname="li">
+						<w2:anchor class="btn_m_menu" outerDiv="false">
+							<xf:label></xf:label>
+						</w2:anchor>
+					</xf:group>
+					<xf:group tagname="li">
+						<w2:anchor class="btn_m_star" outerDiv="false" toolTip="즐겨찾기">
+							<xf:label><![CDATA[]]>
+							</xf:label>
+						</w2:anchor>
+					</xf:group>
+					<!--
+						<xf:group tagname="li">
+						<w2:span label="6"></w2:span>
+						<w2:anchor outerDiv="false" class="btn_m_user">
+						<xf:label><![CDATA[]]>
+						</xf:label>
+						</w2:anchor>
+						</xf:group>
+					-->
+					<xf:group tagname="li">
+						<w2:anchor class="btn_m_grid" outerDiv="false" toolTip="사이트맵">
+							<xf:label></xf:label>
+						</w2:anchor>
+					</xf:group>
+				</xf:group>
+				<xf:group tagname="ul" class="bottom-group">
+					<xf:group tagname="li">
+						<w2:anchor class="btn_m_icon1" outerDiv="false" toolTip="SKIN">
+							<xf:label></xf:label>
+						</w2:anchor>
+					</xf:group>
+					<xf:group tagname="li">
+						<w2:anchor class="btn_m_icon2" outerDiv="false" toolTip="공지사항">
+							<xf:label></xf:label>
+						</w2:anchor>
+					</xf:group>
+					<xf:group tagname="li">
+						<w2:anchor class="btn_m_icon3" outerDiv="false" toolTip="자료실">
+							<xf:label></xf:label>
+						</w2:anchor>
+					</xf:group>
+					<xf:group tagname="li">
+						<w2:anchor class="btn_m_icon4" outerDiv="false" toolTip="QNA">
+							<xf:label></xf:label>
+						</w2:anchor>
+					</xf:group>
+					<xf:group tagname="li">
+						<w2:anchor class="btn_m_icon5" outerDiv="false" toolTip="FAQ">
+							<xf:label></xf:label>
+						</w2:anchor>
+					</xf:group>
+					<xf:group tagname="li">
+						<w2:anchor class="btn_m_icon6" outerDiv="false" toolTip="관리자">
+						</w2:anchor>
+					</xf:group>
+					<xf:group tagname="li">
+					</xf:group>
+					<xf:group class="palette">
+						<w2:anchor outerDiv="false">
+							<xf:label><![CDATA[테마아이콘]]></xf:label>
+						</w2:anchor>
+						<w2:anchor outerDiv="false" id="">
+							<xf:label><![CDATA[기본]]></xf:label>
+						</w2:anchor>
+						<w2:anchor outerDiv="false">
+							<xf:label><![CDATA[그린]]></xf:label>
+						</w2:anchor>
+						<w2:anchor outerDiv="false">
+							<xf:label><![CDATA[보라]]></xf:label>
+						</w2:anchor>
+						<w2:anchor outerDiv="false">
+							<xf:label><![CDATA[회색]]></xf:label>
+						</w2:anchor>
+						<w2:anchor outerDiv="false">
+							<xf:label><![CDATA[청록]]></xf:label>
+						</w2:anchor>
+					</xf:group>
+				</xf:group>
+				<xf:group class="sap">
+					<w2:anchor id="anchorSAP" label="SAP" outerDiv="false" ev:onclick="scwin.anchorSAP_onclick">
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group style="position:relative;" class="">
+				<xf:group id="grpMain" style="cursor:pointer;" class="title" ev:onclick="scwin.grpMain_onclick">
+					K-water 에너지 시스템
+					<!-- <w2:span style="font-style:italic;color:mediumspringgreen;text-shadow:3px 2px 2px #44444499;font-size:2.3em;text-indent:0;" label="e"></w2:span> -->
+					<!-- <w2:k_water_mark></w2:k_water_mark> -->
+				</xf:group>
+				<xf:group class="search">
+					<xf:group class="input_search " pluginName="input_Search">
+						<xf:input id="ibxMenuSearch" placeholder="메뉴검색" ev:onkeyup="scwin.ibxMenuSearch_onkeyup" ev:onmouseup="scwin.ibxMenuSearch_onmouseup"></xf:input>
+						<w2:anchor class="fa fa-search" outerDiv="false">
+							<xf:label><![CDATA[조회]]></xf:label>
+						</w2:anchor>
+					</xf:group>
+				</xf:group>
+				<xf:group class="navi-tree" style="position:relative; padding:0px; height:85%;">
+					<xf:group id="grpNav" class="nav" style="height:100%;">
+						<xf:group id="grpFav">
+							<w2:treeview id="trvMenu" checkboxDisabledTrueValue="" class="tw_menu" dataType="listed" ev:onlabelclick="scwin.trvMenu_onclick"
+								showTreeDepth="0" toggleEvent="onclick" tooltipGroupClass="false">
+								<w2:itemset nodeset="data:dltLeftMenuList">
+									<w2:label ref="menuNm"></w2:label>
+									<w2:value ref="menuId"></w2:value>
+									<w2:depth ref="menuLvl"></w2:depth>
+									<w2:folder ref=""></w2:folder>
+									<w2:checkbox ref=""></w2:checkbox>
+									<w2:checkboxDisabled ref=""></w2:checkboxDisabled>
+									<w2:image ref=""></w2:image>
+									<w2:iconImage ref=""></w2:iconImage>
+									<w2:selectedImage ref=""></w2:selectedImage>
+									<w2:expandedImage ref=""></w2:expandedImage>
+									<w2:leafImage ref=""></w2:leafImage>
+								</w2:itemset>
+							</w2:treeview>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="favorate" style="position:relative; padding:0px;">
+					<xf:group tagname="dl">
+						<xf:group tagname="dt">
+							<xf:group class="">
+								<w2:span id="usrCnt" label=" ">
+								</w2:span>
+								<w2:span label="메뉴가 있습니다. ">
+								</w2:span>
+							</xf:group>
+						</xf:group>
+						<xf:group id="bkMk">
+							<xf:group id="usrBkMkList" tagname="dd">
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</header>
+		<w2:iframe id="IE_OPEN" style="width:0px; height:0px;"></w2:iframe>
+	</body>
+</html>

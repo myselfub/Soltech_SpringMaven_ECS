@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 건설(CMS) Project View -->
+<mapper namespace="VM_CS01003_01_Dao">
+	<select id="VM_CS01003_01_Dao_retrieveProjectList" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo" resultType="egovMap">
+		<!-- 계획/건설 - 계획/건설 목록 -->
+		/* VM_CS01003_01_Dao_retrieveProjectList */
+		SELECT
+			bsns_cd AS cms_bsns_cd,
+			prjct_cd AS cms_prjct_cd,
+			prjct_sqnc_idtfr AS cms_prjct_sqnc_idtfr,
+			ordg_tit,
+			lnrtr_div_cd,
+			lnrtr_div_nm,
+			prjct_div_cd,
+			prjct_div_nm,
+			ntntrs_sport_yn,
+			bsns_mngdept_nm,
+			edpt_nm,
+			edpt_charger_nm,
+			strwrk_de,
+			last_compet_de,
+			abslt_cntrwk_pd_info,
+			last_cntrwk_pd_info,
+			cntrct_entrps_nm,
+			entrps_rprsr_nm,
+			spt_addr,
+			competam,
+			bsns_div_nm
+		FROM
+			CMS.vm_cs01003_01
+		WHERE
+			strwrk_de BETWEEN #{strtDt} AND #{endDt}
+			<if test='null != ordgTit and "" neq ordgTit'>
+			AND ordg_tit LIKE '%' || #{ordgTit} || '%'
+			</if>
+			<if test='null != edptNm and "" neq edptNm'>
+			AND edpt_nm LIKE '%' || #{edptNm} || '%'
+			</if>
+		ORDER BY
+			strwrk_de
+	</select>
+</mapper>

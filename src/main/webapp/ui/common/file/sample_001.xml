@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection attributeMap="dmaNttMt">
+				<w2:dataMap baseNode="map" id="dmaFileBasic" style="" firstSet="true" repeatNode="map">
+					<w2:keyInfo>
+						<w2:key id="rowStatus" name="상태" dataType="text"></w2:key>
+						<w2:key id="atchFileId" name="파일ID" dataType="text"></w2:key>
+						<w2:key id="fileSn" name="파일순번" dataType="number"></w2:key>
+						<w2:key id="orginlFileNm" name="원본파일명" dataType="text"></w2:key>
+						<w2:key id="fileSize" name="파일사이즈" dataType="number"></w2:key>
+						<w2:key id="saveFileNm" name="물리파일명" dataType="text"></w2:key>
+						<w2:key id="fileSavePath" name="파일경로" dataType="text"></w2:key>
+						<w2:key id="fileTempPath" name="임시저장경로" dataType="text"></w2:key>
+						<w2:key id="idvdinfoInclsYn" name="개인정보포함여부" dataType="text"></w2:key>
+						<w2:key id="sapYn" name="SAP여부" dataType="text"></w2:key>
+						<w2:key id="tempFileNm" name="임시저장소 저장된 파일명" dataType="text"></w2:key>
+					</w2:keyInfo>
+					<w2:data></w2:data>
+				</w2:dataMap>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFile">
+					<w2:columnInfo>
+						<w2:column id="orginlFileNm" name="파일명" dataType="text"></w2:column>
+						<w2:column id="fileTempPath" name="임시저장소 저장된 파일명" dataType="text"></w2:column>
+						<w2:column id="atchFileId" name="파일ID" dataType="text"></w2:column>
+						<w2:column id="fileSn" name="파일순번" dataType="number"></w2:column>
+						<w2:column id="imgData" name="이미지데이터" dataType="text"></w2:column>
+						<w2:column id="jobSeCd" name="업무구분코드" dataType="text"></w2:column>
+						<w2:column id="docSj" name="문서제목" dataType="text"></w2:column>
+						<w2:column id="docCn" name="문서내용" dataType="text"></w2:column>
+						<w2:column id="sapYn" name="SAP여부" dataType="text"></w2:column>
+						<w2:column id="scrinLinkInfo" name="화면링크정보" dataType="text"></w2:column>
+						<w2:column id="pkInfo" name="PK정보" dataType="text"></w2:column>
+						<w2:column id="menuId" name="메뉴ID" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltNttList" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="nttId" name="게시물ID" dataType="text"></w2:column>
+
+						<w2:column id="bbsId" name="게시판ID" dataType="text"></w2:column>
+						<w2:column id="ctgId" name="카테고리ID" dataType="text"></w2:column>
+						<w2:column id="sysSeCd" name="시스템구분코드" dataType="text"></w2:column>
+						<w2:column id="sysSeNm" name="시스템구분명" dataType="text"></w2:column>
+						<w2:column id="nttSj" name="게시물제목" dataType="text"></w2:column>
+						<w2:column id="nttCn" name="게시물내용" dataType="text"></w2:column>
+						<w2:column id="atchFileId" name="첨부파일ID" dataType="text"></w2:column>
+						<w2:column id="frstRegistDt" name="최초등록일시" dataType="date"></w2:column>
+						<w2:column id="frstRegisterId" name="최초등록자ID" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="저장경로" dataType="text"></w2:column>
+						<w2:column id="saveFileNm" name="저장파일명" dataType="text"></w2:column>
+						<w2:column id="orginlFileNm" name="원본파일명" dataType="text"></w2:column>
+						<w2:column id="fileSize" name="파일사이즈" dataType="text"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap baseNode="map" id="dmaNttMt">
+					<w2:keyInfo>
+						<w2:key id="ctgId" name="카테고리ID" dataType="text"></w2:key>
+						<w2:key id="sysSeCd" name="시스템구분코드" dataType="text"></w2:key>
+						<w2:key id="nttSj" name="게시물제목" dataType="text"></w2:key>
+						<w2:key id="nttCn" name="게시물내용" dataType="text"></w2:key>
+						<w2:key id="orginlFileNm" name="첨부파일명" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+			</w2:dataCollection>
+		</xf:model>
+    	<script lazy="false" type="text/javascript"><![CDATA[
+        //화면 오픈
+       scwin.initScreen = function() {
+
+        };
+        
+        /**
+		 * 게시물을  조회한다.
+		 * @param 검색조건
+		 * @return  검색결과
+		 */
+		scwin.btnSearch_onclick = function() {
+			scwin.searchNttMt();
+		};
+		scwin.searchNttMt = function() {
+			var requestData = {};
+				 requestData.data = {"nttSj" : ibxSearchNttSj.getValue()};
+			var option = {action : "sc/sample/searchNttMt.do"
+			               , reqData : requestData
+			               , resData : dltNttList
+			               , success : "scwin.searchNttMtCallback"
+			               , isShowMeg : false
+			                 };			
+			ajaxLib.executeAjax($p, option);	
+		};
+        
+       	/**
+		 * 게시물 조회후 콜백 로직을 수행한다.
+		 * @param resBody java단에서 넘겨받은 결과값
+		 * @return 
+		 */
+		scwin.searchNttMtCallback = function(resBody) {
+		 	//alert ( "처리되었습니다.");
+			//console.log ( resBody.data.nttCn );
+		};	
+		
+		
+		/**
+		 * 그리드 클릭
+		 * @param
+		 * @return
+		 */
+        scwin.grdBbs_onrowindexchange = function(row,oldRow) {
+			dmaNttMt.set( "ctgId" ,  dltNttList.getCellData( row , "ctgId" ) );
+			dmaNttMt.set("sysSeCd", dltNttList.getCellData( row , "sysSeCd" ) );
+			dmaNttMt.set("nttSj", dltNttList.getCellData( row , "nttSj" ) );
+			dmaNttMt.set("nttCn", dltNttList.getCellData( row , "nttCn" ) );
+			dmaNttMt.set("orginlFileNm", dltNttList.getCellData( row , "orginlFileNm" ) );
+		};
+		
+		/**
+		 * 신규버튼클릭
+		 * @param
+		 * @return
+		 */
+		scwin.btnAdd_onclick = function() {
+			formReset();          //입력폼값 초기화
+		};
+	
+        /**********************************************************
+        첨부파일 처리
+        **********************************************************/
+        /**
+         * 첨부파일 선택이후 콜백
+         * @param
+         * @return
+         */
+        function singlSelectCallback() {
+        	var fileInfos = mpdSinglFile.getFileInfos();
+        	ibxAtchFile.setValue(fileInfos[0].name);
+        };
+        
+        /**
+         * 등록하고자 선택된 첨부파일 삭제처리(단, 저장전에만 가능함)
+         * @param
+         * @return
+         */
+        scwin.btnDelSinglFile_onclick = function() {
+			ibxAtchFile.setValue("");
+			mpdSinglFile.removeAllFiles();
+		};
+		
+		
+		
+        /**
+         * 첨부 파일 임시저장후 콜백(전송)
+         * @param
+         * @return
+         */
+		scwin.mpdSinglFile_ondone = function(data) {
+			//첨부파일정보 셋팅
+			fileLib.dataListSetting(dltFile, data);
+//			comLib.confirm($p, utilLib.getMessage("게시물을 저장하시겠습니까?"), "scwin.saveConfirmCallback");
+			comLib.confirm($p, "게시물을 저장하시겠습니까?", "scwin.saveConfirmCallback");
+		};
+		
+		/**
+		 * 화면단 프로그래스바를 사용할 경우 사용
+		 * @param info 서버로 업로드시 파일전송 상태값
+		 * @return
+		 */
+		scwin.mpdSinglFile_onprogress = function(info) {
+			var rowidx = fileDataList.getMatchedIndex("name", info.fileName);
+
+			ibxBigFileStatus.setValue( info.percentData + "%" );
+			ibxBigFileStatus.setStyle("display", "block");
+			ibxBigFileStatus.setStyle("background","#ffcc00");
+			ibxBigFileStatus.setStyle("background-repeat","repeat-x");
+			ibxBigFileStatus.setStyle("background-position","left top");
+			ibxBigFileStatus.setStyle("background-image","url('/scm/resources/images/common/pro.png')");
+			ibxBigFileStatus.setStyle( "width" , info.percentData + "%" );
+		};
+		
+        /**
+         * 저장버튼 클릭
+         * @param
+         * @return
+         */
+		scwin.btnSave_onclick = function() {
+			// 입력값 셋팅 (입력 컨포넌트들을 dataCollection에 매핑시 필요없음)
+			dmaNttMt.set( "ctgId" , ibxCtg.getValue() );
+			dmaNttMt.set( "sysSeCd", ibxSysSeCd.getValue() );
+			dmaNttMt.set( "nttSj",  ibxNttSj.getValue() );
+			dmaNttMt.set( "nttCn", txaNttCn.getValue() );
+			
+			// 첨부파일이 있는 경우
+			if ( ibxAtchFile.getValue() != '' ) {
+				mpdSinglFile.startUpload();
+			} else { //첨부파일이 없는 경우
+				comLib.confirm($p, utilLib.getMessage("SC.INFO.00321"), "scwin.saveConfirmCallback");
+			}
+		};
+	
+	    /**
+		 * 실제 저장처리는 하는 함수
+		 * @param
+		 * @return
+		 */
+		scwin.saveConfirmCallback = function() {
+			var requestData = {};
+			requestData.data = dmaNttMt.getJSON();
+			requestData.data1 = dltFile.getAllJSON();
+			
+			var option = {action : "sc/sample/saveNttMt.do"
+			               , reqData : requestData
+			               , resData : dltNttList
+			               , success : "scwin.saveCallback"
+			               , isShowMeg : false
+				            };			
+			ajaxLib.executeAjax($p, option);
+		};
+		
+		/**
+		 * 저장후 콜백
+		 * @param resBody (서비스단에서 받은 데이터)
+		 * @return 
+		 */
+		scwin.saveCallback = function(resBody) {
+//			comLib.alert($p, utilLib.getMessage(resBody.message.code_name));
+			comLib.alert($p, resBody.message.code_name);
+			formReset();
+			scwin.searchNttMt();
+		};
+	
+		/**
+		 * 입력폼 초기화
+		 * @param 
+		 * @return 
+		 */
+		function formReset() {
+			dmaNttMt.undo();
+			dltFile.removeAll();
+			ibxAtchFile.setValue( "" );
+			ibxCtg.setValue("");
+			ibxSysSeCd.setValue("");
+			ibxNttSj.setValue("");
+			txaNttCn.setValue("");
+		};	
+	
+		/**
+		 * 첨부파일 다운로드
+		 * @param event
+		 * @return 첨부파일
+		 */
+		scwin.ibxAtchFile_onclick = function(e) {
+			var row = grdBbs.getFocusedRowIndex();
+			var atchFileId = dltNttList.getCellData( row, "atchFileId" );       	//첨부파일 ID
+			var fileSn = dltNttList.getCellData( row, "fileSn" );       	//첨부파일 ID
+			var filePath = dltNttList.getCellData(row, "fileSavePath");				//서버에 저장된 파일 경로
+			var saveFileName = dltNttList.getCellData( row , "saveFileNm" );			//서버에 저장된 파일명
+			var fileName = dltNttList.getCellData(row, "orginlFileNm");		//저장할 파일명
+
+			if (atchFileId != null && atchFileId != '' ) {
+				// filePath : 서버에 저장된 파일 경로
+				// saveFileName : 서버에 저장된 파일명
+				// fileName : 원본파일명
+				var sendUrl = filePath + "/" + saveFileName;
+				fileLib.fileDownload(sendUrl, fileName);
+			}
+		};
+	
+		/**
+		 * SAP용 팝업 호출 (임시)
+		 * @param 없음.
+		 * @return 없음.
+		 */
+		scwin.btnSapPopup_onclick = function() {
+			var options = {
+					title : "문서관리(SAP)", width : 800, height : 670, 
+					popupParam : { closeCallbackFncName : "scwin.sapFileUploadCallback" }
+				};
+			comLib.openPopup($p, "sapFile", "/ui/scm/sc/docMng/SCMSC40000003.xml&usrId=100001&sysSeCd=SCM&jobSeCd=SC&tCode=12345&objectKey=11111&popupId=sapFile", options);
+		};
+	]]></script>
+    	<!-- <w2:require src="/ui/common/udc/periodCalendar.xml"></w2:require> -->
+    </head>
+    <body>   	
+    	<xf:group id="" style="" class="wrap">
+    		<xf:group class="search-box" id="" style="">
+    			<xf:group class="list" id="" style="">
+    				<xf:group class="w2tb" id="" style="" tagname="table">
+    					<w2:attributes>
+    						<w2:summary></w2:summary>
+    					</w2:attributes>
+    					<xf:group tagname="caption"></xf:group>
+    					<xf:group tagname="colgroup">
+    						<xf:group class="cw2" tagname="col"></xf:group>
+    						<xf:group tagname="col"></xf:group>
+    						<xf:group class="cw2" tagname="col"></xf:group>
+    						<xf:group tagname="col"></xf:group>
+    						<xf:group class="cw2" tagname="col"></xf:group>
+    						<xf:group tagname="col" class="cw4"></xf:group>
+    						<xf:group class="cw2" tagname="col"></xf:group>
+    						<xf:group class="" tagname="col"></xf:group>
+    					</xf:group>
+    					<xf:group style="" tagname="tr">
+    						<xf:group class="w2tb_th cw2" tagname="th">
+    							<w2:attributes>
+    								<w2:scope>row</w2:scope>
+    							</w2:attributes>
+    							<w2:span id="" label="게시물제목" style=""></w2:span>
+    						</xf:group>
+    						<xf:group class="w2tb_td" style="" tagname="td">
+    							<xf:input id="ibxSearchNttSj" style=""></xf:input>
+		    						<w2:attributes>
+			        					<w2:scope>row</w2:scope>
+			        					<w2:colspan>3</w2:colspan>
+			        					<w2:rowspan>1</w2:rowspan>
+			        				</w2:attributes>
+    						</xf:group>
+    						
+    					</xf:group>
+    				</xf:group>
+    			</xf:group>
+    			<xf:group class="btn-group">
+    				<w2:anchor class="fa fa-search btn_sh" id="btnSearch" outerDiv="false" style="" ev:onclick="scwin.btnSearch_onclick">
+    					<xf:label><![CDATA[조회]]></xf:label>
+    				</w2:anchor>
+    			</xf:group>
+    		</xf:group>
+    		<xf:group style="" id="" class="content-area">
+    			<xf:group class="layout-float" id="" style="">
+
+					<xf:group class="float-con left-area cw12" id="" style="">
+    					<xf:group class="con-box" id="" style="">
+    						<xf:group class="title-group" id="" style="">
+    							<xf:group style="" id="" class="" tagname="h3">
+    								<w2:span label="그리드 타이틀" style="" id="">
+    								</w2:span>
+    								<w2:span id="" label="10" style="" class="title-num" displayFormat="###,###,###">
+    								</w2:span>
+    							</xf:group>
+    						</xf:group>
+    						<xf:group style="" id="" class="list-box box  height-sam">
+    							<w2:gridView scrollByColumnAdaptive="false" summaryAuto="false" useShiftKey="true" scrollByColumn="false" focusMode="row"
+    								fixedColumnWithHidden="true" dataList="dltNttList" ignoreCellClick="false" style="height: 150px;" autoFit="allColumn" id="grdBbs"
+    								visibleRowNum="10" ignoreToggleOnDisabled="false" autoFitMinWidth="" readOnly="true" rowNumVisible="true" rowNumHeaderValue="순번"
+    								loadCount="10" ev:onrowindexchange="scwin.grdBbs_onrowindexchange">
+
+    								<w2:header style="" id="header1">
+    									<w2:row style="" id="row1">
+    										<w2:column width="70" inputType="text" style="height:20px;" id="column7" blockSelect="false"
+    											displayMode="label" value="카테고리">
+    										</w2:column>
+    										<w2:column width="70" inputType="text" style="height:20px;" id="column8" blockSelect="false"
+    											displayMode="label" value="시스템구분">
+    										</w2:column>
+    										<w2:column width="200" inputType="text" style="height:20px;" id="column1" blockSelect="false"
+    											displayMode="label" value="게시물제목">
+    										</w2:column>
+    										<w2:column width="70" inputType="text" style="height:20px;" id="column6" blockSelect="false"
+    											displayMode="label" value="등록일자">
+    										</w2:column>
+    										<w2:column width="70" inputType="text" style="height:20px;" id="column5" blockSelect="false"
+    											displayMode="label" value="등록자">
+    										</w2:column>
+    									</w2:row>
+    								</w2:header>
+    								<w2:gBody style="" id="gBody1">
+    									<w2:row style="" id="row2">
+    										<w2:column width="70" inputType="text" style="height:20px" id="ctgId" blockSelect="false" displayMode="label">
+											</w2:column>
+											<w2:column width="70" inputType="text" style="height:20px" id="sysSeCd" blockSelect="false" displayMode="label">
+											</w2:column>
+											<w2:column width="200" inputType="text" style="height:20px" id="nttSj" blockSelect="false" displayMode="label">
+											</w2:column>
+											<w2:column width="70" inputType="text" style="height:20px" id="frstRegistDt" blockSelect="false" displayMode="label">
+											</w2:column>
+											<w2:column width="70" inputType="text" style="height:20px" id="frstRegisterId" blockSelect="false" displayMode="label">
+											</w2:column>
+    									</w2:row>
+    								</w2:gBody>
+    							</w2:gridView>
+    						</xf:group>
+    					</xf:group>
+    				</xf:group>
+    				<xf:group class="float-con right-area cw8" id="" style="">
+    					<xf:group style="" id="" class="con-box">
+    						<xf:group style="" id="" class="title-group">
+    							<xf:group style="" id="" class="" tagname="h3">
+									<w2:span id="" label="상세정보" style=""></w2:span>
+    							</xf:group>
+    							<xf:group class="com-area" id="" style="">
+									<xf:group class="btn-group" id="" style="">
+										<w2:anchor class="" id="btnAdd" outerDiv="false" style="" ev:onclick="scwin.btnAdd_onclick">
+    										<xf:label><![CDATA[신규]]></xf:label>
+    									</w2:anchor>
+    								</xf:group>
+    								<xf:group class="info-box" id="" style="">
+    								</xf:group>
+    							</xf:group>
+    						</xf:group>
+    						<xf:group class="view-box box height-sam" id="" style="">
+    							<xf:group class="w2tb" id="" style="" tagname="table">
+    								<xf:group tagname="colgroup">
+    									<xf:group class="detail_tit" style="" tagname="col">
+										</xf:group>
+										<xf:group style="" tagname="col">
+										</xf:group>
+										<xf:group style="" tagname="col">
+										</xf:group>
+										<xf:group style="" tagname="col">
+										</xf:group>
+    								</xf:group>
+    								<xf:group style="" tagname="tr">
+    									<xf:group adaptiveThreshold="" class="w2tb_th right" style="" tagname="th">
+    										<w2:span id="" label="카테고리" style="">
+    										</w2:span>
+    									</xf:group>
+    									<xf:group class="w2tb_td" style="" tagname="td">
+    										<w2:attributes>
+    											<w2:colspan>3</w2:colspan>
+    											<w2:rowspan>1</w2:rowspan>
+    										</w2:attributes>
+    										<xf:input id="ibxCtg" style="" ref="data:dmaNttMt.ctgId"></xf:input>
+    									</xf:group>
+    								</xf:group>
+    								<xf:group style="" tagname="tr">
+    									<xf:group class="w2tb_th right" style="" tagname="th">
+    										<w2:span id="" label="시스템구분" style=""></w2:span>
+    									</xf:group>
+    									<xf:group class="w2tb_td"
+    										style="" tagname="td">
+    										<w2:attributes>
+    											<w2:colspan>3</w2:colspan>
+    											<w2:rowspan>1</w2:rowspan>
+    										</w2:attributes>
+    										<xf:input id="ibxSysSeCd" style="" ref="data:dmaNttMt.sysSeCd"></xf:input>
+    									</xf:group>
+    								</xf:group>
+    								<xf:group style="" tagname="tr">
+    									<xf:group class="w2tb_th right"
+    										style="" tagname="th">
+    										<w2:span id="" label="게시물제목"
+    											style="">
+    										</w2:span>
+    									</xf:group>
+    									<xf:group class="w2tb_td"
+    										style="" tagname="td">
+    										<w2:attributes>
+    											<w2:colspan>3</w2:colspan>
+    											<w2:rowspan>1</w2:rowspan>
+    										</w2:attributes>
+    										<xf:input id="ibxNttSj" style="" ref="data:dmaNttMt.nttSj"></xf:input>
+    									</xf:group>
+    								</xf:group>
+    								<xf:group style="" tagname="tr">
+    									<xf:group class="w2tb_th right" style="" tagname="th">
+    										<w2:span id="" label="게시물내용" style="">
+    										</w2:span>
+    									</xf:group>
+    									<xf:group class="w2tb_td" style="" tagname="td">
+    										<w2:attributes>
+    											<w2:colspan>3</w2:colspan>
+    											<w2:rowspan>1</w2:rowspan>
+    										</w2:attributes>
+    										<xf:textarea style="width:100%;height:100px;" id="txaNttCn" ref="data:dmaNttMt.nttCn"></xf:textarea>
+    									</xf:group>
+    								</xf:group>
+    								<xf:group style="" tagname="tr">
+    									<xf:group class="w2tb_th right" style="" tagname="th">
+    										<w2:span id="" label="첨부파일"
+    											style="">
+    										</w2:span>
+    									</xf:group>
+    									<xf:group class="w2tb_td" style="" tagname="td">
+    										<w2:attributes>
+    											<w2:colspan>3</w2:colspan>
+												<w2:rowspan>1	</w2:rowspan>
+    										</w2:attributes>
+	    									<xf:group class="file-upload big-file">
+					    						<xf:group class="file-group">
+					    							<xf:input id="ibxAtchFile" ref="data:dmaNttMt.orginlFileNm" readOnly="true" ev:ondblclick="scwin.ibxAtchFile_ondblclick" ev:onclick="scwin.ibxAtchFile_onclick"></xf:input>
+					    							<w2:multiupload maxcount="1" filter="*:*.*" mode="html5_transparent" action="" wmode="false" style="" id="mpdSinglFile" maxsize="2048000" 
+																		 uploadButton="" selectCallback="singlSelectCallback" ev:ondone="scwin.mpd_SinglFile_ondone" 
+																		 ev:onprogress="scwin.mpd_SinglFile_onprogress">
+					    							</w2:multiupload>
+					    							<w2:anchor outerDiv="false" class="fa fa-file-o file-btn file-search-btn" style="" id="">
+					    								<xf:label><![CDATA[파일찾기]]></xf:label>
+					    							</w2:anchor>
+					    						</xf:group>
+					    						<xf:group class="file-g-group">
+					    							<w2:anchor outerDiv="false" style="" id="btn_DelSinglFile" class="fa fa-trash file-btn file-del-btn" 
+					    											ev:onclick="scwin.btn_DelSinglFile_onclick">
+					    								<xf:label><![CDATA[삭제]]></xf:label>
+					    							</w2:anchor>
+					    							<!-- 프로그래스바를 사용시 주석제거 할 것 -->
+					    							<!-- <xf:group class="file-bar" id="file_status">
+					    								<xf:input id="ibx_BigFileStatus"
+					    									style="" initValue="0%" title="0%">
+					    								</xf:input>
+					    							</xf:group> -->
+					    						</xf:group>
+					    					</xf:group>
+	    								</xf:group>
+    								</xf:group>
+    							</xf:group>
+    						</xf:group>
+
+    					</xf:group>
+    					<xf:group style="" id="" class=""></xf:group>
+    				</xf:group>
+    			</xf:group>
+    		</xf:group>
+    		<xf:group class="footer" id="" style="">
+    			<xf:group class="btn-group" id="" style="">
+    				<w2:anchor class="" href="" id="btn_Save" outerDiv="false"
+    					ref="" style="" ev:onclick="scwin.btn_Save_onclick">
+    					<xf:label><![CDATA[저장]]></xf:label>
+    				</w2:anchor>
+    				<w2:anchor class="" href="" id="btnSapPopup" outerDiv="false" ref="" style="" ev:onclick="scwin.btnSapPopup_onclick">
+    					<xf:label><![CDATA[SAP용팝업]]></xf:label>
+    				</w2:anchor>
+    				<!-- <w2:anchor class="" href="" id="" outerDiv="false"
+    					ref="" style="">
+    					<xf:label><![CDATA[삭제]]></xf:label>
+    				</w2:anchor> -->
+    			</xf:group>
+    		</xf:group>
+    	</xf:group>
+
+    </body>
+</html>

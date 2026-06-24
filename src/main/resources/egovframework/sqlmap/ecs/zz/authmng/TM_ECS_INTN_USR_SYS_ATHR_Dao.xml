@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="TM_ECS_INTN_USR_SYS_ATHR_Dao">
+
+	<select id="TM_ECS_INTN_USR_SYS_ATHR_retrieveUsrSysAthr" parameterType="kw.ecs.zz.authmng.vo.UsrSysAthrVo" resultType="egovMap">
+		/* TM_ECS_INTN_USR_SYS_ATHR_retrieveUsrSysAthr */
+		SELECT
+			A.SYS_DIV_CD AS INTN_SYS_DIV_CD,
+			(SELECT CMMN_CD_NM FROM SCM.TC_SC_CD WHERE cls_cd = 'SCM_0000' AND A.SYS_DIV_CD = CMMN_CD) AS INTN_SYS_DIV_NM,
+			ADMIN_DIV_CD,
+			A.USR_ID,
+			(SELECT KORNAME FROM HRM.VM_HR01601 WHERE EMPNO = A.USR_ID) AS USR_NM,
+			DTY_NM,
+			CONECT_IP,
+			ATHR_ORDR,
+			A.USE_YN
+		FROM
+			TM_ECS_INTN_USR_SYS_ATHR A
+		WHERE
+			1 = 1
+		<if test="useYn != '' and useYn != null">
+			AND A.USE_YN = #{useYn}
+		</if>
+		<if test="usrId != '' and usrId != null ">
+			/* 사용자 id 정보가 있을 경우 */
+			AND A.USR_ID = #{usrId}
+		</if>
+		<if test="intnSysDivCd != '' and intnSysDivCd != null ">
+			/* 시스템구분코드가 있을 경우 */
+			AND A.SYS_DIV_CD = #{intnSysDivCd}
+		</if>
+		<if test="adminDivCd != '' and adminDivCd != null ">
+			/* 관리자구분코드가 있을 경우 */
+			AND A.ADMIN_DIV_CD = #{adminDivCd}
+		</if>
+		ORDER BY
+			A.SYS_DIV_CD,
+			A.ATHR_ORDR,
+			A.ADMIN_DIV_CD,
+			A.USR_ID
+	</select>
+
+	<insert id="TM_ECS_INTN_USR_SYS_ATHR_insertUsrSysAthr" parameterType="kw.ecs.zz.authmng.vo.UsrSysAthrVo">
+		<selectKey keyProperty="athrOrdr" resultType="integer" order="BEFORE"> 
+			SELECT NVL(MAX((ATHR_ORDR)) + 1, 1) FROM TM_ECS_INTN_USR_SYS_ATHR
+		</selectKey>
+		/* TM_ECS_INTN_USR_SYS_ATHR_insertUsrSysAthr */
+		INSERT INTO
+		TM_ECS_INTN_USR_SYS_ATHR (
+			USR_ID,
+			SYS_DIV_CD,
+			ADMIN_DIV_CD,
+			DTY_NM,
+			CONECT_IP,
+			ATHR_ORDR,
+			USE_YN,
+			FRST_REGIST_DT,
+			FRST_RGSTR_ID,
+			LAST_UPDT_DT,
+			LAST_UPDUSR_ID
+		) VALUES (
+			#{usrId},
+			#{intnSysDivCd},
+			#{adminDivCd},
+			#{dtyNm},
+			#{conectIp},
+			#{athrOrdr},
+			NVL(#{useYn}, 'N'),
+			SYSDATE,
+			#{frstRgstrId},
+			SYSDATE,
+			#{lastUpdusrId}
+		)
+	</insert>
+
+	<update id="TM_ECS_INTN_USR_SYS_ATHR_updateUsrSysAthr" parameterType="kw.ecs.zz.authmng.vo.UsrSysAthrVo">
+		/* TM_ECS_INTN_USR_SYS_ATHR_updateUsrSysAthr */
+		UPDATE
+			TM_ECS_INTN_USR_SYS_ATHR
+		SET
+			DTY_NM = #{dtyNm},
+			CONECT_IP = #{conectIp},
+			ATHR_ORDR = #{athrOrdr},
+			USE_YN = NVL(#{useYn}, 'N'),
+			LAST_UPDT_DT = SYSDATE,
+			LAST_UPDUSR_ID = #{lastUpdusrId}
+		WHERE
+			USR_ID = #{usrId}
+			AND SYS_DIV_CD = #{intnSysDivCd}
+			AND ADMIN_DIV_CD = #{adminDivCd}
+	</update>
+
+	<delete id="TM_ECS_INTN_USR_SYS_ATHR_deleteUsrSysAthr" parameterType="kw.ecs.zz.authmng.vo.UsrSysAthrVo">
+		/* TM_ECS_INTN_USR_SYS_ATHR_deleteUsrSysAthr */
+		DELETE FROM
+			TM_ECS_INTN_USR_SYS_ATHR
+		WHERE
+			USR_ID = #{usrId}
+			AND SYS_DIV_CD = #{intnSysDivCd}
+			AND ADMIN_DIV_CD = #{adminDivCd}
+	</delete>
+</mapper>

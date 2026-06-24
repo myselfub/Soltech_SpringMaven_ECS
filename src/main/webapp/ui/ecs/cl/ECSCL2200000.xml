@@ -1,0 +1,1867 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSCL2200000.xml
+			* 설 명 : 정산_REC 정산현황
+			* 작성일 : 2023.02.14
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.14 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="strtDt" dataType="number" name="조회연도"></w2:key>
+						<w2:key id="basinCd" dataType="text" name="유역코드"></w2:key>
+						<w2:key id="elcpwstnCd" dataType="text" name="발전소코드"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltAutoCondition1" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition2" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition3" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition4" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltRecExcclcSnpwList" baseNode="list" repeatNode="map" saveRemovedData="true"
+					ev:oncelldatachange="scwin.dltRecExcclcSnpwList_ondatachange" ev:onremoverow="scwin.dltRecExcclcSnpwList_ondatachange" ev:oninsertrow="scwin.dltRecExcclcSnpwList_ondatachange">
+					<w2:columnInfo>
+						<w2:column id="recDelngYear" dataType="number" name="거래연도"></w2:column>
+						<w2:column id="elcpwstnNm" dataType="text" name="발전소명"></w2:column>
+						<w2:column id="recEqpCdNm" dataType="text" name="REC설비코드명"></w2:column>
+						<w2:column id="mon01SbmtQy" dataType="number" name="1월 제출수량 "></w2:column>
+						<w2:column id="mon01Tm1sAmt" dataType="number" name="1월 1차"></w2:column>
+						<w2:column id="mon01Tm2sAmt" dataType="number" name="1월 2차"></w2:column>
+						<w2:column id="mon01Tm3sAmt" dataType="number" name="1월 3차"></w2:column>
+						<w2:column id="mon01Tm4sAmt" dataType="number" name="1월 4차"></w2:column>
+						<w2:column id="mon01AccnutSnrn" dataType="number" name="1월 회계기준"></w2:column>
+						<w2:column id="mon02SbmtQy" dataType="number" name="2월 제출수량 "></w2:column>
+						<w2:column id="mon02Tm1sAmt" dataType="number" name="2월 1차"></w2:column>
+						<w2:column id="mon02Tm2sAmt" dataType="number" name="2월 2차"></w2:column>
+						<w2:column id="mon02Tm3sAmt" dataType="number" name="2월 3차"></w2:column>
+						<w2:column id="mon02Tm4sAmt" dataType="number" name="2월 4차"></w2:column>
+						<w2:column id="mon02AccnutSnrn" dataType="number" name="2월 회계기준"></w2:column>
+						<w2:column id="mon03SbmtQy" dataType="number" name="3월 제출수량 "></w2:column>
+						<w2:column id="mon03Tm1sAmt" dataType="number" name="3월 1차"></w2:column>
+						<w2:column id="mon03Tm2sAmt" dataType="number" name="3월 2차"></w2:column>
+						<w2:column id="mon03Tm3sAmt" dataType="number" name="3월 3차"></w2:column>
+						<w2:column id="mon03Tm4sAmt" dataType="number" name="3월 4차"></w2:column>
+						<w2:column id="mon03AccnutSnrn" dataType="number" name="3월 회계기준"></w2:column>
+						<w2:column id="mon04SbmtQy" dataType="number" name="4월 제출수량 "></w2:column>
+						<w2:column id="mon04Tm1sAmt" dataType="number" name="4월 1차"></w2:column>
+						<w2:column id="mon04Tm2sAmt" dataType="number" name="4월 2차"></w2:column>
+						<w2:column id="mon04Tm3sAmt" dataType="number" name="4월 3차"></w2:column>
+						<w2:column id="mon04Tm4sAmt" dataType="number" name="4월 4차"></w2:column>
+						<w2:column id="mon04AccnutSnrn" dataType="number" name="4월 회계기준"></w2:column>
+						<w2:column id="mon05SbmtQy" dataType="number" name="5월 제출수량 "></w2:column>
+						<w2:column id="mon05Tm1sAmt" dataType="number" name="5월 1차"></w2:column>
+						<w2:column id="mon05Tm2sAmt" dataType="number" name="5월 2차"></w2:column>
+						<w2:column id="mon05Tm3sAmt" dataType="number" name="5월 3차"></w2:column>
+						<w2:column id="mon05Tm4sAmt" dataType="number" name="5월 4차"></w2:column>
+						<w2:column id="mon05AccnutSnrn" dataType="number" name="5월 회계기준"></w2:column>
+						<w2:column id="mon06SbmtQy" dataType="number" name="6월 제출수량 "></w2:column>
+						<w2:column id="mon06Tm1sAmt" dataType="number" name="6월 1차"></w2:column>
+						<w2:column id="mon06Tm2sAmt" dataType="number" name="6월 2차"></w2:column>
+						<w2:column id="mon06Tm3sAmt" dataType="number" name="6월 3차"></w2:column>
+						<w2:column id="mon06Tm4sAmt" dataType="number" name="6월 4차"></w2:column>
+						<w2:column id="mon06AccnutSnrn" dataType="number" name="6월 회계기준"></w2:column>
+						<w2:column id="mon07SbmtQy" dataType="number" name="7월 제출수량 "></w2:column>
+						<w2:column id="mon07Tm1sAmt" dataType="number" name="7월 1차"></w2:column>
+						<w2:column id="mon07Tm2sAmt" dataType="number" name="7월 2차"></w2:column>
+						<w2:column id="mon07Tm3sAmt" dataType="number" name="7월 3차"></w2:column>
+						<w2:column id="mon07Tm4sAmt" dataType="number" name="7월 4차"></w2:column>
+						<w2:column id="mon07AccnutSnrn" dataType="number" name="7월 회계기준"></w2:column>
+						<w2:column id="mon08SbmtQy" dataType="number" name="8월 제출수량 "></w2:column>
+						<w2:column id="mon08Tm1sAmt" dataType="number" name="8월 1차"></w2:column>
+						<w2:column id="mon08Tm2sAmt" dataType="number" name="8월 2차"></w2:column>
+						<w2:column id="mon08Tm3sAmt" dataType="number" name="8월 3차"></w2:column>
+						<w2:column id="mon08Tm4sAmt" dataType="number" name="8월 4차"></w2:column>
+						<w2:column id="mon08AccnutSnrn" dataType="number" name="8월 회계기준"></w2:column>
+						<w2:column id="mon09SbmtQy" dataType="number" name="9월 제출수량 "></w2:column>
+						<w2:column id="mon09Tm1sAmt" dataType="number" name="9월 1차"></w2:column>
+						<w2:column id="mon09Tm2sAmt" dataType="number" name="9월 2차"></w2:column>
+						<w2:column id="mon09Tm3sAmt" dataType="number" name="9월 3차"></w2:column>
+						<w2:column id="mon09Tm4sAmt" dataType="number" name="9월 4차"></w2:column>
+						<w2:column id="mon09AccnutSnrn" dataType="number" name="9월 회계기준"></w2:column>
+						<w2:column id="mon10SbmtQy" dataType="number" name="10월 제출수량 "></w2:column>
+						<w2:column id="mon10Tm1sAmt" dataType="number" name="10월 1차"></w2:column>
+						<w2:column id="mon10Tm2sAmt" dataType="number" name="10월 2차"></w2:column>
+						<w2:column id="mon10Tm3sAmt" dataType="number" name="10월 3차"></w2:column>
+						<w2:column id="mon10Tm4sAmt" dataType="number" name="10월 4차"></w2:column>
+						<w2:column id="mon10AccnutSnrn" dataType="number" name="10월 회계기준"></w2:column>
+						<w2:column id="mon11SbmtQy" dataType="number" name="11월 제출수량 "></w2:column>
+						<w2:column id="mon11Tm1sAmt" dataType="number" name="11월 1차"></w2:column>
+						<w2:column id="mon11Tm2sAmt" dataType="number" name="11월 2차"></w2:column>
+						<w2:column id="mon11Tm3sAmt" dataType="number" name="11월 3차"></w2:column>
+						<w2:column id="mon11Tm4sAmt" dataType="number" name="11월 4차"></w2:column>
+						<w2:column id="mon11AccnutSnrn" dataType="number" name="11월 회계기준"></w2:column>
+						<w2:column id="mon12SbmtQy" dataType="number" name="12월 제출수량 "></w2:column>
+						<w2:column id="mon12Tm1sAmt" dataType="number" name="12월 1차"></w2:column>
+						<w2:column id="mon12Tm2sAmt" dataType="number" name="12월 2차"></w2:column>
+						<w2:column id="mon12Tm3sAmt" dataType="number" name="12월 3차"></w2:column>
+						<w2:column id="mon12Tm4sAmt" dataType="number" name="12월 4차"></w2:column>
+						<w2:column id="mon12AccnutSnrn" dataType="number" name="12월 회계기준"></w2:column>
+						<w2:column id="totqy" dataType="number" name="수량"></w2:column>
+						<w2:column id="tamt" dataType="number" name="총액"></w2:column>
+						<w2:column id="updtRsn" dataType="text" name="수정사유"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataList id="dltRecExcclcNotSnpwList" baseNode="list" repeatNode="map" saveRemovedData="true"
+					ev:oncelldatachange="scwin.dltRecExcclcNotSnpwList_ondatachange" ev:onremoverow="scwin.dltRecExcclcNotSnpwList_ondatachange"
+					ev:oninsertrow="scwin.dltRecExcclcNotSnpwList_ondatachange">
+					<w2:columnInfo>
+						<w2:column id="recDelngYear" dataType="number" name="거래연도"></w2:column>
+						<w2:column id="elcpwstnNm" dataType="text" name="발전소명"></w2:column>
+						<w2:column id="recEqpCdNm" dataType="text" name="REC설비코드명"></w2:column>
+						<w2:column id="mon01Qy" dataType="number" name="1월 수량" length="22"></w2:column>
+						<w2:column id="mon01Upc" dataType="number" name="1월 평균가" length="13"></w2:column>
+						<w2:column id="mon01Tamt" dataType="number" name="1월 총액" length="22"></w2:column>
+						<w2:column id="mon02Qy" dataType="number" name="2월 수량"></w2:column>
+						<w2:column id="mon02Upc" dataType="number" name="2월 평균가"></w2:column>
+						<w2:column id="mon02Tamt" dataType="number" name="2월 총액"></w2:column>
+						<w2:column id="mon03Qy" dataType="number" name="3월 수량"></w2:column>
+						<w2:column id="mon03Upc" dataType="number" name="3월 평균가"></w2:column>
+						<w2:column id="mon03Tamt" dataType="number" name="3월 총액"></w2:column>
+						<w2:column id="mon04Qy" dataType="number" name="4월 수량"></w2:column>
+						<w2:column id="mon04Upc" dataType="number" name="4월 평균가"></w2:column>
+						<w2:column id="mon04Tamt" dataType="number" name="4월 총액"></w2:column>
+						<w2:column id="mon05Qy" dataType="number" name="5월 수량"></w2:column>
+						<w2:column id="mon05Upc" dataType="number" name="5월 평균가"></w2:column>
+						<w2:column id="mon05Tamt" dataType="number" name="5월 총액"></w2:column>
+						<w2:column id="mon06Qy" dataType="number" name="6월 수량"></w2:column>
+						<w2:column id="mon06Upc" dataType="number" name="6월 평균가"></w2:column>
+						<w2:column id="mon06Tamt" dataType="number" name="6월 총액"></w2:column>
+						<w2:column id="mon07Qy" dataType="number" name="7월 수량"></w2:column>
+						<w2:column id="mon07Upc" dataType="number" name="7월 평균가"></w2:column>
+						<w2:column id="mon07Tamt" dataType="number" name="7월 총액"></w2:column>
+						<w2:column id="mon08Qy" dataType="number" name="8월 수량"></w2:column>
+						<w2:column id="mon08Upc" dataType="number" name="8월 평균가"></w2:column>
+						<w2:column id="mon08Tamt" dataType="number" name="8월 총액"></w2:column>
+						<w2:column id="mon09Qy" dataType="number" name="9월 수량"></w2:column>
+						<w2:column id="mon09Upc" dataType="number" name="9월 평균가"></w2:column>
+						<w2:column id="mon09Tamt" dataType="number" name="9월 총액"></w2:column>
+						<w2:column id="mon10Qy" dataType="number" name="10월 수량"></w2:column>
+						<w2:column id="mon10Upc" dataType="number" name="10월 평균가"></w2:column>
+						<w2:column id="mon10Tamt" dataType="number" name="10월 총액"></w2:column>
+						<w2:column id="mon11Qy" dataType="number" name="11월 수량"></w2:column>
+						<w2:column id="mon11Upc" dataType="number" name="11월 평균가"></w2:column>
+						<w2:column id="mon11Tamt" dataType="number" name="11월 총액"></w2:column>
+						<w2:column id="mon12Qy" dataType="number" name="12월 수량"></w2:column>
+						<w2:column id="mon12Upc" dataType="number" name="12월 평균가"></w2:column>
+						<w2:column id="mon12Tamt" dataType="number" name="12월 총액"></w2:column>
+						<w2:column id="totqy" dataType="number" name="총거래량"></w2:column>
+						<w2:column id="tamt" dataType="number" name="총액"></w2:column>
+						<w2:column id="updtRsn" dataType="text" name="수정사유"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"isValidateSnpw" : false,
+		"isValidateNotSnpw" : false,
+		"isSaveProcess" : false,
+		"acbMappingCdObjSnpw" : {
+			"elcpwstnNm" : "cmmnCd"
+		},
+		"acbMappingNmObjSnpw" : {
+		},
+		"acbMappingCdObjNotSnpw" : {
+			"elcpwstnNm" : "cmmnCd"
+		},
+		"acbMappingNmObjNotSnpw" : {
+		},
+		// 태양광
+		"valInfoSnpw" : [
+			{id : "recDelngYear", minLength : 4, maxByteLength : 4, mandatory : true, number : true, dateFunc : ecsLib.validatorYear},
+			{id : "elcpwstnNm", maxLength : 40, mandatory : true},
+			{id : "mon01SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon01Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon01Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon01Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon01Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon01AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon02SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon02Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon02Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon02Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon02Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon02AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon03SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon03Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon03Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon03Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon03Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon03AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon04SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon04Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon04Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon04Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon04Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon04AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon05SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon05Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon05Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon05Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon05Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon05AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon06SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon06Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon06Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon06Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon06Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon06AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon07SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon07Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon07Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon07Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon07Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon07AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon08SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon08Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon08Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon08Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon08Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon08AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon09SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon09Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon09Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon09Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon09Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon09AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon10SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon10Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon10Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon10Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon10Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon10AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon11SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon11Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon11Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon11Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon11Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon11AccnutSnrn", maxByteLength : 13, number : true},
+			{id : "mon12SbmtQy", maxByteLength : 22, number : true},
+			{id : "mon12Tm1sAmt", maxByteLength : 15, number : true},
+			{id : "mon12Tm2sAmt", maxByteLength : 15, number : true},
+			{id : "mon12Tm3sAmt", maxByteLength : 15, number : true},
+			{id : "mon12Tm4sAmt", maxByteLength : 15, number : true},
+			{id : "mon12AccnutSnrn", maxByteLength : 13, number : true}
+		],
+		// 비태양광
+		"valInfoNotSnpw" : [
+			{id : "recDelngYear", minLength : 4, maxByteLength : 4, mandatory : true, number : true},
+			{id : "elcpwstnNm", maxLength : 40, mandatory : true},
+			{id : "mon01Qy", maxByteLength : 22, number : true},
+			{id : "mon01Upc", maxByteLength : 13, number : true},
+			{id : "mon01Tamt", maxByteLength : 22, number : true},
+			{id : "mon02Qy", maxByteLength : 22, number : true},
+			{id : "mon02Upc", maxByteLength : 13, number : true},
+			{id : "mon02Tamt", maxByteLength : 22, number : true},
+			{id : "mon03Qy", maxByteLength : 22, number : true},
+			{id : "mon03Upc", maxByteLength : 13, number : true},
+			{id : "mon03Tamt", maxByteLength : 22, number : true},
+			{id : "mon04Qy", maxByteLength : 22, number : true},
+			{id : "mon04Upc", maxByteLength : 13, number : true},
+			{id : "mon04Tamt", maxByteLength : 22, number : true},
+			{id : "mon05Qy", maxByteLength : 22, number : true},
+			{id : "mon05Upc", maxByteLength : 13, number : true},
+			{id : "mon05Tamt", maxByteLength : 22, number : true},
+			{id : "mon06Qy", maxByteLength : 22, number : true},
+			{id : "mon06Upc", maxByteLength : 13, number : true},
+			{id : "mon06Tamt", maxByteLength : 22, number : true},
+			{id : "mon07Qy", maxByteLength : 22, number : true},
+			{id : "mon07Upc", maxByteLength : 13, number : true},
+			{id : "mon07Tamt", maxByteLength : 22, number : true},
+			{id : "mon08Qy", maxByteLength : 22, number : true},
+			{id : "mon08Upc", maxByteLength : 13, number : true},
+			{id : "mon08Tamt", maxByteLength : 22, number : true},
+			{id : "mon09Qy", maxByteLength : 22, number : true},
+			{id : "mon09Upc", maxByteLength : 13, number : true},
+			{id : "mon09Tamt", maxByteLength : 22, number : true},
+			{id : "mon10Qy", maxByteLength : 22, number : true},
+			{id : "mon10Upc", maxByteLength : 13, number : true},
+			{id : "mon10Tamt", maxByteLength : 22, number : true},
+			{id : "mon11Qy", maxByteLength : 22, number : true},
+			{id : "mon11Upc", maxByteLength : 13, number : true},
+			{id : "mon11Tamt", maxByteLength : 22, number : true},
+			{id : "mon12Qy", maxByteLength : 22, number : true},
+			{id : "mon12Upc", maxByteLength : 13, number : true},
+			{id : "mon12Tamt", maxByteLength : 22, number : true}
+		],
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSCL2200000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 조회조건 설정
+		scwin.initSearchParam();
+		// 화면 데이터 조회
+		scwin.initSearch();
+	};
+
+	/**
+	 * 조회조건 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initSearchParam = function() {
+		dmaSearchParam.set("strtDt", utilLib.getCurrentDate("yyyy"));
+		dmaSearchParam.set("basinCd", "ALL");
+		dmaSearchParam.set("elcpwstnCd", "ALL");
+	};
+
+	/**
+	 * 화면 초기화 후 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initSearch = function() {
+		var strtDate = dmaSearchParam.get("strtDt");
+		var ecsBasinDivCd = dmaSearchParam.get("basinCd");
+		var ecsSetcscDivCd = radSNs.getValue();
+		var ecsElcpwstnDivCd = dmaSearchParam.get("elcpwstnCd");
+
+		if (String(strtDate).length != 4) {
+			// 조회기간이 올바르지 않습니다.
+			alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+			return;
+		}
+
+		var queryStringSnpw = `?strtDt=${strtDate}`;
+		queryStringSnpw += `&ecsBasinDivCd=${ecsBasinDivCd}`;
+		queryStringSnpw += `&ecsSetcscDivCd=${ecsSetcscDivCd}`;
+		queryStringSnpw += `&ecsElcpwstnDivCd=${ecsElcpwstnDivCd}`;
+
+		// 태양광
+		var optionSnpw = {
+			action : "cl/recexcclc/retrieve-rec-excclc.do"
+				+ queryStringSnpw,
+			method : "get",
+			resData : dltRecExcclcSnpwList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, optionSnpw);
+
+		var queryStringNotSnpw = `?strtDt=${strtDate}`;
+		queryStringNotSnpw += `&ecsBasinDivCd=${ecsBasinDivCd}`;
+		queryStringNotSnpw += `&ecsSetcscDivCd=02`;
+		queryStringNotSnpw += `&ecsElcpwstnDivCd=${ecsElcpwstnDivCd}`;
+
+		// 비태양광
+		var optionNotSnpw = {
+			action : "cl/recexcclc/retrieve-rec-excclc.do"
+				+ queryStringNotSnpw,
+			method : "get",
+			resData : dltRecExcclcNotSnpwList,
+			success : "scwin.inqireCallbackNotSnpw",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, optionNotSnpw);
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var strtDate = dmaSearchParam.get("strtDt");
+		var ecsBasinDivCd = dmaSearchParam.get("basinCd");
+		var ecsSetcscDivCd = radSNs.getValue();
+		var ecsElcpwstnDivCd = dmaSearchParam.get("elcpwstnCd");
+
+		var queryString = `?strtDt=${strtDate}`;
+		queryString += `&ecsBasinDivCd=${ecsBasinDivCd}`;
+		queryString += `&ecsSetcscDivCd=${ecsSetcscDivCd}`;
+		queryString += `&ecsElcpwstnDivCd=${ecsElcpwstnDivCd}`;
+
+		if (ecsSetcscDivCd == "01") {
+			// 태양광
+			var option = {
+				action : "cl/recexcclc/retrieve-rec-excclc.do"
+					+ queryString,
+				method : "get",
+				resData : dltRecExcclcSnpwList,
+				success : "scwin.inqireCallback",
+				isShowMeg : false
+			};
+		} else {
+			// 비태양광
+			var option = {
+				action : "cl/recexcclc/retrieve-rec-excclc.do"
+					+ queryString,
+				method : "get",
+				resData : dltRecExcclcNotSnpwList,
+				success : "scwin.inqireCallbackNotSnpw",
+				isShowMeg : false
+			};
+		}
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCallback = function() {
+		spnTotalRowSnpw.setValue(dltRecExcclcSnpwList.getRowCount());
+		var mandatoryList = scwin.initData.valInfoSnpw.filter(obj => obj.mandatory);
+
+		for (var i = 0; i < dltRecExcclcSnpwList.getRowCount(); i++) {
+			mandatoryList.forEach(obj => {
+				grdRecExcclcSnpwList.setCellReadOnly(i, obj.id, true);
+			});
+		}
+		scwin.initData.isValidateSnpw = false;
+	};
+
+	/**
+	 * 비태양광 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCallbackNotSnpw = function() {
+		spnTotalRowNotSnpw.setValue(dltRecExcclcNotSnpwList.getRowCount());
+		var mandatoryList = scwin.initData.valInfoNotSnpw.filter(obj => obj.mandatory);
+
+		for (var i = 0; i < dltRecExcclcNotSnpwList.getRowCount(); i++) {
+			mandatoryList.forEach(obj => {
+				grdRecExcclcNotSnpwList.setCellReadOnly(i, obj.id, true);
+			});
+		}
+		scwin.initData.isValidateNotSnpw = false;
+	};
+
+	/**
+	 * 태양광 그리드뷰 행을 추가한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnAddRow1_onclick = function() {
+		var newIndex = dltRecExcclcSnpwList.insertRow();
+
+		grdRecExcclcSnpwList.setFocusedCell(newIndex, "elcpwstnNm", true);
+	};
+
+	/**
+	 * 태양광 그리드뷰 행을 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelRow1_onclick = function() {
+		var rowIndexsList = grdRecExcclcSnpwList.getAllFocusedRowIndex();
+
+		dltRecExcclcSnpwList.removeRows(rowIndexsList);
+	};
+
+	/**
+	 * 비태양광 그리드뷰 행을 추가한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnAddRow2_onclick = function() {
+		var newIndex = dltRecExcclcNotSnpwList.insertRow();
+
+		grdRecExcclcNotSnpwList.setFocusedCell(newIndex, "elcpwstnNm", true);
+	};
+
+	/**
+	 * 비태양광 그리드뷰 행을 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelRow2_onclick = function() {
+		var rowIndexsList = grdRecExcclcNotSnpwList.getAllFocusedRowIndex();
+
+		dltRecExcclcNotSnpwList.removeRows(rowIndexsList);
+	};
+
+	/**
+	 * 그리드뷰의 내용을 검증한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnValidate_onclick = function(confirmValue) {
+		if (confirmValue == true || confirmValue == undefined) {
+			var ecsSetcscDivCd = radSNs.getValue();
+
+			if (ecsSetcscDivCd == "01") {
+				if (dltRecExcclcSnpwList.getModifiedData() == "") {
+					// 처리할 데이터가 없습니다.
+					comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+					return;
+				} else if (dltRecExcclcSnpwList.getModifiedJSON().length) {
+					var isAllNull = true;
+					dltRecExcclcSnpwList.getModifiedJSON().forEach(obj => {
+						Object.keys(obj).forEach(key => {
+							if (isAllNull) {
+								if (key.startsWith("mon")) {
+									isAllNull = obj[key] && obj[key] != "" ? false : true;
+								}
+							} else {
+								return;
+							}
+						});
+						if (!isAllNull) {
+							return;
+						}
+					});
+					if (isAllNull) {
+						comLib.alert($p, "월 항목중 하나 이상의 데이터를 넣어야됩니다.");
+						return;
+					}
+				}
+
+				if (utilLib.validateGridView(grdRecExcclcSnpwList, scwin.initData.valInfoSnpw)) {
+					var columnList = scwin.initData.valInfoSnpw.filter(obj => obj.mandatory); //.flatMap(obj => obj.id.replace("elcpwstnNm", "recEqpCdNm"));
+					if (ecsLib.gridViewPkDuplicationCheck(grdRecExcclcSnpwList, dltRecExcclcSnpwList, columnList)) {
+						// 중복 데이터가 있습니다.
+						return;
+					}
+
+					if (ecsLib.validateGridViewAcb(grdRecExcclcSnpwList, dltAutoCondition3, scwin.initData.acbMappingCdObjSnpw, scwin.initData.acbMappingNmObjSnpw)) {
+						// 해당하는 {컬럼명}이(가) 존재하지 않습니다.
+						return;
+					}
+					scwin.initData.isValidateSnpw = true;
+					if (scwin.initData.isSaveProcess) {
+						scwin.initData.isSaveProcess = false;
+						scwin.btnSave_onclick();
+					} else {
+						// 데이터 검증이 완료되었습니다.
+						comLib.alert($p, utilLib.getMessage("ECS.INFO.00102"));
+					}
+				}
+			} else {
+				if (dltRecExcclcNotSnpwList.getModifiedData() == "") {
+					// 처리할 데이터가 없습니다.
+					comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+					return;
+				} else if (dltRecExcclcNotSnpwList.getModifiedJSON().length) {
+					var isAllNull = true;
+					dltRecExcclcNotSnpwList.getModifiedJSON().forEach(obj => {
+						Object.keys(obj).forEach(key => {
+							if (isAllNull) {
+								if (key.startsWith("mon")) {
+									isAllNull = obj[key] && obj[key] != "" ? false : true;
+								}
+							} else {
+								return;
+							}
+						});
+						if (!isAllNull) {
+							return;
+						}
+					});
+					if (isAllNull) {
+						comLib.alert($p, "월 항목중 하나 이상의 데이터를 넣어야됩니다.");
+						return;
+					}
+				}
+
+				if (utilLib.validateGridView(grdRecExcclcNotSnpwList, scwin.initData.valInfoNotSnpw)) {
+					var columnList = scwin.initData.valInfoNotSnpw.filter(obj => obj.mandatory);
+					if (ecsLib.gridViewPkDuplicationCheck(grdRecExcclcNotSnpwList, dltRecExcclcNotSnpwList, columnList)) {
+						// 중복 데이터가 있습니다.
+						return;
+					}
+
+					if (ecsLib.validateGridViewAcb(grdRecExcclcNotSnpwList, dltAutoCondition4, scwin.initData.acbMappingCdObjNotSnpw, scwin.initData.acbMappingNmObjNotSnpw)) {
+						// 해당하는 {컬럼명}이(가) 존재하지 않습니다.
+						return;
+					}
+					scwin.initData.isValidateNotSnpw = true;
+					if (scwin.initData.isSaveProcess) {
+						scwin.initData.isSaveProcess = false;
+						scwin.btnSave_onclick();
+					} else {
+						// 데이터 검증이 완료되었습니다.
+						comLib.alert($p, utilLib.getMessage("ECS.INFO.00102"));
+					}
+				}
+			}
+		} else {
+			scwin.initData.isSaveProcess = false;
+		}
+	};
+
+	/**
+	 * 그리드뷰의 내용을 수정/저장한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		scwin.initData.isSaveProcess = false;
+		var ecsSetcscDivCd = radSNs.getValue();
+
+		if (ecsSetcscDivCd == "01") {
+			// 태양광
+			if (dltRecExcclcSnpwList.getModifiedData() == "") {
+				// 처리할 데이터가 없습니다.
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+				return;
+			}
+			if (scwin.initData.isValidateSnpw) {
+				var addCount = 0;
+				var modifyCount = 0;
+				var delCount = 0;
+				dltRecExcclcSnpwList.getModifiedJSON().forEach(obj => {
+					var rowStatus = obj.rowStatus;
+					switch(rowStatus) {
+						case "C":
+							// 추가
+							addCount++;
+							break;
+						case "U":
+							// 수정
+							modifyCount++;
+							break;
+						case "E":
+							// 삭제
+							delCount++;
+							break;
+						default:
+							break;
+					}
+				});
+				var extendMsg = ecsLib.extendCustomSaveMsg(addCount, modifyCount, delCount);
+				// 변경된 내역이 있습니다.\n저장 하시겠습니까? \n수정사유를 입력하세요.
+				ecsLib.saveRsn($p, `${dltRecExcclcSnpwList.getID()}.updtRsn`, utilLib.getMessage("SCM.INFO.00239")[0] + extendMsg, "scwin.saveConfirmCallback");
+			} else {
+				scwin.initData.isSaveProcess = true;
+				// 데이터 검증 후 저장 가능합니다.\n검증하시겠습니까?
+				comLib.confirm($p, utilLib.getMessage("ECS.INFO.00101"), "scwin.btnValidate_onclick", true);
+				return;
+			}
+		} else {
+			// 비태양광
+			if (dltRecExcclcNotSnpwList.getModifiedData() == "") {
+				// 처리할 데이터가 없습니다.
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+				return;
+			}
+			if (scwin.initData.isValidateNotSnpw) {
+				var addCount = 0;
+				var modifyCount = 0;
+				var delCount = 0;
+				dltRecExcclcNotSnpwList.getModifiedJSON().forEach(obj => {
+					var rowStatus = obj.rowStatus;
+					switch(rowStatus) {
+						case "C":
+							// 추가
+							addCount++;
+							break;
+						case "U":
+							// 수정
+							modifyCount++;
+							break;
+						case "E":
+							// 삭제
+							delCount++;
+							break;
+						default:
+							break;
+					}
+				});
+				var extendMsg = ecsLib.extendCustomSaveMsg(addCount, modifyCount, delCount);
+				// 변경된 내역이 있습니다.\n저장 하시겠습니까? \n수정사유를 입력하세요.
+				ecsLib.saveRsn($p, `${dltRecExcclcNotSnpwList.getID()}.updtRsn`, utilLib.getMessage("SCM.INFO.00239")[0] + extendMsg, "scwin.saveConfirmCallback");
+			} else {
+				scwin.initData.isSaveProcess = true;
+				// 데이터 검증 후 저장 가능합니다.\n검증하시겠습니까?
+				comLib.confirm($p, utilLib.getMessage("ECS.INFO.00101"), "scwin.btnValidate_onclick", true);
+				return;
+			}
+		}
+	};
+
+	/**
+	 * 수정/저장 ComfirmCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var ecsSetcscDivCd = radSNs.getValue();
+		var requestData = {};
+		var queryString = `?ecsSetcscDivCd=${ecsSetcscDivCd}`;
+
+		if (ecsSetcscDivCd == "01") {
+			// 태양광
+			requestData.dltRecExcclcSnpwList = dltRecExcclcSnpwList.getModifiedJSON();
+		} else {
+			// 비태양광
+			requestData.dltRecExcclcNotSnpwList = dltRecExcclcNotSnpwList.getModifiedJSON();
+		}
+		var option = {
+			action : "cl/recexcclc/process-rec-excclc.do"
+				+ queryString,
+			reqData : requestData,
+			success : "scwin.saveConfirmSuccessCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 수정/저장 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.saveConfirmSuccessCallback = function(resBody) {
+		comLib.alert($p, resBody.message.code_name);
+
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 작업중이던 내용을 취소한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnCancl_onclick = function() {
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 태양광 데이터컬렉션의 추가/변경/삭제 시 이벤트
+	 * @param
+	 * @return
+	 */
+	scwin.dltRecExcclcSnpwList_ondatachange = function(info) {
+		scwin.initData.isValidateSnpw = false;
+	};
+
+	/**
+	 * 비태양광 데이터컬렉션의 추가/변경/삭제 시 이벤트
+	 * @param
+	 * @return
+	 */
+	scwin.dltRecExcclcNotSnpwList_ondatachange = function(info) {
+		scwin.initData.isValidateNotSnpw = false;
+	};
+
+	/**
+	 * 화면목록에서 선택한 버튼권한을 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDel_onclick = function() {
+		if (dltRecExcclcSnpwList.getModifiedData() != "") {
+			comLib.removeGridView(grdRecExcclcSnpwList);
+
+			// 삭제하시겠습니까?
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00251"), "scwin.saveConfirmCallback");
+		} else if (dltRecExcclcNotSnpwList.getModifiedData() != "") {
+			comLib.removeGridView(grdRecExcclcNotSnpwList);
+
+			// 삭제하시겠습니까?
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00251"), "scwin.saveConfirmCallback");
+		} else {
+			// 삭제할 자료를 선택한 후 처리하시기 바랍니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00252"));
+		}
+	};
+
+	/**
+	 * 조회박스 선택별 값을 세팅한다.
+	 * @param
+	 * @return
+	 */
+	scwin.acbBasin_onviewchange = function(info) {
+		var ecsBasinDivCd = info.newValue;
+		dmaSearchParam.set("basinCd", ecsBasinDivCd);
+		var ecsSetcscDivCd = radSNs.getValue();
+
+		var queryString = `?ecsBasinDivCd=${ecsBasinDivCd}`;
+		queryString += `&ecsSetcscDivCd=${ecsSetcscDivCd}`;
+		var option = {
+			action : "zz/cmmn/retrieve-rec-cnd-setcsc.do"
+				+ queryString,
+			method : "get",
+			success : "",
+			isShowMeg : false
+		};
+
+		if (ecsSetcscDivCd == "01") {
+			// 태양광
+			option.resData = dltAutoCondition3;
+		} else {
+			// 비태양광
+			option.resData = dltAutoCondition4;
+		}
+		ajaxLib.executeAjax($p, option);
+		dmaSearchParam.set("elcpwstnCd", "ALL");
+	};
+
+	/**
+	 * 발전원  라디오버튼 선택에 따라 그리드 화면이 바뀐다.
+	 * @param
+	 * @return
+	 */
+	scwin.radSNs_onchange = function() {
+		var rad = radSNs.getValue();
+		var ecsBasinDivCd = dmaSearchParam.get("basinCd");
+		var ecsSetcscDivCd = rad;
+		var queryString = `?ecsBasinDivCd=${ecsBasinDivCd}`;
+		queryString += `&ecsSetcscDivCd=${ecsSetcscDivCd}`;
+
+		var option = {
+			action : "zz/cmmn/retrieve-rec-cnd-setcsc.do"
+				+ queryString,
+			method : "get",
+			success : "",
+			isShowMeg : false
+		};
+
+		if (rad == "01") {
+			// 태양광
+			option.resData = dltAutoCondition3;
+			grpGridSnpw.setStyle("display", "block");
+			grpGridNotSnpw.setStyle("display", "none");
+			acbCndElcpwstn.setNodeSet("data:" + dltAutoCondition3.getID(), "cmmnCdNm", "cmmnCd");
+		} else if (rad == "02") {
+			// 비태양광
+			option.resData = dltAutoCondition4;
+			grpGridSnpw.setStyle("display", "none");
+			grpGridNotSnpw.setStyle("display", "block");
+			acbCndElcpwstn.setNodeSet("data:" + dltAutoCondition4.getID(), "cmmnCdNm", "cmmnCd");
+		}
+		ajaxLib.executeAjax($p, option);
+		dmaSearchParam.set("elcpwstnCd", "ALL");
+	}
+
+	scwin.acbElcpwstn_onviewchange = function(info) {
+		dmaSearchParam.set("elcpwstnCd", info.newValue);
+	};
+
+	scwin.grdRecExcclcSnpwList_onafteredit = function(row,col,value) {
+		ecsLib.updateGridViewFontColor(grdRecExcclcSnpwList, row, col);
+	};
+
+	//============================================================================================
+	// 엑셀
+	//============================================================================================
+	/**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm1 = spnSnpwTitle.getValue();
+		var subTitleNm2 = spnNotSnpwTitle.getValue();
+		var ecsSetcscDivCd = radSNs.getValue();
+
+		if (ecsSetcscDivCd == "01") {
+			// 엑셀 내부 타이틀 추가_240105
+			var infoArr = [];
+			var infoObj = {
+				rowIndex 	: 0,
+				colIndex 	: 0,
+				rowSpan 	: 0,
+				colSpan 	: 76,
+				text 		: `${menuNm}_` + `${subTitleNm1}.xlsx`,
+				textAlign 	: "left"
+			};
+			infoArr.push(infoObj);
+			// 태양광
+			options = {
+				fileName : `${menuNm}_` + `${subTitleNm1}.xlsx`,
+				type : 1,
+				autoSizeColumn : true,
+				startRowIndex : 1,
+				startColumnIndex : 0,
+				useDataFormat: true,
+				applyDataFormat : true,
+				rowHeight : 40,
+				useStyle: true,
+				hidden: 1
+			}
+			grdRecExcclcSnpwList.advancedExcelDownload(options, infoArr);
+		} else {
+			// 엑셀 내부 타이틀 추가_240105
+			var infoArr = [];
+			var infoObj = {
+				rowIndex 	: 0,
+				colIndex 	: 0,
+				rowSpan 	: 0,
+				colSpan 	: 40,
+				text 		: `${menuNm}_` + `${subTitleNm2}.xlsx`,
+				textAlign 	: "left"
+			};
+			infoArr.push(infoObj);
+			// 비태양광
+			options = {
+				fileName : `${menuNm}_` + `${subTitleNm2}.xlsx`,
+				type : 1,
+				autoSizeColumn : true,
+				startRowIndex : 1,
+				startColumnIndex : 0,
+				useDataFormat: true,
+				applyDataFormat : true,
+				rowHeight : 40,
+				useStyle: true,
+				hidden: 1
+			}
+			grdRecExcclcNotSnpwList.advancedExcelDownload(options, infoArr);
+		}
+	};
+
+	/**
+	 * 엑셀의 내용을 그리드에 업로드 한다.
+	 * @return
+	 */
+	scwin.btnUploadExcel_onclick = function() {
+		var ecsSetcscDivCd = radSNs.getValue();
+
+		if (ecsSetcscDivCd == "01") {
+			// 태양광
+			var options = {
+				type : 1,
+				headerExist : 1,
+				startRowIndex : 1,
+				startColumnIndex : 0,
+				endColumnIndex : 74,
+				sheetNo : 0,
+				append : 0,
+				status: "C",
+				decimal : 3,
+				useMaxByteLength : true
+			};
+			comLib.uploadExcel(grdRecExcclcSnpwList, options);
+		} else {
+			// 비태양광
+			var options = {
+				type : 1,
+				headerExist : 1,
+				startRowIndex : 1,
+				startColumnIndex : 0,
+				endColumnIndex : 38,
+				sheetNo : 0,
+				append : 0,
+				status: "C",
+				decimal : 3,
+				useMaxByteLength : true
+			};
+			comLib.uploadExcel(grdRecExcclcNotSnpwList, options);
+		}
+	};
+
+	/**
+	 * 엑셀 내용을 그리드에 저장한다.
+	 * @return
+	 */
+	scwin.grdDrspExcclcList_onfilereadend = function(value) {
+		var ecsSetcscDivCd = radSNs.getValue();
+
+		if (ecsSetcscDivCd == "01") {
+			// 태양광
+			var dltData = dltRecExcclcSnpwList.getAllJSON();
+			var dltAuto3 = dltAutoCondition3.getAllJSON();
+			// set JSON
+			for (var idx = 0; idx < dltData.length; idx++) {
+				var elcpwstnNm = (dltAuto3.find(obj => obj.cmmnCd == dltData[idx].elcpwstnNm) || 0).cmmnCd;
+				dltRecExcclcSnpwList.setCellData(idx, "elcpwstnNm", elcpwstnNm);
+				// 엑셀에서 빈값으로 넣을경우 0으로 나오는 걸 ""으로 수정_231207
+				for (var key in dltData) {
+					var innerObj = dltData[key];
+					for (var innerKey in innerObj) {
+						if (innerKey.startsWith("mon") && innerObj[innerKey] === "0") {
+							dltData[key][innerKey] = "";
+						} else if (innerKey.startsWith("totqy") && innerObj[innerKey] === "0") {
+							dltData[key][innerKey] = "";
+						}
+					}
+				}
+			}
+			// ""로 수정한 거 dlt에 적용하기 
+			dltRecExcclcSnpwList.setJSON(dltData);
+			// rowStatus 상태값 변경_231208
+			for (var idx = 0; idx < dltData.length; idx++) {
+				dltRecExcclcSnpwList.modifyRowStatus(idx, "C");
+			}
+		} else {
+			// 비태양광
+			var dltData = dltRecExcclcNotSnpwList.getAllJSON();
+			var dltAuto4 = dltAutoCondition4.getAllJSON();
+			// set JSON
+			for (var idx = 0; idx < dltData.length; idx++) {
+				var elcpwstnNm = (dltAuto4.find(obj => obj.cmmnCd == dltData[idx].elcpwstnNm) || 0).cmmnCd;
+				dltRecExcclcSnpwList.setCellData(idx, "elcpwstnNm", elcpwstnNm);
+				// 엑셀에서 빈값으로 넣을경우 0으로 나오는 걸 ""으로 수정_231207
+				for (var key in dltData) {
+					var innerObj = dltData[key];
+					for (var innerKey in innerObj) {
+						if (innerKey.startsWith("mon") && innerObj[innerKey] === "0") {
+							dltData[key][innerKey] = "";
+						} else if (innerKey.startsWith("totqy") && innerObj[innerKey] === "0") {
+							dltData[key][innerKey] = "";
+						}
+					}
+				}
+			}
+			// ""로 수정한 거 dlt에 적용하기 
+			dltRecExcclcNotSnpwList.setJSON(dltData);
+			// rowStatus 상태값 변경_231208
+			for (var idx = 0; idx < dltData.length; idx++) {
+				dltRecExcclcNotSnpwList.modifyRowStatus(idx, "C");
+			}
+		}
+	};]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group id="grpInqire" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회연도">
+								</w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw1" tagname="td">
+								<w2:year_calendar ref="data:dmaSearchParam.strtDt"></w2:year_calendar>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="유역"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete displayMode="label" editType="select" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL" ev:onviewchange="scwin.acbBasin_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition1">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="발전소"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete id="acbCndElcpwstn" displayMode="label" editType="select" search="contain" submenuSize="auto"
+									useKeywordHighlight="true" visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL"
+									ev:onviewchange="scwin.acbElcpwstn_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition3">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_td cw1_9" tagname="td">
+								<xf:select1 id="radSNs" appearance="full" cols="3" renderType="radiogroup" selectedIndex="0" ev:onchange="scwin.radSNs_onchange">
+									<xf:choices>
+										<xf:item>
+											<xf:label for="radSNs"><![CDATA[태양광]]></xf:label>
+											<xf:value><![CDATA[01]]></xf:value>
+										</xf:item>
+										<xf:item>
+											<xf:label for="radSNs"><![CDATA[비태양광]]></xf:label>
+											<xf:value><![CDATA[02]]></xf:value>
+										</xf:item>
+									</xf:choices>
+								</xf:select1>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" userData1="Q" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" outerDiv="false" userData1="E"
+						ev:onclick="scwin.btnDownExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnUploadExcel" class="excel-btn fa fa-long-arrow-up btn_sh" outerDiv="false" userData1="EU"
+						ev:onclick="scwin.btnUploadExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group id="grpGridSnpw" class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span id="spnSnpwTitle" toolTip="REC (Renewable Energy Certificate):&lt;br/&gt;신재생에너지 공급인증서" label="REC 정산(태양광)"></w2:span>
+							<w2:span id="spnTotalRowSnpw" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+							<w2:span class="sub-title-l" label="&amp;emsp;* REC (Renewable Energy Certificate): 신재생에너지 공급인증서"></w2:span>
+						</xf:group>
+						<xf:group class="com-area">
+							<xf:group class="btn-group">
+								<w2:anchor id="btnAddRow1" class="add_row fa fa-plus" ev:onclick="scwin.btnAddRow1_onclick" outerDiv="false" userData1="S">
+									<xf:label><![CDATA[행추가]]></xf:label>
+								</w2:anchor>
+								<w2:anchor id="btnDelRow1" class="del_row fa fa-minus" ev:onclick="scwin.btnDelRow1_onclick" outerDiv="false" userData1="D">
+									<xf:label><![CDATA[행삭제]]></xf:label>
+								</w2:anchor>
+							</xf:group>
+							<xf:group class="info-box"></xf:group>
+						</xf:group>
+						<w2:span class="grd-unit-vat" label="VAT포함"></w2:span>
+					</xf:group>
+					<xf:group class="list-box box">
+						<w2:gridView id="grdRecExcclcSnpwList" class="resized" dataList="dltRecExcclcSnpwList" checkReadOnlyOnPaste="true"
+							checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" keyMoveEditMode="true" sortable="true" tooltipDisplay="true"
+							defaultCellHeight="35" autoFit="none" fixedColumn="2" style="height:45.6rem;" ev:onfilereadend="scwin.grdDrspExcclcList_onfilereadend"
+							ev:onafteredit="scwin.grdRecExcclcSnpwList_onafteredit">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hRecDelngYear" class="req" width="80" value="거래연도" rowSpan="2"></w2:column>
+									<w2:column id="hElcpwstnNm" class="req border-right" inputType="text" width="220" value="발전소명" rowSpan="2"></w2:column>
+									<w2:column id="hMon01" class="border-right" inputType="text" width="600" value="1월" colSpan="6"></w2:column>
+									<w2:column id="hMon02" class="border-right" inputType="text" width="600" value="2월" colSpan="6"></w2:column>
+									<w2:column id="hMon03" class="border-right" inputType="text" width="600" value="3월" colSpan="6"></w2:column>
+									<w2:column id="hMon04" class="border-right" inputType="text" width="600" value="4월" colSpan="6"></w2:column>
+									<w2:column id="hMon05" class="border-right" inputType="text" width="600" value="5월" colSpan="6"></w2:column>
+									<w2:column id="hMon06" class="border-right" inputType="text" width="600" value="6월" colSpan="6"></w2:column>
+									<w2:column id="hMon07" class="border-right" inputType="text" width="600" value="7월" colSpan="6"></w2:column>
+									<w2:column id="hMon08" class="border-right" inputType="text" width="600" value="8월" colSpan="6"></w2:column>
+									<w2:column id="hMon09" class="border-right" inputType="text" width="600" value="9월" colSpan="6"></w2:column>
+									<w2:column id="hMon10" class="border-right" inputType="text" width="600" value="10월" colSpan="6"></w2:column>
+									<w2:column id="hMon11" class="border-right" inputType="text" width="600" value="11월" colSpan="6"></w2:column>
+									<w2:column id="hMon12" class="border-right" inputType="text" width="600" value="12월" colSpan="6"></w2:column>
+									<w2:column id="hTotal" inputType="text" width="100" value="총계" colSpan="2"></w2:column>
+								</w2:row>
+								<w2:row>
+									<w2:column id="hMon01SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon01Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon01Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon01Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon01Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon01AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon02SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon02Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon02Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon02Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon02Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon02AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon03SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon03Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon03Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon03Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon03Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon03AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon04SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon04Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon04Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon04Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon04Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon04AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon05SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon05Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon05Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon05Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon05Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon05AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon06SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon06Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon06Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon06Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon06Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon06AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon07SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon07Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon07Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon07Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon07Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon07AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon08SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon08Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon08Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon08Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon08Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon08AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon09SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon09Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon09Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon09Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon09Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon09AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon10SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon10Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon10Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon10Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon10Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon10AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon11SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon11Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon11Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon11Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon11Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon11AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hMon12SbmtQy" inputType="text" width="100" value="제출수량(REC)"></w2:column>
+									<w2:column id="hMon12Tm1sAmt" inputType="text" width="100" value="1차(원)"></w2:column>
+									<w2:column id="hMon12Tm2sAmt" inputType="text" width="100" value="2차(원)"></w2:column>
+									<w2:column id="hMon12Tm3sAmt" inputType="text" width="100" value="3차(원)"></w2:column>
+									<w2:column id="hMon12Tm4sAmt" inputType="text" width="100" value="4차(원)"></w2:column>
+									<w2:column id="hMon12AccnutSnrn" class="border-right" inputType="text" width="100" value="회계기준(원)"></w2:column>
+									<w2:column id="hTotqy" inputType="text" width="100" value="수량"></w2:column>
+									<w2:column id="hTamt" inputType="text" width="100" value="금액(원)"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="recDelngYear" inputType="text" maxByteLength="4" validator="ecsLib.validatorYear"></w2:column>
+									<w2:column id="elcpwstnNm" class="border-right" inputType="autoComplete" maxLength="40" selectedData="false" visibleRowNum="8" chooseOption="true">
+										<w2:choices>
+											<w2:itemset nodeset="data:dltAutoCondition3">
+												<w2:label ref="cmmnCdNm"></w2:label>
+												<w2:value ref="cmmnCd"></w2:value>
+											</w2:itemset>
+										</w2:choices>
+									</w2:column>
+									<w2:column id="mon01SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon01Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon01Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon01Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon01Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon01AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon02SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon02Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon02Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon02Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon02Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon02AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon03SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon03Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon03Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon03Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon03Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon03AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon04SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon04Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon04Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon04Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon04Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon04AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon05SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon05Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon05Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon05Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon05Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon05AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon06SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon06Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon06Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon06Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon06Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon06AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon07SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon07Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon07Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon07Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon07Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon07AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon08SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon08Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon08Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon08Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon08Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon08AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon09SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon09Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon09Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon09Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon09Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon09AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon10SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon10Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon10Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon10Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon10Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon10AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon11SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon11Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon11Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon11Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon11Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon11AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon12SbmtQy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="mon12Tm1sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon12Tm2sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon12Tm3sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon12Tm4sAmt" class="grd-right" inputType="text" maxByteLength="15" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon12AccnutSnrn" class="grd-right border-right" inputType="text" maxByteLength="13" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="totqy" class="grd-right" inputType="text" readOnly="true" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="tamt" class="grd-right" inputType="text" readOnly="true" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt"
+										textAlign="right"></w2:column>
+								</w2:row>
+							</w2:gBody>
+							<w2:footer>
+								<w2:row>
+									<w2:column id="fRecDelngYear" inputType="text" value="합계"></w2:column>
+									<w2:column id="fElcpwstnNm" inputType="text"></w2:column>
+									<w2:column id="fMon01SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon01SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon01Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon01Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon01Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon01Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon01Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon01Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon01Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon01Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon01AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon01AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon02SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon02SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon02Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon02Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon02Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon02Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon02Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon02Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon02Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon02Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon02AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon02AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon03SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon03SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon03Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon03Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon03Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon03Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon03Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon03Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon03Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon03Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon03AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon03AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon04SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon04SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon04Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon04Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon04Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon04Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon04Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon04Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon04Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon04Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon04AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon04AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon05SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon05SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon05Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon05Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon05Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon05Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon05Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon05Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon05Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon05Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon05AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon05AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon06SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon06SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon06Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon06Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon06Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon06Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon06Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon06Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon06Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon06Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon06AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon06AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon07SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon07SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon07Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon07Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon07Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon07Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon07Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon07Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon07Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon07Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon07AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon07AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon08SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon08SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon08Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon08Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon08Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon08Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon08Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon08Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon08Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon08Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon08AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon08AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon09SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon09IemVu')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon09Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon09Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon09Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon09Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon09Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon09Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon09Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon09Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon09AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon09AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon10SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon10IemVu')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon10Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon10Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon10Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon10Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon10Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon10Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon10Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon10Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon10AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon10AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon11SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon11SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon11Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon11Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon11Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon11Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon11Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon11Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon11Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon11Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon11AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon11AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon12SbmtQy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon12SbmtQy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon12Tm1sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon12Tm1sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon12Tm2sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon12Tm2sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon12Tm3sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon12Tm3sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon12Tm4sAmt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon12Tm4sAmt')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fMon12AccnutSnrn" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('mon12AccnutSnrn')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fTotqy" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('totqy')"
+										inputType="expression" textAlign="right"></w2:column>
+									<w2:column id="fTamt" class="grd-right" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt" expression="sum('tamt')"
+										inputType="expression" textAlign="right"></w2:column>
+								</w2:row>
+							</w2:footer>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpGridNotSnpw" class="con-box" style="display:none;">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span id="spnNotSnpwTitle" label="REC 정산(비태양광)"></w2:span>
+							<w2:span id="spnTotalRowNotSnpw" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+						</xf:group>
+						<xf:group class="com-area">
+							<xf:group class="btn-group">
+								<w2:anchor id="btnAddRow2" class="add_row fa fa-plus" ev:onclick="scwin.btnAddRow2_onclick" outerDiv="false" userData1="S">
+									<xf:label><![CDATA[행추가]]></xf:label>
+								</w2:anchor>
+								<w2:anchor id="btnDelRow2" class="del_row fa fa-minus" ev:onclick="scwin.btnDelRow2_onclick" outerDiv="false" userData1="D">
+									<xf:label><![CDATA[행삭제]]></xf:label>
+								</w2:anchor>
+							</xf:group>
+							<xf:group class="info-box"></xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="list-box box">
+						<w2:gridView id="grdRecExcclcNotSnpwList" class="resized" dataList="dltRecExcclcNotSnpwList" checkReadOnlyOnPaste="true"
+							checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" keyMoveEditMode="true" sortable="true" tooltipDisplay="true"
+							defaultCellHeight="35" autoFit="none" fixedColumn="2" style="height:45.5rem;" ev:onfilereadend="scwin.grdDrspExcclcList_onfilereadend">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hSRecDelngYear" class="req" inputType="text" width="80" value="거래연도" rowSpan="2"></w2:column>
+									<w2:column id="hSElcpwstnNm" class="req border-right" inputType="text" width="220" value="발전소명" rowSpan="2"></w2:column>
+									<w2:column id="hSMon01" class="border-right" inputType="text" width="300" value="1월" colSpan="3"></w2:column>
+									<w2:column id="hSMon02" class="border-right" inputType="text" width="300" value="2월" colSpan="3"></w2:column>
+									<w2:column id="hSMon03" class="border-right" inputType="text" width="300" value="3월" colSpan="3"></w2:column>
+									<w2:column id="hSMon04" class="border-right" inputType="text" width="300" value="4월" colSpan="3"></w2:column>
+									<w2:column id="hSMon05" class="border-right" inputType="text" width="300" value="5월" colSpan="3"></w2:column>
+									<w2:column id="hSMon06" class="border-right" inputType="text" width="300" value="6월" colSpan="3"></w2:column>
+									<w2:column id="hSMon07" class="border-right" inputType="text" width="300" value="7월" colSpan="3"></w2:column>
+									<w2:column id="hSMon08" class="border-right" inputType="text" width="300" value="8월" colSpan="3"></w2:column>
+									<w2:column id="hSMon09" class="border-right" inputType="text" width="300" value="9월" colSpan="3"></w2:column>
+									<w2:column id="hSMon10" class="border-right" inputType="text" width="300" value="10월" colSpan="3"></w2:column>
+									<w2:column id="hSMon11" class="border-right" inputType="text" width="300" value="11월" colSpan="3"></w2:column>
+									<w2:column id="hSMon12" class="border-right" inputType="text" width="300" value="12월" colSpan="3"></w2:column>
+									<w2:column id="hSTotal" inputType="text" width="100" value="합계" colSpan="2"></w2:column>
+								</w2:row>
+								<w2:row>
+									<w2:column id="hSMon01Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon01Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon01Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon02Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon02Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon02Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon03Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon03Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon03Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon04Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon04Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon04Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon05Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon05Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon05Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon06Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon06Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon06Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon07Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon07Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon07Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon08Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon08Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon08Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon09Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon09Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon09Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon10Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon10Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon10Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon11Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon11Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon11Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSMon12Qy" inputType="text" width="100" value="REC&lt;br/&gt;거래량"></w2:column>
+									<w2:column id="hSMon12Upc" inputType="text" width="100" value="평균가"></w2:column>
+									<w2:column id="hSMon12Tamt" class="border-right" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+									<w2:column id="hSTotqy" inputType="text" width="100" value="REC&lt;br/&gt;총거래량"></w2:column>
+									<w2:column id="hSTamt" inputType="text" width="100" value="판매&lt;br/&gt;총액"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="recDelngYear" inputType="text" maxByteLength="4" validator="ecsLib.validatorYear"></w2:column>
+									<w2:column id="elcpwstnNm" class="border-right" inputType="autoComplete" maxLength="40" selectedData="false" visibleRowNum="8" chooseOption="true">
+										<w2:choices>
+											<w2:itemset nodeset="data:dltAutoCondition4">
+												<w2:label ref="cmmnCdNm"></w2:label>
+												<w2:value ref="cmmnCd"></w2:value>
+											</w2:itemset>
+										</w2:choices>
+									</w2:column>
+									<w2:column id="mon01Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon01Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon01Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon02Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon02Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon02Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon03Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon03Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon03Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon04Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon04Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon04Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon05Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon05Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon05Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon06Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon06Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon06Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon07Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon07Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon07Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon08Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon08Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon08Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon09Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon09Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon09Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon10Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon10Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon10Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon11Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon11Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon11Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon12Qy" class="grd-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon12Upc" class="grd-right" inputType="text" maxByteLength="13" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="mon12Tamt" class="grd-right border-right" inputType="text" maxByteLength="22" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="totqy" class="grd-right" inputType="text" readOnly="true" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+									<w2:column id="tamt" class="grd-right" inputType="text" readOnly="true" displayFormat="#,###" displayFormatter="ecsLib.dsplZeroFrmt" textAlign="right"></w2:column>
+								</w2:row>
+							</w2:gBody>
+							<w2:footer>
+								<w2:row>
+									<w2:column id="fRecDelngYear" inputType="text" value="합계"></w2:column>
+									<w2:column id="fElcpwstnNm" inputType="text"></w2:column>
+									<w2:column id="fMon01Qy" inputType="expression" expression="sum('mon01Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon01Upc" inputType="expression" expression="sum('mon01Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon01Tamt" inputType="expression" expression="sum('mon01Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon02Qy" inputType="expression" expression="sum('mon02Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon02Upc" inputType="expression" expression="sum('mon02Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon02Tamt" inputType="expression" expression="sum('mon02Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon03Qy" inputType="expression" expression="sum('mon03Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon03Upc" inputType="expression" expression="sum('mon03Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon03Tamt" inputType="expression" expression="sum('mon03Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon04Qy" inputType="expression" expression="sum('mon04Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon04Upc" inputType="expression" expression="sum('mon04Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon04Tamt" inputType="expression" expression="sum('mon04Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon05Qy" inputType="expression" expression="sum('mon05Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon05Upc" inputType="expression" expression="sum('mon05Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon05Tamt" inputType="expression" expression="sum('mon05Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon06Qy" inputType="expression" expression="sum('mon06Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon06Upc" inputType="expression" expression="sum('mon06Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon06Tamt" inputType="expression" expression="sum('mon06Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon07Qy" inputType="expression" expression="sum('mon07Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon07Upc" inputType="expression" expression="sum('mon07Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon07Tamt" inputType="expression" expression="sum('mon07Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon08Qy" inputType="expression" expression="sum('mon08Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon08Upc" inputType="expression" expression="sum('mon08Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon08Tamt" inputType="expression" expression="sum('mon08Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon09Qy" inputType="expression" expression="sum('mon09Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon09Upc" inputType="expression" expression="sum('mon09Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon09Tamt" inputType="expression" expression="sum('mon09Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon10Qy" inputType="expression" expression="sum('mon10Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon10Upc" inputType="expression" expression="sum('mon10Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon10Tamt" inputType="expression" expression="sum('mon10Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon11Qy" inputType="expression" expression="sum('mon11Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon11Upc" inputType="expression" expression="sum('mon11Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon11Tamt" inputType="expression" expression="sum('mon11Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon12Qy" inputType="expression" expression="sum('mon12Qy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon12Upc" inputType="expression" expression="sum('mon12Upc')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fMon12Tamt" inputType="expression" expression="sum('mon12Tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fSTotqy" inputType="expression" expression="sum('totqy')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="fSTamt" inputType="expression" expression="sum('tamt')" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+								</w2:row>
+							</w2:footer>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnValidate" ev:onclick="scwin.btnValidate_onclick" outerDiv="false" userData1="S">
+						<xf:label><![CDATA[검증]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnSave" ev:onclick="scwin.btnSave_onclick" outerDiv="false" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnCancl" ev:onclick="scwin.btnCancl_onclick" outerDiv="false" userData1="CC">
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

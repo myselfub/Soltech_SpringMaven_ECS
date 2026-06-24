@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:buildDate/>
+        <w2:userPalette defaultIcon="mix.png" desc=""/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[ ]]></script>
+    </head>
+    <body><xf:group class="tab-box" id="" style="">
+	<w2:tabControl alwaysDraw="false" confirmFalseAction="new" confirmTrueAction="exist" id="" style="" useConfirmMessage="false" useMoveNextTabFocus="false" useTabKeyOnly="true">
+		<w2:tabs disabled="false" id="tabs1" label="탭메뉴_01" style="">
+</w2:tabs>
+		<w2:tabs disabled="false" id="tabs2" label="탭메뉴_02" style="">
+</w2:tabs>
+		<w2:tabs disabled="false" id="tabs3" label="탭메뉴_03" style="">
+</w2:tabs>
+		<w2:content alwaysDraw="false" id="content1" style="">
+			<w2:textbox id="" label="탭1 본 영역은 삭제 후 사용합니다." ref="" style="background:coral;  text-align:center; padding:30px 0; font-size:20px;">
+</w2:textbox>
+</w2:content>
+		<w2:content alwaysDraw="false" id="content2" style="">
+			<w2:textbox id="" label="탭2 본 영역은 삭제 후 사용합니다." ref="" style="background:coral;  text-align:center; padding:30px 0; font-size:20px;">
+</w2:textbox>
+</w2:content>
+		<w2:content alwaysDraw="false" id="content3" style="">
+			<w2:textbox id="" label="탭3 본 영역은 삭제 후 사용합니다." ref="" style="background:coral;  text-align:center; padding:30px 0; font-size:20px;">
+</w2:textbox>
+</w2:content>
+</w2:tabControl>
+</xf:group>
+</body>
+</html>

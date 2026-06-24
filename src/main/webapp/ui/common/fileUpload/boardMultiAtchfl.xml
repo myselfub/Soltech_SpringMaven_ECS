@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    <!--
+    ============================================================
+    * 소스명 : multiAtchfl.xml
+    * 설  명 : 멀티첨부파일등록화면
+    * 작성일 : 2017.07.17.
+    * 사  번 : 60002840
+    * << 개정이력 >>
+    *    수정일        수정자        수정내용
+    * 2017.07.17     60002840(김화영)      최초 작성
+    *  Copyright (C) 2017 by Unlimited K-water, All right reserved.
+     ================================================================
+    -->
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+	            <w2:dataList baseNode="list" repeatNode="map" id="_dltNttFile">
+	            	<w2:columnInfo>
+	            		<w2:column id="atchflId" name="파일ID" dataType="text"></w2:column>
+						<w2:column id="fileSeq" name="파일순번" dataType="number"></w2:column>
+						<w2:column id="biznDivCd" name="업무구분코드" dataType="text"></w2:column>
+						<w2:column id="docClsCd" name="문서구분코드" dataType="text"></w2:column>
+						<w2:column id="orginlFileNm" name="파일명" dataType="text"></w2:column>
+						<w2:column id="fileTmprPath" name="임시저장소 저장된 파일명" dataType="text"></w2:column>
+						<w2:column id="docTit" name="문서제목" dataType="text"></w2:column>
+						<w2:column id="docCtnt" name="문서내용" dataType="text"></w2:column>
+						<w2:column id="sapYn" name="SAP여부" dataType="text"></w2:column>
+						<w2:column id="scrinLinkInfo" name="화면링크정보" dataType="text"></w2:column>
+						<w2:column id="pkInfo" name="PK정보" dataType="text"></w2:column>
+						<w2:column id="menuId" name="메뉴ID" dataType="text"></w2:column>
+						<w2:column id="imgData" name="이미지데이터" dataType="text"></w2:column>
+						<w2:column id="chk" name="선택" dataType="text" ignoreStatus="true"></w2:column>
+						<w2:column id="name" name="파일명" dataType="text"></w2:column>
+						<w2:column id="displaySize" name="파일사이즈" dataType="text"></w2:column>
+						<w2:column id="Status" name="진행상태" dataType="text"></w2:column>
+						<w2:column id="fileSavePath" name="파일저장경로" dataType="text"></w2:column>
+						<w2:column id="saveFileNm" name="저장파일명" dataType="text"></w2:column>
+						<w2:column id="atchflTit" name="첨부파일제목" dataType="text"></w2:column>
+						<w2:column id="saveYn" name="저장여부" dataType="text"></w2:column>
+	            	</w2:columnInfo>
+	            	<w2:data use="false"></w2:data>
+	            </w2:dataList>
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+        <script type="text/javascript" lazy="false"><![CDATA[
+      /**********************************************************
+      첨부파일 처리
+      **********************************************************/
+ 
+ 		/**
+		 * 화면 초기화에 필요한 로직을 수행한다.
+		 */
+		scwin.initScreen = function() { 
+			// Drag & Drop 이벤트 처리용 함수호출
+			var filedragdom = _grdNttMultiFile.render;  // 첨부파일 정보가 보여질 그리드ID
+			filedragdom.addEventListener("dragover", scwin.fileDragHandler, false);
+	    	filedragdom.addEventListener("dragenter", scwin.fileDragHandler, false);  // for ie
+			filedragdom.addEventListener("dragleave", scwin.fileDragHandler, false);
+			filedragdom.addEventListener("drop", scwin.fileDropHandler, false);
+		};
+ 
+       /**
+        * 첨부파일 선택이후 호출되는 콜백함수
+        * @param  mpdMultiAtchFile.getFileInfos() 선택된 파일정보
+        * @return
+        */
+       scwin._multiSelectNttCallback = function() {
+       	    if (fileLib.fileSizeCheck(_mpdNttMultiAtchFile)) {
+		       	//공통제공 함수호출
+		       	fileLib.multiSelectCallback(_mpdNttMultiAtchFile, _dltNttFile);
+		    }
+       };
+
+       /**
+        * 등록하고자 선택된 첨부파일 삭제처리(단, 저장전에만 가능함)
+        * @param
+        * @return
+        */
+      scwin._btnNttDelMultiFile_onclick = function() {
+		fileLib.multiDeleteFileList(_grdNttMultiFile, _mpdNttMultiAtchFile, _dltNttFile);
+	};
+
+       /**
+        * 파일 임시저장(업로드) 이후 호출되는 콜백함수
+        * @param data 업로드된 파일정보(원본파일명, 임시저장소 저장파일명, 파일사이즈)
+        * @return
+        */
+	scwin._mpdNttMultiAtchFile_ondone = function(data) {
+		//첨부파일정보 셋팅
+		var rtnYn = fileLib.dataListSetting(_dltNttFile, data);
+		if (rtnYn) {
+			comLib.confirm($p.parent().$p, utilLib.getMessage("SCM.INFO.00321"), "scwin.saveNttConfirmCallback");
+		}
+	};
+
+
+	/**
+	 * 프로그래스바를 상태, 프로그래스바 사용시 필요함.
+	 * @param info 파일전송상태값
+	 * @return
+	 */
+	scwin._mpdNttMultiAtchFile_onprogress = function(info) {
+		var rowidx = _dltNttFile.getMatchedIndex("name", info.fileName);
+
+		$(".multiFile table tbody tr:eq("+rowidx+") td.pro-bar .w2grid_input").text(info.percentData+"%");
+		$(".multiFile table tbody tr:eq("+rowidx+") td.pro-bar .w2grid_input").css("width", info.percentData+"%");
+	};
+
+		/*********************** Drag & Drop 시작 ***********************/
+		/**
+		 * drop할때 발생하는 이벤트
+		 * @param
+		 * @return
+		 */
+		/*
+		_mpdNttMultiAtchFile._handleOndrop = function(e) {
+		    try {
+		        $W._c.stopEvent(e);
+
+		        var _6c = e.dataTransfer.files;
+
+		         for (var i = 0; i < _6c.length; i++) {
+		                if ($.inArray(_6c[i].name, this.fileNameArr) == -1) {
+		                    this.fileArray.push(_6c[i]);
+		                    this.fileNameArr.push(_6c[i].name);
+		                    this._inx++;
+		                } else {
+		                    comLib.alert($p, "파일이 이미 있습니다.  (" + _6c[i].name + ")");
+		                }
+		            }
+		      } catch (e) {
+		      	$W.exception.printStackTrace(e, null, this);
+		      }
+		};
+		*/
+		/**
+		 *  file drag
+		 * @param  event
+		 * @return
+		 */
+		scwin.fileDragHandler = function(e){
+			WebSquare.event.stopEvent(e);
+			//e.target.className = (e.type == "dragover" ? "hover" : "");
+		}
+
+		/**
+		 * file drop
+		 * @param
+		 * @return
+		 */
+		scwin.fileDropHandler = function(e){
+			scwin.fileDragHandler(e);
+			_mpdNttMultiAtchFile._handleOndrop(e);				//멀티컨포넌트 ID로 셋팅
+			scwin._multiSelectNttCallback();
+		}
+
+		/*********************** Drag & Drop 끝 ***********************/
+		/**
+		 * 첨부파일 다운로드
+		 * @param event
+		 * @return 첨부파일
+		 */
+		scwin._grdNttMultiFile_oncellclick = function(row,col) {
+			if ( _grdNttMultiFile.getFocusedColumnID() == "name") {
+				var row = _grdNttMultiFile.getFocusedRowIndex();
+				var atchflId = _dltNttFile.getCellData( row, "atchflId" );       	//첨부파일 ID
+				var fileSeq = _dltNttFile.getCellData( row, "fileSeq" );       	//첨부파일 ID
+				if (atchflId != null && atchflId != '' ) {
+					var dmaTest = { "atchflId" : atchflId, "fileSeq" : fileSeq };
+					var xmlValue = JSON.stringify( dmaTest );
+					// $w.download( "/sc/file/downloadAtchFileOne.do" , xmlValue, "get");
+					comLib.downloadAtchfl($p, "/sc/file/downloadAtchFileOne.do" , xmlValue, "get");
+				}
+			}
+		};
+
+		/**
+		 * 첨부파일 일괄 다운로드
+		 * @param _dltNttFile
+		 * @return 압축파일
+		 */
+		scwin._btnAllDown_onclick = function() {
+			var idxArr =_grdNttMultiFile.getCheckedJSON("chk");
+			var idxArr1 = _grdNttMultiFile.getCheckedIndex( "chk" );
+			if (idxArr.length > 0 ) {
+				var xmlValue = JSON.stringify(idxArr);
+				// $w.download( "/sc/file/downloadAtchFile.do" , xmlValue, "post");
+				comLib.downloadAtchfl($p, "/sc/file/downloadAtchFile.do" , xmlValue, "post");
+			} else {
+				comLib.alert($p, "선택된 데이터가 없습니다.");
+			}
+		}
+
+
+		/**
+		 * 첨부파일 그리드 클리어
+		 * @param
+		 * @return
+		 */
+		 scwin._fileReset = function() {
+		 	_dltNttFile.setJSON([]);
+		 	_mpdNttMultiAtchFile.removeAllFiles();
+		 };]]></script>
+    </head>
+    <body>
+    	<xf:group class="multy-up-list" id="" style=""><xf:group style="margin-top:-30px" id="" class="title-group"><xf:group style="" id=""><w2:span id="" label="첨부파일"></w2:span></xf:group><xf:group style="" id="groupNtt1" class="btn-group">
+				<xf:group id="upload" class="up">
+					<w2:multiupload filter="*:*.*" mode="html5_transparent" ev:ondone="scwin._mpdNttMultiAtchFile_ondone" maxcount="5" action="" style="" wmode="false" id="_mpdNttMultiAtchFile" maxsize="2048000" ev:onprogress="scwin._mpdNttMultiAtchFile_onprogress" uploadButton="" selectCallback="scwin._multiSelectNttCallback">
+					</w2:multiupload>
+					<w2:anchor ev:onclick="scwin._btnMultiAtchFile_onclick" style="" id="_btnMultiAtchFile" class="">
+						<xf:label><![CDATA[추가]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+				<w2:anchor ev:onclick="scwin._btnNttDelMultiFile_onclick" style="" id="_btnDelMultiFile" class="delete_ing">
+					<xf:label><![CDATA[삭제]]></xf:label>
+				</w2:anchor>
+			</xf:group></xf:group>
+    		<w2:gridView autoFit="allColumn" dataList="_dltNttFile" fixedColumnWithHidden="true" focusMode="row" id="_grdNttMultiFile" ignoreCellClick="false"
+    			ignoreToggleOnDisabled="false" readOnly="true" scrollByColumn="false" style="height: 275px;" useShiftKey="true" visibleRowNum="10"
+    			class="multiFile" ev:oncellclick="scwin._grdNttMultiFile_oncellclick">
+    			<w2:header id="header1" style="">
+    				<w2:row id="row2" style="">
+    					<w2:column blockSelect="false" checkboxLabel="&amp;nbsp;" displayMode="label" id="chk" inputType="checkbox" width="50" value="선택"
+    						style="height:20px;" ignoreStatus="true" defaultValue="0" falseValue="0">
+    					</w2:column>
+    					<!-- 문서명은 필요시 주석 제거하여 사용할것 -->
+    					<!-- <w2:column width="100" inputType="text" style="height:20px;" id="column18" blockSelect="false" displayMode="label" value="문서명"></w2:column> -->
+    					<w2:column blockSelect="false" displayMode="label" id="column15" inputType="text" value="파일명" width="180" style="height:20px;"></w2:column>
+    					<w2:column blockSelect="false" displayMode="label" id="column13" inputType="text" value="파일사이즈" width="80" style="height:20px;">
+    					</w2:column>
+    					<w2:column blockSelect="false" displayMode="label" id="column11" inputType="text" value="진행상태" width="70" style="height:20px;"></w2:column>
+    				</w2:row>
+    			</w2:header>
+    			<w2:gBody id="gBody4" style="">
+    				<w2:row id="row5" style="">
+    					<w2:column blockSelect="false" checkboxLabel="&amp;nbsp;" displayMode="label" id="chk" inputType="checkbox" style="height:24px;"
+    						width="50" readOnly="false" textAlign="center" defaultValue="0" falseValue="0">
+    					</w2:column>
+    					<!-- 필요시 주석 제거하여 사용할 것 -->
+    					<!-- <w2:column width="100" inputType="text" style="height:24px" id="atchflTit" blockSelect="false" displayMode="label" readOnly="false"></w2:column> -->
+    					<w2:column blockSelect="false" displayMode="label" id="name" inputType="text" style="height:24px;" width="180" readOnly="true"
+    						textAlign="left">
+    					</w2:column>
+    					<w2:column blockSelect="false" displayMode="label" id="displaySize" inputType="text" style="height:24px;" width="80"
+    						readOnly="true" textAlign="center">
+    					</w2:column>
+    					<w2:column blockSelect="false" displayMode="label" id="Status" inputType="text" style="height:24px;" width="70" readOnly="true"
+    						class="pro-bar" textAlign="center">
+    					</w2:column>
+    				</w2:row>
+    			</w2:gBody>
+    		</w2:gridView>
+    	</xf:group>
+
+    </body>
+</html>

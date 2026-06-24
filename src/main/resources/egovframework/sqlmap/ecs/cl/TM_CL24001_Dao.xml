@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 정산 - DR 정산 -->
+<mapper namespace="TM_CL24001_Dao">
+	<select id="TM_CL24001_Dao_retrieveDrspExcclcList" parameterType="kw.ecs.cl.drspexcclc.vo.DrspExcclcVo" resultType="egovMap">
+		/* TM_CL24001_Dao_retrieveDrspExcclcList */
+		SELECT
+			A.excclc_year,
+			(
+				SELECT
+					(
+						SELECT
+							cmmn_cd_nm
+						FROM
+							tc_ecs_cd
+						WHERE
+							use_yn = 'Y'
+							AND cls_cd = (
+								SELECT
+									upper_cls_cd
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = CD.upper_cls_cd
+									AND cmmn_cd = CD.upper_cmmn_cd
+							)
+							AND cmmn_cd = (
+								SELECT
+									upper_cmmn_cd
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = CD.upper_cls_cd
+									AND cmmn_cd = CD.upper_cmmn_cd
+							)
+					) AS basin_nm
+					FROM
+						tc_ecs_cd CD
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2002'
+						AND cmmn_cd = A.bplc_cd_id
+			) AS basin_nm,
+			(
+				SELECT
+					(
+						SELECT /*+ LEADING(UPP HR) */
+							stext
+						FROM (
+							SELECT
+								cmmn_cd
+							FROM
+								tc_ecs_cd
+							WHERE
+								use_yn = 'Y'
+								AND cls_cd = CD.upper_cls_cd
+								AND cmmn_cd = CD.upper_cmmn_cd
+						) UPP
+						LEFT JOIN
+							HRM.vm_hr01a01 HR
+						ON
+							UPP.cmmn_cd = HR.objid
+							AND SYSDATE BETWEEN HR.strdt AND HR.enddt
+				) AS dept_nm
+				FROM
+					tc_ecs_cd CD
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_2002'
+					AND cmmn_cd = A.bplc_cd_id
+			) AS dept_nm,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM
+					tc_ecs_cd CD
+				WHERE
+					use_yn = 'Y'
+					AND cls_cd = 'ECS_2002'
+					AND cmmn_cd = A.bplc_cd_id
+			) AS bplc_nm,
+			A.bplc_cd_id,
+			(
+				NVL(A.mon01_iem_vu, 0) + NVL(A.mon02_iem_vu, 0) + NVL(A.mon03_iem_vu, 0) + NVL(A.mon04_iem_vu, 0) +
+				NVL(A.mon05_iem_vu, 0) + NVL(A.mon06_iem_vu, 0) + NVL(A.mon07_iem_vu, 0) + NVL(A.mon08_iem_vu, 0) +
+				NVL(A.mon09_iem_vu, 0) + NVL(A.mon10_iem_vu, 0) + NVL(A.mon11_iem_vu, 0) + NVL(A.mon12_iem_vu, 0) +
+				NVL(B.mon01_iem_vu, 0) + NVL(B.mon02_iem_vu, 0) + NVL(B.mon03_iem_vu, 0) + NVL(B.mon04_iem_vu, 0) +
+				NVL(B.mon05_iem_vu, 0) + NVL(B.mon06_iem_vu, 0) + NVL(B.mon07_iem_vu, 0) + NVL(B.mon08_iem_vu, 0) +
+				NVL(B.mon09_iem_vu, 0) + NVL(B.mon10_iem_vu, 0) + NVL(B.mon11_iem_vu, 0) + NVL(B.mon12_iem_vu, 0) +
+				NVL(A.time_add_excclc_amt, 0) + NVL(B.time_add_excclc_amt, 0)
+			) AS excclc_amt_total,
+			(
+				NVL(A.mon01_iem_vu, 0) + NVL(A.mon02_iem_vu, 0) + NVL(A.mon03_iem_vu, 0) + NVL(A.mon04_iem_vu, 0) +
+				NVL(A.mon05_iem_vu, 0) + NVL(A.mon06_iem_vu, 0) + NVL(A.mon07_iem_vu, 0) + NVL(A.mon08_iem_vu, 0) +
+				NVL(A.mon09_iem_vu, 0) + NVL(A.mon10_iem_vu, 0) + NVL(A.mon11_iem_vu, 0) + NVL(A.mon12_iem_vu, 0)
+			) AS bass_amt_total,
+			A.mon01_iem_vu AS bass_amt_mon01,
+			A.mon02_iem_vu AS bass_amt_mon02,
+			A.mon03_iem_vu AS bass_amt_mon03,
+			A.mon04_iem_vu AS bass_amt_mon04,
+			A.mon05_iem_vu AS bass_amt_mon05,
+			A.mon06_iem_vu AS bass_amt_mon06,
+			A.mon07_iem_vu AS bass_amt_mon07,
+			A.mon08_iem_vu AS bass_amt_mon08,
+			A.mon09_iem_vu AS bass_amt_mon09,
+			A.mon10_iem_vu AS bass_amt_mon10,
+			A.mon11_iem_vu AS bass_amt_mon11,
+			A.mon12_iem_vu AS bass_amt_mon12,
+			(
+				NVL(B.mon01_iem_vu, 0) + NVL(B.mon02_iem_vu, 0) + NVL(B.mon03_iem_vu, 0) + NVL(B.mon04_iem_vu, 0) +
+				NVL(B.mon05_iem_vu, 0) + NVL(B.mon06_iem_vu, 0) + NVL(B.mon07_iem_vu, 0) + NVL(B.mon08_iem_vu, 0) +
+				NVL(B.mon09_iem_vu, 0) + NVL(B.mon10_iem_vu, 0) + NVL(B.mon11_iem_vu, 0) + NVL(B.mon12_iem_vu, 0)
+			) AS acmslt_amt_total,
+			B.mon01_iem_vu AS acmslt_amt_mon01,
+			B.mon02_iem_vu AS acmslt_amt_mon02,
+			B.mon03_iem_vu AS acmslt_amt_mon03,
+			B.mon04_iem_vu AS acmslt_amt_mon04,
+			B.mon05_iem_vu AS acmslt_amt_mon05,
+			B.mon06_iem_vu AS acmslt_amt_mon06,
+			B.mon07_iem_vu AS acmslt_amt_mon07,
+			B.mon08_iem_vu AS acmslt_amt_mon08,
+			B.mon09_iem_vu AS acmslt_amt_mon09,
+			B.mon10_iem_vu AS acmslt_amt_mon10,
+			B.mon11_iem_vu AS acmslt_amt_mon11,
+			B.mon12_iem_vu AS acmslt_amt_mon12,
+			(A.time_add_excclc_amt + B.time_add_excclc_amt) AS time_add_excclc_amt,
+			CASE WHEN
+				A.frst_regist_dt &gt; B.frst_regist_dt
+			THEN
+				A.frst_regist_dt
+			ELSE
+				B.frst_regist_dt
+			END AS frst_regist_dt,
+			CASE WHEN
+				A.frst_regist_dt &gt; B.frst_regist_dt
+			THEN
+				A.frst_rgstr_id
+			ELSE
+				B.frst_rgstr_id
+			END AS frst_rgstr_id,
+			CASE WHEN
+				A.last_updt_dt &gt; B.last_updt_dt
+			THEN
+				A.last_updt_dt
+			ELSE
+				B.last_updt_dt
+			END AS last_updt_dt,
+			CASE WHEN
+				A.last_updt_dt &gt; B.last_updt_dt
+			THEN
+				A.last_updusr_id
+			ELSE
+				B.last_updusr_id
+			END AS last_updusr_id,
+			CASE WHEN
+				A.last_updt_dt &gt; B.last_updt_dt
+			THEN
+				A.updt_rsn
+			ELSE
+				B.updt_rsn
+			END AS updt_rsn
+		FROM (
+			SELECT
+				excclc_year,
+				bplc_cd_id,
+				iem_nm,
+				mon01_iem_vu,
+				mon02_iem_vu,
+				mon03_iem_vu,
+				mon04_iem_vu,
+				mon05_iem_vu,
+				mon06_iem_vu,
+				mon07_iem_vu,
+				mon08_iem_vu,
+				mon09_iem_vu,
+				mon10_iem_vu,
+				mon11_iem_vu,
+				mon12_iem_vu,
+				time_add_excclc_amt,
+				frst_regist_dt,
+				frst_rgstr_id,
+				last_updt_dt,
+				last_updusr_id,
+				updt_rsn
+			FROM
+				tm_cl24001
+			WHERE
+				iem_nm = 'bassAmt'
+				AND excclc_year = SUBSTR(#{strtDt}, 0, 4)
+		) A LEFT JOIN (
+			SELECT
+				excclc_year,
+				bplc_cd_id,
+				iem_nm,
+				mon01_iem_vu,
+				mon02_iem_vu,
+				mon03_iem_vu,
+				mon04_iem_vu,
+				mon05_iem_vu,
+				mon06_iem_vu,
+				mon07_iem_vu,
+				mon08_iem_vu,
+				mon09_iem_vu,
+				mon10_iem_vu,
+				mon11_iem_vu,
+				mon12_iem_vu,
+				time_add_excclc_amt,
+				frst_regist_dt,
+				frst_rgstr_id,
+				last_updt_dt,
+				last_updusr_id,
+				updt_rsn
+			FROM
+				tm_cl24001
+			WHERE
+				iem_nm = 'acmsltAmt'
+				AND excclc_year = SUBSTR(#{strtDt}, 0, 4)
+		) B
+		ON
+			A.excclc_year = B.excclc_year
+			AND A.bplc_cd_id = B.bplc_cd_id
+		ORDER BY
+			A.excclc_year,
+			A.bplc_cd_id
+	</select>
+
+	<update id="TM_CL24001_Dao_saveDrspExcclcList" parameterType="kw.ecs.cl.drspexcclc.vo.DrspExcclcVo">
+		/* TM_CL24001_Dao_saveDrspExcclcList */
+		MERGE INTO
+			tm_cl24001 A
+		USING (
+			SELECT
+				#{excclcYear} AS excclc_year,
+				#{bplcCdId} AS bplc_cd_id,
+				#{iemNm} AS iem_nm,
+				#{mon01IemVu} AS mon01_iem_vu,
+				#{mon02IemVu} AS mon02_iem_vu,
+				#{mon03IemVu} AS mon03_iem_vu,
+				#{mon04IemVu} AS mon04_iem_vu,
+				#{mon05IemVu} AS mon05_iem_vu,
+				#{mon06IemVu} AS mon06_iem_vu,
+				#{mon07IemVu} AS mon07_iem_vu,
+				#{mon08IemVu} AS mon08_iem_vu,
+				#{mon09IemVu} AS mon09_iem_vu,
+				#{mon10IemVu} AS mon10_iem_vu,
+				#{mon11IemVu} AS mon11_iem_vu,
+				#{mon12IemVu} AS mon12_iem_vu,
+				<!-- #{timeAddExcclcAmt} AS time_add_excclc_amt, -->
+				0 AS time_add_excclc_amt,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.excclc_year = B.excclc_year
+			AND A.bplc_cd_id = B.bplc_cd_id
+			AND A.iem_nm = B.iem_nm
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.mon01_iem_vu = B.mon01_iem_vu,
+				A.mon02_iem_vu = B.mon02_iem_vu,
+				A.mon03_iem_vu = B.mon03_iem_vu,
+				A.mon04_iem_vu = B.mon04_iem_vu,
+				A.mon05_iem_vu = B.mon05_iem_vu,
+				A.mon06_iem_vu = B.mon06_iem_vu,
+				A.mon07_iem_vu = B.mon07_iem_vu,
+				A.mon08_iem_vu = B.mon08_iem_vu,
+				A.mon09_iem_vu = B.mon09_iem_vu,
+				A.mon10_iem_vu = B.mon10_iem_vu,
+				A.mon11_iem_vu = B.mon11_iem_vu,
+				A.mon12_iem_vu = B.mon12_iem_vu,
+				A.time_add_excclc_amt = B.time_add_excclc_amt,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.excclc_year,
+				A.bplc_cd_id,
+				A.iem_nm,
+				A.mon01_iem_vu,
+				A.mon02_iem_vu,
+				A.mon03_iem_vu,
+				A.mon04_iem_vu,
+				A.mon05_iem_vu,
+				A.mon06_iem_vu,
+				A.mon07_iem_vu,
+				A.mon08_iem_vu,
+				A.mon09_iem_vu,
+				A.mon10_iem_vu,
+				A.mon11_iem_vu,
+				A.mon12_iem_vu,
+				A.time_add_excclc_amt,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.excclc_year,
+				B.bplc_cd_id,
+				B.iem_nm,
+				B.mon01_iem_vu,
+				B.mon02_iem_vu,
+				B.mon03_iem_vu,
+				B.mon04_iem_vu,
+				B.mon05_iem_vu,
+				B.mon06_iem_vu,
+				B.mon07_iem_vu,
+				B.mon08_iem_vu,
+				B.mon09_iem_vu,
+				B.mon10_iem_vu,
+				B.mon11_iem_vu,
+				B.mon12_iem_vu,
+				B.time_add_excclc_amt,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<delete id="TM_CL24001_Dao_deleteDrspExcclcList" parameterType="kw.ecs.cl.drspexcclc.vo.DrspExcclcVo">
+		/* TM_CL24001_Dao_deleteDrspExcclcList */
+		DELETE FROM
+			tm_cl24001
+		WHERE
+			excclc_year = #{excclcYear}
+			AND bplc_cd_id = #{bplcCdId}
+	</delete>
+</mapper>

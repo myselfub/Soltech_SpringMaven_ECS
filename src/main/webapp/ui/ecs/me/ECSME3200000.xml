@@ -1,0 +1,651 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSME3200000.xml
+			* 설 명 : 관리/폐기_관리대장_수전전력량계 관리대장
+			* 작성일 : 2023.02.08
+			* 담당자: Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.08 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="ecsChrgDeptId" dataType="text" name="사업장코드"></w2:key>
+						<w2:key id="itslfFcltyNm" dataType="text" name="자체시설명"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltAutoCondition1" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltAutoCondition2" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="clsCd" dataType="text" name="대분류 코드"></w2:column>
+						<w2:column id="clsCdNm" dataType="text" name="대분류 이름"></w2:column>
+						<w2:column id="cmmnCd" dataType="text" name="소분류 코드"></w2:column>
+						<w2:column id="cmmnCdNm" dataType="text" name="소분류 이름"></w2:column>
+						<w2:column id="upperCmmnCd" dataType="text" name="상위 소분류 코드1"></w2:column>
+						<w2:column id="upperCmmnCdNm" dataType="text" name="상위 소분류 이름1"></w2:column>
+						<w2:column id="upperCmmnCd2" dataType="text" name="상위 소분류 코드2"></w2:column>
+						<w2:column id="upperCmmnCdNm2" dataType="text" name="상위 소분류 이름2"></w2:column>
+						<w2:column id="upperCmmnCd3" dataType="text" name="상위 소분류 코드3"></w2:column>
+						<w2:column id="upperCmmnCdNm3" dataType="text" name="상위 소분류 이름3"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList id="dltWtwkEltengMsrinsList" baseNode="list" repeatNode="map" saveRemovedData="true"
+					ev:oncelldatachange="scwin.dltWtwkEltengMsrinsList_ondatachange" ev:onremoverow="scwin.dltWtwkEltengMsrinsList_ondatachange"
+					ev:oninsertrow="scwin.dltWtwkEltengMsrinsList_ondatachange">
+					<w2:columnInfo>
+						<w2:column id="deptNm" dataType="text" name="부서명"></w2:column>
+						<w2:column id="ecsChrgDeptId" dataType="text" name="ECS담당부서ID"></w2:column>
+						<w2:column id="itslfFcltyNm" dataType="text" name="자체시설명"></w2:column>
+						<w2:column id="mnfctrYm" dataType="number" name="제조년월"></w2:column>
+						<w2:column id="mrnrChckHistYm" dataType="number" name="정도검사-이력"></w2:column>
+						<w2:column id="mrnrChckPlanYm" dataType="number" name="정도검사-계획"></w2:column>
+						<w2:column id="eltengMsrinsIdnum" dataType="number" name="측정기기 고유번호"></w2:column>
+						<w2:column id="mrnrChgNeedYm" dataType="number" name="교체필요 대상연도"></w2:column>
+						<w2:column id="rmCtnt" dataType="text" name="비고"></w2:column>
+						<w2:column id="updtRsn" dataType="text" name="수정사유"></w2:column>
+						<w2:column id="rowStatus" dataType="text" name="상태"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"isValidate" : false,
+		"isSaveProcess" : false,
+		"acbMappingCdObj" : {
+			"deptNm" : "cmmnCd"
+		},
+		"acbMappingNmObj" : {
+		},
+		"valInfo" : [
+			{id : "deptNm", maxByteLength : 40, mandatory : true},
+			{id : "itslfFcltyNm", minLength : 1, maxByteLength : 80, mandatory : true},
+			{id : "mnfctrYm", maxByteLength : 6, number : true, dateFunc : ecsLib.validatorYearMonth},
+			{id : "mrnrChckHistYm", maxByteLength : 6, number : true, dateFunc : ecsLib.validatorYearMonth},
+			{id : "mrnrChckPlanYm", maxByteLength : 6, number : true, dateFunc : ecsLib.validatorYearMonth},
+			{id : "eltengMsrinsIdnum", maxByteLength : 20, mandatory : true, number : true},
+			{id : "mrnrChgNeedYm", maxByteLength : 6, number : true, dateFunc : ecsLib.validatorYearMonth},
+			{id : "rmCtnt", maxByteLength : 4000},
+			{id : "rowStatus", maxByteLength : 4},
+		]
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSME3200000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		// 조회조건 초기 설정
+		scwin.initSearchParam();
+		// 화면 데이터 조회
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 조회조건 초기화에 필요한 로직을 수행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.initSearchParam = function() {
+		dmaSearchParam.set("itslfFcltyNm", "ALL");
+		dmaSearchParam.set("ecsChrgDeptId", "ALL");
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var ecsChrgDeptId = dmaSearchParam.get("ecsChrgDeptId");
+		var itslfFcltyNm = dmaSearchParam.get("itslfFcltyNm");
+
+		var queryString = `?ecsChrgDeptId=${ecsChrgDeptId}`;
+		queryString += `&itslfFcltyNm=${itslfFcltyNm}`;
+
+		var option = {
+			action : "me/wtwkeltengmsrins/retrieve-wtwk-elteng-msrins.do"
+				+ queryString,
+			method : "get",
+			resData : dltWtwkEltengMsrinsList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCallback = function() {
+		spnTotalRow.setValue(dltWtwkEltengMsrinsList.getRowCount());
+		var mandatoryList = scwin.initData.valInfo.filter(obj => obj.mandatory);
+		var nowYm = $p.getCurrentServerDate("yyyyMM");
+
+		for (var i = 0; i < dltWtwkEltengMsrinsList.getRowCount(); i++) {
+			mandatoryList.forEach(obj => {
+				grdWtwkEltengMsrinsList.setCellReadOnly(i, obj.id, true);
+			});
+		}
+		dltWtwkEltengMsrinsList.getAllJSON().forEach((obj, i) => {
+			// 교체필요 년월 시기가 지나면 셀 폰트,배경 색 변경 _231012
+			if (obj.mrnrChgNeedYm != "" && obj.mrnrChgNeedYm < nowYm) {
+				grdWtwkEltengMsrinsList.setCellBackgroundColor(i, "mrnrChgNeedYm", "#FFF5F5");
+				grdWtwkEltengMsrinsList.setCellColor(i, "mrnrChgNeedYm", "#FF0000");
+			} else {
+				//grdWtwkEltengMsrinsList.setCellBackgroundColor(i, "mrnrChgNeedYm", "");
+				//grdWtwkEltengMsrinsList.setCellColor(i, "mrnrChgNeedYm", "");
+			}
+			if (obj.mrnrChckPlanYm != "" && obj.mrnrChckPlanYm.startsWith(nowYm)) {
+				grdWtwkEltengMsrinsList.setCellBackgroundColor(i, "mrnrChckPlanYm", "#F5F5FF");
+				grdWtwkEltengMsrinsList.setCellColor(i, "mrnrChckPlanYm", "#0000FF");
+			} else {
+				//grdWtwkEltengMsrinsList.setCellBackgroundColor(i, "mrnrChckPlanYm", "");
+				//grdWtwkEltengMsrinsList.setCellColor(i, "mrnrChckPlanYm", "");
+			}
+		});
+		scwin.initData.isValidate = false;
+	};
+
+	/**
+	 * 그리드뷰 행을 추가한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnAddRow_onclick = function() {
+		var newIndex = dltWtwkEltengMsrinsList.insertRow();
+
+		grdWtwkEltengMsrinsList.setFocusedCell(newIndex, "deptNm", true);
+	};
+
+	/**
+	 * 그리드뷰 행을 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelRow_onclick = function() {
+		var rowIndexList = grdWtwkEltengMsrinsList.getAllFocusedRowIndex();
+
+		dltWtwkEltengMsrinsList.removeRows(rowIndexList);
+	};
+
+	/**
+	 * 그리드뷰의 내용을 검증한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnValidate_onclick = function(confirmValue) {
+		if (confirmValue == true || confirmValue == undefined) {
+			if (dltWtwkEltengMsrinsList.getModifiedData() == "") {
+				// 처리할 데이터가 없습니다.
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+				return;
+			}
+
+			dltWtwkEltengMsrinsList.getAllJSON().forEach((obj, idx) => {
+				if (obj.rowStatus == "U") {
+					var isCd = dltAutoCondition1.getAllJSON().find(cdObj => cdObj.cmmnCd == obj.deptNm);
+					if (isCd) {
+						dltWtwkEltengMsrinsList.setCellData(idx, "ecsChrgDeptId", obj.deptNm, true);
+					}
+				}
+			});
+			if (utilLib.validateGridView(grdWtwkEltengMsrinsList, scwin.initData.valInfo)) {
+				var columnList = scwin.initData.valInfo.filter(obj => obj.mandatory).flatMap(obj => obj.id.replace("deptNm", "ecsChrgDeptId"));
+				if (ecsLib.gridViewPkDuplicationCheck(grdWtwkEltengMsrinsList, dltWtwkEltengMsrinsList, columnList)) {
+					// 중복 데이터가 있습니다.
+					return;
+				}
+
+				if (ecsLib.validateGridViewAcb(grdWtwkEltengMsrinsList, dltAutoCondition1, scwin.initData.acbMappingCdObj, scwin.initData.acbMappingNmObj)) {
+					// 해당하는 {컬럼명}이(가) 존재하지 않습니다.
+					return;
+				}
+				scwin.initData.isValidate = true;
+				if (scwin.initData.isSaveProcess) {
+					scwin.initData.isSaveProcess = false;
+					scwin.btnSave_onclick();
+				} else {
+					// 데이터 검증이 완료되었습니다.
+					comLib.alert($p, utilLib.getMessage("ECS.INFO.00102"));
+				}
+			}
+		} else {
+			scwin.initData.isSaveProcess = false;
+		}
+	};
+
+	/**
+	 * 그리드뷰의 내용을 수정/저장한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		scwin.initData.isSaveProcess = false;
+		if (dltWtwkEltengMsrinsList.getModifiedData() == "") {
+			// 처리할 데이터가 없습니다.
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00304"));
+			return;
+		}
+
+		if (scwin.initData.isValidate) {
+			var addCount = 0;
+			var modifyCount = 0;
+			var delCount = 0;
+			dltWtwkEltengMsrinsList.getModifiedJSON().forEach(obj => {
+				var rowStatus = obj.rowStatus;
+				switch(rowStatus) {
+					case "C":
+						// 추가
+						addCount++;
+						break;
+					case "U":
+						// 수정
+						modifyCount++;
+						break;
+					case "E":
+						// 삭제
+						delCount++;
+						break;
+					default:
+						break;
+				}
+			});
+			var extendMsg = ecsLib.extendCustomSaveMsg(addCount, modifyCount, delCount);
+			// 변경된 내역이 있습니다.\n저장 하시겠습니까? \n수정사유를 입력하세요.
+			ecsLib.saveRsn($p, `${dltWtwkEltengMsrinsList.getID()}.updtRsn`, utilLib.getMessage("SCM.INFO.00239")[0] + extendMsg, "scwin.saveConfirmCallback");
+		} else {
+			scwin.initData.isSaveProcess = true;
+			// 데이터 검증 후 저장 가능합니다.\n검증하시겠습니까?
+			comLib.confirm($p, utilLib.getMessage("ECS.INFO.00101"), "scwin.btnValidate_onclick", true);
+			return;
+		}
+	};
+
+	/**
+	 * 수정/저장 ComfirmCallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		var requestData = {};
+		requestData.dltWtwkEltengMsrinsList = dltWtwkEltengMsrinsList.getModifiedJSON();
+
+		var option = {
+			action : "me/wtwkeltengmsrins/process-wtwk-elteng-msrins.do",
+			reqData : requestData,
+			success : "scwin.saveConfirmSuccessCallback",
+			savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 수정/저장 CallBack 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.saveConfirmSuccessCallback = function(resBody) {
+		comLib.alert($p, resBody.message.code_name);
+
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 작업중이던 내용을 취소한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnCancl_onclick = function() {
+		scwin.btnInqire_onclick();
+	};
+
+	/**
+	 * 데이터컬렉션의 추가/변경/삭제 시 이벤트
+	 * @param
+	 * @return
+	 */
+	scwin.dltWtwkEltengMsrinsList_ondatachange = function(info) {
+		scwin.initData.isValidate = false;
+	};
+
+	/**
+	 * 조회박스 선택별 값을 세팅한다.
+	 * @param
+	 * @return
+	 */
+	scwin.acbDept_onviewchange = function(info) {
+		var ecsChrgDeptId = info.newValue;
+		dmaSearchParam.set("ecsChrgDeptId", ecsChrgDeptId);
+
+		var queryString = `ecsChrgDeptId=${ecsChrgDeptId}`;
+
+		var option = {
+			action : "me/wtwkeltengmsrins/retrieve-wtwk-elteng-msrins-cnd-itslf-fclty-nm.do?"
+				+ queryString,
+			method : "get",
+			resData : dltAutoCondition2,
+			success : "",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+		dmaSearchParam.set("itslfFcltyNm", "ALL");
+	};
+
+	scwin.acbItslfFcltyNm_onviewchange = function(info) {
+		dmaSearchParam.set("itslfFcltyNm", info.newValue);
+	};
+
+	scwin.grdWtwkEltengMsrinsList_onafteredit = function(row, col, value) {
+		ecsLib.updateGridViewFontColor(grdWtwkEltengMsrinsList, row, col);
+	};
+
+	//============================================================================================
+	// 엑셀
+	//============================================================================================
+	/**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		var subTitleNm = spnSubTitle.getValue();
+		// 엑셀 내부 타이틀 추가_240105
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 8,
+			text 		: `${menuNm}_` + `${subTitleNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		// 데이터가 없어도 탬플릿만 다운받을 수 있게 comLib.downloadExcel 말고 grdID.advancedExcelDownload 적용_231113
+		var options = {
+			fileName : `${menuNm}_` + `${subTitleNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			useDataFormat: true,
+			applyDataFormat : true,
+			rowHeight : 40,
+			useStyle: true,
+			hidden: 1
+		};
+		/*
+		// 엑셀 업로드 샘플데이터_231206
+		if (!grdWtwkEltengMsrinsList.getAllJSON().length) {
+			var dataList = $p.getComponentById(grdWtwkEltengMsrinsList.getDataList());
+			//dataList.insertJSON();
+		}
+		 */
+		var date = new Date();
+		var currentData = String(date.getFullYear());
+		if (Number(date.getMonth() + 1) < 10) {
+			currentData += "0" + String(date.getMonth() + 1);
+		} else {
+			currentData += String(date.getMonth() + 1);
+		}
+
+		/*
+		dltWtwkEltengMsrinsList.getAllJSON().forEach((obj, i) => {
+			if (obj.mrnrChgNeedYm !== "" && obj.mrnrChgNeedYm < currentData) {
+				grdWtwkEltengMsrinsList.setCellBackgroundColor(i, "mrnrChgNeedYm", "#FFC3C3");
+			} else {
+				grdWtwkEltengMsrinsList.setCellBackgroundColor(i, "mrnrChgNeedYm", "#FFFFFF");
+			}
+		});
+		*/
+
+		grdWtwkEltengMsrinsList.advancedExcelDownload(options, infoArr);
+
+		/*
+		setTimeout(() => {
+			dltWtwkEltengMsrinsList.getAllJSON().forEach((obj, i) => {
+				if (grdWtwkEltengMsrinsList.getCellBackgroundColor(i, "mrnrChgNeedYm") != "#FFC3C3") {
+					if (i % 2 == 0) {
+						grdWtwkEltengMsrinsList.setCellBackgroundColor(i, "mrnrChgNeedYm", "#FFFFFF");
+					} else {
+						grdWtwkEltengMsrinsList.setCellBackgroundColor(i, "mrnrChgNeedYm", "#F5F5F5");
+					}
+				}
+			});
+		}, 200);
+		*/
+	};
+
+	/**
+	 * 엑셀의 내용을 그리드에 업로드 한다.
+	 * @return
+	 */
+	 scwin.btnUploadExcel_onclick = function() {
+		var options = {
+			type : 1,
+			headerExist : 1,
+			startRowIndex : 1,
+			startColumnIndex : 0,
+			endColumnIndex : 10,
+			sheetNo : 0,
+			append : 0,
+			status: "C",
+			useMaxByteLength : true
+		};
+		comLib.uploadExcel(grdWtwkEltengMsrinsList, options);
+	};
+
+	/**
+	 * 엑셀 내용을 그리드에 저장한다.
+	 * @return
+	 */
+	scwin.grdWtwkEltengMsrinsList_onfilereadend = function(value) {
+		var dltData = dltWtwkEltengMsrinsList.getAllJSON();
+		var dltAuto1 = dltAutoCondition1.getAllJSON();
+		// set JSON
+		for (var idx = 0; idx < dltData.length; idx++) {
+			var deptNm = (dltAuto1.find(obj => obj.cmmnCd == dltData[idx].deptNm) || 0).cmmnCd;
+			dltWtwkEltengMsrinsList.setCellData(idx, "deptNm", deptNm);
+		}
+	};
+	]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group id="grpInqire" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="부서"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete displayMode="label" editType="select" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL" ev:onviewchange="scwin.acbDept_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition1">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="자체시설명"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw2" tagname="td">
+								<w2:autoComplete displayMode="label" editType="select" search="contain" submenuSize="auto" useKeywordHighlight="true"
+									visibleRowNum="15" chooseOptionLabel="- 전체 -" chooseOption="true" chooseOptionValue="ALL" ev:onviewchange="scwin.acbItslfFcltyNm_onviewchange">
+									<w2:choices>
+										<w2:itemset nodeset="data:dltAutoCondition2">
+											<w2:label ref="cmmnCdNm"></w2:label>
+											<w2:value ref="cmmnCd"></w2:value>
+										</w2:itemset>
+									</w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" userData1="Q" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" outerDiv="false" userData1="E"
+						ev:onclick="scwin.btnDownExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnUploadExcel" class="excel-btn fa fa-long-arrow-up btn_sh" outerDiv="false" userData1="EU"
+						ev:onclick="scwin.btnUploadExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="title-group">
+						<xf:group tagname="h3">
+							<w2:span  id="spnSubTitle" label="사업장 전력량계 관리"></w2:span>
+							<w2:span id="spnTotalRow" class="title-num" displayFormat="###,###,###" label="0"></w2:span>
+						</xf:group>
+						<xf:group class="com-area">
+							<xf:group class="btn-group">
+								<w2:anchor id="btnAddRow" class="add_row fa fa-plus" ev:onclick="scwin.btnAddRow_onclick" userData1="S" outerDiv="false">
+									<xf:label><![CDATA[행추가]]></xf:label>
+								</w2:anchor>
+								<w2:anchor id="btnDelRow" class="del_row fa fa-minus" ev:onclick="scwin.btnDelRow_onclick" userData1="D" outerDiv="false">
+									<xf:label><![CDATA[행삭제]]></xf:label>
+								</w2:anchor>
+							</xf:group>
+							<xf:group class="info-box"></xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="list-box box height-sam">
+						<w2:gridView id="grdWtwkEltengMsrinsList" class="resized" dataList="dltWtwkEltengMsrinsList" checkReadOnlyOnPaste="true"
+							checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" keyMoveEditMode="true" sortable="true" tooltipDisplay="true"
+							defaultCellHeight="35" rowNumVisible="true" rowNumHeaderValue="순번" rowNumWidth="35" style="height:45.6rem;"
+							ev:onfilereadend="scwin.grdWtwkEltengMsrinsList_onfilereadend" ev:onafteredit="scwin.grdWtwkEltengMsrinsList_onafteredit">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hDeptNm" class="req" inputType="text" width="120" value="부서명" rowSpan="2"></w2:column>
+									<w2:column id="hItslfFcltyNm" class="req" inputType="text" width="140" value="자체시설명" rowSpan="2"></w2:column>
+									<w2:column id="hMnfctrYm" inputType="text" width="80" value="제조년월" rowSpan="2"></w2:column>
+									<w2:column id="hMrnrChckYm" inputType="text" width="120" value="정도검사(7년)" colSpan="2"></w2:column>
+									<w2:column id="hEltengMsrinsIdnum" class="req" inputType="text" width="100" value="측정기기 고유번호" rowSpan="2"></w2:column>
+									<w2:column id="hmrnrChgNeedYm" inputType="text" width="100" value="교체필요년월" rowSpan="2"></w2:column>
+									<w2:column id="hRmCtnt" inputType="text" width="100" value="비고" rowSpan="2"></w2:column>
+								</w2:row>
+								<w2:row>
+									<w2:column id="hMrnrChckHistYm" inputType="text" width="60" value="이력"></w2:column>
+									<w2:column id="hMrnrChckPlanYm" inputType="text" width="60" value="계획"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="deptNm" inputType="autoComplete" maxLength="40" selectedData="false" visibleRowNum="8" chooseOption="true" chooseOptionLabel="">
+										<w2:choices>
+											<w2:itemset nodeset="data:dltAutoCondition1">
+												<w2:label ref="cmmnCdNm"></w2:label>
+												<w2:value ref="cmmnCd"></w2:value>
+											</w2:itemset>
+										</w2:choices>
+									</w2:column>
+									<w2:column id="itslfFcltyNm" inputType="text" maxByteLength="80"></w2:column>
+									<w2:column id="mnfctrYm" inputType="calendar" calendarValueType="yearMonth" maxByteLength="6" validator="ecsLib.validatorYearMonth"></w2:column>
+									<w2:column id="mrnrChckHistYm" inputType="calendar" calendarValueType="yearMonth" maxByteLength="6"
+										validator="ecsLib.validatorYearMonth"></w2:column>
+									<w2:column id="mrnrChckPlanYm" inputType="calendar" calendarValueType="yearMonth" maxByteLength="6"
+										validator="ecsLib.validatorYearMonth"></w2:column>
+									<w2:column id="eltengMsrinsIdnum" inputType="text" maxByteLength="20"></w2:column>
+									<w2:column id="mrnrChgNeedYm" inputType="text" maxByteLength="6" validator="ecsLib.validatorYearMonth"></w2:column>
+									<w2:column id="rmCtnt" inputType="text" maxByteLength="4000"></w2:column>
+								</w2:row>
+							</w2:gBody>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnValidate" ev:onclick="scwin.btnValidate_onclick" outerDiv="false" userData1="S">
+						<xf:label><![CDATA[검증]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnSave" ev:onclick="scwin.btnSave_onclick" outerDiv="false" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnCancl" ev:onclick="scwin.btnCancl_onclick" outerDiv="false" userData1="CC">
+						<xf:label><![CDATA[취소]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

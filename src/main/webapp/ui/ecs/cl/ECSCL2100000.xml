@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSCL2100000.xml
+			* 설 명 : 정산_REC/CER 정산종합
+			* 작성일 : 2023.02.02
+			* 담당자 : Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.02.02 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaSearchParam" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="strtDt" dataType="number" name="조회연도"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList id="dltRecCerList" baseNode="list" repeatNode="map" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="ym" dataType="text" name="년월"></w2:column>
+						<w2:column id="smlhp" dataType="number" name="소수력"></w2:column>
+						<w2:column id="snpw" dataType="number" name="태양광"></w2:column>
+						<w2:column id="wdpw" dataType="number" name="풍력"></w2:column>
+						<w2:column id="tdpw" dataType="number" name="시화조력"></w2:column>
+						<w2:column id="ovsea" dataType="number" name="해외"></w2:column>
+						<w2:column id="sum" dataType="number" name="합계"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	scwin.initData = {
+		"chart" : {
+			"chartUnit" : 10,
+			"chartIntervalCount" : 4,
+		},
+		"observeEvent" : false
+	};
+
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, "ECSCL2100000", {"initScreenCallback" : scwin.searchDatas});
+	};
+
+	/**
+	 * 화면 초기 데이터들을 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.searchDatas = function() {
+		dmaSearchParam.set("strtDt", utilLib.getCurrentDate("yyyy"));
+		// 그리드 데이터 조회
+		scwin.btnInqire_onclick();
+
+		//ecsLib.setChartResizeObserver(this);
+	};
+
+	/**
+	 * 조회조건에 맞게 data를 조회한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInqire_onclick = function() {
+		var strtDate = dmaSearchParam.get("strtDt");
+
+		if (String(strtDate).length != 4) {
+			// 조회기간이 올바르지 않습니다.
+			alert(utilLib.getMessage("ECS.INFO.00011")[0]);
+			return;
+		}
+
+		var queryString = `?strtDt=${strtDate}`;
+
+		var option = {
+			action : "cl/reccer/retrieve-rec-cer.do"
+				+ queryString,
+			method : "get",
+			resData : dltRecCerList,
+			success : "scwin.inqireCallback",
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * 조회 CallBack 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.inqireCallback = function() {
+		scwin.setRecChart();
+		scwin.setCerChart();
+	};
+
+	//============================================================================================
+	// 차트
+	//============================================================================================
+	/**
+	 * REC 정산총액 차트 데이터 조회 콜백
+	 */
+	scwin.setRecChart = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerRec";
+		rMateChartH5.create($p.id + "chartRec", grpChartRec.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * 합산값 라벨 설정
+	 * @param {
+	 	index : index,
+	 	data : 데이터,
+	 	value : 값
+	 }
+	 * @return 라벨 내용
+	 */
+	scwin.recTotalLabelHandler = function(index, data, value) {
+		return ecsLib.dsplZeroFrmt(value);
+	};
+
+	/**
+	 * REC 정산총액 차트 설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerRec = function(id) {
+		var recCerList = dltRecCerList.getAllJSON();
+		recCerList.forEach(obj => {
+			obj["month"] = Number(obj.ym.slice(-2)) + "월"
+			obj.smlhp = Number(ecsLib.dsplZeroFrmt(obj.smlhp / 1000 / 1000, 0).replaceAll(",", "")) || 0;
+			obj.snpw = Number(ecsLib.dsplZeroFrmt(obj.snpw / 1000 / 1000, 0).replaceAll(",", "")) || 0;
+			obj.wdpw = Number(ecsLib.dsplZeroFrmt(obj.wdpw / 1000 / 1000, 0).replaceAll(",", "")) || 0;
+		});
+		var chartData = recCerList;
+
+		var maxData = recCerList.reduce((max, obj) => Math.max(max, obj.smlhp, obj.snpw, obj.wdpw), 0);
+		var chartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+		var interval = Math.ceil((maxData / scwin.initData.chart.chartIntervalCount) / chartUnit) * chartUnit;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Caption text="REC 정산총액" textAlign="center" paddingTop="4.8" paddingRight="3.2" paddingBottom="4.8" paddingLeft="9.6" fontWeight="bold" fontSize="1rem" />'
+			+ '		<Legend position="bottom" labelPlacement="right" />'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true"/>'
+			+ '	<Column2DChart showDataTips="true" dataTipDisplayMode="axis" maxColumnWidth="25">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis categoryField="month" />'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + interval + '" formatter="{numFmt}" title="백만"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSet type="stacked" showTotalLabel="true" totalLabelJsFunction="'+ $p.id + 'scwin.recTotalLabelHandler">'
+			+ '		<series>'
+			+ '			<Column2DSeries font-weight="bold" yField="smlhp" displayName="소수력(백만)">'
+			+ '				<fill>'
+			+ '					<SolidColor color="#FFAECC" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '			<Column2DSeries font-weight="bold" yField="snpw" displayName="태양광(백만)">'
+			+ '				<fill>'
+			+ '					<SolidColor color="#FEC7DD" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '			<Column2DSeries font-weight="bold" yField="wdpw" displayName="풍력(백만)">'
+			+ '				<fill>'
+			+ '					<SolidColor color="#CDB4DB" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '		</series>'
+			+ '			</Column2DSet>'
+			+ '		</series>'
+			+ '	<verticalAxisRenderers>'
+			+ '		<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false"/>'
+			+ '	</verticalAxisRenderers>'
+			+ '	</Column2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartData);
+	};
+
+	/**
+	 * CER 정산총액 차트 데이터 조회 콜백
+	 */
+	scwin.setCerChart = function() {
+		var chartVars = "rMateOnLoadCallFunction=" + $p.id + "scwin.chartReadyHandlerCer";
+		rMateChartH5.create($p.id + "chartCer", grpChartCer.getID(), chartVars, "100%", "100%");
+	};
+
+	/**
+	 * CER 정산총액 차트 설정
+	 * @param id : 차트 그룹 ID
+	 */
+	scwin.chartReadyHandlerCer = function(id) {
+		var recCerList = dltRecCerList.getAllJSON();
+		recCerList.forEach(obj => {
+			obj["month"] = Number(obj.ym.slice(-2)) + "월"
+			obj.tdpw = Number(ecsLib.dsplZeroFrmt(obj.tdpw / 1000 / 1000, 0).replaceAll(",", "")) || 0;
+			obj.ovsea = Number(ecsLib.dsplZeroFrmt(obj.ovsea / 1000 / 1000, 0).replaceAll(",", "")) || 0;
+		});
+		var chartData = recCerList;
+
+		var maxData = recCerList.reduce((max, obj) => Math.max(max, (obj.tdpw + obj.ovsea)), 0);
+		var chartUnit = Math.max(scwin.initData.chart.chartUnit, Math.pow(10, String(maxData.toFixed(0)).length - 2));
+		var interval = Math.ceil((maxData / scwin.initData.chart.chartIntervalCount) / chartUnit) * chartUnit;
+
+		var layoutStr =
+			'<rMateChart backgroundColor="#FFFFFF" cornerRadius="12">'
+			+ '	<Options>'
+			+ '		<Caption text="CER 정산총액" textAlign="center" paddingTop="4.8" paddingRight="3.2" paddingBottom="4.8" paddingLeft="9.6" fontWeight="bold" fontSize="1rem" />'
+			+ '		<Legend position="bottom" labelPlacement="right" />'
+			+ '	</Options>'
+			+ '	<NumberFormatter id="numFmt" useThousandsSeparator="true" />'
+			+ '	<Column2DChart showDataTips="true" dataTipDisplayMode="axis" maxColumnWidth="25">'
+			+ '		<horizontalAxis>'
+			+ '			<CategoryAxis categoryField="month" />'
+			+ '		</horizontalAxis>'
+			+ '		<verticalAxis>'
+			+ '			<LinearAxis id="vAxis1" interval="' + interval + '" formatter="{numFmt}" title="백만"/>'
+			+ '		</verticalAxis>'
+			+ '		<series>'
+			+ '			<Column2DSet type="stacked" showTotalLabel="true" totalLabelJsFunction="'+ $p.id +'scwin.recTotalLabelHandler">'
+			+ '		<series>'
+			+ '			<Column2DSeries color="#FFFFFF" font-weight="bold" yField="tdpw" displayName="시화조력(백만)">'
+			+ '				<fill>'
+			+ '					<SolidColor color="#A2D2FF" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '			<Column2DSeries color="#FFFFFF" font-weight="bold" yField="ovsea" displayName="해외(파트린드)(백만)">'
+			+ '				<fill>'
+			+ '					<SolidColor color="#BDE0FE" />'
+			+ '				</fill>'
+			+ '				<showDataEffect>'
+			+ '					<SeriesInterpolate />'
+			+ '				</showDataEffect>'
+			+ '			</Column2DSeries>'
+			+ '		</series>'
+			+ '			</Column2DSet>'
+			+ '			</series>'
+			+ '		<verticalAxisRenderers>'
+			+ '			<Axis2DRenderer axis="{vAxis1}" verticalAxisTitleAlignment="vertical" showLine="false"/>'
+			+ '		</verticalAxisRenderers>'
+			+ '	</Column2DChart>'
+			+ '</rMateChart>';
+
+		document.getElementById(id).setLayout(layoutStr);
+		document.getElementById(id).setData(chartData);
+	};
+
+	//============================================================================================
+	// 엑셀
+	//============================================================================================
+	/**
+	 * 그리드의 내용을 엑셀로 다운로드 한다.
+	 * @return
+	 */
+	scwin.btnDownExcel_onclick = function() {
+		var menuNm = $p.getComponentById("wfm_title").scope.$p.getComponentById("tbxScreenTitle").getValue();
+		// 엑셀 내부 타이틀 추가_240105
+		var infoArr = [];
+		var infoObj = {
+			rowIndex 	: 0,
+			colIndex 	: 0,
+			rowSpan 	: 0,
+			colSpan 	: 7,
+			text 		: `${menuNm}`,
+			textAlign 	: "left"
+		};
+		infoArr.push(infoObj);
+
+		comLib.downloadExcel(grdRecCerList, {
+			fileName : `${menuNm}.xlsx`,
+			type : 1,
+			autoSizeColumn : true,
+			useDataFormat: true,
+			applyDataFormat : true
+		}, infoArr);
+	};
+]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wfm_title" class="wfm_title" src="/ui/common/navigator.xml"></w2:wframe>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml"></w2:pageInherit> -->
+		<xf:group class="wrap">
+			<xf:group class="search-box">
+				<xf:group id="grpInqire" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw1" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span label="조회연도"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw1" tagname="td">
+								<w2:year_calendar id="calDt" ref="data:dmaSearchParam.strtDt"></w2:year_calendar>
+							</xf:group>
+							<xf:group class="w2tb_th" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+							</xf:group>
+							<xf:group class="w2tb_td" tagname="td"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnInqire" class="fa fa-search btn_sh" outerDiv="false" userData1="Q" ev:onclick="scwin.btnInqire_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+					<w2:anchor id="btnDownExcel" class="excel-btn fa fa-long-arrow-down btn_sh" outerDiv="false" userData1="E"
+						ev:onclick="scwin.btnDownExcel_onclick">
+						<xf:label><![CDATA[엑셀]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="layout-float">
+					<xf:group class="float-con left-area cw10">
+						<xf:group class="con-box">
+							<xf:group id="grpChartRec" class="view-box box chart-wrap-padding" style="width:100%; height:300px;"></xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="float-con right-area cw10">
+						<xf:group class="con-box">
+							<xf:group id="grpChartCer" class="view-box box chart-wrap-padding" style="width:100%; height:300px;"></xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="title-group">
+					<xf:group class="wd-100" tagname="h3">
+						<w2:span class="sub-title-l wd-50" label="* REC (Renewable Energy Certificate): 신재생에너지 공급인증서"></w2:span>
+						<w2:span class="sub-title-l wd-49" label="* CER (Certified Emission Reducation): 탄소 배출권, 탄소 인증 감축량"></w2:span>
+					</xf:group>
+				</xf:group>
+				<xf:group class="con-box">
+					<xf:group class="list-box box">
+						<w2:gridView id="grdRecCerList" class="resized" dataList="dltRecCerList" readOnly="true" checkReadOnlyOnPaste="true"
+							checkReadOnlyOnCut="true" focusMode="row" useShiftKey="true" sortable="true" tooltipDisplay="true" defaultCellHeight="35"
+							style="height:29.1rem;">
+							<w2:header>
+								<w2:row>
+									<w2:column id="hYm" inputType="text" width="110" value="년월" rowSpan="2"></w2:column>
+									<w2:column id="hRec" class="border-right" inputType="text" width="465" value="REC 정산총액(원)" colSpan="3"></w2:column>
+									<w2:column id="hCer" inputType="text" width="310" value="CER 정산총액(원)" colSpan="2"></w2:column>
+									<w2:column id="hSum" class="grd-header-back-color" inputType="text" width="115" value="합계(원)" rowSpan="2"></w2:column>
+								</w2:row>
+								<w2:row>
+									<w2:column id="hSmlhp" inputType="text" width="155" value="소수력"></w2:column>
+									<w2:column id="hSnpw" inputType="text" width="155" value="태양광"></w2:column>
+									<w2:column id="hWdpw" class="border-right" inputType="text" width="155" value="풍력"></w2:column>
+									<w2:column id="hTdpw" inputType="text" width="155" value="시화조력"></w2:column>
+									<w2:column id="hOvsea" inputType="text" width="155" value="해외(파트린드)"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="ym" inputType="text" maxByteLength="16" displayFormat="####-##"></w2:column>
+									<w2:column id="smlhp" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="snpw" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="wdpw" class="grd-right border-right" inputType="text" maxByteLength="16" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplFrmt" textAlign="right"></w2:column>
+									<w2:column id="tdpw" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="ovsea" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+									<w2:column id="sum" class="grd-right" inputType="text" maxByteLength="16" displayFormat="#,###" displayFormatter="ecsLib.dsplFrmt"
+										textAlign="right"></w2:column>
+								</w2:row>
+							</w2:gBody>
+							<w2:footer>
+								<w2:row>
+									<w2:column id="fYm" inputType="text" value="합계" width="120"></w2:column>
+									<w2:column id="fSmlhp" class="grd-right" inputType="expression" expression="sum('smlhp')" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplFrmt" textAlign="right"></w2:column>
+									<w2:column id="fSnpw" class="grd-right" inputType="expression" expression="sum('snpw')" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplFrmt" textAlign="right"></w2:column>
+									<w2:column id="fWdpw" class="grd-right" inputType="expression" expression="sum('wdpw')" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplFrmt" textAlign="right"></w2:column>
+									<w2:column id="fTdpw" class="grd-right" inputType="expression" expression="sum('tdpw')" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplFrmt" textAlign="right"></w2:column>
+									<w2:column id="fOvsea" class="grd-right" inputType="expression" expression="sum('ovsea')" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplFrmt" textAlign="right"></w2:column>
+									<w2:column id="fSum" class="grd-right" inputType="expression" expression="sum('sum')" displayFormat="#,###"
+										displayFormatter="ecsLib.dsplFrmt" textAlign="right"></w2:column>
+								</w2:row>
+							</w2:footer>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,661 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/content.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content-layout.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/animate.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/font-awesome.min.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : ECSZZ0000005.xml
+			* 설 명 : RFC 공통 팝업
+			* 작성일 : 2023.11.30
+			* 담당자 : Soltech 위해서
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2023.11.30 Soltech 위해서 최초 작성
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltList" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="chk" name="name1" dataType="text" maxlength="5"></w2:column>
+						<w2:column id="col1" name="name2" dataType="text" maxlength="5"></w2:column>
+						<w2:column id="col2" name="name3" dataType="text" maxlength="5"></w2:column>
+						<w2:column id="col3" name="name4" dataType="text" maxlength="5"></w2:column>
+					</w2:columnInfo>
+					<w2:data use="false">
+						<w2:row>
+							<chk><![CDATA[]]>
+							</chk>
+							<col1><![CDATA[test1]]></col1>
+							<col2><![CDATA[2]]></col2>
+							<col3><![CDATA[3]]></col3>
+						</w2:row>
+						<w2:row>
+							<chk><![CDATA[]]>
+							</chk>
+							<col1><![CDATA[test2]]></col1>
+							<col2><![CDATA[5]]></col2>
+							<col3><![CDATA[6]]></col3>
+						</w2:row>
+						<w2:row>
+							<chk><![CDATA[]]>
+							</chk>
+							<col1><![CDATA[test3]]></col1>
+							<col2><![CDATA[8]]></col2>
+							<col3><![CDATA[9]]></col3>
+						</w2:row>
+						<w2:row>
+							<chk><![CDATA[]]>
+							</chk>
+							<col1><![CDATA[test4]]></col1>
+							<col2><![CDATA[11]]></col2>
+							<col3><![CDATA[12]]></col3>
+						</w2:row>
+					</w2:data>
+				</w2:dataList>
+				<w2:dataMap id="dataMap1" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="amt" name="금액" dataType="number"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="javascript"><![CDATA[
+	// imports("uiplugin._popup");
+	scwin.EV_TABLENAME;
+	scwin.EV_RESULTRFC;
+	scwin.data9;
+	scwin.data8;
+	scwin.data7;
+	scwin.popupParam;
+
+	scwin.initScreen = function() {
+		scwin.popupParam=comLib.getPopupParam($p,["useChkBox", "rfcNm", "ivF4Case"
+		,"isFieldNm1", "isFieldNm2" ,"isFieldNm3" ,"isFieldNm4","isFieldNm5", "isFieldNm6"
+		,"isFieldVal1","isFieldVal2","isFieldVal3","isFieldVal4","isFieldVal5","isFieldVal6"]);
+		// 화면초기화 공통 함수 호출
+		comLib.initForm($p, scwin.popupParam.popupID);
+		// 화면구성 조회
+		scwin.initSearch();
+	};
+
+	/**
+	* 화면구성 조회
+	*/
+	scwin.initSearch = function() {
+		// Search Help 팝업 화면구성
+		// 샘플
+		var requestData = {"RFC_NAME" : scwin.popupParam.rfcNm //"ZKCT_F4_INIT_SAMPLE" //ZKCT_F4_INIT_SAMPLE
+							, "IS_FIELD1" : { "FIELDNAME" : scwin.popupParam.isFieldNm1, "FIELDVAL" : scwin.popupParam.isFieldVal1 }	//CARRID,AF
+							, "IS_FIELD2" : { "FIELDNAME" : scwin.popupParam.isFieldNm2, "FIELDVAL" : scwin.popupParam.isFieldVal2 }	//CARRNAME, Air*
+							, "IS_FIELD3" : { "FIELDNAME" : scwin.popupParam.isFieldNm3, "FIELDVAL" : scwin.popupParam.isFieldVal3 }
+							, "IS_FIELD4" : { "FIELDNAME" : scwin.popupParam.isFieldNm4, "FIELDVAL" : scwin.popupParam.isFieldVal4 }
+							, "IS_FIELD5" : { "FIELDNAME" : scwin.popupParam.isFieldNm5, "FIELDVAL" : scwin.popupParam.isFieldVal5 }
+							, "IS_FIELD6" : { "FIELDNAME" : scwin.popupParam.isFieldNm6, "FIELDVAL" : scwin.popupParam.isFieldVal6 }
+							, "IV_F4_CASE" : scwin.popupParam.ivF4Case //"SRCH1"	//SRCH1
+							, "EXPORT_TABLE" : ["TT_COMBO1", "TT_COMBO2", "TT_COMBO3", "TT_COMBO4", "TT_COMBO5", "TT_COMBO6", "TT_MAPPING", "TT_OPTION", "TT_RESULT"]
+							, "EXPORT_RESULT" : ["EV_TABLENAME", "EV_RESULTRFC", "EV_VALCOUNT"]
+						};
+
+			// 샘플
+//			var requestData = {  "RFC_NAME" : "ZKCT_F4_INIT_SAMPLE" //ZKCT_F4_INIT_SAMPLE
+//								, "IS_FIELD1" : { "FIELDNAME" : "", "FIELDVAL" : "" }	//CARRID,AA
+//								, "IV_F4_CASE" : "SRCH1"	//SRCH1
+//								, "EXPORT_TABLE" : [ "TT_COMBO1", "TT_COMBO2", "TT_COMBO3", "TT_COMBO4", "TT_COMBO5", "TT_COMBO6", "TT_MAPPING", "TT_OPTION", "TT_RESULT" ]
+//								, "EXPORT_RESULT" : [ "EV_TABLENAME", "EV_RESULTRFC", "EV_VALCOUNT" ]
+//							};
+
+			// 건설
+//			var requestData = {  "RFC_NAME" : "ZPSZ_F4_SCODE_LIST_INIT" //ZPSZ_F4_SCODE_LIST_INIT
+//								, "IS_FIELD1" : { "FIELDNAME" : "", "FIELDVAL" : "" }	//
+//								, "IV_F4_CASE" : "SRCH1"
+//								, "EXPORT_TABLE" : [ "TT_COMBO1", "TT_COMBO2", "TT_COMBO3", "TT_COMBO4", "TT_COMBO5", "TT_COMBO6", "TT_MAPPING", "TT_OPTION", "TT_RESULT" ]
+//								, "EXPORT_RESULT" : [ "EV_TABLENAME", "EV_RESULTRFC", "EV_VALCOUNT" ]
+//							};
+
+			// 예산
+//			var requestData = {  "RFC_NAME" : "ZFMZ_F4_INIT_POSID" //ZKCT_F4_INIT_SAMPLE
+//								, "IS_FIELD1" : { "FIELDNAME" : "", "FIELDVAL" : "" }	//
+//								, "IV_F4_CASE" : "SRCH1"	//SRCH1
+//								, "EXPORT_TABLE" : [ "TT_COMBO1", "TT_COMBO2", "TT_COMBO3", "TT_COMBO4", "TT_COMBO5", "TT_COMBO6", "TT_MAPPING", "TT_OPTION", "TT_RESULT" ]
+//								, "EXPORT_RESULT" : [ "EV_TABLENAME", "EV_RESULTRFC", "EV_VALCOUNT" ]
+//							};
+
+			// 예산
+//			var requestData = {  "RFC_NAME" : "ZCOZ_F4_INIT_PRCTR"
+//								, "IS_FIELD1" : { "FIELDNAME" : "", "FIELDVAL" : "" }	//
+//								, "IV_F4_CASE" : "SRCH1"
+//								, "EXPORT_TABLE" : [ "TT_COMBO1", "TT_COMBO2", "TT_COMBO3", "TT_COMBO4", "TT_COMBO5", "TT_COMBO6", "TT_MAPPING", "TT_OPTION", "TT_RESULT" ]
+//								, "EXPORT_RESULT" : [ "EV_TABLENAME", "EV_RESULTRFC", "EV_VALCOUNT" ]
+//							};
+
+				var option = {action : "sc/sap/getCmmnPopup.do", reqData : requestData, resData : "", success : "scwin.initSearchCallback", isShowMeg : false};
+				ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	* 화면구성 콜백
+	*/
+	scwin.initSearchCallback = function(resBody, e) {
+		// console.log("initSearchCallback resBody="+JSON.stringify(resBody));
+		scwin.data9 = resBody.data.data9;
+		scwin.data8 = resBody.data.data8;
+		scwin.data7 = resBody.data.data7;
+		/*
+		data9 = resBody.data.data9;
+		data8 = resBody.data.data8;
+		data7 = resBody.data.data7;
+		data6 = resBody.data.data6;
+		data5 = resBody.data.data5;
+		data4 = resBody.data.data4;
+		data3 = resBody.data.data3;
+		data2 = resBody.data.data2;
+		data1 = resBody.data.data1;
+		*/
+		scwin.EV_TABLENAME = resBody.data.EV_TABLENAME;
+		scwin.EV_RESULTRFC = resBody.data.EV_RESULTRFC;
+
+		// 조회조건 구성
+		scwin.makeCondition(resBody.data.data8);
+		// scwin.makeCondition();
+
+		// SelectBox 구성
+		scwin.makeSelectBox(resBody);
+
+		// GridView 동적 생성
+		scwin.setColumnID();
+	};
+
+		/**
+		* 조회
+		*/
+		scwin.btnQuery_onclick = function() {
+			// TT_OPTION : 조회조건 설정
+			for (var i=0; i<data8.length; i++) {
+				if (data8[i].CB_FLG == "X") {
+					data8[i].LOW = $p.getComponentById(("acbData"+i).getValue());
+				} else {
+					data8[i].LOW = $p.getComponentById(("iptData"+i).getValue());
+				}
+			}
+
+			// Search Help 팝업 조회
+			var requestData = {"RFC_NAME" : scwin.EV_RESULTRFC
+								, "IV_TABLENAME" : scwin.EV_TABLENAME
+								, "IV_MAXREC" : iptData6.getValue()
+								, "IMPORT_TABLE" : [ { "TT_OPTION" : scwin.data8 } //[{"CB_NM":"TT_COMBO1","CB_FLG":"X","FIELDDESC":"항공사","LOW":"","FIELDNAME":"CARRID","OPTION":"EQ"},{"CB_NM":"","CB_FLG":"","FIELDDESC":"항공사명","LOW":"","FIELDNAME":"CARRNAME","OPTION":"EQ"}] }
+								, {"TT_MAPPING" : scwin.data7 } //[{"MAPNAME":"VAL1","FIELDDESC":"항공사","FIELDNAME":"CARRID","DISP_FLG":"X","RET_FLG":"X","FWIDTH":"3"},{"MAPNAME":"VAL2","FIELDDESC":"항공사명","FIELDNAME":"CARRNAME","DISP_FLG":"X","RET_FLG":"","FWIDTH":"15"}] }
+							]
+								, "EXPORT_TABLE" : ["TT_RESULT"]
+							};
+
+			var option = {action : "sc/sap/getCmmnPopup.do", reqData : requestData, resData : "", success : "scwin.btnQueryCallback", isShowMeg : false};
+			ajaxLib.executeAjax($p, option);
+		};
+
+		/**
+		 * 조회 콜백
+		 */
+		scwin.btnQueryCallback = function(resBody, e) {
+//			console.log("btnQueryCallback resBody="+JSON.stringify(resBody));
+			dltList.setJSON(resBody.data.data1);
+			txtQryRsltCnt.setValue(dltList.getRowCount());
+		};
+
+		/**
+		 * 확인
+		 */
+		scwin.btnConfirm_onclick = function(e) {
+			var rowIdx = grdView.getFocusedRowIndex();
+			var colIdx = grdView.getFocusedColumnIndex();
+
+			if (rowIdx < 0) return;
+			if (utilLib.isNull(pparam)) {
+				window.close();
+			}
+
+			var arrData = utilLib.getCheckedData(dltList);
+			comLib.closePopupCall($p,scwin.popupParam,true, arrData != [] ? arrData : dltList.getRowJSON(rowIdx));
+		};
+
+		/**
+		 * GridView Cell 더블 클릭
+		 */
+		scwin.grdView_oncelldblclick = function(row, col) {
+			var rowIdx = grdView.getFocusedRowIndex();
+			var colIdx = grdView.getFocusedColumnIndex();
+			var rtnData = dltList.getCellData(rowIdx, colIdx);
+			comLib.closePopupCall($p, scwin.popupParam, true, dltList.getRowJSON(rowIdx));
+		};
+
+		/**
+		 * 조회조건 구성
+		 */
+		scwin.makeCondition = function(data8) {
+			// TT_OPTION 개수에 따른 조회조건 구성(show/hide)
+			grpCond2.hide();
+			grpCond3.hide();
+
+			if (data8.length > 2 && data8.length <=4) {
+				grpCond2.show();
+			}
+			if (data8.length > 4) {
+				grpCond2.show();
+				grpCond3.show();
+			}
+
+			for(var i=0; i<6; i++) {
+				$p.getComponentById("txtTitle" + i).hide();
+				$p.getComponentById("acbData" + i).hide();
+				$p.getComponentById("iptData" + i).hide();
+			}
+
+			// TT_OPTION	
+//			var data8 = [{"CB_FLG":"X","FIELDDESC":"항공사","LOW":"","FIELDNAME":"CARRID","OPTION":"EQ"}
+//							,{"CB_FLG":"","FIELDDESC":"항공사명","LOW":"","FIELDNAME":"CARRNAME","OPTION":"CP"}];
+
+			for (var i = 0; i < data8.length; i++) {
+				// title 구성
+				$p.getComponentById("txtTitle"+i).setValue(data8[i].FIELDDESC);
+
+				// selectBox, inputBox 사용여부
+				if (data8[i].CB_FLG == "X") { // selectBox
+					$p.getComponentById("txtTitle"+i).show();
+					$p.getComponentById("acbData"+i).show();
+				} else { //inputBox
+					$p.getComponentById("txtTitle"+i).show();
+					$p.getComponentById("iptData"+i).show();
+					$p.getComponentById("iptData"+i).setValue(data8[i].LOW);
+				}
+
+				// 최대적중수
+				iptData6.setValue(500);
+			}
+		};
+
+		/**
+		 * SelectBox 개수 리턴
+		 * @return cnt selectBox 개수 리턴
+		 */
+		scwin.getCboCnt = function() {
+			var cnt = 0;
+
+			if (data1.length > 0) cnt++;
+			if (data2.length > 0) cnt++;
+			if (data3.length > 0) cnt++;
+			if (data4.length > 0) cnt++;
+			if (data5.length > 0) cnt++;
+			if (data6.length > 0) cnt++;
+
+			return cnt;
+		};
+
+		/**
+		 * OPTION display
+		 * @param value
+		 */
+		scwin.displayOption = function(value) {
+			var sign = false;
+			/*
+			EQ : 같다 '='
+			NE : 같지 않다 '<>'
+			GE : 이상 '>='
+			GT : 초과 '>'
+			LE : 이하 '<='
+			LT : 미만 '<'
+			CP : 문자열 포함 찾기 '[*]'
+			*/
+			if (sign) { //기호
+				switch (value) {
+					case "EQ" : return "="; break;
+					case "NE" : return "<>"; break;
+					case "GE" : return ">="; break;
+					case "GT" : return ">"; break;
+					case "LE" : return "<="; break;
+					case "LT" : return "<"; break;
+					case "CP" : return "[*]"; break;
+				}
+			} else { //한글
+				switch (value) {
+					case "EQ" : return "같다"; break;
+					case "NE" : return "같지 않다"; break;
+					case "GE" : return "이상"; break;
+					case "GT" : return "초과"; break;
+					case "LE" : return "이하"; break;
+					case "LT" : return "미만"; break;
+					case "CP" : return "문자열 포함"; break;
+				}
+			}
+		};
+
+		/**
+		 * selectBox 구성
+		 */
+		scwin.makeSelectBox = function(resBody) {
+			for (var k = 0; k < resBody.data.data8.length; k++) {
+				if (data8[k].CB_FLG == "X") {
+					for(var i = 0; i < resBody.data["data"+(k+1)].length; i++) {
+						resBody.data["data"+(k+1)][i].CB_DES = resBody.data["data"+(k+1)][i].CB_VAL + " - " + resBody.data["data"+(k+1)][i].CB_DES;
+					}
+					var option = {"id" :"dltData" + k,
+					"type" : "dataList",
+					"option":{"baseNode": "list", "repeatNode": "map"},
+					"columnInfo":[{"id":"CB_DES", "name":"CB_DES", "dataType":"text"},
+						{"id":"CB_VAL", "name":"CB_VAL", "dataType":"text"}]
+					};
+					comLib.createData($p, option);
+
+					$p.getComponentById("dltData" + k).setJSON(resBody.data["data"+(k+1)]);
+					$p.getComponentById("acbData" + k).setNodeSet("data:dltData" + k, "CB_DES", "CB_VAL");
+					$p.getComponentById("acbData" + k).setValue(resBody.data.data8[k].LOW);
+				}
+			}
+		};
+
+		/**
+		 * 동적으로 dataList 생성
+		 * @param <String> dataList ID
+		 * @param <Array>  columnInfo
+		 */
+		scwin.makeDataList = function(dltID, columnInfo) {
+			comLib.createData($p,{
+				"id": dltID,
+				"type": "dataList",
+				"option": {
+					"useData": false
+				},
+				"columnInfo": columnInfo
+			});
+		};
+
+	/**
+	 * dataList에 넣을 json
+	 */
+	scwin.setColumnID = function() {
+		var column = {};
+		var columnArr = [];
+		var gridHeader = "", gridBody = "";
+
+		// json의 첫번째 데이터에서 컬럼의 id와 개수 정보 확
+		// TT_MAPPING
+		// var data7 = [{"MAPNAME":"VAL1","FIELDDESC":"항공사","FIELDNAME":"CARRID","DISP_FLG":"X","RET_FLG":"X","FWIDTH":"3"},{"MAPNAME":"VAL2","FIELDDESC":"항공사명","FIELDNAME":"CARRNAME","DISP_FLG":"X","RET_FLG":"","FWIDTH":"15"}];
+		// TT_RESULT
+		// var data9 = [{"VAL9":"","VAL1":"AA","VAL2":"American Airlines","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"AC","VAL2":"Air Canada","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"AF","VAL2":"Air France","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"AZ","VAL2":"Alitalia","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"BA","VAL2":"British Airways","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"FJ","VAL2":"Air Pacific","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"CO","VAL2":"Continental Airlines","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"DL","VAL2":"Delta Airlines","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"AB","VAL2":"Air Berlin","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"LH","VAL2":"Lufthansa","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"NG","VAL2":"Lauda Air","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"JL","VAL2":"Japan Airlines","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"NW","VAL2":"Northwest Airlines","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"QF","VAL2":"Qantas Airways","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"SA","VAL2":"South African Air.","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"SQ","VAL2":"Singapore Airlines","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"SR","VAL2":"Swiss","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""},{"VAL9":"","VAL1":"UA","VAL2":"United Airlines","VAL3":"","VAL10":"","VAL4":"","VAL5":"","VAL6":"","VAL7":"","VAL8":""}];
+
+		if (useChkBox) {
+			gridHeader = '<w2:column width="15" inputType="checkbox" style="height:40px;" id="chk" value="" displayMode="" checkboxLabel="&amp;nbsp" readOnly="false"></w2:column>';
+			gridBody = '<w2:column inputType="checkbox" style="height:34px;" id="chk" displayMode="label" checkboxLabel="&amp;nbsp" readOnly="false"></w2:column>';
+			column["id"] = "chk";
+			column["dataType"] = "text";
+			columnArr.push(column);
+		}
+
+		for(var k = 0;k < scwin.data7.length; k++){
+		// dataList를 동적으로 만들기 위한 컬럼 정보
+		column = {};
+		column["id"] = scwin.data7[k].MAPNAME;
+		column["dataType"] = "text";
+		columnArr.push(column);
+
+		// gridView의 컬럼 정보 정의
+		var width = "70";
+		// if (data7[k].DISP_FLG == "") width = "0";
+		gridHeader +='<w2:column id="'+'h'+k+'" style="height:20px" inputType="text" width="' + width + '" value="'+scwin.data7[k].FIELDDESC+'"></w2:column>';
+			if (k==0) {	//code center
+				gridBody += '<w2:column id="'+scwin.data7[k].MAPNAME+'" style="height:20px" inputType="text" width="70" textAlign="center"></w2:column>'
+			} else { //desc left
+				gridBody += '<w2:column id="'+scwin.data7[k].MAPNAME+'" style="height:20px" inputType="text" width="70" textAlign="left"></w2:column>'
+			}
+		}
+		scwin.makeDataList("dltList", columnArr);
+
+		// gridView 정보 정의 
+		// xml 형식을 정의 하면 <w2:gridView 에 xmlns:w2="http://www.inswave.com/websquare" xmlns:ev="http://www.w3.org/2001/xml-events" 포함 합니다.
+		// 조회조건 1줄이면 gridView height : 375px, 2줄이면 ?px, 3줄이면 300px, 4줄이면 259px
+		var gridheight=grdView.getSize( "height" );
+		var gridStr = '<w2:gridView xmlns:w2="http://www.inswave.com/websquare" xmlns:ev="http://www.w3.org/2001/xml-events" dataList="dltList" scrollByColumn="false" id="grdView" style="height: '+gridheight+'px;" fixedColumnWithHidden="true" useShiftKey="false" autoFit="" ev:oncelldblclick="scwin.grdView_oncelldblclick" readOnly="true" focusMode="row">'
+		+ '<w2:header id="header1">'
+		+ '<w2:row id="row1">'
+		+ gridHeader
+		+ '</w2:row>'
+		+'</w2:header>'
+		+'<w2:gBody id="gBody1">'
+		+'<w2:row id="row2">'
+		+ gridBody
+		+'</w2:row>'
+		+'</w2:gBody>'
+		+'</w2:gridView>' ;
+
+		grdView.setGridStyle(WebSquare.xml.parse(gridStr, true));
+		dltList.setJSON(scwin.data9);
+
+		txtQryRsltCnt.setValue(dltList.getRowCount());
+	};
+]]></script>
+	</head>
+	<body>
+		<w2:wframe id="wframe1" src="/ui/common/popup_header.xml"></w2:wframe>
+		<xf:group class="popup-wrap footer-none">
+			<xf:group class="search-box">
+				<xf:group id="grpCond1" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="txtTitle0" label="타이틀"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<xf:input id="iptData0"></xf:input>
+								<w2:autoComplete id="acbData0" submenuSize="auto" search="start" editType="select" chooseOption="true"
+									useKeywordHighlight="false" displayMode="label" style="height: 32px; display: none;" visibleRowNum="5" class="section mgt6 mgr6 fl"
+									textAlign="left">
+									<w2:choices></w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="txtTitle1" label="타이틀"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<xf:input id="iptData1"></xf:input>
+								<w2:autoComplete id="acbData1" chooseOption="true" class="section mgt6 mgr6 fl" displayMode="label" editType="select"
+									search="start" style="height: 32px; display: none;" submenuSize="auto" textAlign="left" useKeywordHighlight="false" visibleRowNum="5">
+									<w2:choices></w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpCond2" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="txtTitle2" label="타이틀"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<xf:input id="iptData2" style="display: none;"></xf:input>
+								<w2:autoComplete id="acbData2" chooseOption="true" class="section mgt6 mgr6 fl" displayMode="label" editType="select"
+									search="start" style="height: 32px;" submenuSize="auto" textAlign="left" useKeywordHighlight="false" visibleRowNum="5">
+									<w2:choices></w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="txtTitle3" label="타이틀"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<xf:input id="iptData3"></xf:input>
+								<w2:autoComplete id="acbData3" chooseOption="true" class="section mgt6 mgr6 fl" displayMode="label" editType="select"
+									search="start" style="height: 32px; display: none;" submenuSize="auto" textAlign="left" useKeywordHighlight="false" visibleRowNum="5">
+									<w2:choices></w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpCond3" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary />
+						</w2:attributes>
+						<xf:group tagname="caption" />
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col" />
+							<xf:group tagname="col" />
+							<xf:group tagname="col" />
+							<xf:group tagname="col" />
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="txtTitle4" label="타이틀" />
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<xf:input id="iptData4" style="display: none;" />
+								<w2:autoComplete id="acbData4" chooseOption="true" class="section mgt6 mgr6 fl" displayMode="label" editType="select"
+									search="start" style="height: 32px;" submenuSize="auto" textAlign="left" useKeywordHighlight="false" visibleRowNum="5">
+									<w2:choices></w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="txtTitle5" label="타이틀" />
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<xf:input id="iptData5" />
+								<w2:autoComplete id="acbData5" chooseOption="true" class="section mgt6 mgr6 fl" displayMode="label" editType="select"
+									search="start" style="height: 32px; display: none;" submenuSize="auto" textAlign="left" useKeywordHighlight="false" visibleRowNum="5">
+									<w2:choices></w2:choices>
+								</w2:autoComplete>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group id="grpCond4" class="list">
+					<xf:group class="w2tb" tagname="table">
+						<w2:attributes>
+							<w2:summary></w2:summary>
+						</w2:attributes>
+						<xf:group tagname="caption"></xf:group>
+						<xf:group tagname="colgroup">
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+							<xf:group tagname="col"></xf:group>
+						</xf:group>
+						<xf:group tagname="tr">
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:span id="15" label="최대적중수"></w2:span>
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<xf:input id="iptData6" allowChar="0-9" dataType="number" displayFormat="#,###" maxlength="5" style="text-align: right;">
+								</xf:input>
+							</xf:group>
+							<xf:group class="w2tb_th cw2" tagname="th">
+								<w2:attributes>
+									<w2:scope>row</w2:scope>
+								</w2:attributes>
+								<w2:anchor class="tooltip_orange" outerDiv="false">
+									<xf:label></xf:label>
+								</w2:anchor>
+							</xf:group>
+							<xf:group class="w2tb_td cw4" tagname="td">
+								<w2:anchor class="tooltip_orange" outerDiv="false" style="width: 40px;">
+									<xf:label></xf:label>
+								</w2:anchor>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="btn-group">
+					<w2:anchor id="btnQuery" class="fa fa-search btn_sh" outerDiv="false" ev:onclick="scwin.btnQuery_onclick">
+						<xf:label><![CDATA[조회]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="content-area">
+				<xf:group class="con-box">
+					<xf:group class="list-box box">
+						<xf:group class="title-group">
+							<xf:group tagname="h4">
+								<w2:span id="txtGridTitle" label="조회 결과"></w2:span>
+								<w2:span id="txtQryRsltCnt" class="title-num" displayFormat="###,###, ###" label="0"></w2:span>
+							</xf:group>
+							<xf:group class="com-area">
+								<xf:group class="btn-group">
+								</xf:group>
+							</xf:group>
+						</xf:group>
+						<w2:gridView id="grdView" dataList="dltList" fixedColumnWithHidden="true" scrollByColumn="false" style="width:489px;height:100px;"
+							useShiftKey="false" ev:oncelldblclick="scwin.grdView_oncelldblclick" readOnly="true">
+							<w2:header>
+								<w2:row>
+									<w2:column id="column5" inputType="text" style="height:20px" value="name1" width="70"></w2:column>
+								</w2:row>
+							</w2:header>
+							<w2:gBody>
+								<w2:row>
+									<w2:column id="col1" inputType="text" style="height:20px" width="70"></w2:column>
+								</w2:row>
+							</w2:gBody>
+						</w2:gridView>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer">
+				<xf:group class="btn-group">
+					<w2:anchor id="btnConfirm" ev:onclick="scwin.btnConfirm_onclick" outerDiv="false">
+						<xf:label><![CDATA[확인]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

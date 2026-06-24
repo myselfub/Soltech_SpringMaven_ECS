@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+    <!--
+    ============================================================
+    * 소스명 : singlAtchfl.xml
+    * 설  명 : 단일첨부파일등록화면
+    * 작성일 : 2017.07.17.
+    * 사  번 : 60002840
+    * << 개정이력 >>
+    *    수정일        수정자        수정내용
+    * 2017.07.17     60002840(김화영)      최초 작성
+    *  Copyright (C) 2017 by Unlimited K-water, All right reserved.
+     ================================================================
+    -->    	    	
+    	<w2:type>DEFAULT</w2:type>
+        <w2:buildDate/>
+        <xf:model>
+            <xf:instance>
+                <data xmlns=""/>
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+	            <w2:dataList baseNode="list" repeatNode="map" id="_dltFile">
+	            	<w2:columnInfo>
+	            		<w2:column id="atchflId" name="파일ID" dataType="text"></w2:column>
+	            		<w2:column id="fileSeq" name="파일순번" dataType="number"></w2:column>
+	            		<w2:column id="orginlFileNm" name="파일명" dataType="text"></w2:column>
+	            		<w2:column id="fileTmprPath" name="임시저장소 저장된 파일명" dataType="text"></w2:column>
+
+
+
+	            		<w2:column id="biznDivCd" name="업무구분코드" dataType="text"></w2:column>
+	            		<w2:column id="docClsCd" name="문서구분코드" dataType="text"></w2:column>
+	            		<w2:column id="docTit" name="문서제목" dataType="text"></w2:column>
+	            		<w2:column id="docCtnt" name="문서내용" dataType="text"></w2:column>
+	            		<w2:column id="sapYn" name="SAP여부" dataType="text"></w2:column>
+	            		<w2:column id="scrinLinkInfo" name="화면링크정보" dataType="text"></w2:column>
+	            		<w2:column id="pkInfo" name="PK정보" dataType="text"></w2:column>
+	            		<w2:column id="menuId" name="메뉴ID" dataType="text"></w2:column>
+	            		<w2:column id="imgData" name="이미지데이터" dataType="text"></w2:column>
+	            	</w2:columnInfo>
+	            	<w2:data use="false"></w2:data>
+	            </w2:dataList>
+            </w2:dataCollection>
+            <w2:workflowCollection>
+            </w2:workflowCollection>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[
+                 /**
+		 * 화면 초기화에 필요한 로직을 수행한다.
+		 * @param
+		 * @return
+		 */
+		scwin.initScreen = function() {
+				/**
+			 *  Drag & Drop 이벤트 처리용 함수호출
+			 * @param
+			 * @return
+			 */
+			var filedragdom = _ibxAtchFile_4.render;                                          // 첨부파일 정보가 보여질 그리드ID 
+			filedragdom.addEventListener("dragover", scwin.fileDragHandler, false);
+	    	filedragdom.addEventListener("dragenter", scwin.fileDragHandler, false);  // for ie
+			filedragdom.addEventListener("dragleave", scwin.fileDragHandler, false);
+			filedragdom.addEventListener("drop", scwin.fileDropHandler, false);
+			
+			/*********************** Drag & Drop 끝 ***********************/
+		}
+        /**
+         * 첨부파일 선택이후 콜백
+         * @param
+         * @return
+         */
+        scwin._singlSelectCallback = function() {
+        	var fileInfos = _mpdSinglFile_4.getFileInfos();
+        	_ibxAtchFile_4.setValue(fileInfos[0].name);
+        };
+        
+        /**
+         * 등록하고자 선택된 첨부파일 삭제처리(단, 저장전에만 가능함)
+         * @param
+         * @return
+         */
+        scwin._btnDelSinglFile_4_onclick = function() {
+			_ibxAtchFile_4.setValue("");
+			_mpdSinglFile_4.removeAllFiles();
+		};
+		
+		
+		
+        /**
+         * 첨부 파일 임시저장후 콜백(전송)
+         * @param
+         * @return
+         */
+		scwin._mpdSinglFile_4_ondone = function(data) {
+			//첨부파일정보 셋팅
+			fileLib.dataListSetting(_dltFile, data);
+			comLib.confirm($p.parent().$p,  utilLib.getMessage("SCM.INFO.00321"), "scwin.saveConfirmCallback");
+		};
+		
+		/**
+		 * 화면단 프로그래스바를 사용할 경우 사용
+		 * @param info 서버로 업로드시 파일전송 상태값
+		 * @return
+		 */
+		scwin._mpdSinglFile_4_onprogress = function(info) {
+
+			_ibxBigFileStatus_4.setValue( info.percentData + "%" );
+			_ibxBigFileStatus_4.setStyle("display", "block");
+			_ibxBigFileStatus_4.setStyle("background","#ffcc00");
+			_ibxBigFileStatus_4.setStyle("background-repeat","repeat-x");
+			_ibxBigFileStatus_4.setStyle("background-position","left top");
+			_ibxBigFileStatus_4.setStyle("background-image","url('/smp/resources/images/common/pro.png')");
+			_ibxBigFileStatus_4.setStyle( "width" , info.percentData + "%" );
+		};        
+	
+		
+		scwin._mpdSinglFile_4_onerror = function(data) {
+			comLib.alert($p, data.message );
+		};
+		
+		/**
+		 * 임시저장 함수 호출
+		 * @param
+		 * @return
+		 */
+		scwin.fileStartUpload = function() {
+			_mpdSinglFile_4.startUpload();
+		};
+		
+		/**
+		 * 품 초기화
+		 * @param
+		 * @return
+		 */
+		scwin._atchflFormReset = function() {
+			_dltFile.removeAll();
+			_ibxAtchFile_4.setValue("");
+			_ibxBigFileStatus_4.setValue( "" );
+			_ibxBigFileStatus_4.setStyle("background-image","");
+			_ibxBigFileStatus_4.setStyle("background","#ffffff");
+			_ibxBigFileStatus_4.setStyle( "width" , "0%" );
+		};
+		
+		
+		/*********************** Drag & Drop 시작 ***********************/
+		/**
+		 * drop할때 발생하는 이벤트
+		 * @param
+		 * @return
+		 */
+		_ibxAtchFile_4._handleOndrop = function(e) {
+		    try {
+		        $W._c.stopEvent(e);
+		        
+		        var _6c = e.dataTransfer.files;
+		        
+		         for (var i = 0; i < _6c.length; i++) {
+		                if ($.inArray(_6c[i].name, this.getValue()) == -1) {
+		                    this.fileArray.push(_6c[i]);
+		                    //this.fileNameArr.push(_6c[i].name);
+		                    this.setValue(_6c[i].name);
+		                    this._inx++;
+		                } else {
+		                    comLib.alert($p, "파일이 이미 있습니다.  (" + _6c[i].name + ")");
+		                }
+		            }
+		      } catch (e) {
+		      	$W.exception.printStackTrace(e, null, this);
+		      }
+		};
+		/**
+		 *  file drag
+		 * @param  event
+		 * @return 
+		 */
+		scwin.fileDragHandler = function(e){
+			WebSquare.event.stopEvent(e);
+			//e.target.className = (e.type == "dragover" ? "hover" : "");
+		}
+		
+		/**
+		 * file drop
+		 * @param
+		 * @return
+		 */
+		scwin.fileDropHandler = function(e){
+			scwin.fileDragHandler(e);
+			_mpdSinglFile_4._handleOndrop(e);				//멀티컨포넌트 ID로 셋팅
+			scwin._singlSelectCallback();
+		}
+
+		
+		
+]]></script>
+	<style type="text/css">
+	<![CDATA[ 
+		<!-- 	.hidden{visibility: hidden;} -->
+						
+
+		]]>
+		</style>
+    </head>
+    <body>
+		<xf:group class="file-upload big-file">
+			<xf:group class="file-group">
+				<xf:input id="_ibxAtchFile_4" readOnly="true" ev:onclick="scwin._ibxAtchFile_4_onclick"></xf:input>
+				<w2:multiupload maxcount="1" filter="*:*.*" mode="html5_transparent" action="" wmode="false" style="" id="_mpdSinglFile_4" maxsize="2048000" 
+								 uploadButton="" selectCallback="scwin._singlSelectCallback" ev:ondone="scwin._mpdSinglFile_4_ondone" 
+								 ev:onprogress="scwin._mpdSinglFile_4_onprogress" fireEventOnError="true" ev:onerror="scwin._mpdSinglFile_4_onerror">
+				</w2:multiupload>
+				<w2:anchor outerDiv="false" class="fa fa-file-o file-btn file-search-btn" style="" id="">
+					<xf:label><![CDATA[파일찾기]]></xf:label>
+				</w2:anchor>
+			</xf:group>
+			<xf:group class="file-g-group">
+				<w2:anchor outerDiv="false" style="" id="_btnDelSinglFile_4" class="fa fa-trash file-btn file-del-btn" 
+								ev:onclick="scwin._btnDelSinglFile_4_onclick">
+					<xf:label><![CDATA[삭제]]></xf:label>
+				</w2:anchor>
+				<!-- 프로그래스바를 사용시 주석제거 할 것 -->
+				<xf:group class="file-bar" id="file_status_4">
+					<xf:input id="_ibxBigFileStatus_4"
+						style="" initValue="0%" title="0%">
+					</xf:input>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+    </body>
+</html>

@@ -1,0 +1,58 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>WebSquare 1.0</title>
+<script type="text/javascript" src="bootloader.js"></script>
+<script type="text/javascript" src="engine\form.js"></script>
+<script type="text/javascript" src="engine\Parser.js"></script>
+<script type="text/javascript" src="engine\CommonRuntime.js"></script>
+<script type="text/javascript" src="engine\net.js"></script>
+<script type="text/javascript" src="engine\session.js"></script>
+<script type="text/javascript" src="engine\util.js"></script>
+<script type="text/javascript" src="engine\skin.js"></script>
+<script type="text/javascript" src="engine\core.js"></script>
+<script type="text/javascript" src="engine\date.js"></script>
+<script type="text/javascript" src="engine\xml.js"></script>
+<script type="text/javascript" src="engine\collection.js"></script>
+<script type="text/javascript" src="engine\exception.js"></script>
+<script type="text/javascript" src="engine\text.js"></script>
+<script type="text/javascript" src="engine\proworks.js"></script>
+<script type="text/javascript" src="engine\layer.js"></script>
+<script type="text/javascript" src="engine\cookie.js"></script>
+<script type="text/javascript" src="engine\event.js"></script>
+<script type="text/javascript" src="engine\logger.js"></script>
+<script type="text/javascript" src="engine\Model.js"></script>
+<script type="text/javascript" src="engine\Actions.js"></script>
+<script type="text/javascript" src="engine\ModelUtil.js"></script>
+<script type="text/javascript" src="engine\Events.js"></script>
+<script type="text/javascript" src="engine\WebSquareDocument.js"></script>
+
+<script type="text/javascript" src="engine\initializer.js"></script>
+<script type="text/javascript" src="uiplugin/input/input.js"></script>
+<script type="text/javascript" language="javascript">
+	window.onload = init;
+	function init() {
+		try {
+			WebSquare.startApplication();
+
+		} catch (e) {
+			onWebsquareError(e.message);//조치가이드 화면 오픈
+		}
+	}
+	/**
+	 * 웹스퀘어 오류에 대한 조치 가이드 팝업창
+	 * @return 변수값
+	 * @2020.03.04 신규 생성. 
+	 */
+	function onWebsquareError(strMsg) {
+		if (confirm("사용하시는 브라우저의 사용가능 Memory가 부족합니다.\n\n전체 브라우저 종료 후 다시 이용 부탁드립니다.\n\n가이드 페이지로 이동하시려면 확인을 선택해 주세요!\n\n[ "
+				+ strMsg + "]")) {
+			window.open("http://scm.[BASE_DOMAIN]/hpcm/SCM9001.html",
+					"WebsquareErrorGuide", "width=800px,height=600px");
+		}
+	}
+</script>
+</head>
+<body>
+</body>
+</html>

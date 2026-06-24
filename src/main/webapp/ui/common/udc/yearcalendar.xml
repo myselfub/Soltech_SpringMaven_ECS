@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Context Root + resources/css/*.css 로 include -->
+<?xml-stylesheet href="/resources/css/common.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+		</xf:model>
+		<script lazy="false" type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"componentName": "year_calendar",
+			"pluginName": "year_calendar",
+			"company": "",
+			"developer": "",
+			"category": "Basic",
+			"notSupportBrowser": "",
+			"version": "",
+			"htmlRender": "",
+			"icon": "",
+			"disableIcon": "",
+			"description": "",
+			"width": "100px",
+			"height": "21px",
+			"properties": [
+			{
+			"name": "id",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "Y",
+			"hidden": "N",
+			"description": "udc 아이디"
+			},
+			{
+			"name": "date",
+			"default": "",
+			"type": "number",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 초기 값"
+			},
+			{
+			"name": "ref",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 Ref"
+			},
+			{
+			"name": "class",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "udc 클래스"
+			},
+			{
+			"name": "disabled",
+			"default": "",
+			"type": "combobox",
+			"option": "[true,false]",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "desc"
+			}
+			],
+			"events": [
+			{
+			"name":"onchangeValue(value)",
+			"type":"user",
+			"description": "udc 클래스"
+			}
+			],
+			"apis": [
+			{
+			"name": "getDate",
+			"description": "desc",
+			"params": [],
+			"return": [{
+			"type": "String",
+			"description": "desc"
+			}]
+			},
+			{
+			"name": "setDate",
+			"description": "desc",
+			"params": [{
+			"type": "Number",
+			"name": "strDate",
+			"description": "desc"
+			}],
+			"return": [{
+			"type": "String",
+			"description": "desc"
+			}]
+			}
+			]
+			}
+		-->
+		<xf:group class="gb_udc_cal year" id="" style="" pluginName="year_calendar">
+
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+			/**
+			* //property handling
+			* $w.log("id:" + options.id);
+			* $w.log("date:" + options.date);
+			* $w.log("ref:" + options.ref);
+			*
+			* //event trigger
+			* udc_obj.trigger("onBtnCalendarClick"); 
+			*/
+
+			// 초기 수행함수 
+			this.initYearCalendar = function() {
+				tbx_Year.hide();
+				this.today = "";
+				this.selectedDate = "";
+
+				var tmpDate = new Date();
+				var year = tmpDate.getFullYear();
+
+				year = year + "";
+				year = year.substr(0, 3) + "0";
+
+				var startYear = parseInt(year);
+				var endYear = parseInt(year) + 9;
+
+				tbx_Year.setValue(startYear);
+				tbx_Year_Label.setValue(startYear + "~" + endYear);
+
+				// ref 설정
+				if (options.ref != "") {
+					ibx_Date.setRef(options.ref);
+				}
+				// udc의 초기 설정값
+				if (ibx_Date.getValue() == "" && options.date != undefined) {
+					ibx_Date.setValue(options.date);
+				}
+				this.changeYear(startYear);
+			};
+
+			this.showYearCalendar = function() {
+				this.selectedDate = ibx_Date.getValue();
+
+				// if (this.selectedDate.length >= 4) {
+					// this.changeYear(this.selectedDate);
+				// }
+
+				if (div_Year.getStyle( "display") == "none") {
+					div_Year.setStyle( "display", "");
+				} else {
+					div_Year.setStyle( "display", "none");
+				}
+			};
+
+			// 시작 년도가 변경된 경우
+			this.changeYear = function(strDate) {
+				tbx_Year.setValue(strDate);
+
+				var startYear = parseInt(strDate);
+				var endYear = parseInt(strDate) + 9;
+
+				tbx_Year.setValue(startYear);
+				tbx_Year_Label.setValue(startYear + "~" + endYear);
+
+				span_Year99.setValue(startYear - 1);
+
+				for (var i = 0; i <= 10; i++) {
+					var month = "00" + i;
+					month = month.substr(month.length - 2, 2);
+					eval("span_Year" + month).setValue(startYear);
+					eval("btn_Year" + month).removeClass("selected");
+
+					if (eval("span_Year" + month).getLabel() == this.selectedDate) {
+						eval("btn_Year" + month).addClass("selected");
+					}
+					startYear++;
+				}
+			};
+
+			// 년도클릭시
+			this.clickYears = function(strYear) {
+				eval("btn_Year99").removeClass("selected");
+				for (var i = 0; i <= 10; i++) {
+					var month = "00" + i;
+					month = month.substr(month.length - 2, 2);
+					eval("btn_Year" + month).removeClass("selected");
+				}
+
+				eval("btn_Year" + strYear).addClass("selected");
+
+				this.selectedDate = eval("span_Year" + strYear).getLabel();
+
+				udc_obj.confirmYear();
+			};
+
+			// 년도클릭시
+			this.onYears = function(strYear) {
+				for(var i = 0; i <= 10; i++) {
+					var month = "00" + i;
+					month = month.substr(month.length - 2, 2);
+					eval("btn_Year" + month).removeClass("selected");
+
+					if (eval("span_Year" + month).getLabel() == strYear) {
+						eval("btn_Year" + month).addClass("selected");
+					}
+				}
+				this.selectedDate = strYear;
+			};
+
+			//확인 버튼 클릭시 
+			this.confirmYear = function() {
+				ibx_Date.setValue(this.selectedDate + "");
+
+				div_Year.setStyle("display", "none");
+			};
+
+			udc_obj.getDate = function() {
+				if(ibx_Date.getValue() == "") {
+					return null;
+				} else {
+					return ibx_Date.getValue();
+				}
+			};
+
+			udc_obj.setDate = function(strDate) {
+				ibx_Date.setValue(strDate);
+			};
+
+			//초기 실행함수 수행
+			this.initYearCalendar();
+
+			]]>
+			</script>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<script ev:event="oncreated(options)" type="text/javascript"><![CDATA[
+				/**
+				* //property handling
+				*
+				* //event trigger
+				*/
+			]]></script>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+			<xf:group style="" id="">
+				<xf:group style="" id="" class="year_wrap">
+					<xf:input maxlength="4" dataType="number" validator="" displayFormat="" applyFormat="" style="cursor:pointer;" readOnly="false"
+						id="ibx_Date" title="" class="cal_from" mandatory="" ioFormat="">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							udc_obj.showYearCalendar();
+						]]></script>
+						<script ev:event="onkeyup(e)" type="text/javascript"><![CDATA[
+							if (ibx_Date.getValue().length == 4 ) {
+								udc_obj.changeYear(ibx_Date.getValue().substr(0, 3) + "0");
+								udc_obj.onYears(ibx_Date.getValue());
+								var tmpValue = ibx_Date.getValue();
+								udc_obj.trigger("onchangeValue", [tmpValue]);
+							}
+						]]></script>
+						<script ev:event="onchange" type="text/javascript"><![CDATA[
+							if (ibx_Date.getValue().length == 4 ) {
+								udc_obj.changeYear(ibx_Date.getValue().substr(0, 3) + "0");
+								udc_obj.onYears(ibx_Date.getValue());
+								var tmpValue = ibx_Date.getValue();
+								udc_obj.trigger("onchangeValue", [tmpValue]);
+							}
+						]]></script>
+					</xf:input>
+					<w2:anchor outerDiv="false" style="" id="btn_ShowCalendar" class="btn_cal">
+						<script ev:event="onclick" type="javascript"><![CDATA[
+							udc_obj.showYearCalendar();
+						]]></script>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group style="display:none" id="div_Year" title="Title" class="f_layer_m1">
+				<xf:group ev:onblur="" style="" id="grp_Calendar" class="cb">
+					<xf:group style="" id="" class="year_cal_box">
+						<xf:group style="" id="" class="c_header">
+							<w2:textbox style="" id="tbx_Year" label="2016" class="year">
+							</w2:textbox>
+							<w2:textbox style="" id="tbx_Year_Label" label="2016" class="year">
+							</w2:textbox>
+							<w2:anchor outerDiv="false" style="" id="btn_PrevYear" class="prev">
+								<script ev:event="onclick" type="javascript"><![CDATA[
+									udc_obj.changeYear((parseInt(tbx_Year.getValue()) - 10) + "");
+								]]></script>
+								<xf:label><![CDATA[이전]]></xf:label>
+							</w2:anchor>
+							<w2:anchor outerDiv="false" style="" id="btn_NextYear" class="next">
+								<script ev:event="onclick" type="javascript"><![CDATA[
+									udc_obj.changeYear((parseInt(tbx_Year.getValue()) + 10) + "");
+								]]></script>
+								<xf:label><![CDATA[다음]]></xf:label>
+							</w2:anchor>
+						</xf:group>
+						<xf:group style="" id="" class="c_body">
+							<xf:group tagname="table" style="" id="" class="w2tb">
+								<w2:attributes>
+									<w2:summary></w2:summary>
+								</w2:attributes>
+								<xf:group tagname="colgroup">
+									<xf:group tagname="col" style="width:25.00%">
+									</xf:group>
+									<xf:group tagname="col" style="width:25.00%">
+									</xf:group>
+									<xf:group tagname="col" style="width:25.00%">
+									</xf:group>
+									<xf:group tagname="col" style="width:25.00%">
+									</xf:group>
+								</xf:group>
+								<xf:group tagname="tr">
+									<xf:group tagname="td" style="" id="btn_Year99" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("99");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year99" label="1">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year00" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("00");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year00" label="2">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year01" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("01");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year01" label="3">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year02" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("02");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year02" label="4">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group tagname="tr" id="">
+									<xf:group tagname="td" style="" id="btn_Year03" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("03");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year03" label="5">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year04" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("04");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year04" label="6">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year05" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("05");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year05" label="7">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year06" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("06");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year06" label="8">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+								<xf:group tagname="tr" id="">
+									<xf:group tagname="td" style="" id="btn_Year07" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("07");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year07" label="9">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year08" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("08");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year08" label="10">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year09" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("09");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year09" label="11">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+									<xf:group tagname="td" style="" id="btn_Year10" class="w2tb_td">
+										<xf:group tagname="a" style="" id="" class="">
+											<script ev:event="onclick" type="javascript"><![CDATA[
+												udc_obj.clickYears("10");
+											]]></script>
+											<w2:attributes>
+												<w2:href>
+													#none
+												</w2:href>
+											</w2:attributes>
+											<w2:span style="" id="span_Year10" label="12">
+											</w2:span>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

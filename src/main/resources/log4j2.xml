@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="INFO" monitorInterval="30" strict="true">
+	<properties>
+		<property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} | %-5.5p | %10.10t | %-20.20C:%-5.5L | %msg%n</property>
+		<property name="logPath">./daonlog/log4j_ecs</property>
+	</properties>
+	<appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${pattern}" />
+		</Console>
+		<RollingFile name="FileLog" fileName="${logPath}/ecs.log" filePattern="${logPath}/ecs_%d{yyyy-MM-dd}.log">
+			<PatternLayout pattern="${pattern}" />
+			<Policies>
+				<TimeBasedtriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingFile>
+
+		<RollingFile name="FileLog_error" fileName="${logPath}/ecsError.log" filePattern="${logPath}/ecsError_%d{yyyy-MM-dd}.log">
+			<PatternLayout pattern="${pattern}" />
+			<Policies>
+				<TimeBasedtriggeringPolicy interval="1" modulate="true" />
+			</Policies>
+		</RollingFile>
+	</appenders>
+	<loggers>
+		<!--
+			================================================================
+			Framework
+			================================================================
+		-->
+		<logger name="org.springframework" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<Logger name="egovframework" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</Logger>
+
+		<!--
+			================================================================
+			Database
+			================================================================
+		-->
+		<logger name="java.sql" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="jdbc.sqlonly" level="INFO" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="INFO" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="jdbc.sqltiming" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="jdbc.audit" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="jdbc.resultset" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="net.sf.log4jdbc" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="log4jdbc.debug" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="org.mybais" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="org.apache.ibatis" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="log4j.logger.com.ibatis" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<logger name="log4j.logger.org.mybatis" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="ERROR" />
+		</logger>
+
+		<!--
+			================================================================
+			K-Water
+			================================================================
+		-->
+		<logger name="kw.ecs" level="INFO" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" /> <!-- INFO -->
+			<appender-ref ref="FileLog_error" level="OFF" /> <!-- ERROR -->
+		</logger>
+
+		<logger name="kw.fw" level="OFF" additivity="false">
+			<appender-ref ref="Console" />
+			<appender-ref ref="FileLog" level="OFF" />
+			<appender-ref ref="FileLog_error" level="OFF" /> <!-- ERROR -->
+		</logger>
+
+		<root level="INFO">
+			<appender-ref ref="Console" level="OFF" />
+			<appender-ref ref="FileLog" level="OFF" /> <!-- INFO -->
+			<appender-ref ref="FileLog_error" level="OFF" /> <!-- ERROR -->
+		</root>
+	</loggers>
+</configuration>

@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/resources/css/common.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content-layout.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/animate.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/font-awesome.min.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/system_ecs.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataMap id="dmaHpc" baseNode="map">
+					<w2:keyInfo>
+						<w2:key id="hpcmFileNm" name="hpcmFileNm" dataType="text"></w2:key>
+						<w2:key id="pgeNo" name="pgeNo" dataType="text"></w2:key>
+						<w2:key id="hpcmVidoFileNm" name="hpcmVidoFileNm" dataType="text"></w2:key>
+						<w2:key id="linkinfo" name="linkinfo" dataType="text">
+						</w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+			</w2:dataCollection>
+			<w2:workflowCollection>
+			</w2:workflowCollection>
+		</xf:model>
+		<script type="text/javascript" lazy="false"><![CDATA[
+		/*
+		var prevKey ="";
+
+		var confirmMessage = function(e) {
+			//console.log("", e);
+			return "업무화면을 로그아웃 하시겠습니까?";
+		};
+
+		var logoutFunction = function(e) {
+			var requestData = {};
+			requestData.dmaReqInfo = {
+				sysDivCd : comLib.getSysDivCd(),
+				usrId : comLib.getUsrId()
+			};
+			var option = {
+				action : "sc/login/logoutIntnUsr.do",
+				reqData : requestData,
+				success : "scwin.callBackLogoutFunction",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjaxSync($p, option);
+		};
+
+		scwin.callBackLogoutFunction = function(resBody) {
+			alert (resBody.message.code_name);
+		};
+
+		//$(window).bind("beforeunload", confirmMessage) ;
+		$(window).bind("beforeunload", logoutFunction);
+
+		$(document).keydown(function (e) {
+			if (e.key =="F5") {
+				$(window).unbind("beforeunload", logoutFunction);
+			} else if (e.key.toUpperCade() == "W" && prevKey == "CONTROL") {
+				$(window).unbind("beforeunload", logoutFunction);
+			} else if (e.key.toUpperCade() == "R" && prevKey == "CONTROL") {
+				$(window).unbind("beforeunload", logoutFunction);
+			} else if (e.key.toUpperCade() == "F5" && prevKey == "CONTROL") {
+				$(window).unbind("beforeunload", logoutFunction);
+			} else if (e.key.toUpperCade() == "F4" && (prevKey == "CONTROL" || prevKey == "ALT")) {
+				$(window).unbind("beforeunload", logoutFunction);
+			}
+			prevKey = e.key.toUpperCase();
+		});
+		*/
+
+		scwin.initContent = function() {
+			var wfmLeft = $p.top().wfm_left.getWindow();
+			if (typeof wfmLeft.trvMenu !== "undefined") {
+				var windowId = $p.top().wdcMain.getSelectedWindowId();
+				var menuNm = $p.top().wdcMain.getWindowLabel(windowId, "window");
+				tbxScreenTitle.setLabel(menuNm);
+				txtMenuDepth.setValue(comLib.getMenuNavi(windowId));
+
+				// 도움말 파일 다운로드 버튼 보임/숨김
+				scwin.setNaviHelpBtn(windowId);
+			} else {
+				var menuNm = comLib.getParameter("menuNm");
+				var menuPath = comLib.getParameter("menuPath");
+				if (menuNm != null && menuNm != "") {
+					tbxScreenTitle.setLabel(menuNm);
+				}
+				if (menuPath != null && menuPath != "") {
+					txtMenuDepth.setValue(menuPath);
+				}
+			}
+		};
+
+		scwin.setNaviHelpBtn = function(windowId) {
+			var requestData = {};
+			requestData.dmaInqireParam = {
+				scrinId : windowId,
+				intnSysDivCd : comLib.getSysDivCd()
+			};
+			var option = {
+				action : "zz/authmng/retrieveScrin.do",
+				reqData : requestData,
+				resData : dmaHpc,
+				success : "scwin.setNaviHelpBtnCallback",
+				isShowMeg : false
+			};
+			ajaxLib.executeAjaxSync($p, option);
+		};
+
+		scwin.setNaviHelpBtnCallback = function(resBody) {
+			if (resBody.message.code != "success") {
+				$p.$("#btn_Help").hide();
+				$p.$("#btn_HelpMovie").hide();
+				$p.$("#btn_law").hide();
+			} else {
+				if (dmaHpc.get("hpcmFileNm") == "") {
+					$p.$("#btn_Help").hide();
+				}
+				if (dmaHpc.get("hpcmVidoFileNm") == "") {
+					$p.$("#btn_HelpMovie").hide();
+				}
+				if (dmaHpc.get("linkinfo") == "") {
+					$p.$("#btn_law").hide();
+				}
+			}
+		};
+
+		/*
+		if (scwin.initStatus) {
+			if (typeof scwin.initScreen === "function") {
+				scwin.initScreen();
+			}
+	
+			if (typeof scwin.initContent === "function") {
+				scwin.initContent();
+			}
+		}
+		*/
+
+		/*
+		scwin.menu = function() {
+			var heights=$(".height-sam").map(function(){
+				return $(this).height();
+			}).get();
+			var maxHeight=Math.max.apply(null , heights);
+			$(".height-sam").height(maxHeight);
+		};
+
+		scwin.help = function() {
+			var helpBoxJq = $(".help-box");
+			setTimeout(function(){
+				if (helpBoxJq.length > 0) {
+					helpBoxJq.removeClass("on");
+					helpBoxJq.addClass("off");
+				}
+			}, 5000);
+			$(".close").click(function(){
+				if (helpBoxJq.length > 0) {
+					helpBoxJq.removeClass("on");
+					helpBoxJq.addClass("off");
+				}
+			});
+			$(".help-btn").click(function(){
+				if (helpBoxJq.length > 0) {
+					helpBoxJq.addClass("on");
+					helpBoxJq.removeClass("off");
+				}
+			});
+			var btnJq = $(".toggle-box >button");
+			if (btnJq.length > 0) {
+				btnJq.click();
+			}
+		};
+
+		scwin.help();
+		scwin.menu();
+		scwin.initContent();
+		scwin.btnSnH01_onclick = function() {
+			comLib.fn_hideAndShow($p, "btnSnH01", "hideBox01");
+		};
+
+		scwin.btnSnH02_onclick = function() {
+			comLib.fn_hideAndShow($p, "btnSnH02", "hideBox02");
+		};
+
+		scwin.btnSnH03_onclick = function() {
+			comLib.fn_hideAndShow($p, "btnSnH03", "hideBox03");
+		};
+
+		function fn_hideAndShow(strBtn, GroupBox) {
+			var objBtn = WebSquare.util.getComponentById(strBtn);
+			var objGroupBox = WebSquare.util.getComponentById(GroupBox);
+			var sTxt = objBtn.getValue();
+			if(sTxt == "접기") {
+				objGroupBox.hide();
+				objBtn.setValue("열기");
+				objBtn.addClass("close");
+			} else if(sTxt == "열기") {
+				objGroupBox.show();
+				objBtn.setValue("접기");
+				objBtn.removeClass("close");
+			}
+		};
+
+		scwin.radioBtn = function() {
+			$(".first").on("on1", function() {
+				$(".first > ul").addClass("radio-on");
+			});
+			$(".first").trigger("on1");
+				$(".radio-btn-group > a").click(function(){
+				$(this).parent().siblings().find("ul.depth2").hide(100);
+				$(this).parent().siblings().find("a.on").removeClass("on");
+				$(this).addClass("on");
+				return false;
+			});
+		};
+		scwin.radioBtn();
+		*/
+
+		scwin.btn_Fav_onclick = function() {
+			var naviTop = $p.top().wfm_left.getWindow();
+			var usrBkMkJson = naviTop.dltLeftMenuList.getMatchedJSON("menuId", naviTop.trvMenu.getSelectedValue(), true, 0, naviTop.dltLeftMenuList.getRowCount());
+			if (usrBkMkJson[0].scrinUrl.trim() === "") {
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00057", "즐겨찾기"));
+			} else {
+				comLib.confirm($p, utilLib.getMessage("SCM.INFO.00336"), "scwin.saveUsrBkMkConfirmCallback");
+			}
+		};
+
+		scwin.saveUsrBkMkConfirmCallback = function() {
+			var naviTop = $p.top().wfm_left.getWindow();
+			var usrBkMkJson = naviTop.dltLeftMenuList.getMatchedJSON("menuId", naviTop.trvMenu.getSelectedValue(), true, 0, naviTop.dltLeftMenuList.getRowCount());
+			var requestData = {};
+			requestData.data = {
+				"bkmkMenuId" : usrBkMkJson[0].menuId,
+				"menuNm" : usrBkMkJson[0].menuNm,
+				"menuLvlNm" : "",
+				"scrinUrl" : usrBkMkJson[0].scrinUrl
+			};
+			var option = {
+				action : "sc/usrBkMk/selectUsrBkMk.do",
+				reqData : requestData,
+				success : "scwin.selectUsrBkMkCallback",
+				savedToken : true,
+				isShowMeg : false
+			};
+			ajaxLib.executeAjax($p, option);
+		};
+
+		scwin.selectUsrBkMkCallback = function(resBody) {
+			var naviTop = $p.top().wfm_left.getWindow();
+			if (resBody.data.length == 0) {
+				var usrBkMkJson = naviTop.dltLeftMenuList.getMatchedJSON("menuId", naviTop.trvMenu.getSelectedValue(), true, 0, naviTop.dltLeftMenuList.getRowCount());
+				var depth = comLib.getMenuNavi($p.top().wdcMain.getSelectedWindowId());
+				if (depth != "" && depth.indexOf(" &gt") != -1) {
+					depth = depth.substring(0, depth.lastIndexOf(" &gt"));
+				}
+				var requestData = {};
+				requestData.data = {
+					"bkmkMenuId" : usrBkMkJson[0].menuId,
+					"menuNm" : usrBkMkJson[0].menuNm,
+					"menuLvlNm" : depth,
+					"scrinUrl" : usrBkMkJson[0].scrinUrl + "," + usrBkMkJson[0].scrinId
+				};
+
+				var option = {
+					action : "sc/usrBkMk/insertUsrBkMk.do",
+					reqData : requestData,
+					success : "",
+					savedToken : true,
+					isShowMeg : false
+				};
+				ajaxLib.executeAjax($p, option);
+			} else {
+				comLib.alert($p, utilLib.getMessage("SCM.INFO.00050", "즐겨찾기가"));
+			}
+		};
+
+		scwin.btn_Help_onclick = function() {
+			var popupId = dmaHpc.get("hpcmFileNm");
+			var options = {
+				type : "window", // window, wframePopup
+				title : "온라인 도움말",
+				width : 1500,
+				height : 900,
+				modal : false,
+				popupParam : {
+					data : {
+						guideHtml : dmaHpc.get("hpcmFileNm"),
+						pageNo : dmaHpc.get("pgeNo")
+					}
+				}
+			};
+			// 수도운영에서는 권한관리>화면관리>화면상세>도움말 파일명을 ECSPG+숫자 형태로 입력하고 guide_ecs.xml을 호출하도록 하여 기상, 댐보, 발전종합의 사용자 메뉴얼 팝업과 별도로 띄움
+			// 패턴은  ECS + 숫자4자리로 구성
+			var fileNm = dmaHpc.get("hpcmFileNm");
+			if (/^ECS[\d]{4}$/.test(fileNm) === true) {
+				comLib.openPopup($p, popupId, "/ui/ecs/zz/guide/guide_ecs.xml", options);
+				return;
+			}
+			comLib.openPopup($p, popupId, "/ui/ecs/zz/guide/guide.xml&guideHtml=" + dmaHpc.get("hpcmFileNm") + "&pageNo=" + dmaHpc.get("pgeNo"), options);
+		};
+
+		scwin.btn_HelpMovie_onclick = function() {
+			var popupId = dmaHpc.get("hpcmVidoFileNm");
+			var options = {
+				type : "window", // window, wframePopup
+				title : "온라인 도움말",
+				width : 1500,
+				height : 800,
+				modal : false,
+				popupParam : {
+					data : {
+						guideVido : dmaHpc.get("hpcmVidoFileNm")
+					}
+				}
+			};
+			comLib.openPopup($p, popupId, "/ui/ecs/zz/guide/guideVido.xml", options);
+		};
+
+		/**
+		 * 규정정보 아이콘 클릭
+		 */
+		scwin.btn_law_onclick = function() {
+			var naviTop = $p.top().wfm_left.getWindow();
+			var popupId ="LAW_" + naviTop.trvMenu.getSelectedValue();
+			var options = {
+				type : "window", // window, wframePopup
+				title : "법령_규정정보",
+				width : 1250,
+				height : 780,
+				modal : false
+			};
+			comLib.openPopup($p, popupId, comLib.LAW_POP_URL.substring(0, comLib.LAW_POP_URL.indexOf("wq")) + "syslink.jsp?" + dmaHpc.get("linkinfo"), options);
+		};
+	]]></script>
+		<w2:require src="/ui/common/udc/monthcalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/periodCalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/periodMonthcalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/periodYearcalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/quartercalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/timePicker.xml"></w2:require>
+		<w2:require src="/ui/common/udc/yearcalendar.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainBackArrowSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/longArrowRightSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/shortArrowRightSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapInLabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapOutLabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapBasinLabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapHBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapGBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapNBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapYBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapJejuBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapUlleungBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mapAllSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/beltMenuSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/waterDropShapeSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainCbnNtrltSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/flowSttusArrowSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/flowSttusPBLabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/flowSttusMELabelSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/detailMapHBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/detailMapGBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/detailMapYBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/detailMapNBasinSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltTreeSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltFactorySvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltBangUlBodySvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltLHandSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashCbnNtrltRHandSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashPbmeBangUlPSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashPbmeBangUlMSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashPbmeBangUlBSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/dashPbmeBangUlESvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/kWaterMarkSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainCbnNtrltScaleSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainCbnNtrltEarthSvg.xml"></w2:require>
+		<w2:require src="/ui/common/udc/mainCbnNtrltPollutionSvg.xml"></w2:require>
+	</head>
+	<body>
+		<xf:group class="navigator_wrap">
+			<xf:group class="navigator">
+				<w2:textbox class="mt" id="tbxScreenTitle" tagname="strong"></w2:textbox>
+				<w2:anchor outerDiv="false" class="btn_home">
+					<xf:label><![CDATA[]]>
+					</xf:label>
+				</w2:anchor>
+				<w2:textbox id="txtMenuDepth" tagname="span"></w2:textbox>
+			</xf:group>
+			<xf:group class="navi_btn" tagname="">
+				<w2:anchor class="btn_star" id="btn_Fav" userData1="9" outerDiv="false" ev:onclick="scwin.btn_Fav_onclick">
+					<xf:label><![CDATA[]]>
+					</xf:label>
+				</w2:anchor>
+				<w2:anchor class="btn_question" id="btn_Help" userData1="9" outerDiv="false" ev:onclick="scwin.btn_Help_onclick">
+					<xf:label><![CDATA[]]>
+					</xf:label>
+				</w2:anchor>
+				<!--
+					<w2:anchor class="btn_movie" id="btn_HelpMovie" outerDiv="false" userData1="9" ev:onclick="scwin.btn_HelpMovie_onclick">
+					<xf:label><![CDATA[]]>
+					</xf:label>
+					</w2:anchor>
+				-->
+				<w2:anchor class="btn_law_manual" userData1="9" ev:onclick="scwin.btn_law_onclick" id="btn_law" outerDiv="false">
+					<xf:label></xf:label>
+				</w2:anchor>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

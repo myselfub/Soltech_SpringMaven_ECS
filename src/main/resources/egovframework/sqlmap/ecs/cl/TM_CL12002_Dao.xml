@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 정산 - 외부수열 정산현황 상세 -->
+<mapper namespace="TM_CL12002_Dao">
+	<select id="TM_CL12002_Dao_retrieveWthtExcclcSttusList" parameterType="kw.ecs.cl.wthtexcclc.vo.WthtExcclcSttusVo" resultType="egovMap">
+		/* TM_CL12002_Dao_retrieveWthtExcclcSttusList */
+		SELECT
+			wtht_suply_begin_de,
+			eqp_nm,
+			regist_de,
+			cntrct_nm,
+			cntrct_cpcty,
+			ctrpd_strt_de,
+			ctrpd_end_de,
+			splval,
+			vat,
+			excclc_amt,
+			bsns_div_nm,
+			mrkt_div_nm,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id,
+			updt_rsn
+		FROM
+			tm_cl12002
+		WHERE
+			wtht_suply_begin_de = #{wthtSuplyBeginDe}
+			AND eqp_nm = #{eqpNm}
+		ORDER BY
+			regist_de,
+			cntrct_nm
+	</select>
+
+	<update id="TM_CL12002_Dao_saveWthtExcclcSttusList" parameterType="kw.ecs.cl.wthtexcclc.vo.WthtExcclcSttusVo">
+		/* TM_CL12002_Dao_saveWthtExcclcSttusList */
+		MERGE INTO
+			tm_cl12002 A
+		USING (
+			SELECT
+				#{wthtSuplyBeginDe} AS wtht_suply_begin_de,
+				#{eqpNm} AS eqp_nm,
+				#{registDe} AS regist_de,
+				#{cntrctNm} AS cntrct_nm,
+				#{cntrctCpcty} AS cntrct_cpcty,
+				#{ctrpdStrtDe} AS ctrpd_strt_de,
+				#{ctrpdEndDe} AS ctrpd_end_de,
+				#{splval} AS splval,
+				#{vat} AS vat,
+				#{excclcAmt} AS excclc_amt,
+				#{bsnsDivNm} AS bsns_div_nm,
+				#{mrktDivNm} AS mrkt_div_nm,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.wtht_suply_begin_de = B.wtht_suply_begin_de
+			AND A.eqp_nm = B.eqp_nm
+			AND A.regist_de = B.regist_de
+			AND A.cntrct_nm = B.cntrct_nm
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.cntrct_cpcty = B.cntrct_cpcty,
+				A.ctrpd_strt_de = B.ctrpd_strt_de,
+				A.ctrpd_end_de = B.ctrpd_end_de,
+				A.splval = B.splval,
+				A.vat = B.vat,
+				A.excclc_amt = B.excclc_amt,
+				A.bsns_div_nm = B.bsns_div_nm,
+				A.mrkt_div_nm = B.mrkt_div_nm,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.wtht_suply_begin_de,
+				A.eqp_nm,
+				A.regist_de,
+				A.cntrct_nm,
+				A.cntrct_cpcty,
+				A.ctrpd_strt_de,
+				A.ctrpd_end_de,
+				A.splval,
+				A.vat,
+				A.excclc_amt,
+				A.bsns_div_nm,
+				A.mrkt_div_nm,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.wtht_suply_begin_de,
+				B.eqp_nm,
+				B.regist_de,
+				B.cntrct_nm,
+				B.cntrct_cpcty,
+				B.ctrpd_strt_de,
+				B.ctrpd_end_de,
+				B.splval,
+				B.vat,
+				B.excclc_amt,
+				B.bsns_div_nm,
+				B.mrkt_div_nm,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<delete id="TM_CL12002_Dao_deleteWthtExcclcSttusList" parameterType="kw.ecs.cl.wthtexcclc.vo.WthtExcclcSttusVo">
+		/* TM_CL12002_Dao_deleteWthtExcclcSttusList */
+		DELETE FROM
+			tm_cl12002
+		WHERE
+			wtht_suply_begin_de = #{wthtSuplyBeginDe}
+			AND eqp_nm = #{eqpNm}
+			AND regist_de = #{registDe}
+			AND cntrct_nm = #{cntrctNm}
+	</delete>
+</mapper>

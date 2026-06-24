@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Context Root + resources/css/*.css 로 include -->
+<?xml-stylesheet href="/resources/css/common.css" type="text/css"?>
+<?xml-stylesheet href="/resources/css/content.css" type="text/css"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:type>UDC</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript"><![CDATA[
+		]]></script>
+	</head>
+	<body>
+		<!--/** WEBSQUARE UDC */
+			{
+			"componentName": "period_Cal",
+			"pluginName": "period_Cal",
+			"company": "",
+			"developer": "",
+			"category": "Basic",
+			"notSupportBrowser": "",
+			"version": "",
+			"htmlRender": "",
+			"icon": "",
+			"disableIcon": "",
+			"description": "구간 달력",
+			"width": "192px",
+			"height": "21px",
+			"properties": [
+			{
+			"name": "id",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "desc"
+			},
+			{
+			"name": "style",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "desc"
+			},
+			{
+			"name": "class",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "desc"
+			},
+			{
+			"name": "disabled",
+			"default": "",
+			"type": "combobox",
+			"option": "[true,false]",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "desc"
+			},
+			{
+			"name": "strtDate",
+			"default": "",
+			"type": "number",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 초기 값"
+			},
+			{
+			"name": "endDate",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "종료년월 초기 값"
+			},
+			{
+			"name": "strtDateRef",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "시작년월 Ref"
+			},
+			{
+			"name": "endDateRef",
+			"default": "",
+			"type": "string",
+			"option": "",
+			"necessary": "N",
+			"hidden": "N",
+			"description": "종료년월 Ref"
+			}
+			],
+			"events": [
+			{
+			"name":"onchangeFromValue(info)",
+			"type":"user",
+			"description": "udc 클래스"
+			},
+			{
+			"name":"onchangToValue(info)",
+			"type":"user",
+			"description": "udc 클래스"
+			}
+			],
+			"apis": []
+			}
+		-->
+		<xf:group id="" style="" pluginName="period_Cal" class="udc_cal">
+			<xf:group id="" style="" class="gb_udc_cal">
+				<xf:group id="" style="" class="">
+					<xf:group id="" style="" class="cal_from_wrap">
+						<xf:input id="ibx_FrDate" dataType="date" displayFormat="yyyy-MM-dd" class="cal_from" ref="" maxlength="8" allowChar="0-9"
+							enterBlur="true">
+							<script ev:event="onclick(e)" type="text/javascript"><![CDATA[
+								if (popPeriodCal.getStyle( "display") == "none") {
+									$(".f_layer_cal").hide();
+									popPeriodCal.setStyle( "display", "");
+
+									if ($p.isPopup()) {
+										var clientX = e.clientX - e.offsetX - parseInt($p.getComponentById($p.getPopupId()).getStyle("left").replace("px"));
+										var popupWidth = $p.getFrame().getSize("width");
+
+										if(popupWidth - clientX < 570) {
+											popPeriodCal.setStyle("right","0px");
+										}
+									} else {
+										if (window.innerWidth > 900) {
+											if (window.innerWidth - e.clientX < 500) {
+												// var periodX= window.innerWidth - (500 + event.clientX) + "px";
+												popPeriodCal.setStyle("right","0px");
+												// popPeriodCal.setStyle("left", periodX);
+											}
+										} else {
+											popPeriodCal.setStyle("left", "-120px");
+										}
+									}
+									popPeriodCal.show();
+								} else {
+									popPeriodCal.setStyle("display", "none");
+									// popPeriodCal.setStyle("left" ,"0px");
+									popPeriodCal.hide();
+								}
+							]]></script>
+							<script ev:event="onchange" type="text/javascript"><![CDATA[
+								cal_From.gotoCalendar(ibx_FrDate.getValue());
+							]]></script>
+						</xf:input>
+					</xf:group>
+					<w2:span id="" style="" label="~" class="txt_unit"></w2:span>
+					<xf:group id="" style="" class="cal_to_wrap">
+						<xf:input id="ibx_ToDate" dataType="date" style="" displayFormat="yyyy-MM-dd" class="cal_to" mandatory="" ignoreChar="" ref=""
+							maxlength="8" allowChar="0-9" enterBlur="true">
+							<script ev:event="onclick(e)" type="text/javascript"><![CDATA[
+								if(popPeriodCal.getStyle("display") == "none") {
+									$(".f_layer_cal").hide();
+									popPeriodCal.setStyle("display", "");
+
+									if ($p.isPopup()) {
+										var clientX = e.clientX - e.offsetX - parseInt($p.getComponentById($p.getPopupId()).getStyle("left").replace("px"));
+										var popupWidth = $p.getFrame().getSize("width");
+
+										if (popupWidth - clientX < 450) {
+											popPeriodCal.setStyle("right","0px");
+										}
+									} else {
+										if (window.innerWidth > 900) {
+											if (window.innerWidth - e.clientX < 400) {
+												// var periodX= window.innerWidth - (500 + event.clientX) + "px";
+												popPeriodCal.setStyle("right","0px");
+												// popPeriodCal.setStyle("left", periodX);
+											}
+										} else {
+											popPeriodCal.setStyle("left", "-120px");
+										}
+									}
+									popPeriodCal.show( );
+								} else {
+									popPeriodCal.setStyle("display", "none");
+									// popPeriodCal.setStyle("left", "0px");
+									popPeriodCal.hide();
+								}
+ 							]]></script>
+							<script ev:event="onchange" type="text/javascript"><![CDATA[
+								cal_To.gotoCalendar(ibx_ToDate.getValue());
+							]]></script>
+						</xf:input>
+						<w2:anchor id="btnCalendar" style="" class="btn_cal" outerDiv="false">
+							<script ev:event="onclick" type="text/javascript"><![CDATA[
+								if (popPeriodCal.getStyle("display") == "none") {
+									$(".f_layer_cal").hide();
+									popPeriodCal.setStyle("display", "");
+
+									if ($p.isPopup()) {
+										var clientX = event.clientX - parseInt($p.getComponentById($p.getPopupId()).getStyle("left").replace("px"));
+										var popupWidth = $p.getFrame().getSize("width");
+
+										if (popupWidth - clientX < 330) {
+											popPeriodCal.setStyle("right", "0px");
+										}
+									} else {
+										if (window.innerWidth > 900) {
+											if (window.innerWidth - event.clientX < 350) {
+												// var periodX= window.innerWidth - (500 + event.clientX) + "px";
+												popPeriodCal.setStyle("right", "0px");
+												// popPeriodCal.setStyle("left", periodX);
+											}
+										} else {
+											popPeriodCal.setStyle("left", "-120px");
+										}
+									}
+									popPeriodCal.show( );
+								} else {
+									popPeriodCal.setStyle("display", "none");
+									// popPeriodCal.setStyle("left", "0px");
+									popPeriodCal.hide( );
+								}
+							]]></script>
+						</w2:anchor>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group id="popPeriodCal" title="Title" style="width:571px; display:none; position: absolute; z-index: 999999; background: #fff;"
+				class="f_layer_cal" headerRightClass="cc" headerCenterClass="aa" headerLeftClass="bb">
+				<w2:calendar id="cal_From" footerDiv="false" style="display: inline-block;box-shadow: 0px 0px 0px transparent; border: 1px solid #ccc;"
+					weekStartsOn="0" calendarClass="">
+					<script ev:event="onviewchange(info)" type="text/javascript"><![CDATA[
+						var tmpFromValue = {originalFromValue : ibx_FrDate.realValue.replaceAll("-", ""), value : cal_From.getValue()};
+						udc_obj.trigger("onchangeFromValue", tmpFromValue);
+					]]></script>
+				</w2:calendar>
+				<w2:calendar id="cal_To" footerDiv="false"
+					style="display: inline-block;margin-left: -1px;box-shadow: 0px 0px 0px transparent; border: 1px solid #ccc;" weekStartsOn="0">
+					<script ev:event="onviewchange(info)" type="text/javascript"><![CDATA[
+						var tmpToValue = {originalToValue : ibx_ToDate.realValue.replaceAll("-", ""), value : cal_To.getValue()};
+						udc_obj.trigger("onchangToValue", tmpToValue);
+					]]></script>
+				</w2:calendar>
+				<xf:group class="" id="" style="text-align: right">
+					<w2:anchor id="btnCancel" outerDiv="false" style="" class="btn_cancle">
+						<xf:label><![CDATA[취소]]></xf:label>
+						<script ev:event="onclick" type="text/javascript"><![CDATA[
+							popPeriodCal.setStyle("left", "0px");
+							popPeriodCal.hide();
+						]]></script>
+					</w2:anchor>
+					<w2:anchor id="btnOK" outerDiv="false" style="" class="btn_ok">
+						<xf:label><![CDATA[확인]]></xf:label>
+						<script ev:event="onclick" type="text/javascript"><![CDATA[
+						udc_obj.changePeriod();
+						]]></script>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<script ev:event="oncreated(options)" type="javascript"><![CDATA[
+				/**
+				* //property handling
+				*
+				* //event trigger
+				*/
+				try {
+					// ref 설정
+					if (ibx_FrDate.getValue() == "" && options.strtDateRef != undefined) {
+						ibx_FrDate.setRef(options.strtDateRef);
+					}
+					if (ibx_ToDate.getValue() == "" && options.endDateRef != undefined) {
+						ibx_ToDate.setRef(options.endDateRef);
+					}
+
+					// udc의 초기 설정값
+					if (ibx_FrDate.getValue() == "" && options.strtDate != undefined) {
+						ibx_FrDate.setValue(options.strtDate);
+					}
+					if (ibx_ToDate.getValue() == "" && options.endDate != undefined) {
+						ibx_ToDate.setValue(options.endDate);
+					}
+
+					cal_From.gotoCalendar(ibx_FrDate.getValue());
+					cal_To.gotoCalendar(ibx_ToDate.getValue());
+
+					// 시작일, 종료일 한꺼번에 구하기
+					this.getValue = function() {
+						var arg = ibx_FrDate.getValue() + "," + ibx_ToDate.getValue();
+						return arg;
+					};
+
+					// 시작일, 종료일 한꺼번에 입력
+					this.setValue = function(arg1, arg2) {
+						ibx_FrDate.setValue(arg1);
+						ibx_ToDate.setValue(arg2);
+					};
+
+					// 시작일만 입력
+					this.setFromDate = function(arg) {
+						ibx_FrDate.setValue(arg);
+					};
+
+					// 종료일만 입력
+					this.setToDate = function(arg) {
+						ibx_ToDate.setValue(arg);
+					};
+
+					// 시작일 구하기
+					this.getFromDate = function() {
+						return ibx_FrDate.getValue();
+					};
+
+					// 종료일 구하기
+					this.getToDate = function() {
+						return ibx_ToDate.getValue();
+					};
+
+					// 시작일 필수 입력 속성 제어(mandatory) - default는 false
+					this.setMandatoryFromDate = function(arg) {
+						ibx_FrDate.setMandatory(arg);
+					};
+
+					// 종료일 필수 입력 속성 제어(mandatory) - default는 false
+					this.setMandatoryToDate = function(arg) {
+						ibx_ToDate.setMandatory(arg);
+					};
+
+					// 시작일 필수 입력 속성 구하기
+					this.getMandatoryFromDate = function() {
+						ibx_FrDate.getMandatory();
+					};
+
+					// 종료일 필수 입력 속성 구하기
+					this.getMandatoryToDate = function() {
+						ibx_ToDate.getMandatory();
+					};
+
+					// 시작일 ref 입력
+					this.setRefFromDate = function(arg) {
+						ibx_FrDate.setRef(arg);
+					};
+
+					// 종료일 ref 입력
+					this.setRefToDate = function(arg) {
+						ibx_ToDate.setRef(arg);
+					};
+
+					// 시작일 ref 구하기
+					this.getRefFromDate = function() {
+						ibx_FrDate.getRef();
+					};
+
+					// 종료일 ref 구하기
+					this.getRefToDate = function() {
+						ibx_ToDate.getRef();
+					};
+
+					// 확인 클릭시
+					this.changePeriod = function() {
+						if (cal_From.getValue().length == 8 && cal_To.getValue().length == 8) {
+							if (parseInt(cal_From.getValue()) > parseInt(cal_To.getValue())) {
+								alert("시작년월일이 종료년월일보다 클수 없습니다.");
+								return false;
+							}
+						}
+						ibx_FrDate.setValue(cal_From.getValue());
+						ibx_ToDate.setValue(cal_To.getValue());
+						//popPeriodCal.setStyle("left", "0px");
+						popPeriodCal.hide();
+					};
+				} catch(e) {
+				}
+			]]></script>
+			<w2:style type="text/css"><![CDATA[ ]]></w2:style>
+		</xf:group>
+	</body>
+</html>

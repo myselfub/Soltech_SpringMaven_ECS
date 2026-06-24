@@ -1,0 +1,2408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<!--
+			========================================================================
+			* 소스명 : dataMapping.xml
+			* 설 명 : as-is와 to-be 데이터 매핑을 위한 프로그램
+			* 작성일 : 2018.05.17
+			* 사 번 : 사번
+			* << 개정이력 >>
+			* 수정일 수정자 수정내용
+			* 2018.05.17 사번 개발자 최초 작성
+			*
+			* Copyright (C) 2017 by Unlimited K-water, All right reserved.
+			========================================================================
+		-->
+		<w2:type>DEFAULT</w2:type>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection baseNode="map">
+				<w2:dataList id="dltDataList1" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="chk" name="선택" dataType="text">
+						</w2:column>
+						<w2:column id="col1" name="PM설비번호" dataType="text">
+						</w2:column>
+						<w2:column id="col2" name="지형지물번호" dataType="text">
+						</w2:column>
+						<w2:column id="col3" name="권역" dataType="text">
+						</w2:column>
+						<w2:column id="col4" name="관리부서" dataType="text">
+						</w2:column>
+						<w2:column id="col5" name="사업단계" dataType="text">
+						</w2:column>
+						<w2:column id="col6" name="계통" dataType="text">
+						</w2:column>
+						<w2:column id="col7" name="구간" dataType="text">
+						</w2:column>
+						<w2:column id="col8" name="항목1" dataType="text">
+						</w2:column>
+						<w2:column id="col9" name="항목2" dataType="text">
+						</w2:column>
+						<w2:column id="col10" name="항목3" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataList id="dltDataList2" baseNode="list" saveRemovedData="true" repeatNode="map">
+					<w2:columnInfo>
+						<w2:column id="chk" name="선택" dataType="text">
+						</w2:column>
+						<w2:column id="col1" name="PM설비번호" dataType="text">
+						</w2:column>
+						<w2:column id="col2" name="지형지물번호" dataType="text">
+						</w2:column>
+						<w2:column id="col3" name="권역" dataType="text">
+						</w2:column>
+						<w2:column id="col4" name="관리부서" dataType="text">
+						</w2:column>
+						<w2:column id="col5" name="사업단계" dataType="text">
+						</w2:column>
+						<w2:column id="col6" name="계통" dataType="text">
+						</w2:column>
+						<w2:column id="col7" name="구간" dataType="text">
+						</w2:column>
+						<w2:column id="col8" name="항목1" dataType="text">
+						</w2:column>
+						<w2:column id="col9" name="항목2" dataType="text">
+						</w2:column>
+						<w2:column id="col10" name="항목3" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+					<w2:data use="false"></w2:data>
+				</w2:dataList>
+				<w2:dataMap baseNode="map" id="">
+					<w2:keyInfo>
+						<w2:key id="tableNm" name="테이블명" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm1" name="고정컬럼1" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal1" name="고정컬럼값1" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm2" name="고정컬럼2" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal2" name="고정컬럼값2" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm3" name="고정컬럼3" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal3" name="고정컬럼값3" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm4" name="고정컬럼4" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal4" name="고정컬럼값4" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm5" name="고정컬럼5" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal5" name="고정컬럼값5" dataType="text">
+						</w2:key>
+						<w2:key id="colNm1" name="컬럼1" dataType="text">
+						</w2:key>
+						<w2:key id="colVal1" name="컬럼값1" dataType="text">
+						</w2:key>
+						<w2:key id="colNm2" name="컬럼2" dataType="text">
+						</w2:key>
+						<w2:key id="colVal2" name="컬럼값2" dataType="text">
+						</w2:key>
+						<w2:key id="colNm3" name="컬럼3" dataType="text">
+						</w2:key>
+						<w2:key id="colVal3" name="컬럼값4" dataType="text">
+						</w2:key>
+						<w2:key id="colNm4" name="컬럼4" dataType="text">
+						</w2:key>
+						<w2:key id="colVal4" name="컬럼값4" dataType="text">
+						</w2:key>
+						<w2:key id="selCols" name="결과컬럼" dataType="text">
+						</w2:key>
+						<w2:key id="retCnt" name="조회건수" dataType="text">
+						</w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap baseNode="map" id="dmaInquireParam1" style="">
+					<w2:keyInfo>
+						<w2:key dataType="text" id="tableNm" name="테이블명">
+						</w2:key>
+						<w2:key id="fixColNm1" name="고정컬럼1" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal1" name="고정컬럼값1" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm2" name="고정컬럼2" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal2" name="고정컬럼값2" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm3" name="고정컬럼3" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal3" name="고정컬럼값3" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm4" name="고정컬럼4" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal4" name="고정컬럼값4" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm5" name="고정컬럼5" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal5" name="고정컬럼값5" dataType="text">
+						</w2:key>
+						<w2:key dataType="text" id="colNm1" name="컬럼1">
+						</w2:key>
+						<w2:key dataType="text" id="colVal1" name="컬럼값1">
+						</w2:key>
+						<w2:key dataType="text" id="colNm2" name="컬럼2">
+						</w2:key>
+						<w2:key dataType="text" id="colVal2" name="컬럼값2">
+						</w2:key>
+						<w2:key dataType="text" id="colNm3" name="컬럼3">
+						</w2:key>
+						<w2:key dataType="text" id="colVal3" name="컬럼값4">
+						</w2:key>
+						<w2:key dataType="text" id="colNm4" name="컬럼4">
+						</w2:key>
+						<w2:key dataType="text" id="colVal4" name="컬럼값4">
+						</w2:key>
+						<w2:key dataType="text" id="selCols" name="결과컬럼">
+						</w2:key>
+
+						<w2:key id="retCnt" name="조회건수" dataType="text">
+						</w2:key>
+						<w2:key id="mappedColNm" name="매핑컬럼" dataType="text">
+						</w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap baseNode="map" id="dmaInquireParam2" style="">
+					<w2:keyInfo>
+						<w2:key dataType="text" id="tableNm" name="테이블명">
+						</w2:key>
+						<w2:key id="fixColNm1" name="고정컬럼1" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal1" name="고정컬럼값1" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm2" name="고정컬럼2" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal2" name="고정컬럼값2" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm3" name="고정컬럼3" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal3" name="고정컬럼값3" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm4" name="고정컬럼4" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal4" name="고정컬럼값4" dataType="text">
+						</w2:key>
+						<w2:key id="fixColNm5" name="고정컬럼5" dataType="text">
+						</w2:key>
+						<w2:key id="fixColVal5" name="고정컬럼값5" dataType="text">
+						</w2:key>
+						<w2:key dataType="text" id="colNm1" name="컬럼1">
+						</w2:key>
+						<w2:key dataType="text" id="colVal1" name="컬럼값1">
+						</w2:key>
+						<w2:key dataType="text" id="colNm2" name="컬럼2">
+						</w2:key>
+						<w2:key dataType="text" id="colVal2" name="컬럼값2">
+						</w2:key>
+						<w2:key dataType="text" id="colNm3" name="컬럼3">
+						</w2:key>
+						<w2:key dataType="text" id="colVal3" name="컬럼값4">
+						</w2:key>
+						<w2:key dataType="text" id="colNm4" name="컬럼4">
+						</w2:key>
+						<w2:key dataType="text" id="colVal4" name="컬럼값4">
+						</w2:key>
+						<w2:key dataType="text" id="selCols" name="결과컬럼">
+						</w2:key>
+						<w2:key id="retCnt" name="조회건수" dataType="text">
+						</w2:key>
+						<w2:key id="mappedColNm" name="매핑컬럼" dataType="text">
+						</w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataMap baseNode="map" id="dmaSaveData">
+					<w2:keyInfo>
+						<w2:key id="asisTableNm" name="AS-IS테이블명" dataType="text">
+						</w2:key>
+						<w2:key id="asisColNm" name="AS-IS컬럼명" dataType="text">
+						</w2:key>
+						<w2:key id="asisColData" name="AS-IS컬럼데이터" dataType="text">
+						</w2:key>
+						<w2:key id="tobeTableNm" name="TO-BE테이블명" dataType="text">
+						</w2:key>
+						<w2:key id="tobeColNm" name="TO-BE컬럼명" dataType="text">
+						</w2:key>
+						<w2:key id="tobeColData" name="TO-BE컬럼데이터" dataType="text">
+						</w2:key>
+						<w2:key id="frstRegistDt" name="최초등록일시" dataType="text">
+						</w2:key>
+						<w2:key id="frstRgstrId" name="최초등록자ID" dataType="text">
+						</w2:key>
+						<w2:key id="lastUpdtDt" name="최종수정일시" dataType="text">
+						</w2:key>
+						<w2:key id="lastUpdusrId" name="최종등록자ID" dataType="text">
+						</w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltTableList1" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="tableName" name="테이블명" dataType="text">
+						</w2:column>
+						<w2:column id="tableComments" name="테이블설명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" id="dltTableList2" repeatNode="map" saveRemovedData="true" style="">
+					<w2:columnInfo>
+						<w2:column dataType="text" id="tableName" name="테이블명">
+						</w2:column>
+						<w2:column dataType="text" id="tableComments" name="테이블설명">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltColumns1" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="tableName" name="테이블명" dataType="text">
+						</w2:column>
+						<w2:column id="columnName" name="컬럼명" dataType="text">
+						</w2:column>
+						<w2:column id="columnComments" name="컬럼설명" dataType="text">
+						</w2:column>
+						<w2:column id="dataType" name="데이터타입" dataType="text">
+						</w2:column>
+						<w2:column id="dataLength" name="데이터길이" dataType="text">
+						</w2:column>
+						<w2:column id="nullable" name="Null여부" dataType="text">
+						</w2:column>
+						<w2:column id="columnId" name="컬럼순서" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" id="dltColumns2" repeatNode="map" saveRemovedData="true" style="">
+					<w2:columnInfo>
+						<w2:column dataType="text" id="tableName" name="테이블명">
+						</w2:column>
+						<w2:column dataType="text" id="columnName" name="컬럼명">
+						</w2:column>
+						<w2:column dataType="text" id="columnComments" name="컬럼설명">
+						</w2:column>
+						<w2:column dataType="text" id="dataType" name="데이터타입">
+						</w2:column>
+						<w2:column dataType="text" id="dataLength" name="데이터길이">
+						</w2:column>
+						<w2:column dataType="text" id="nullable" name="Null여부">
+						</w2:column>
+						<w2:column dataType="text" id="columnId" name="컬럼순서">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns11" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="rohqcd" name="지역본부코드" dataType="text">
+						</w2:column>
+						<w2:column id="rohqnm" name="지역본부명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns12" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="rohqcd" name="지역본부코드" dataType="text">
+						</w2:column>
+						<w2:column id="mgdpcd" name="관리부서코드" dataType="text">
+						</w2:column>
+						<w2:column id="mgdpnm" name="관리부서명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns13" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="chrgMgdpcd" name="주무관리부서코드" dataType="text">
+						</w2:column>
+						<w2:column id="bzspcd" name="사업단계코드" dataType="text">
+						</w2:column>
+
+						<w2:column id="bzspnm" name="사업단계명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns14" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="bzspcd" name="사업단계코드" dataType="text">
+						</w2:column>
+						<w2:column id="cnncd" name="계통코드" dataType="text">
+						</w2:column>
+						<w2:column id="cnnnm" name="계통명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns15" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="bzspcd" name="사업단계코드" dataType="text">
+						</w2:column>
+						<w2:column id="cnncd" name="계통코드" dataType="text">
+						</w2:column>
+						<w2:column id="scncd" name="구간코드" dataType="text">
+						</w2:column>
+						<w2:column id="scnnm" name="구간명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns21" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="dstrctHqCd" name="권역본부코드" dataType="text">
+						</w2:column>
+						<w2:column id="dstrctHqNm" name="권역본부명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns22" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="dstrctHqCd" name="권역본부코드" dataType="text">
+						</w2:column>
+						<w2:column id="mnggrpCd" name="관리부서코드" dataType="text">
+						</w2:column>
+						<w2:column id="mnggrpNm" name="관리부서명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns23" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="mnggrpCd" name="관리부서코드" dataType="text">
+						</w2:column>
+						<w2:column id="bsnsStepCd" name="사업단계코드" dataType="text">
+						</w2:column>
+
+						<w2:column id="bsnsStepNm" name="사업단계명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns24" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="bsnsStepCd" name="사업단계코드" dataType="text">
+						</w2:column>
+						<w2:column id="systCd" name="계통코드" dataType="text">
+						</w2:column>
+						<w2:column id="systNm" name="계통명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataList baseNode="list" repeatNode="map" id="dltFixColumns25" saveRemovedData="true">
+					<w2:columnInfo>
+						<w2:column id="bsnsStepCd" name="사업단계코드" dataType="text">
+						</w2:column>
+						<w2:column id="systCd" name="계통코드" dataType="text">
+						</w2:column>
+						<w2:column id="sctnCd" name="구간코드" dataType="text">
+						</w2:column>
+						<w2:column id="sctnNm" name="구간명" dataType="text">
+						</w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+			</w2:dataCollection>
+			<w2:workflowCollection></w2:workflowCollection>
+		</xf:model>
+		<script lazy="false" type="text/javascript"><![CDATA[
+	/**
+	 * 화면 초기화 작업을 수행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.initScreen = function() {
+		// 화면 초기화
+        comLib.initForm($p, "dataMapping");
+
+		// 디폴트 값 설정
+		scwin.setDefaultValue();
+
+		// 데이터 조회
+		scwin.retrieveOldTableList();
+		scwin.retrieveNewTableList();
+	};
+	
+	/**
+	 * 기본값 설정
+	 * @param
+	 * @return
+	 */
+	scwin.setDefaultValue = function() {
+		// 조회건수
+		dmaInquireParam1.set("retCnt", "100");
+		dmaInquireParam2.set("retCnt", "100");
+		
+		// 매핑컬럼 : 값(MAPPED_KEY)이 있으면 "매핑제외", 없으면 "전체"
+		// 매핑제외 Checkbox의 Value에 "MAPPED_KEY" 설정
+		dmaInquireParam1.set("mappedColNm", "");
+		dmaInquireParam2.set("mappedColNm", "");
+	};
+	
+	/**
+	 * AS-IS 테이블 목록을 조회한다.
+	 * @param
+	 * @return	 
+	 */ 
+	scwin.retrieveOldTableList = function() {
+		var requestData = {};
+								  
+		requestData.param = {"tableList" : ["VT_ZZ_BIZ_SITE_AS"   // 사업장(면)
+												, "VT_ZZ_COUPLING"   // 커플링
+												, "VT_ZZ_DRAINAGE"   // 배류기위치
+												, "VT_ZZ_DRAINAGE_PS"   // 배류기위치(점)
+												, "VT_ZZ_FACILITY_AS"   // 시설물(면)
+												, "VT_ZZ_FIREFIGHTING_PS"   // 소방시설(점)
+												, "VT_ZZ_FLOWMETER_PS"   // 유량계위치(점)
+												, "VT_ZZ_FLOWMETER_SPECIFICATION"   // 유량계제원												
+												, "VT_ZZ_INTAKE_AS"   // 취수구(면)
+												, "VT_ZZ_INVERTER"   // 인버터
+												, "VT_ZZ_MANHOLE_PS"   // 맨홀(점)
+												, "VT_ZZ_MOTOR"   // 모터
+												, "VT_ZZ_PUMP"   // 펌프
+												, "VT_ZZ_PUMP_MOTOR_PS"   // 펌프모터(점)
+												, "VT_ZZ_PUMP_MOTOR_VALVE"   // 펌프모터밸브
+												, "VT_ZZ_RECTIFIER"   // 정류기										
+												, "VT_ZZ_RECTIFIER_PS"   // 정류기위치(점)
+												, "VT_ZZ_STANDPIPE_PS"   // 스탠드파이프(점)
+												, "VT_ZZ_STRUCTURES_AS"   // 건축물(면)
+												, "VT_ZZ_SURGE_TANK_PS"   // 서지탱크(점)
+												, "VT_ZZ_TEST_BOX"   // 측정함
+												, "VT_ZZ_TEST_BOX_PS"   // 측정함위치(점)
+												, "VT_ZZ_TUNNEL_AS"   // 터널(면)
+												, "VT_ZZ_VALVEROOM_AS"   // 밸브실(면)
+												, "VT_ZZ_VALVE_PS"   // 밸브(점)
+												, "VT_ZZ_WASTE_PIPELINE"   // 폐관로 
+												, "VT_ZZ_WATER_PIPELINE_LS"   // 상수관로(선)  
+												]
+								   };
+
+		var option = {action : "zz/data/retrieveTableList.do"
+						, reqData : requestData
+						, resData : dltTableList1
+						, success : "scwin.retrieveOldTableListCallBack"
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);
+	};
+	
+	/**
+	 * AS-IS 테이블 목록 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.retrieveOldTableListCallBack = function(res) {
+		if (dltTableList1.getRowCount() == 0) {
+			comLib.alert($p, "AS-IS 테이블의 데이터가 없습니다.");
+		}
+	};
+	
+	/**
+	 * AS-IS 테이블의 컬럼 정보를 조회한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxTables1_onchange = function() {
+		var tableNm = sbxTables1.getValue();
+		
+		if (tableNm != "" && tableNm != null) {	
+			var requestData = {};
+			requestData.param = {"tableName" : tableNm};
+		
+			var option = {action : "zz/data/retrieveTabColumns.do"
+							, reqData : requestData
+							, resData : dltColumns1
+							, success : "scwin.sbxTables1CallBack"
+							, isShowMeg : false
+							};
+			ajaxLib.executeAjax($p, option);
+		} else {
+			comLib.alert($p, "테이블명은 필수 입력 항목입니다.");
+		}
+	};
+	
+	/**
+	 * AS-IS 테이블의 컬럼 정보 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxTables1CallBack = function(res) {
+		if (dltColumns1.getRowCount() > 0) {
+			// 고정 컬럼 설정
+			scwin.setAsisFixedColumns();
+		
+			// 컬럼 설정
+			scwin.setColumnId(dltColumns1);
+			
+			// 컬럼 필터 설정 - 보이지 않는 컬럼 설정
+			scwin.setAsisColumnFilter();
+
+			// 해당 테이블의 데이터 조회
+			scwin.btnInquire1_onclick();
+		} else {
+			comLib.alert($p, "AS-IS 테이블의 컬럼 정보가 없습니다.");
+		}
+	};
+	
+	/**
+	 * AS-IS 고정 컬럼 설정
+	 * @param
+	 * @return	 
+	 */ 
+	scwin.setAsisFixedColumns = function() {
+		// 해당 테이블에 고정 컬럼이 포함되어 있지 않으면 SelectBox를 disabled 처리
+		// 지역본부
+		var idx = dltColumns1.getMatchedIndex("columnName", "ROHQCD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam1.set("fixColNm1", "ROHQCD");
+			sbxFixCol11.setDisabled(false);	
+			
+			// 지역본부 목록 조회
+			scwin.retrieveOldHeadquarterList();
+		} else {
+			dmaInquireParam1.set("fixColNm1", "");
+			sbxFixCol11.setDisabled(true);	
+		}
+		
+		// 관리부서
+		idx = dltColumns1.getMatchedIndex("columnName", "MGDPCD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam1.set("fixColNm2", "MGDPCD");
+			sbxFixCol12.setDisabled(false);	
+		} else {
+			dmaInquireParam1.set("fixColNm2", "");
+			sbxFixCol12.setDisabled(true);	
+		}
+
+		// 사업단계
+		idx = dltColumns1.getMatchedIndex("columnName", "BZSPCD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam1.set("fixColNm3", "BZSPCD");
+			sbxFixCol13.setDisabled(false);	
+		} else {
+			dmaInquireParam1.set("fixColNm3", "");
+			sbxFixCol13.setDisabled(true);	
+		}
+		
+		// 계통
+		idx = dltColumns1.getMatchedIndex("columnName", "CNNCD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam1.set("fixColNm4", "CNNCD");
+			sbxFixCol14.setDisabled(false);	
+		} else {
+			dmaInquireParam1.set("fixColNm4", "");
+			sbxFixCol14.setDisabled(true);	
+		}
+
+		// 구간
+		idx = dltColumns1.getMatchedIndex("columnName", "SCNCD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam1.set("fixColNm5", "SCNCD");
+			sbxFixCol15.setDisabled(false);	
+		} else {
+			dmaInquireParam1.set("fixColNm5", "");
+			sbxFixCol15.setDisabled(true);	
+		}
+	};
+	
+	/**
+	 * AS-IS 컬럼 필터 설정
+	 * @param
+	 * @return	 
+	 */ 
+	scwin.setAsisColumnFilter = function() {	
+		// 조회 조건 컬럼 Filter 설정
+		// 첫 번째 컬럼(MAPPED_KEY - 검색하면 속도 느림)과 고정(코드) 컬럼이 검색 조건에서 보이지 않도록 Filter 설정
+		dltColumns1.setColumnFilter({type : "regExp"
+											, colIndex : "columnName"
+											, key : /^((?!(MAPPED_KEY|ROHQCD|MGDPCD|BZSPCD|CNNCD|SCNCD)).|(ROHQCD_NM|MGDPCD_NM|BZSPCD_NM|CNNCD_NM|SCNCD_NM))*$/								
+											, condition : "and"
+											});
+	
+		// GridView 데이터 Filter 설정 - 코드 컬럼 숨김
+		var cols = ["rohqcd", "mgdpcd", "bzspcd", "cnncd", "scncd"];
+		for (var k=0; k < cols.length; k++) {
+			grdDataList1.setColumnVisible(cols[k], false);
+		}
+	};
+	
+	/** 
+	 * AS-IS 고정 컬럼(지역본부) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.retrieveOldHeadquarterList = function() {
+		if (dltFixColumns11.getRowCount() == 0) {   // 처음 조회인 경우
+			var requestData = {};
+		
+			var option = {action : "zz/data/retrieveHeadquarterList.do"
+							, reqData : requestData
+							, resData : dltFixColumns11
+							, success : "scwin.retrieveOldHeadquarterListCallBack"
+							, isShowMeg : false
+							};
+			ajaxLib.executeAjax($p, option);
+		}
+	};
+
+	/**
+	 *  AS-IS 고정 컬럼(지역본부) 목록 조회 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.retrieveOldHeadquarterListCallBack = function(res) {
+		if (sbxFixCol11.getRowCount() > 0) {	
+			var cd = sbxFixCol11.getValue();
+			if (cd != "" && cd != null) {
+				scwin.sbxFixCol11_onchange();   // 관리부서 목록 조회
+			}
+		}
+	};
+
+	/** 
+	 * AS-IS 고정 컬럼(관리부서) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.sbxFixCol11_onchange = function() {
+		var requestData = {};
+		requestData.param = {"rohqcd" : sbxFixCol11.getValue()};   // 지역본부코드
+	
+		var option = {action : "zz/data/retrieveDepartmentList.do"
+						, reqData : requestData
+						, resData : dltFixColumns12
+						, success : "scwin.sbxFixCol11CallBack"
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);		
+	};
+	
+	/**
+	 *  AS-IS 고정 컬럼(관리부서) 목록 조회 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxFixCol11CallBack = function(res) {
+		scwin.sbxFixCol12_onchange();   // 사업단계 목록 조회
+	};
+	
+	/** 
+	 * AS-IS 고정 컬럼(사업단계) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.sbxFixCol12_onchange = function() {
+		var requestData = {};
+		requestData.param = {"mgdpcd" : sbxFixCol12.getValue()};   // 관리부서코드
+	
+		var option = {action : "zz/data/retrieveBizStepList.do"
+						, reqData : requestData
+						, resData : dltFixColumns13
+						, success : "scwin.sbxFixCol12CallBack"
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);		
+	};
+	
+	/**
+	 *  AS-IS 고정 컬럼(사업단계) 목록 조회 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxFixCol12CallBack = function(res) {
+		scwin.sbxFixCol13_onchange();   // 계통 목록 조회
+	};
+	
+	/** 
+	 * AS-IS 고정 컬럼(계통) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.sbxFixCol13_onchange = function() {
+		var requestData = {};
+		requestData.param = {"bzspcd" : sbxFixCol13.getValue()};   // 사업단계코드
+	
+		var option = {action : "zz/data/retrieveChannelList.do"
+						, reqData : requestData
+						, resData : dltFixColumns14
+						, success : "scwin.sbxFixCol13CallBack"
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);		
+	};
+	
+	/**
+	 *  AS-IS 고정 컬럼(사업단계) 목록 조회 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxFixCol13CallBack = function(res) {
+		scwin.sbxFixCol14_onchange();   // 구간 목록 조회
+	};
+	
+	/** 
+	 * AS-IS 고정 컬럼(구간) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.sbxFixCol14_onchange = function() {
+		var requestData = {};
+		requestData.param = {"bzspcd" : sbxFixCol13.getValue()   // 사업단계코드
+								  , "cnncd" : sbxFixCol14.getValue()   // 계통코드 
+								  };
+	
+		var option = {action : "zz/data/retrieveSectionList.do"
+						, reqData : requestData
+						, resData : dltFixColumns15
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);		
+	};
+	
+	/** 
+	 * AS-IS 테이블 조회를 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInquire1_onclick = function() {
+		if(utilLib.validateGroup(grpSearch1)) {
+			var requestData = {};
+	
+			dmaInquireParam1.set("selCols", dltColumns1.getColData("columnName").toString());
+			requestData.param = dmaInquireParam1.getJSON();
+	
+			var option = {action : "zz/data/retrieveDataList.do"
+						   , reqData : requestData
+						   , resData : dltDataList1
+						   , success : "scwin.btnInquire1CallBack"
+						   , isShowMeg : false
+							 };
+			ajaxLib.executeAjax($p, option);
+		}
+	};
+
+	/** 
+	 * AS-IS 테이블 조회 CallBack을 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.btnInquire1CallBack = function(resBody) {
+		txtCnt1.setValue( "0" );
+		if (resBody.message.code == "success") {
+			txtCnt1.setValue(dltDataList1.getRowCount());
+		} else {
+			comLib.alert($p,  "AS-IS 테이블 조회시 에러가 발생되었습니다." );
+		}
+	};
+	
+	/** 
+	 * AS-IS 테이블 기준으로 매핑 데이터를 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelete1_onclick = function() {
+		var rowIndex1 = grdDataList1.getMatchedIndex("chk1", "1" , true);  // ASIS라디오 선택 index
+
+		if (rowIndex1 != "" && rowIndex1 != null) {
+			var mappedKey = dltDataList1.getCellData(rowIndex1 , "mappedKey");  // TOBE 기본키키 - TOBE 기본키
+			if (mappedKey == "" || mappedKey == null) {
+				comLib.alert($p, "선택한 항목은 매핑되어 있지 않습니다.");
+				return;
+			}
+			
+			var asisPk = dltDataList1.getCellData(rowIndex1 , "pk");  // ASIS 기본키
+
+			dmaSaveData.set("asisTableNm", sbxTables1.getValue());
+			dmaSaveData.set("asisColNm", "ASIS_PK");
+			dmaSaveData.set("asisColData", asisPk);
+		}  else {
+			comLib.alert($p, "AS-IS 테이블에서 선택된 데이터가 없습니다.");
+			return;
+		}
+		
+		// 삭제할것인지 confirm
+		comLib.confirm($p, "매핑 정보를 삭제하겠습니까?", "delete1Confirm");
+	};
+	
+	/** 
+	 * AS-IS 테이블 기준으로 매핑 데이터를 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.delete1Confirm = function() {
+		var requestData = {};
+		
+		requestData.param = dmaSaveData.getJSON();
+
+		var option = {action : "zz/data/deleteDataMapping.do"
+		               , reqData : requestData
+		               , success : "scwin.delete1ConfirmCallback"
+					   , savedToken : true
+		               , isShowMeg : false
+	                 };			
+		ajaxLib.executeAjax($p, option);	
+	};
+	
+	/** 
+	 * AS-IS 기분 매핑 삭제에 대한 Callback을 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.delete1ConfirmCallback = function() {
+		// AS-IS 매핑 정보 초기화
+		var rowIndex1 = grdDataList1.getMatchedIndex("chk1", "1", true);   // ASIS라디오 선택 index
+		dltDataList1.setCellData(parseInt(rowIndex1), "mappedKey", "");
+		
+		// TO-BE 매핑 정보 초기화
+		var asisPk = dltDataList1.getCellData(rowIndex1 , "pk");   // ASIS 기본키
+		var arrRowIndex2 = grdDataList2.getMatchedIndex("mappedKey", asisPk, false);   // TOBE 매핑키 index
+		for (var k=0; k < arrRowIndex2.length; k++) {
+			var mappedKey = dltDataList2.getCellData(arrRowIndex2[k] , "mappedKey");   // TOBE 매핑키
+			if (mappedKey != "" && mappedKey != null) {
+				dltDataList2.setCellData(arrRowIndex2[k], "mappedKey", mappedKey.replace(asisPk, ""));   // 삭제되는 ASIS기본키 제거
+			}
+		}	
+			
+		comLib.alert($p,  "매핑 정보가 삭제되었습니다." );
+	};
+	
+	/** 
+	 * AS-IS 테이블 기준으로 지도 위치 이동
+	 * @param
+	 * @return
+	 */
+	scwin.btnMove_onclick = function() {
+		var rowIndex1 = grdDataList1.getMatchedIndex("chk1", "1" , true);  // ASIS라디오 선택 index
+
+		if (rowIndex1 != "" && rowIndex1 != null) {
+			
+		}  else {
+			comLib.alert($p, "AS-IS 테이블에서 선택된 데이터가 없습니다.");
+		}
+	};
+	
+	/**
+	 * TO-BE 테이블 목록을 조회한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.retrieveNewTableList = function() {
+		var requestData = {};
+		
+		requestData.param = {"tableList" : ["VT_ZZ_VM_PG07012_01"   // PG_모터
+												, "VT_ZZ_VM_PG07018_01"   // PG_유량계사양
+												, "VT_ZZ_VM_PG07025_01"   // PG_펌프
+												, "VT_ZZ_VM_PG07030_01"   // PG_펌프모터밸브
+												, "VT_ZZ_VM_PG07037_01"   // PG_인버터
+												, "VT_ZZ_VM_PG07049_01"   // PG_측정함
+												, "VT_ZZ_VM_PG07053_01"   // PG_커플링
+												, "VT_ZZ_VM_PG20004_01"   // PG_건축물
+												, "VT_ZZ_VM_PG20027"       // PG_맨홀
+												, "VT_ZZ_VM_PG20030"       // PG_유량계위치
+												, "VT_ZZ_VM_PG20031_01"   // PG_배류시설위치
+												, "VT_ZZ_VM_PG20032_01"   // PG_밸브
+												, "VT_ZZ_VM_PG20037_01"   // PG_밸브실
+												, "VT_ZZ_VM_PG20048_01"   // PG_서지탱크
+												, "VT_ZZ_VM_PG20045_01"   // PG_관로
+												, "VT_ZZ_VM_PG20049_01"   // PG_소방시설
+												, "VT_ZZ_VM_PG20056_01"   // PG_스탠드파이프
+												, "VT_ZZ_VM_PG20060_01"   // PG_펌프모터
+												, "VT_ZZ_VM_PG20068_PS"   // PG_측정함위치
+												, "VT_ZZ_VM_PG20061_01"   // PG_농축조
+												, "VT_ZZ_VM_PG20061_02"   // PG_배슬러지지
+												, "VT_ZZ_VM_PG20061_03"   // PG_여과지
+												, "VT_ZZ_VM_PG20061_04"   // PG_역세척수조
+												, "VT_ZZ_VM_PG20061_05"   // PG_응집지
+												, "VT_ZZ_VM_PG20061_06"   // PG_자연건조장
+												, "VT_ZZ_VM_PG20061_07"   // PG_정수지
+												, "VT_ZZ_VM_PG20061_08"   // PG_조정조
+												, "VT_ZZ_VM_PG20061_09"   // PG_집수조
+												, "VT_ZZ_VM_PG20061_10"   // PG_착수정
+												, "VT_ZZ_VM_PG20061_11"   // PG_침사지
+												, "VT_ZZ_VM_PG20061_12"   // PG_침전지
+												, "VT_ZZ_VM_PG20061_13"   // PG_혼화지
+												, "VT_ZZ_VM_PG20061_14"   // PG_회수조
+												, "VT_ZZ_VM_PG20061_15"   // PG_흡수정
+												, "VT_ZZ_VM_PG20061_16"   // PG_흡수정
+												, "VT_ZZ_VM_PG20061_17"   // PG_조절지
+												, "VT_ZZ_VM_PG20063_01"   // PG_정류기위치
+												, "VT_ZZ_VM_PG20065_01"   // PG_취수구역
+												, "VT_ZZ_VM_PG20069_01"   // PG_터널
+												, "VT_ZZ_VM_PG99038_01"   // PG_가압장
+												, "VT_ZZ_VM_PG99038_03"   // PG_정수장
+												, "VT_ZZ_VM_PG99038_05"   // PG_취수장
+												, "VT_ZZ_VM_PG99038_AS"   // PG_사업장
+												]
+							};
+								   
+		var option = {action : "zz/data/retrieveTableList.do"
+						, reqData : requestData
+						, resData : dltTableList2
+						, success : "scwin.retrieveNewTableListCallBack"
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	/**
+	 * TO-BE 테이블 목록 조회의 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.retrieveNewTableListCallBack = function(res) {
+		if (dltTableList2.getRowCount() == 0) {
+			comLib.alert($p, "TO-BE 테이블의 데이터가 없습니다.");
+		}
+	};
+
+	/**
+	 * TO-BE 테이블의 컬럼 정보를 조회한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxTables2_onchange = function() {
+		var tableNm = sbxTables2.getValue();
+		
+		if (tableNm != "" && tableNm != null) {	
+			var requestData = {};
+			requestData.param = {"tableName" : tableNm};
+		
+			var option = {action : "zz/data/retrieveTabColumns.do"
+							, reqData : requestData
+							, resData : dltColumns2
+							, success : "scwin.sbxTables2CallBack"
+							, isShowMeg : false
+							};
+			ajaxLib.executeAjax($p, option);
+		} else {
+			comLib.alert($p, "테이블명은 필수 입력 항목입니다.");
+		}
+	};
+	
+	/**
+	 * TO-BE 테이블의 컬럼 정보 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxTables2CallBack = function(res) {
+		if (dltColumns2.getRowCount() > 0) {
+			// 고정 컬럼 설정
+			scwin.setTobeFixedColumns();
+		
+			// 컬럼 설정
+			scwin.setColumnId(dltColumns2);
+			
+			// 컬럼 필터 설정 - 보이지 않는 컬럼 설정
+			scwin.setTobeColumnFilter();
+			
+			// 해당 테이블의 데이터 조회
+			scwin.btnInquire2_onclick();
+		} else {
+			comLib.alert($p, "TO-BE 테이블의 컬럼 정보가 없습니다.");
+		}
+	};
+	
+	/**
+	 * TO-BE 고정 컬럼 설정
+	 * @param
+	 * @return	 
+	 */ 
+	scwin.setTobeFixedColumns = function() {
+		// 해당 테이블에 고정 컬럼이 포함되어 있지 않으면 SelectBox를 disabled 처리
+		// 권역본부
+		var idx = dltColumns2.getMatchedIndex("columnName", "DSTRCT_HQ_CD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam2.set("fixColNm1", "DSTRCT_HQ_CD");
+			sbxFixCol21.setDisabled(false);	
+			
+			// 권역본부 목록 조회
+			scwin.retrieveNewHeadquarterList();
+		} else {
+			dmaInquireParam2.set("fixColNm1", "");
+			sbxFixCol21.setDisabled(true);	
+		}
+		
+		// 관리부서-플랜트번호
+		idx = dltColumns2.getMatchedIndex("columnName", "MNGGRP_CD", true); 
+		if (idx != "" && idx != null) {
+			dmaInquireParam2.set("fixColNm2", "MNGGRP_CD");
+			sbxFixCol22.setDisabled(false);	
+		} else {
+			dmaInquireParam2.set("fixColNm2", "");
+			sbxFixCol22.setDisabled(true);	
+		}
+
+		// 사업단계
+		idx = dltColumns2.getMatchedIndex("columnName", "PM_BSNS_STEP_CD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam2.set("fixColNm3", "PM_BSNS_STEP_CD");
+			sbxFixCol23.setDisabled(false);	
+		} else {
+			dmaInquireParam2.set("fixColNm3", "");
+			sbxFixCol23.setDisabled(true);	
+		}
+		
+		// 계통
+		idx = dltColumns2.getMatchedIndex("columnName", "PM_SYST_CD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam2.set("fixColNm4", "PM_SYST_CD");
+			sbxFixCol24.setDisabled(false);	
+		} else {
+			dmaInquireParam2.set("fixColNm4", "");
+			sbxFixCol24.setDisabled(true);	
+		}
+
+		// 구간
+		idx = dltColumns2.getMatchedIndex("columnName", "PM_SCTN_CD", true);
+		if (idx != "" && idx != null) {
+			dmaInquireParam2.set("fixColNm5", "PM_SCTN_CD");
+			sbxFixCol25.setDisabled(false);	
+		} else {
+			dmaInquireParam2.set("fixColNm5", "");
+			sbxFixCol25.setDisabled(true);	
+		}
+	};
+	
+	/**
+	 * TO-BE 컬럼 필터 설정
+	 * @param
+	 * @return	 
+	 */ 
+	scwin.setTobeColumnFilter = function() {	
+		// 조회 조건 컬럼 Filter 설정
+		// 첫 번째 컬럼(MAPPED_KEY - 검색하면 속도 느림)과 고정(코드) 컬럼이 검색 조건에서 보이지 않도록 Filter 설정
+		dltColumns2.setColumnFilter({type : "regExp"
+											, colIndex : "columnName"
+											, key : /^((?!(MAPPED_KEY|DSTRCT_HQ_CD|MNGGRP_CD|PM_BSNS_STEP_CD|PM_SYST_CD|PM_SCTN_CD)).|(DSTRCT_HQ_NM|MNGGRP_NM|PM_BSNS_STEP_NM|PM_SYST_NM|PM_SCTN_NM))*$/																
+											, condition : "and"
+											});
+	
+		// GridView 데이터 Filter 설정 - 코드 숨김
+		var cols = ["dstrctHqCd", "mnggrpCd", "pmBsnsStepCd", "pmSystCd", "pmSctnCd"];
+		for (var k=0; k < cols.length; k++) {
+			grdDataList2.setColumnVisible(cols[k], false);
+		}											
+	};
+		
+	/** 
+	 * TO-BE 고정 컬럼(권역본부) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.retrieveNewHeadquarterList = function() {
+		if (dltFixColumns21.getRowCount() == 0) {   // 처음 조회인 경우
+			var requestData = {};
+		
+			var option = {action : "zz/data/retrieveHeadquarterList2.do"
+							, reqData : requestData
+							, resData : dltFixColumns21
+							, success : "scwin.retrieveNewHeadquarterListCallBack"
+							, isShowMeg : false
+							};
+			ajaxLib.executeAjax($p, option);
+		}
+	};
+
+	/**
+	 *  TO-BE 고정 컬럼(권역본부) 목록 조회 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.retrieveNewHeadquarterListCallBack = function(res) {
+		if (sbxFixCol21.getRowCount() > 0) {	
+			var cd = sbxFixCol21.getValue();
+			if (cd != "" && cd != null) {
+				scwin.sbxFixCol21_onchange();   // 관리부서 목록 조회
+			}
+		}
+	};
+
+	/** 
+	 * TO-BE 고정 컬럼(관리부서) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.sbxFixCol21_onchange = function() {
+		var requestData = {};
+		requestData.param = {"dstrctHqCd" : sbxFixCol21.getValue()};   // 권역본부코드
+	
+		var option = {action : "zz/data/retrieveDepartmentList2.do"
+						, reqData : requestData
+						, resData : dltFixColumns22
+						, success : "scwin.sbxFixCol21CallBack"
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);		
+	};
+	
+	/**
+	 * TO-BE 고정 컬럼(관리부서) 목록 조회 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxFixCol21CallBack = function(res) {
+		scwin.sbxFixCol22_onchange();   // 사업단계 목록 조회
+	};
+	
+	/** 
+	 * TO-BE 고정 컬럼(사업단계) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.sbxFixCol22_onchange = function() {
+		var requestData = {};
+		requestData.param = {"mnggrpCd" : sbxFixCol22.getValue()};   // 관리부서코드
+	
+		var option = {action : "zz/data/retrieveBizStepList2.do"
+						, reqData : requestData
+						, resData : dltFixColumns23
+						, success : "scwin.sbxFixCol22CallBack"
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);		
+	};
+	
+	/**
+	 *  TO-BE 고정 컬럼(사업단계) 목록 조회 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxFixCol22CallBack = function(res) {
+		scwin.sbxFixCol23_onchange();   // 계통 목록 조회
+	};
+	
+	/** 
+	 * TO-BE 고정 컬럼(계통) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.sbxFixCol23_onchange = function() {
+		var requestData = {};
+		requestData.param = {"bsnsStepCd" : sbxFixCol23.getValue()};   // 사업단계코드
+	
+		var option = {action : "zz/data/retrieveChannelList2.do"
+						, reqData : requestData
+						, resData : dltFixColumns24
+						, success : "scwin.sbxFixCol23CallBack"
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);		
+	};
+	
+	/**
+	 *  TO-BE 고정 컬럼(사업단계) 목록 조회 CallBack을 실행한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.sbxFixCol23CallBack = function(res) {
+		scwin.sbxFixCol24_onchange();   // 구간 목록 조회
+	};
+	
+	/** 
+	 * TO-BE 고정 컬럼(구간) 목록을 조회한다.
+	 * @param
+	 * @return
+	 */	
+	scwin.sbxFixCol24_onchange = function() {
+		var requestData = {};
+		requestData.param = {"bsnsStepCd" : sbxFixCol23.getValue()   // 사업단계코드
+								  , "systCd" : sbxFixCol24.getValue()   // 계통코드 
+								  };
+	
+		var option = {action : "zz/data/retrieveSectionList2.do"
+						, reqData : requestData
+						, resData : dltFixColumns25
+						, isShowMeg : false
+						};
+		ajaxLib.executeAjax($p, option);		
+	};
+		
+	/** 
+	 * TO-BE 테이블 조회를 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnInquire2_onclick = function() {
+		if(utilLib.validateGroup(grpSearch2)) {
+			var requestData = {};
+	
+			dmaInquireParam2.set("selCols", dltColumns2.getColData("columnName").toString());
+			requestData.param = dmaInquireParam2.getJSON();
+	
+			var option = {action : "zz/data/retrieveDataList.do"
+						   , reqData : requestData
+						   , resData : dltDataList2
+						   , success : "scwin.btnInquire2CallBack"
+						   , isShowMeg : false
+							 };
+			ajaxLib.executeAjax($p, option);
+		}
+	};
+
+	/** 
+	 * TO-BE 조회 CallBack을 실행한다.
+	 * @param <Object> resBody
+	 * @return
+	 */
+	scwin.btnInquire2CallBack = function(resBody) {
+		txtCnt2.setValue( "0" );
+		if (resBody.message.code == "success") {
+			txtCnt2.setValue(dltDataList2.getRowCount());
+		} else {
+			comLib.alert($p,  "TO-BE 테이블 조회시 에러가 발생되었습니다." );
+		}
+	};
+	
+	/** 
+	 * TO-BE 테이블 기준으로 매핑 데이터를 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnDelete2_onclick = function() {
+		var rowIndex2 = grdDataList2.getMatchedIndex("chk2", "1" , true);  // TOBE 라디오 선택 index
+		
+		if (rowIndex2 != "" && rowIndex2 != null) {
+			var mappedKey = dltDataList2.getCellData(rowIndex2 , "mappedKey");  // TOBE 매핑키 - ASIS 기본키
+			if (mappedKey == "" || mappedKey == null) {
+				comLib.alert($p, "선택한 항목은 매핑되어 있지 않습니다.");
+				return;
+			}
+
+			var tobePk = dltDataList2.getCellData(rowIndex2 , "pk");  // TOBE 기본키
+
+			dmaSaveData.set("tobeTableNm", sbxTables2.getValue());
+			dmaSaveData.set("tobeColNm", "TOBE_PK");
+			dmaSaveData.set("tobeColData", tobePk);
+		}  else {
+			comLib.alert($p, "TO-BE 테이블에서 선택된 데이터가 없습니다.");
+			return;
+		}
+		
+		// 삭제할것인지 confirm
+		comLib.confirm($p, "매핑 정보를 삭제하겠습니까?", "delete2Confirm");	
+	};
+	
+	/** 
+	 * TO-BE 기준으로 매핑 데이터를 삭제한다.
+	 * @param
+	 * @return
+	 */
+	scwin.delete2Confirm = function() {
+		var requestData = {};
+		
+		requestData.param = dmaSaveData.getJSON();
+
+		var option = {action : "zz/data/deleteDataMapping.do"
+		               , reqData : requestData
+		               , success : "scwin.delete2ConfirmCallback"
+					   , savedToken : true
+		               , isShowMeg : false
+	                 };			
+		ajaxLib.executeAjax($p, option);	
+	};
+	
+	/** 
+	 * TO-BE 매핑 삭제에 대한 Callback을 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.delete2ConfirmCallback = function() {
+		 // TO-BE 매핑 정보 초기화
+		var rowIndex2 = grdDataList2.getMatchedIndex("chk2", "1", true);
+		dltDataList2.setCellData(parseInt(rowIndex2), "mappedKey", "");
+		
+		// AS-IS 매핑 정보 초기화
+		var tobePk = dltDataList2.getCellData(rowIndex2 , "pk");  // TOBE 기본키
+		var arrRowIndex1 = grdDataList1.getMatchedIndex("mappedKey", tobePk, false);   // ASIS 매핑키 index
+		for (var k=0; k < arrRowIndex1.length; k++) {
+			var mappedKey = dltDataList1.getCellData(arrRowIndex1[k] , "mappedKey");  // TOBE 매핑키
+			if (mappedKey != "" && mappedKey != null) {
+				dltDataList1.setCellData(arrRowIndex1[k], "mappedKey", mappedKey.replace(tobePk, ""));   // 삭제되는 TOBE 기본키 제거
+			}
+		}
+		
+		comLib.alert($p,  "매핑 정보가 삭제되었습니다." );
+	};
+	
+	/** 
+	 * AS-IS와 TO-BE 테이블에 대한 키 값을 매핑한다.
+	 * @param
+	 * @return
+	 */
+	scwin.btnSave_onclick = function() {
+		var asisPk = "";
+		var rowIndex1 = grdDataList1.getMatchedIndex("chk1", "1" , true);  // ASIS라디오 선택 index
+		if (rowIndex1 != "" && rowIndex1 != null) {
+			asisPk = dltDataList1.getCellData(rowIndex1 , "pk");  // ASIS 기본키
+
+			dmaSaveData.set("asisTableNm", sbxTables1.getValue());
+			dmaSaveData.set("asisColNm", "ASIS_PK");
+			dmaSaveData.set("asisColData", asisPk);
+		}  else {
+			comLib.alert($p, "AS-IS 테이블에서 선택된 데이터가 없습니다.");
+			return;
+		}
+		
+		var tobePk = "";
+		var rowIndex2 = grdDataList2.getMatchedIndex("chk2", "1" , true);  // ASIS라디오 선택 index
+		if (rowIndex2 != "" && rowIndex2 != null) {
+			tobePk = dltDataList2.getCellData(rowIndex2 , "pk");  // TOBE 기본키
+
+			dmaSaveData.set("tobeTableNm", sbxTables2.getValue());
+			dmaSaveData.set("tobeColNm", "TOBE_PK");
+			dmaSaveData.set("tobeColData", tobePk);
+		}  else {
+			comLib.alert($p, "TO-BE 테이블에서 선택된 데이터가 없습니다.");
+			return;
+		}
+		
+		// 기존 매핑 여부 확인
+		var mappedKey = dltDataList2.getCellData(rowIndex2 , "mappedKey");   // TOBE 매핑키
+		if (mappedKey != "" && mappedKey != null) {
+			if (mappedKey.indexOf(asisPk) > -1) {
+				comLib.alert($p, "이미 매핑되어 있습니다.");
+				return;				
+			}
+		}			
+
+		// 저장할것인지 confirm
+		comLib.confirm($p, "매핑 정보를 저장하겠습니까?", "scwin.saveConfirm");
+	};
+	
+	/** 
+	 * 매핑 데이터를 저장한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirm = function() {
+		var requestData = {};
+		
+		requestData.param = dmaSaveData.getJSON();
+
+		var option = {action : "zz/data/insertDataMapping.do"
+		               , reqData : requestData
+		               , success : "scwin.saveConfirmCallback"
+					   , savedToken : true
+		               , isShowMeg : false
+	                 };			
+		ajaxLib.executeAjax($p, option);	
+	};
+
+	/** 
+	 * 매핑 저장에 대한 Callback을 실행한다.
+	 * @param
+	 * @return
+	 */
+	scwin.saveConfirmCallback = function() {
+		// AS-IS 데이터
+		var intRowIdx1 = parseInt(grdDataList1.getMatchedIndex("chk1", "1", true));
+		var mappedKey1 = dltDataList1.getCellData(intRowIdx1, "mappedKey");
+		var asisPk = dltDataList1.getCellData(intRowIdx1, "pk");
+		
+		// TO-BE 데이터
+		var intRowIdx2 = parseInt(grdDataList2.getMatchedIndex("chk2", "1", true));
+		var mappedKey2 = dltDataList2.getCellData(intRowIdx2, "mappedKey");
+		var tobePk = dltDataList2.getCellData(intRowIdx2, "pk");
+
+		// AS-IS 데이터 업데이터
+		if (mappedKey1 != "" && mappedKey1 != null) {	
+			if (mappedKey1.indexOf(tobePk)  < 0) {   // 매핑되어 있지 않으면
+				dltDataList1.setCellData(intRowIdx1, "mappedKey", mappedKey1 + "," + tobePk);
+			}
+		} else {
+			dltDataList1.setCellData(intRowIdx1, "mappedKey", tobePk);
+		}
+
+		// TO-BE 데이터 업데이트
+		if (mappedKey2 != "" && mappedKey2 != null) {
+			if (mappedKey2.indexOf(asisPk)  < 0) {   // 매핑되어 있지 않으면
+				dltDataList2.setCellData(intRowIdx2, "mappedKey", mappedKey2 + "," + asisPk);
+			}
+		} else {
+			dltDataList2.setCellData(intRowIdx2, "mappedKey", asisPk);
+		}
+
+		comLib.alert($p,  "매핑 정보가 저장되었습니다." );
+	};
+	
+	/**
+	 * GridView의 컬럼을 설정한다.
+	 * @param
+	 * @return	 
+	 */ 	 
+	 scwin.setColumnId = function(dataList) {
+	 	var num = dataList.id.substr(dataList.id.length-1, 1);   // ex) dltColumns1 --> num=1, dltColumns2 --> num=2
+	 	var obj = dataList.getAllJSON();
+	 	var column = {};
+	 	var columnArr = [];
+	 	var gridHeader = "";
+	 	var gridBody = "";
+
+	 	gridHeader = '<w2:column inputType="text" id="hChk'+num+'" value="선택" blockSelect="false" width="50" style="height:20px;"></w2:column>';
+	 	gridBody = '<w2:column inputType="radio" id="chk'+num+'" radioLabel="&amp;nbsp;" blockSelect="false" width="50" style="height:20px;"></w2:column>';
+
+ 	 	// radio 버튼에 대한 DataList 컬럼 추가
+ 	 	column["id"] = "chk"+num;
+	 	column["dataType"] = "text";
+	 	columnArr.push(column)
+	 	
+ 		// 테이블 컬럼으로 DataList 컬럼 추가								
+	 	for (var k=0; k < obj.length; k++) {
+	 		column = {};
+	 		column["id"] = scwin.camelCase(obj[k].columnName);
+	 		column["dataType"] = "text";
+	 		columnArr.push(column);
+	 		
+	 		gridHeader += '<w2:column inputType="text" id="'+'h'+column["id"]+'" value="'+obj[k].columnComments+'" blockSelect="false" width="110" style="height:20px;"></w2:column>';
+	 		gridBody += '<w2:column inputType="text" id="'+column["id"]+'" readOnly="true" blockSelect="false" width="110" style="height:20px;"></w2:column>';
+	 	}
+
+	 	scwin.makeDataList("dltDataList"+num, columnArr);
+	
+	 	var gridStr = '<w2:gridView xmlns:w2="http://www.inswave.com/websquare" xmlns:ev="http://www.w3.org/2001/xml-events" id="grdDataList'+num+'"'
+	 				+ ' dataList="dltDataList'+num+'" style="height:280px;" sortable="true" focusMode="row" useShiftKey="false" fixedColumn="2" autoFit="lastColumn">'
+	 				+ '<w2:header id="header'+num+'" style="">'
+	 				+ '<w2:row id="row'+num+'1" style="">'
+	 				+ gridHeader
+	 				+ '</w2:row>'
+	 				+ '</w2:header>'
+	 				+ '<w2:gBody id="gBody'+num+'1" style="">'
+	 				+ '<w2:row id="row'+num+'2" style="">'
+	 				+ gridBody
+	 				+ '</w2:row>'
+	 				+ '</w2:gBody>'
+	 				+ '</w2:gridView>';
+	 				
+		eval("grdDataList"+num).setGridStyle(WebSquare.xml.parse(gridStr, true));
+	};	
+
+	/**
+	 * DataCollection(DataList)를 동적으로 생성한다.
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.makeDataList = function(id, obj) {
+		comLib.createData($p,{
+				"id" : id
+				, "type" : "dataList"
+				, "option" : {	"useData" : "false" }
+				, "columnInfo" : obj
+		});
+	};
+	
+	/**
+	 * 문자열을 '_'를 기준으로 camelCase로 변경한다. ex) ONE_TWO_THREE -> oneTwoThree
+	 * @param
+	 * @return	 
+	 */ 	
+	scwin.camelCase = function(str) {
+		return str.toLowerCase().replace(/_([a-z])/g, function(g) {
+			return g[1].toUpperCase();
+		});
+	};
+
+	]]></script>
+	</head>
+	<body>
+		<!--< w2:pageInherit id="comPage" src="/ui/common/content_common.xml" style=""></w2:pageInherit> -->
+		<w2:wframe id="wframe1" src="/ui/common/popup_header.xml"></w2:wframe>
+		<xf:group id="" style="" class="wrap">
+			<xf:group style="" id="" class="content-area">
+				<xf:group class="layout-float" id="" style="">
+					<xf:group class="layout-float cw20" id="" style="">
+						<xf:group class="search-box" id="grpSearch1" style="">
+							<xf:group class="list" id="" style="">
+								<xf:group adaptive="" adaptiveThreshold="" class="w2tb" id="" style="" tagname="table">
+									<w2:attributes>
+										<w2:summary></w2:summary>
+									</w2:attributes>
+									<xf:group tagname="caption"></xf:group>
+									<xf:group tagname="colgroup">
+										<xf:group class="" tagname="col">
+										</xf:group>
+										<xf:group tagname="col"></xf:group>
+										<xf:group class="" tagname="col">
+										</xf:group>
+										<xf:group tagname="col"></xf:group>
+										<xf:group class="" tagname="col" style="">
+										</xf:group>
+										<xf:group tagname="col" style="">
+										</xf:group>
+										<xf:group class="" tagname="col" style="">
+										</xf:group>
+										<xf:group tagname="col" style="">
+										</xf:group>
+										<xf:group class="" style="" tagname="col">
+										</xf:group>
+										<xf:group style="" tagname="col">
+										</xf:group>
+									</xf:group>
+									<xf:group style="" tagname="tr">
+										<xf:group class="w2tb_th cw6 req" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="시설물" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw20" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxTables1" optionOrder="false"
+														ref="data:dmaInquireParam1.tableNm" selectedData="true" style="" submenuSize="auto" emptyItem="true" ev:onchange="scwin.sbxTables1_onchange"
+														ev:onclick="" mandatory="true" ev:onviewchange="" ev:onfocus="">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltTableList1">
+																<xf:label ref="tableComments">
+																</xf:label>
+																<xf:value ref="tableName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" tagname="th" style="">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조건1" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxCol11" optionOrder="false"
+														ref="data:dmaInquireParam1.colNm1" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltColumns1">
+																<xf:label ref="columnComments">
+																</xf:label>
+																<xf:value ref="columnName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw8" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxCol11" ref="data:dmaInquireParam1.colVal1" style="">
+													</xf:input>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조건2" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxCol12" optionOrder="false"
+														ref="data:dmaInquireParam1.colNm2" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltColumns1">
+																<xf:label ref="columnComments">
+																</xf:label>
+																<xf:value ref="columnName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw8" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxCol12" ref="data:dmaInquireParam1.colVal2" style="">
+													</xf:input>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조건3" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxCol13" optionOrder="false"
+														ref="data:dmaInquireParam1.colNm3" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltColumns1">
+																<xf:label ref="columnComments">
+																</xf:label>
+																<xf:value ref="columnName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw8" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxCol13" ref="data:dmaInquireParam1.colVal3" style="">
+													</xf:input>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조건4" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" ev:onchange="" id="sbxCol14" optionOrder="false"
+														ref="data:dmaInquireParam1.colNm4" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltColumns1">
+																<xf:label ref="columnComments">
+																</xf:label>
+																<xf:value ref="columnName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw8" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxCol14" ref="data:dmaInquireParam1.colVal4" style="">
+													</xf:input>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group style="" tagname="tr">
+										<xf:group class="w2tb_th cw6" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="권역" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="cw20" id="" style="">
+												<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+													disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxFixCol11" optionOrder="false"
+													ref="data:dmaInquireParam1.fixColVal1" selectedData="true" style="" submenuSize="auto" ev:onchange="scwin.sbxFixCol11_onchange">
+													<xf:choices>
+														<xf:itemset nodeset="data:dltFixColumns11">
+															<xf:label ref="rohqnm">
+															</xf:label>
+															<xf:value ref="rohqcd">
+															</xf:value>
+														</xf:itemset>
+													</xf:choices>
+												</xf:select1>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="관리부서" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw20" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxFixCol12" optionOrder="false"
+														ref="data:dmaInquireParam1.fixColVal2" selectedData="true" style="" submenuSize="auto" ev:onchange="scwin.sbxFixCol12_onchange">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltFixColumns12">
+																<xf:label ref="mgdpnm">
+																</xf:label>
+																<xf:value ref="mgdpcd">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" tagname="th" style="">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="사업/단계" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw20" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" emptyItem="" ev:onchange="scwin.sbxFixCol13_onchange"
+														ev:onclick="" id="sbxFixCol13" mandatory="" optionOrder="false" ref="data:dmaInquireParam1.fixColVal3" selectedData="true"
+														style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltFixColumns13">
+																<xf:label ref="bzspnm">
+																</xf:label>
+																<xf:value ref="bzspcd">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="계통/구간" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw8" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" ev:onchange="scwin.sbxFixCol14_onchange" id="sbxFixCol14"
+														optionOrder="false" ref="data:dmaInquireParam1.fixColVal4" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltFixColumns14">
+																<xf:label ref="cnnnm">
+																</xf:label>
+																<xf:value ref="cnncd">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" ev:onchange="scwin.sbxFixCol15_onchange" id="sbxFixCol15"
+														optionOrder="false" ref="data:dmaInquireParam1.fixColVal5" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltFixColumns15">
+																<xf:label ref="scnnm">
+																</xf:label>
+																<xf:value ref="scncd">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조회건수" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw6" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxRetCnt1" initValue="" ref="data:dmaInquireParam1.retCnt" style="">
+													</xf:input>
+												</xf:group>
+												<xf:group class="cw3" id="" style="">
+													<w2:span id="" label="건" style="">
+													</w2:span>
+												</xf:group>
+												<xf:group class="cw11" id="" style="">
+													<xf:select appearance="full" class="" cols="1" disabled="" displaymessage="true" falseValue="" id="cbxMappedCol1"
+														ref="data:dmaInquireParam1.mappedColNm" renderType="checkboxgroup" rows="" selectedindex="-1" style="">
+														<xf:choices>
+															<xf:item>
+																<xf:label><![CDATA[매핑제외]]></xf:label>
+																<xf:value><![CDATA[MAPPED_KEY]]></xf:value>
+															</xf:item>
+														</xf:choices>
+													</xf:select>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="btn-group">
+								<w2:anchor class="fa fa-search btn_sh" ev:onclick="scwin.btnInquire1_onclick" id="btnInquire1" outerDiv="false" style=""
+									userData1="Q">
+									<xf:label><![CDATA[조회]]></xf:label>
+								</w2:anchor>
+							</xf:group>
+						</xf:group>
+						<xf:group class="con-box" id="" style="">
+							<xf:group class="title-group" id="" style="">
+								<xf:group style="" id="" class="" tagname="h3">
+									<w2:span label="AS-IS 시설물" style="" id="">
+									</w2:span>
+									<w2:span id="txtCnt1" label="0" style="" class="title-num">
+									</w2:span>
+								</xf:group>
+								<xf:group class="com-area" id="" style="">
+									<xf:group class="btn-group" id="" style="">
+										<w2:anchor class="" ev:onclick="scwin.btnMove_onclick" id="btnMove" outerDiv="false" style="">
+											<xf:label><![CDATA[위치확인]]></xf:label>
+										</w2:anchor>
+										<w2:anchor class="" ev:onclick="scwin.btnDelete1_onclick" id="btnDelete1" outerDiv="false" style="">
+											<xf:label><![CDATA[매핑삭제]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+									<xf:group class="info-box" id="" style="">
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group style="" id="" class="list-box box  height-sam">
+								<w2:gridView scrollByColumnAdaptive="false" summaryAuto="false" useShiftKey="false" scrollByColumn="false" focusMode="row"
+									fixedColumnWithHidden="true" dataList="dltDataList1" ignoreCellClick="false" style="height:280px" id="grdDataList1" visibleRowNum="15"
+									ignoreToggleOnDisabled="false" autoFitMinWidth="" readOnly="" sortable="true" tooltipDisplay="true" ev:oncellclick="" enterKeyMove=""
+									editModeEvent="onclick" ev:onviewchange="" dynamic="true" fixedColumn="2" autoFit="">
+									<w2:caption style="" id="caption1" value="AS-IS 시설물">
+									</w2:caption>
+									<w2:header style="" id="header1">
+										<w2:row style="" id="row11">
+											<w2:column inputType="text" id="hChk1" value="선택" blockSelect="false" displayMode="label" width="50" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol11" value="PM설비번호" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol12" value="지형지물번호" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol13" value="권역" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol14" value="관리부서" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol15" value="사업단계" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol16" value="계통" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol17" value="구간" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol18" value="항목1" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol19" value="항목2" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody style="" id="gBody11">
+										<w2:row style="" id="row12">
+											<w2:column inputType="radio" id="chk1" blockSelect="false" displayMode="label" width="50" textAlign="center" style="height:20px"
+												radioLabel="&amp;nbsp;">
+											</w2:column>
+											<w2:column inputType="text" id="col11" blockSelect="false" displayMode="label" width="110" textAlign="left" style="height:20px"
+												readOnly="true">
+											</w2:column>
+											<w2:column inputType="text" id="col12" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col13" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col14" blockSelect="false" displayMode="label" width="110" textAlign="left" style="height:20px"
+												readOnly="true">
+											</w2:column>
+											<w2:column inputType="text" id="col15" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col16" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col17" blockSelect="false" displayMode="label" width="110" textAlign="left" style="height:20px"
+												readOnly="true">
+											</w2:column>
+											<w2:column inputType="text" id="col18" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col19" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+					<xf:group class="layout-float cw20" id="" style="">
+						<xf:group class="con-box" id="" style="">
+							<xf:group class="title-group" id="" style="">
+								<xf:group class="" id="" style="" tagname="h3">
+									<w2:span id="" label="TO-BE 시설물" style="">
+									</w2:span>
+									<w2:span class="title-num" id="txtCnt2" label="0" style="">
+									</w2:span>
+								</xf:group>
+								<xf:group class="com-area" id="" style="">
+									<xf:group class="btn-group" id="" style="">
+										<w2:anchor class="" ev:onclick="scwin.btnDelete2_onclick" id="2" outerDiv="false" style="">
+											<xf:label><![CDATA[매핑삭제]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+									<xf:group class="info-box" id="" style="">
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="list-box box  height-sam" id="" style="">
+								<w2:gridView autoFitMinWidth="" dataList="dltDataList2" dynamic="true" editModeEvent="onclick" enterKeyMove=""
+									ev:oncellclick="" ev:onviewchange="" fixedColumnWithHidden="true" focusMode="row" id="grdDataList2" ignoreCellClick="false"
+									ignoreToggleOnDisabled="false" readOnly="" scrollByColumn="false" scrollByColumnAdaptive="false" sortable="true" style="height:280px"
+									summaryAuto="false" tooltipDisplay="true" useShiftKey="false" visibleRowNum="15" fixedColumn="2" autoFit="">
+									<w2:caption id="caption2" style="" value="TO-BE 시설물">
+									</w2:caption>
+									<w2:header id="header2" style="">
+										<w2:row id="row21" style="">
+											<w2:column inputType="text" id="hChk1" value="선택" blockSelect="false" displayMode="label" width="50" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol21" value="지형지물번호" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol22" value="PM설비번호" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol23" value="권역" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol24" value="관리부서" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol25" value="사업단계" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol26" value="계통" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol27" value="구간" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol28" value="항목1" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+											<w2:column inputType="text" id="hCol29" value="항목2" blockSelect="false" displayMode="label" width="110" style="height:20px;">
+											</w2:column>
+										</w2:row>
+									</w2:header>
+									<w2:gBody id="gBody21" style="">
+										<w2:row id="row22" style="">
+											<w2:column inputType="radio" id="chk2" blockSelect="false" displayMode="label" width="50" textAlign="center" style="height:20px"
+												radioLabel="&amp;nbsp;">
+											</w2:column>
+											<w2:column inputType="text" id="col21" blockSelect="false" displayMode="label" width="110" textAlign="left" style="height:20px"
+												readOnly="true">
+											</w2:column>
+											<w2:column inputType="text" id="col22" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col23" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col24" blockSelect="false" displayMode="label" width="110" textAlign="left" style="height:20px"
+												readOnly="true">
+											</w2:column>
+											<w2:column inputType="text" id="col25" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col26" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col27" blockSelect="false" displayMode="label" width="110" textAlign="left" style="height:20px"
+												readOnly="true">
+											</w2:column>
+											<w2:column inputType="text" id="col28" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+											<w2:column inputType="text" id="col29" blockSelect="false" displayMode="label" width="110" style="height:20px"
+												readOnly="true" textAlign="left">
+											</w2:column>
+										</w2:row>
+									</w2:gBody>
+								</w2:gridView>
+							</xf:group>
+						</xf:group>
+						<xf:group class="search-box" id="grpSearch2" style="">
+							<xf:group class="list" id="" style="">
+								<xf:group adaptive="" adaptiveThreshold="" class="w2tb" id="" style="" tagname="table">
+									<w2:attributes>
+										<w2:summary></w2:summary>
+									</w2:attributes>
+									<xf:group tagname="caption"></xf:group>
+									<xf:group tagname="colgroup">
+										<xf:group class="" tagname="col">
+										</xf:group>
+										<xf:group tagname="col"></xf:group>
+										<xf:group class="" tagname="col">
+										</xf:group>
+										<xf:group tagname="col"></xf:group>
+										<xf:group class="" tagname="col" style="">
+										</xf:group>
+										<xf:group tagname="col" style="">
+										</xf:group>
+										<xf:group class="" tagname="col" style="">
+										</xf:group>
+										<xf:group tagname="col" style="">
+										</xf:group>
+										<xf:group class="" style="" tagname="col">
+										</xf:group>
+										<xf:group style="" tagname="col">
+										</xf:group>
+									</xf:group>
+									<xf:group style="" tagname="tr">
+										<xf:group class="w2tb_th cw6 req" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="시설물" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw20" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" emptyItem="true" ev:onchange="scwin.sbxTables2_onchange"
+														ev:onclick="" id="sbxTables2" mandatory="true" optionOrder="false" ref="data:dmaInquireParam2.tableNm" selectedData="true"
+														style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltTableList2">
+																<xf:label ref="tableComments">
+																</xf:label>
+																<xf:value ref="tableName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" tagname="th" style="">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조건1" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxCol21" optionOrder="false"
+														ref="data:dmaInquireParam2.colNm1" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltColumns2">
+																<xf:label ref="columnComments">
+																</xf:label>
+																<xf:value ref="columnName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw8" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxCol21" ref="data:dmaInquireParam2.colVal1" style="">
+													</xf:input>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조건2" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxCol22" optionOrder="false"
+														ref="data:dmaInquireParam2.colNm2" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltColumns2">
+																<xf:label ref="columnComments">
+																</xf:label>
+																<xf:value ref="columnName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw8" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxCol22" ref="data:dmaInquireParam2.colVal2" style="">
+													</xf:input>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조건3" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxCol23" optionOrder="false"
+														ref="data:dmaInquireParam2.colNm3" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltColumns2">
+																<xf:label ref="columnComments">
+																</xf:label>
+																<xf:value ref="columnName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw8" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxCol23" ref="data:dmaInquireParam2.colVal3" style="">
+													</xf:input>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조건4" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" ev:onchange="" id="sbxCol24" optionOrder="false"
+														ref="data:dmaInquireParam2.colNm4" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltColumns2">
+																<xf:label ref="columnComments">
+																</xf:label>
+																<xf:value ref="columnName">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw8" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxCol24" ref="data:dmaInquireParam2.colVal4" style="">
+													</xf:input>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+									<xf:group style="" tagname="tr">
+										<xf:group class="w2tb_th cw6" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="권역" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="cw20" id="" style="">
+												<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+													disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxFixCol21" optionOrder="false"
+													ref="data:dmaInquireParam2.fixColVal1" selectedData="true" style="" submenuSize="auto" ev:onchange="scwin.sbxFixCol21_onchange">
+													<xf:choices>
+														<xf:itemset nodeset="data:dltFixColumns21">
+															<xf:label ref="dstrctHqNm">
+															</xf:label>
+															<xf:value ref="dstrctHqCd">
+															</xf:value>
+														</xf:itemset>
+													</xf:choices>
+												</xf:select1>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="관리부서" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw20" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" id="sbxFixCol22" optionOrder="false"
+														ref="data:dmaInquireParam2.fixColVal2" selectedData="true" style="" submenuSize="auto" ev:onchange="scwin.sbxFixCol22_onchange">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltFixColumns22">
+																<xf:label ref="mnggrpNm">
+																</xf:label>
+																<xf:value ref="mnggrpCd">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" tagname="th" style="">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="사업/단계" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw20" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" emptyItem="" ev:onchange="scwin.sbxFixCol23_onchange"
+														ev:onclick="" id="sbxFixCol23" mandatory="" optionOrder="false" ref="data:dmaInquireParam2.fixColVal3" selectedData="true"
+														style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltFixColumns23">
+																<xf:label ref="bsnsStepNm">
+																</xf:label>
+																<xf:value ref="bsnsStepCd">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="계통/구간" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw8" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" ev:onchange="scwin.sbxFixCol24_onchange" id="sbxFixCol24"
+														optionOrder="false" ref="data:dmaInquireParam2.fixColVal4" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltFixColumns24">
+																<xf:label ref="systNm">
+																</xf:label>
+																<xf:value ref="systCd">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+												<xf:group class="cw12" id="" style="">
+													<xf:select1 allOption="" appearance="minimal" chooseOption="true" chooseOptionLabel="- 선택 -" direction="auto"
+														disabled="false" disabledClass="w2selectbox_disabled" displayMode="label" ev:onchange="" id="sbxFixCol25" optionOrder="false"
+														ref="data:dmaInquireParam2.fixColVal5" selectedData="true" style="" submenuSize="auto">
+														<xf:choices>
+															<xf:itemset nodeset="data:dltFixColumns25">
+																<xf:label ref="sctnNm">
+																</xf:label>
+																<xf:value ref="sctnCd">
+																</xf:value>
+															</xf:itemset>
+														</xf:choices>
+													</xf:select1>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+										<xf:group class="w2tb_th cw6" style="" tagname="th">
+											<w2:attributes>
+												<w2:scope>row</w2:scope>
+											</w2:attributes>
+											<w2:span id="" label="조회건수" style="">
+											</w2:span>
+										</xf:group>
+										<xf:group class="w2tb_td cw20" style="" tagname="td">
+											<w2:attributes>
+												<w2:colspan></w2:colspan>
+											</w2:attributes>
+											<xf:group class="mix-box" id="" style="">
+												<xf:group class="cw6" id="" style="">
+													<xf:input ev:onkeydown="" id="ibxRetCnt2" initValue="" ref="data:dmaInquireParam2.retCnt" style="">
+													</xf:input>
+												</xf:group>
+												<xf:group class="cw3" id="" style="">
+													<w2:span id="" label="건" style="">
+													</w2:span>
+												</xf:group>
+												<xf:group class="cw11" id="" style="">
+													<xf:select appearance="full" class="" cols="1" disabled="" displaymessage="true" falseValue="" id="cbxMappedCol2"
+														ref="data:dmaInquireParam2.mappedColNm" renderType="checkboxgroup" rows="" selectedindex="-1" style="">
+														<xf:choices>
+															<xf:item>
+																<xf:label><![CDATA[매핑제외]]></xf:label>
+																<xf:value><![CDATA[MAPPED_KEY]]></xf:value>
+															</xf:item>
+														</xf:choices>
+													</xf:select>
+												</xf:group>
+											</xf:group>
+										</xf:group>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group class="btn-group">
+								<w2:anchor class="fa fa-search btn_sh" ev:onclick="scwin.btnInquire2_onclick" id="btnInquire2" outerDiv="false" style=""
+									userData1="">
+									<xf:label><![CDATA[조회]]></xf:label>
+								</w2:anchor>
+							</xf:group>
+						</xf:group>
+
+					</xf:group>
+				</xf:group>
+			</xf:group>
+			<xf:group class="footer" id="" style="">
+				<xf:group class="btn-group" id="" style="">
+					<w2:anchor class="" href="" id="btnSave" outerDiv="false" ref="" style="" ev:onclick="scwin.btnSave_onclick" userData1="S">
+						<xf:label><![CDATA[저장]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 소비 - 전년동월대비 소비현황 -->
+<mapper namespace="PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao">
+	<sql id="PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_Default">
+		WITH GHG_DATA_LIST AS (
+			SELECT /*+ MATERIALZE LEADING(BBB AAA CCC) */
+				BBB.dscfc_id,
+				BBB.dscfc_nm,
+				<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin"></include> AS dscfc_lclhq_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						SCM.tc_sc_unif_cmmn_cd
+					WHERE
+						sys_div_cd = 'SC'
+						AND cls_cd = 'GHG_1001'
+						AND cmmn_cd = <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin"></include>
+				) AS dscfc_lclhq_nm,
+				BBB.dscfc_bplc_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						SCM.tc_sc_unif_cmmn_cd
+					WHERE
+						sys_div_cd = 'SC'
+						AND cls_cd = 'GHG_1002'
+						AND cmmn_cd = BBB.dscfc_bplc_cd
+				) AS dscfc_bplc_nm,
+				BBB.dscfc_procs_ty_cd,
+				(
+					SELECT
+						B.cmmn_cd_nm
+					FROM (
+						SELECT
+							cmmn_cd,
+							cmmn_cd_nm
+						FROM
+							SCM.tc_sc_unif_cmmn_cd
+						WHERE
+							sys_div_cd = 'SC'
+							AND cls_cd = 'GHG_0024'
+					) A, (
+						SELECT
+							usr_dfn_vu2,
+							cmmn_cd_nm
+						FROM
+							tc_ecs_cd
+						WHERE
+							use_yn = 'Y'
+							AND cls_cd = 'ECS_1003'
+					) B
+					WHERE
+						A.cmmn_cd = B.usr_dfn_vu2
+						AND A.cmmn_cd = BBB.dscfc_procs_ty_cd
+				) AS dscfc_procs_ty_nm,
+				BBB.dscfc_use_fuel_div_cd,
+				AAA.dscfc_use_de,
+				AAA.dscfc_use_slip_prcs_ty_cd,
+				AAA.dscfc_use_slip_no,
+				NVL(AAA.dscfc_usgqty, 0) AS dscfc_usgqty
+			FROM
+				GHG.tm_gg01101 BBB,
+				(
+					SELECT
+						ABC.dscfc_id,
+						ABC.dscfc_use_de,
+						MAX(ABC.dscfc_use_slip_prcs_ty_cd) AS dscfc_use_slip_prcs_ty_cd,
+						MAX(ABC.dscfc_use_slip_no) AS dscfc_use_slip_no,
+						NVL(MAX(ABC.dscfc_usgqty), 0) AS dscfc_usgqty
+					FROM (
+						SELECT
+							AA.dscfc_id,
+							AA.dscfc_use_de,
+							MAX(AA.dscfc_use_slip_prcs_ty_cd) AS dscfc_use_slip_prcs_ty_cd,
+							MAX(AA.dscfc_use_slip_no) AS dscfc_use_slip_no,
+							CASE
+								WHEN AA.dsqty_cfrml_parm_id IN ('2005', '2001')
+								THEN MAX(AA.dscfc_usgqty)
+							END AS dscfc_usgqty
+						FROM (
+							SELECT /*+ LEADING(B A) */
+								A.dscfc_id,
+								A.dscfc_use_de,
+								B.dsqty_cfrml_parm_id,
+								B.dsqty_cfrml_parm_nm,
+								A.dscfc_use_slip_prcs_ty_cd,
+								A.dscfc_use_slip_no,
+								A.dscfc_usgqty
+							FROM
+								GHG.tm_rq01103 A,
+								GHG.tm_gg01104 B
+							WHERE
+								(
+									(A.dscfc_use_slip_no IS NOT NULL
+									AND A.dscfc_use_slip_no NOT LIKE 'TMP%')
+									OR A.dscfc_use_slip_prcs_ty_cd = '1'
+								)
+								AND A.dsqty_cfrml_parm_id IN ('2005', '2001')
+								<choose>
+									<when test='null != endDt and "" neq endDt'>
+								AND (
+									A.dscfc_use_de BETWEEN SUBSTR(NVL(#{strtDt}, TO_CHAR(SYSDATE, 'yyyyMM')), 0, 6) || '01'
+									AND SUBSTR(NVL(#{strtDt}, TO_CHAR(SYSDATE, 'yyyyMM')), 0, 6) || '31'
+									OR A.dscfc_use_de BETWEEN SUBSTR(#{endDt}, 0, 6) || '01'
+									AND SUBSTR(#{endDt}, 0, 6) || '31'
+								)
+									</when>
+									<otherwise>
+								AND A.dscfc_use_de LIKE NVL(SUBSTR(#{strtDt}, 0, 4), TO_CHAR(SYSDATE, 'yyyy')) || '%'
+									</otherwise>
+								</choose>
+								AND A.dsqty_cfrml_parm_id = B.dsqty_cfrml_parm_id
+						) AA
+						GROUP BY
+							AA.dscfc_id,
+							AA.dscfc_use_de,
+							AA.dsqty_cfrml_parm_id,
+							AA.dsqty_cfrml_parm_nm
+					) ABC
+					GROUP BY
+						ABC.dscfc_id,
+						ABC.dscfc_use_de
+				) AAA
+			WHERE
+				BBB.dscfc_id = AAA.dscfc_id(+)
+				AND BBB.dscfc_use_yn = '1'
+				AND BBB.dscfc_regist_stat_div_cd = '1'
+				AND BBB.dscfc_use_fuel_div_cd = '61' /* 전기 */
+				AND BBB.dscfc_lclhq_cd != '88888888' /* 위탁 */
+				AND AAA.dscfc_use_de IS NOT NULL
+				<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+				AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin"></include> = (
+					SELECT
+						objid
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+					)
+					WHERE
+						cmmn_cd = #{ecsBasinDivCd}
+				)
+				</if>
+		)
+	</sql>
+
+	<select id="PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_retrievePrvyySammVersusCnsmpSttusCndDeptList" parameterType="kw.ecs.cn.prvyysammversuscnsmpsttus.vo.PrvyySammVersusCnsmpSttusVo" resultType="egovMap">
+		/* PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_retrievePrvyySammVersusCnsmpSttusCndDeptList */
+		<include refid="PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao.PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_Default"></include>
+		SELECT
+			'prvyySammVersusCnsmpSttusDept' AS cls_cd,
+			'소비전력부서' AS cls_cd_nm,
+			dscfc_bplc_cd AS cmmn_cd,
+			MAX(dscfc_bplc_nm) AS cmmn_cd_nm,
+			(
+				SELECT
+					sort_ordr
+				FROM
+					SCM.tc_sc_unif_cmmn_cd
+				WHERE
+					use_yn = 'Y'
+					AND sys_div_cd = 'SC'
+					AND cls_cd LIKE 'GHG_1002'
+					AND cmmn_cd = dscfc_bplc_cd
+			) AS sort_ordr
+		FROM
+			GHG_DATA_LIST
+		WHERE
+			dscfc_bplc_cd IS NOT NULL
+			AND dscfc_bplc_nm IS NOT NULL
+		GROUP BY
+			dscfc_bplc_cd
+		ORDER BY
+			sort_ordr
+	</select>
+
+	<select id="PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_retrievePrvyySammVersusCnsmpSttusList" parameterType="kw.ecs.cn.prvyysammversuscnsmpsttus.vo.PrvyySammVersusCnsmpSttusVo" resultType="egovMap">
+		/* PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_retrievePrvyySammVersusCnsmpSttusList */
+		<include refid="PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao.PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_Default"></include>
+		, MONTH_LIST AS (
+			SELECT /*+ MATERIALZE */
+				SUBSTR(#{strtDt}, 0, 6) AS mt
+			FROM
+				DUAL
+			UNION ALL
+			SELECT
+				SUBSTR(#{endDt}, 0, 6) AS mt
+			FROM
+				DUAL
+		)
+		SELECT
+			<!-- DECODE(dscfc_bplc_cd, #{ecsChrgDeptId}, 0, ROWNUM) + 1 AS "no", -->
+			ROWNUM AS "no",
+			dscfc_lclhq_cd AS basin_cd,
+			dscfc_lclhq_nm AS basin_nm,
+			dscfc_bplc_cd AS dept_cd,
+			dscfc_bplc_nm AS dept_nm,
+			prvyy_pwcsp,
+			thsyy_pwcsp,
+			irds_qy,
+			redcn_rt
+		FROM (
+			SELECT
+				dscfc_lclhq_cd,
+				dscfc_lclhq_nm,
+				dscfc_bplc_cd,
+				dscfc_bplc_nm,
+				ROUND(prvyy_pwcsp, 0) AS prvyy_pwcsp,
+				ROUND(thsyy_pwcsp, 0) AS thsyy_pwcsp,
+				ROUND(irds_qy, 0) AS irds_qy,
+				CASE
+					WHEN thsyy_pwcsp &gt; 0 AND prvyy_pwcsp &gt; 0
+					THEN ROUND(irds_qy / prvyy_pwcsp * 100, 1)
+					ELSE 0
+				END AS redcn_rt
+			FROM (
+				SELECT /*+ LEADING(MAPPING_LIST PRVYY THSYY) */
+					MAX(MAPPING_LIST.dscfc_lclhq_cd) AS dscfc_lclhq_cd,
+					MAX(MAPPING_LIST.dscfc_lclhq_nm) AS dscfc_lclhq_nm,
+					MAPPING_LIST.dscfc_bplc_cd,
+					MAX(MAPPING_LIST.dscfc_bplc_nm) AS dscfc_bplc_nm,
+					NVL(SUM(PRVYY.dscfc_usgqty), 0) AS prvyy_pwcsp,
+					NVL(SUM(THSYY.dscfc_usgqty), 0) AS thsyy_pwcsp,
+					NVL(SUM(THSYY.dscfc_usgqty), 0) - NVL(SUM(PRVYY.dscfc_usgqty), 0) AS irds_qy
+				FROM (
+						SELECT
+							MONTH_LIST.mt,
+							A.dscfc_lclhq_cd,
+							A.dscfc_lclhq_nm,
+							A.dscfc_bplc_cd,
+							A.dscfc_bplc_nm,
+							A.dscfc_id
+						FROM (
+								SELECT
+									MAX(dscfc_lclhq_cd) AS dscfc_lclhq_cd,
+									MAX(dscfc_lclhq_nm) AS dscfc_lclhq_nm,
+									MAX(dscfc_bplc_cd) AS dscfc_bplc_cd,
+									MAX(dscfc_bplc_nm) AS dscfc_bplc_nm,
+									dscfc_id
+								FROM
+									GHG_DATA_LIST
+								GROUP BY
+									dscfc_id
+							) A, MONTH_LIST
+					) MAPPING_LIST, (
+						SELECT
+							SUBSTR(dscfc_use_de, 0, 6) AS dscfc_use_de,
+							dscfc_id,
+							SUM(dscfc_usgqty) AS dscfc_usgqty
+						FROM
+							GHG_DATA_LIST
+						WHERE
+							dscfc_use_de BETWEEN (
+									SELECT
+										MIN(mt)
+									FROM
+										MONTH_LIST
+								) || '01'
+								AND (
+									SELECT
+										MIN(mt)
+									FROM
+										MONTH_LIST
+								) || '31'
+						GROUP BY
+							SUBSTR(dscfc_use_de, 0, 6),
+							dscfc_id
+					) PRVYY, (
+						SELECT
+							SUBSTR(dscfc_use_de, 0, 6) AS dscfc_use_de,
+							dscfc_id,
+							SUM(dscfc_usgqty) AS dscfc_usgqty
+						FROM
+							GHG_DATA_LIST
+						WHERE
+							dscfc_use_de BETWEEN (
+									SELECT
+										MAX(mt)
+									FROM
+										MONTH_LIST
+								) || '01'
+								AND (
+									SELECT
+										MAX(mt)
+									FROM
+										MONTH_LIST
+								) || '31'
+						GROUP BY
+							SUBSTR(dscfc_use_de, 0, 6),
+							dscfc_id
+					) THSYY
+				WHERE
+					MAPPING_LIST.dscfc_id = PRVYY.dscfc_id(+)
+					AND MAPPING_LIST.mt = PRVYY.dscfc_use_de(+)
+					AND MAPPING_LIST.dscfc_id = THSYY.dscfc_id(+)
+					AND MAPPING_LIST.mt = THSYY.dscfc_use_de(+)
+				GROUP BY
+					MAPPING_LIST.dscfc_bplc_cd
+			)
+			ORDER BY
+				redcn_rt DESC,
+				irds_qy DESC
+		)
+		ORDER BY
+			"no"
+	</select>
+
+	<select id="PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_retrievePrvyySammVersusCnsmpSttusChartList" parameterType="kw.ecs.cn.prvyysammversuscnsmpsttus.vo.PrvyySammVersusCnsmpSttusVo" resultType="egovMap">
+		/* PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_retrievePrvyySammVersusCnsmpSttusChartList */
+		<include refid="PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao.PRVYY_SAMM_VERSUS_CNSMP_STTUS_Dao_Default"></include>
+		, MONTH_LIST AS (
+			SELECT /*+ MATERIALZE */
+				SUBSTR(#{strtDt}, 0, 6) AS mt
+			FROM
+				DUAL
+			UNION ALL
+			SELECT
+				SUBSTR(#{endDt}, 0, 6) AS mt
+			FROM
+				DUAL
+		)
+		SELECT
+			dscfc_procs_ty_cd,
+			dscfc_procs_ty_nm,
+			ROUND(prvyy_pwcsp, 0) AS prvyy_pwcsp,
+			ROUND(thsyy_pwcsp, 0) AS thsyy_pwcsp,
+			ROUND(irds_qy, 0) AS irds_qy,
+			CASE
+				WHEN thsyy_pwcsp &gt; 0 AND prvyy_pwcsp &gt; 0
+				THEN ROUND(irds_qy / prvyy_pwcsp * 100, 1)
+				ELSE 0
+			END AS redcn_rt
+		FROM (
+			SELECT /*+ LEADING(MAPPING_LIST PRVYY THSYY) */
+				MAPPING_LIST.dscfc_procs_ty_cd,
+				MAX(MAPPING_LIST.dscfc_procs_ty_nm) AS dscfc_procs_ty_nm,
+				NVL(SUM(PRVYY.dscfc_usgqty), 0) AS prvyy_pwcsp,
+				NVL(SUM(THSYY.dscfc_usgqty), 0) AS thsyy_pwcsp,
+				NVL(SUM(THSYY.dscfc_usgqty), 0) - NVL(SUM(PRVYY.dscfc_usgqty), 0) AS irds_qy
+			FROM (
+					SELECT
+						MONTH_LIST.mt,
+						A.dscfc_lclhq_cd,
+						A.dscfc_lclhq_nm,
+						A.dscfc_bplc_cd,
+						A.dscfc_bplc_nm,
+						A.dscfc_procs_ty_cd,
+						A.dscfc_procs_ty_nm,
+						A.dscfc_id
+					FROM (
+							SELECT
+								MAX(dscfc_lclhq_cd) AS dscfc_lclhq_cd,
+								MAX(dscfc_lclhq_nm) AS dscfc_lclhq_nm,
+								MAX(dscfc_bplc_cd) AS dscfc_bplc_cd,
+								MAX(dscfc_bplc_nm) AS dscfc_bplc_nm,
+								MAX(dscfc_procs_ty_cd) AS dscfc_procs_ty_cd,
+								MAX(dscfc_procs_ty_nm) AS dscfc_procs_ty_nm,
+								dscfc_id
+							FROM
+								GHG_DATA_LIST
+							GROUP BY
+								dscfc_id
+						) A, MONTH_LIST
+				) MAPPING_LIST, (
+					SELECT
+						SUBSTR(dscfc_use_de, 0, 6) AS dscfc_use_de,
+						dscfc_id,
+						SUM(dscfc_usgqty) AS dscfc_usgqty
+					FROM
+						GHG_DATA_LIST
+					WHERE
+						dscfc_use_de BETWEEN (
+								SELECT
+									MIN(mt)
+								FROM
+									MONTH_LIST
+							) || '01'
+							AND (
+								SELECT
+									MIN(mt)
+								FROM
+									MONTH_LIST
+							) || '31'
+					GROUP BY
+						SUBSTR(dscfc_use_de, 0, 6),
+						dscfc_id
+				) PRVYY, (
+					SELECT
+						SUBSTR(dscfc_use_de, 0, 6) AS dscfc_use_de,
+						dscfc_id,
+						SUM(dscfc_usgqty) AS dscfc_usgqty
+					FROM
+						GHG_DATA_LIST
+					WHERE
+						dscfc_use_de BETWEEN (
+								SELECT
+									MAX(mt)
+								FROM
+									MONTH_LIST
+							) || '01'
+							AND (
+								SELECT
+									MAX(mt)
+								FROM
+									MONTH_LIST
+							) || '31'
+					GROUP BY
+						SUBSTR(dscfc_use_de, 0, 6),
+						dscfc_id
+				) THSYY
+			WHERE
+				MAPPING_LIST.dscfc_id = PRVYY.dscfc_id(+)
+				AND MAPPING_LIST.mt = PRVYY.dscfc_use_de(+)
+				AND MAPPING_LIST.dscfc_id = THSYY.dscfc_id(+)
+				AND MAPPING_LIST.mt = THSYY.dscfc_use_de(+)
+				<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+				AND MAPPING_LIST.dscfc_bplc_cd = #{ecsChrgDeptId}
+				</if>
+			GROUP BY
+				MAPPING_LIST.dscfc_procs_ty_cd
+		)
+		ORDER BY
+			redcn_rt DESC,
+			irds_qy DESC
+	</select>
+</mapper>

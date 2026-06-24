@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:ev="http://www.w3.org/2001/xml-events" xmlns:w2="http://www.inswave.com/websquare"
+	xmlns:xf="http://www.w3.org/2002/xforms">
+	<head>
+		<w2:buildDate />
+		<xf:model>
+			<xf:instance>
+				<data xmlns="" />
+			</xf:instance>
+			<w2:dataCollection>
+				<w2:dataList baseNode="list" id="dltSysAthr" repeatNode="map" saveRemovedData="true" style="">
+					<w2:columnInfo>
+						<w2:column dataType="text" id="adminDivCd" name="관리자구분코드"></w2:column>
+						<w2:column id="adminDivNm" name="관리자구분명" dataType="text"></w2:column>
+						<w2:column dataType="text" id="sysDivCd" name="시스템구분코드"></w2:column>
+						<w2:column dataType="text" id="usrId" name="사용자ID"></w2:column>
+						<w2:column dataType="text" id="dtyNm" name="직무명"></w2:column>
+						<w2:column dataType="text" id="conectIp" name="접속IP"></w2:column>
+						<w2:column dataType="text" id="useYn" name="사용여부"></w2:column>
+						<w2:column dataType="text" id="korname" name="사용자명"></w2:column>
+						<w2:column dataType="text" id="dept" name="name32"></w2:column>
+						<w2:column dataType="text" id="posit" name="name34"></w2:column>
+						<w2:column id="dphno" name="name11" dataType="text"></w2:column>
+					</w2:columnInfo>
+				</w2:dataList>
+				<w2:dataMap baseNode="map" id="dmaSysAthr">
+					<w2:keyInfo>
+						<w2:key id="adminDivCd" name="관리자구분코드" dataType="text"></w2:key>
+						<w2:key id="adminDivNm" name="관리자구분명" dataType="text"></w2:key>
+						<w2:key id="sysDivCd" name="시스템구분코드" dataType="text"></w2:key>
+						<w2:key id="usrId" name="사용자ID" dataType="text"></w2:key>
+						<w2:key id="dtyNm" name="직무명" dataType="text"></w2:key>
+						<w2:key id="conectIp" name="접속IP" dataType="text"></w2:key>
+						<w2:key id="useYn" name="사용여부" dataType="text"></w2:key>
+						<w2:key id="korname" name="사용자명" dataType="text"></w2:key>
+						<w2:key id="dept" name="name7" dataType="text"></w2:key>
+						<w2:key id="posit" name="name7" dataType="text"></w2:key>
+						<w2:key id="subject" name="메일제목" dataType="text"></w2:key>
+						<w2:key id="content" name="메일내용" dataType="text"></w2:key>
+						<w2:key id="dphno" name="내선번호" dataType="text"></w2:key>
+					</w2:keyInfo>
+				</w2:dataMap>
+			</w2:dataCollection>
+		</xf:model>
+		<script type="javascript" lazy="false"><![CDATA[ 
+	/**
+	 * 화면 초기화에 필요한 로직을 수행한다.
+	 */
+	scwin.initScreen = function() {
+		$(".nav-title-group .close").click(function() {
+			$(".nav-board").removeClass("board-on");
+			comLib.removeSrc();
+		});
+	};
+
+	scwin.selectAdmin = function(usrId) {
+		$(".adminLi").removeClass("active");
+		eval("liId_" + usrId).classList.add("active");
+		$("table.creat").addClass("table-on");
+		var dltSysAthrJson = dltSysAthr.getMatchedJSON("usrId", usrId, true, 0, dltSysAthr.getRowCount());
+		utilLib.clearDcObj(dmaSysAthr);
+		dmaSysAthr.set("adminDivCd", dltSysAthrJson[0].adminDivCd);
+		dmaSysAthr.set("adminDivNm", dltSysAthrJson[0].adminDivNm);
+		dmaSysAthr.set("sysDivCd", dltSysAthrJson[0].sysDivCd);
+		dmaSysAthr.set("usrId", dltSysAthrJson[0].usrId);
+		dmaSysAthr.set("dtyNm", dltSysAthrJson[0].dtyNm);
+		dmaSysAthr.set("conectIp", dltSysAthrJson[0].conectIp);
+		dmaSysAthr.set("useYn", dltSysAthrJson[0].useYn);
+		dmaSysAthr.set("korname", dltSysAthrJson[0].korname);
+		dmaSysAthr.set("dept", dltSysAthrJson[0].dept);
+		dmaSysAthr.set("posit", dltSysAthrJson[0].posit);
+		dmaSysAthr.set("dphno", dltSysAthrJson[0].dphno);
+		adminUsr.setValue(dmaSysAthr.get("korname")+" "+dmaSysAthr.get("posit")+" "+dltSysAthrJson[0].dphno);
+		dtyInfo.setValue(dmaSysAthr.get("dtyNm"));
+	};
+
+	/**
+	 * 확인버튼클릭
+	 * @param 저장할 데이터
+	 * @return 
+	 */
+	scwin.btnAdminMail_onclick = function() {
+		// 입력값 셋팅
+		if (dmaSysAthr.get("subject") == "") {
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "메일 제목"));
+			return false;
+		}
+		if (dmaSysAthr.get("content") == "") {
+			comLib.alert($p, utilLib.getMessage("SCM.INFO.00004", "메일 내용"));
+			return false;
+		}
+		if (dmaSysAthr.get("subject") != "" && dmaSysAthr.get("content") != "") {
+			comLib.confirm($p, utilLib.getMessage("SCM.INFO.00335"), "mailConfirmCallback");
+		}
+	};
+
+	/**
+	 * 저장처리.
+	 */
+	scwin.mailConfirmCallback = function() {
+		var requestData = {};
+		requestData.data = dmaSysAthr.getJSON();
+		//requestData.data1 = _dltNttFile.getModifiedJSON();
+
+		var option = {
+			action : "sc/admin/adminMailSend.do",
+			reqData : requestData,
+			success : "scwin.mailCallback",
+			//success : "scwin.saveCallback",
+			//savedToken : true,
+			isShowMeg : false
+		};
+		ajaxLib.executeAjax($p, option);
+	};
+
+	scwin.mailCallback = function(resBody) {
+		if (resBody.message.code == 'success') {
+			dmaSysAthr.set("subject", "");
+			dmaSysAthr.set("content", "");
+			comLib.alert($p, resBody.message.code_name);
+		}
+		else{
+			alert("fail");
+		}
+	};
+
+	$p.$(".nav-title-group .close").click(function() {
+		$(".nav-board").removeClass("board-on");
+		comLib.removeSrc($p);
+	});
+		]]></script>
+	</head>
+	<body>
+		<xf:group class="nav-board admin" id="" style="">
+			<xf:group class="nav-title-group" id="" style="">
+				<xf:group class="" id="" style="" tagname="h2">
+					<w2:span class="" id="" label=" 운영자" style=""></w2:span>
+				</xf:group>
+				<xf:group class="search-group" id="" style="">
+					<!-- <xf:select1 allOption="" appearance="minimal" chooseOption="" direction="auto" disabled="false" disabledClass="" displayMode="label"
+						id="" optionOrder="false"
+						selectedData="true" style="" submenuSize="auto"> <xf:choices> <xf:item> <xf:label><![CDATA[번호]]></xf:label> <xf:value></xf:value> </xf:item>
+						</xf:choices>
+						</xf:select1> <xf:group class="input_search" id="" pluginName="input_Search" style=""> <xf:input id="" initValue="" readOnly="" style="">
+						</xf:input> <w2:anchor
+						class="fa fa-search" id="" outerDiv="false" style=""> <xf:label><![CDATA[조회]]></xf:label> </w2:anchor> </xf:group> -->
+				</xf:group>
+				<xf:group class="btn-group" id="" style="">
+					<!-- <w2:anchor class="creat" id="" outerDiv="false" style=""> <xf:label><![CDATA[쓰기]]></xf:label> </w2:anchor> -->
+					<w2:anchor class="close" id="" outerDiv="false" style="">
+						<xf:label><![CDATA[삭제]]></xf:label>
+					</w2:anchor>
+				</xf:group>
+			</xf:group>
+			<xf:group class="nav-content" id="" style="">
+				<xf:group class="navs">
+					<xf:group class="nav" id="" style=""></xf:group>
+				</xf:group>
+				<xf:group class="lists">
+					<xf:group style="" id="adminListGrp">
+						<xf:group class="admin-list" id="adminList" style=""></xf:group>
+					</xf:group>
+				</xf:group>
+				<xf:group class="cvs">
+					<xf:group class="cv" id="" style="">
+						<xf:group class="w2tb creat table-on" id="" style="" tagname="table">
+							<w2:attributes>
+								<w2:summary></w2:summary>
+							</w2:attributes>
+							<xf:group tagname="caption"></xf:group>
+							<xf:group tagname="colgroup">
+								<xf:group style="width:100.00%" tagname="col">
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<xf:group class="admin-user " id="" style="">
+										<xf:image id="" src="/resources/images/common/pic-c-39.png" style="">
+										</xf:image>
+										<w2:span class="name" id="adminUsr" label="" style="">
+										</w2:span>
+										<w2:span class="comp" id="dtyInfo" label="" style="">
+										</w2:span>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:input disabled="" id="" initValue="" placeholder="제목을 입력하세요." readOnly="" style="" ref="data:dmaSysAthr.subject">
+									</xf:input>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:textarea id="" style="" ref="data:dmaSysAthr.content"></xf:textarea>
+								</xf:group>
+							</xf:group>
+							<xf:group tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+								</xf:group>
+							</xf:group>
+							<xf:group style="" tagname="tr">
+								<xf:group class="w2tb_td" style="" tagname="td">
+									<w2:attributes>
+										<w2:headers></w2:headers>
+									</w2:attributes>
+									<xf:group class="btn-group" style="" tagname="">
+										<w2:attributes>
+											<w2:headers></w2:headers>
+										</w2:attributes>
+										<w2:anchor class="del" id="" outerDiv="false" style="">
+											<xf:label><![CDATA[취소]]></xf:label>
+										</w2:anchor>
+										<w2:anchor class="" id="" outerDiv="false" style="" ev:onclick="scwin.btnAdminMail_onclick">
+											<xf:label><![CDATA[확인]]></xf:label>
+										</w2:anchor>
+									</xf:group>
+								</xf:group>
+							</xf:group>
+						</xf:group>
+					</xf:group>
+				</xf:group>
+			</xf:group>
+		</xf:group>
+	</body>
+</html>

@@ -1,0 +1,1244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 계획/건설 - 계획/건설 목록 -->
+<mapper namespace="TM_PB10001_Dao">
+	<select id="TM_PB10001_Dao_retrievePlanCnstrcList" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo" resultType="egovMap">
+		/* TM_PB10001_Dao_retrievePlanCnstrcList */
+		WITH ECS_VIEW AS (
+			SELECT /*+ MATERIALZE LEADING(B A) */
+				A.plan_esntl_id,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1001'
+						AND usr_dfn_vu3 LIKE '%01%'
+						AND cmmn_cd = A.ecs_setcsc_div_cd
+				) AS setcsc_nm,
+				A.ecs_setcsc_div_cd,
+				A.plan_bsns_nm,
+				(
+					SELECT
+						stext
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						SYSDATE BETWEEN strdt AND enddt
+						AND objid = A.ecs_chrg_dept_id
+				) AS plan_chrg_dept_nm,
+				A.ecs_chrg_dept_id,
+				(
+					SELECT
+						korname
+					FROM
+						HRM.vm_hr01601
+					WHERE
+						empno = A.plan_charger_empno
+				) AS plan_charger_nm,
+				A.plan_charger_empno,
+				A.plan_foundng_de,
+				A.plan_eqp_cpcty,
+				A.plan_amt,
+				A.rm_ctnt,
+				(
+					SELECT
+						MAX(drft_de)
+					FROM
+						tm_ecs_ectcc_lnk
+					WHERE
+						ecs_bsns_prgs_div_cd LIKE 'P_2%'
+						AND drft_de BETWEEN #{strtDt} AND #{endDt}
+						AND lnk_esntl_id = A.plan_esntl_id
+				) AS plan_prgs_de,
+				(
+					SELECT
+						MAX(drft_de)
+					FROM
+						tm_ecs_ectcc_lnk
+					WHERE
+						ecs_bsns_prgs_div_cd LIKE 'P_3%'
+						AND drft_de BETWEEN #{strtDt} AND #{endDt}
+						AND lnk_esntl_id = A.plan_esntl_id
+				) AS plan_compt_de,
+				B.basin_cd,
+				B.cnstrc_esntl_id,
+				B.cnstrc_eqp_cpcty,
+				B.cms_bsns_cd,
+				B.cms_prjct_cd,
+				B.cms_prjct_sqnc_idtfr,
+				B.prjct_nm,
+				B.competam,
+				B.lnrtr_div_nm,
+				B.lnrtr_div_cd,
+				B.bsns_div_nm,
+				B.bsns_div_cd,
+				B.ntntrs_sport_yn,
+				B.mngdept_nm,
+				B.mngdept_cd,
+				B.edpt_nm,
+				B.edpt_cd,
+				B.edpt_charger_nm,
+				B.edpt_charger_id,
+				B.strwrk_de,
+				B.last_compet_de,
+				B.abslt_cntrwk_pd_info,
+				B.last_cntrwk_pd_info,
+				B.entrps_nm,
+				B.entrps_rprsr_nm,
+				B.spt_addr,
+				(
+					SELECT
+						MAX(drft_de)
+					FROM
+						tm_ecs_ectcc_lnk
+					WHERE
+						ecs_bsns_prgs_div_cd LIKE 'C_1%'
+						AND drft_de BETWEEN #{strtDt} AND #{endDt}
+						AND lnk_esntl_id = B.cnstrc_esntl_id
+				) AS cnstrc_foundng_de,
+				(
+					SELECT
+						MAX(drft_de)
+					FROM
+						tm_ecs_ectcc_lnk
+					WHERE
+						ecs_bsns_prgs_div_cd LIKE 'C_2%'
+						AND drft_de BETWEEN #{strtDt} AND #{endDt}
+						AND lnk_esntl_id = B.cnstrc_esntl_id
+				) AS cnstrc_prgs_de,
+				(
+					SELECT
+						MAX(drft_de)
+					FROM
+						tm_ecs_ectcc_lnk
+					WHERE
+						ecs_bsns_prgs_div_cd LIKE 'C_3%'
+						AND drft_de BETWEEN #{strtDt} AND #{endDt}
+						AND lnk_esntl_id = B.cnstrc_esntl_id
+				) AS cnstrc_compt_de,
+				(
+					SELECT
+						ecs_bsns_prgs_div_cd_nm
+					FROM (
+						SELECT
+							(
+								SELECT
+									REGEXP_SUBSTR(cmmn_cd_nm, '[^-]+', 1, 1) || REGEXP_SUBSTR(cmmn_cd_nm, '[^-]+', 1, 2)
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = 'ECS_2000'
+									AND cmmn_cd = ecs_bsns_prgs_div_cd
+							) AS ecs_bsns_prgs_div_cd_nm,
+							(
+								SELECT
+									sort_ordr
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = 'ECS_2000'
+									AND cmmn_cd = ecs_bsns_prgs_div_cd
+							) AS sort_ordr
+						FROM
+							tm_ecs_ectcc_lnk
+						WHERE
+							lnk_esntl_id IN (A.plan_esntl_id, B.cnstrc_esntl_id)
+						ORDER BY
+							sort_ordr DESC
+					)
+					WHERE
+						ROWNUM = 1
+				) AS prgs_sttus,
+				(
+					SELECT
+						ecs_bsns_prgs_div_cd
+					FROM (
+						SELECT
+							(
+								SELECT
+									REPLACE(SUBSTR(cmmn_cd, 0, 3), 'P1', 'P0')
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = 'ECS_2000'
+									AND cmmn_cd = ecs_bsns_prgs_div_cd
+							) AS ecs_bsns_prgs_div_cd,
+							(
+								SELECT
+									sort_ordr
+								FROM
+									tc_ecs_cd
+								WHERE
+									use_yn = 'Y'
+									AND cls_cd = 'ECS_2000'
+									AND cmmn_cd = ecs_bsns_prgs_div_cd
+							) AS sort_ordr
+						FROM
+							tm_ecs_ectcc_lnk
+						WHERE
+							lnk_esntl_id IN (A.plan_esntl_id, B.cnstrc_esntl_id)
+						ORDER BY
+							sort_ordr DESC
+					)
+					WHERE
+						ROWNUM = 1
+				) AS prgs_sttus_cd,
+				/* DECODE(TRIM(B.cnstrc_esntl_id), NULL, '계획', '건설') AS prgs_sttus, */
+				A.frst_regist_dt AS plan_frst_regist_dt,
+				A.frst_rgstr_id AS plan_frst_rgstr_id,
+				A.last_updt_dt AS plan_last_updt_dt,
+				A.last_updusr_id AS plan_last_updusr_id,
+				A.updt_rsn AS plan_updt_rsn,
+				B.frst_regist_dt AS cnstrc_frst_regist_dt,
+				B.frst_rgstr_id AS cnstrc_frst_rgstr_id,
+				B.last_updt_dt AS cnstrc_last_updt_dt,
+				B.last_updusr_id AS cnstrc_last_updusr_id,
+				B.updt_rsn AS cnstrc_updt_rsn
+			FROM
+				tm_pb10001 A, (
+					SELECT
+						(
+							SELECT
+								cmmn_cd
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+							)
+							WHERE
+								objid = A.basin_cd
+						) AS basin_cd,
+						A.edpt_cd,
+						A.edpt_nm,
+						A.cnstrc_esntl_id,
+						A.plan_esntl_id,
+						A.cms_bsns_cd,
+						A.cms_prjct_cd,
+						A.cms_prjct_sqnc_idtfr,
+						A.cnstrc_eqp_cpcty,
+						A.prjct_nm,
+						A.competam,
+						A.lnrtr_div_nm,
+						A.lnrtr_div_cd,
+						A.bsns_div_nm,
+						A.bsns_div_cd,
+						A.ntntrs_sport_yn,
+						A.mngdept_nm,
+						A.mngdept_cd,
+						A.edpt_charger_nm,
+						A.edpt_charger_id,
+						A.strwrk_de,
+						A.last_compet_de,
+						A.abslt_cntrwk_pd_info,
+						A.last_cntrwk_pd_info,
+						A.entrps_nm,
+						A.entrps_rprsr_nm,
+						A.spt_addr,
+						A.frst_regist_dt,
+						A.frst_rgstr_id,
+						A.last_updt_dt,
+						A.last_updusr_id,
+						A.updt_rsn
+					FROM (
+							SELECT
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnAllBasin"></include> AS basin_cd,
+								A.edpt_cd,
+								A.edpt_nm,
+								A.cnstrc_esntl_id,
+								A.plan_esntl_id,
+								A.cms_bsns_cd,
+								A.cms_prjct_cd,
+								A.cms_prjct_sqnc_idtfr,
+								A.cnstrc_eqp_cpcty,
+								A.prjct_nm,
+								A.competam,
+								A.lnrtr_div_nm,
+								A.lnrtr_div_cd,
+								A.bsns_div_nm,
+								A.bsns_div_cd,
+								A.ntntrs_sport_yn,
+								A.mngdept_nm,
+								A.mngdept_cd,
+								A.edpt_charger_nm,
+								A.edpt_charger_id,
+								A.strwrk_de,
+								A.last_compet_de,
+								A.abslt_cntrwk_pd_info,
+								A.last_cntrwk_pd_info,
+								A.entrps_nm,
+								A.entrps_rprsr_nm,
+								A.spt_addr,
+								A.frst_regist_dt,
+								A.frst_rgstr_id,
+								A.last_updt_dt,
+								A.last_updusr_id,
+								A.updt_rsn
+							FROM (
+									SELECT
+										<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SearchCMSAllDeptBasinMapping"></include> AS objid,
+										A.edpt_cd,
+										A.edpt_nm,
+										A.cnstrc_esntl_id,
+										A.plan_esntl_id,
+										A.cms_bsns_cd,
+										A.cms_prjct_cd,
+										A.cms_prjct_sqnc_idtfr,
+										A.cnstrc_eqp_cpcty,
+										A.prjct_nm,
+										A.competam,
+										A.lnrtr_div_nm,
+										A.lnrtr_div_cd,
+										A.bsns_div_nm,
+										A.bsns_div_cd,
+										A.ntntrs_sport_yn,
+										A.mngdept_nm,
+										A.mngdept_cd,
+										A.edpt_charger_nm,
+										A.edpt_charger_id,
+										A.strwrk_de,
+										A.last_compet_de,
+										A.abslt_cntrwk_pd_info,
+										A.last_cntrwk_pd_info,
+										A.entrps_nm,
+										A.entrps_rprsr_nm,
+										A.spt_addr,
+										A.frst_regist_dt,
+										A.frst_rgstr_id,
+										A.last_updt_dt,
+										A.last_updusr_id,
+										A.updt_rsn
+									FROM (
+											SELECT
+												A.cnstrc_esntl_id,
+												A.plan_esntl_id,
+												A.cms_bsns_cd,
+												A.cms_prjct_cd,
+												A.cms_prjct_sqnc_idtfr,
+												A.cnstrc_eqp_cpcty,
+												A.prjct_nm,
+												A.competam,
+												(
+													SELECT
+														cmmn_cd_nm
+													FROM
+														tc_ecs_cd
+													WHERE
+														use_yn = 'Y'
+														AND cls_cd = 'ECS_2005'
+														AND cmmn_cd = A.lnrtr_div_cd
+												) AS lnrtr_div_nm,
+												A.lnrtr_div_cd,
+												(
+													SELECT
+														cmmn_cd_nm
+													FROM
+														tc_ecs_cd
+													WHERE
+														use_yn = 'Y'
+														AND cls_cd = 'ECS_2006'
+														AND cmmn_cd = A.bsns_div_cd
+												) AS bsns_div_nm,
+												A.bsns_div_cd,
+												A.ntntrs_sport_yn,
+												(
+													SELECT
+														stext
+													FROM
+														HRM.vm_hr01a01
+													WHERE
+														SYSDATE BETWEEN strdt AND enddt
+														AND objid = A.mngdept_cd
+												) AS mngdept_nm,
+												A.mngdept_cd,
+												(
+													SELECT
+														DISTINCT
+														cmmn_cd_nm
+													FROM (
+															<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_AllDeptMappingList"></include>
+														)
+													WHERE
+														cmmn_cd = A.edpt_cd
+												) AS edpt_nm,
+												A.edpt_cd,
+												(
+													SELECT
+														korname
+													FROM
+														HRM.vm_hr01601
+													WHERE
+														empno = A.edpt_charger_id
+												) AS edpt_charger_nm,
+												A.edpt_charger_id,
+												A.strwrk_de,
+												A.last_compet_de,
+												A.abslt_cntrwk_pd_info,
+												A.last_cntrwk_pd_info,
+												A.entrps_nm,
+												A.entrps_rprsr_nm,
+												A.spt_addr,
+												A.frst_regist_dt,
+												A.frst_rgstr_id,
+												A.last_updt_dt,
+												A.last_updusr_id,
+												A.updt_rsn
+											FROM
+												tm_pb10002 A
+										) A
+								) A
+						) A
+				) B
+			WHERE
+				A.plan_esntl_id = B.plan_esntl_id(+)
+				<!--
+				<if test='null != cnd and "P" eq cnd'>
+				AND (
+					A.plan_foundng_de BETWEEN #{strtDt} AND #{endDt}
+					OR A.plan_foundng_de IS NULL
+				)
+				</if>
+				-->
+				<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+				AND A.ecs_setcsc_div_cd = #{ecsSetcscDivCd}
+				</if>
+		)
+		SELECT /*+ LEADING(ECS_VIEW CMS_VIEW) */
+			ECS_VIEW.plan_esntl_id,
+			ECS_VIEW.setcsc_nm,
+			ECS_VIEW.ecs_setcsc_div_cd,
+			ECS_VIEW.plan_bsns_nm,
+			ECS_VIEW.plan_chrg_dept_nm,
+			ECS_VIEW.ecs_chrg_dept_id,
+			ECS_VIEW.plan_charger_nm,
+			ECS_VIEW.plan_charger_empno,
+			ECS_VIEW.plan_foundng_de,
+			ECS_VIEW.plan_eqp_cpcty,
+			ECS_VIEW.plan_amt,
+			ECS_VIEW.rm_ctnt,
+			ECS_VIEW.cnstrc_esntl_id,
+			ECS_VIEW.cnstrc_eqp_cpcty,
+			ECS_VIEW.cms_bsns_cd,
+			ECS_VIEW.cms_prjct_cd,
+			ECS_VIEW.cms_prjct_sqnc_idtfr,
+			ECS_VIEW.prgs_sttus,
+			ECS_VIEW.prgs_sttus_cd,
+			ECS_VIEW.plan_frst_regist_dt,
+			ECS_VIEW.plan_frst_rgstr_id,
+			ECS_VIEW.plan_last_updt_dt,
+			ECS_VIEW.plan_last_updusr_id,
+			ECS_VIEW.plan_updt_rsn,
+			ECS_VIEW.cnstrc_frst_regist_dt,
+			ECS_VIEW.cnstrc_frst_rgstr_id,
+			ECS_VIEW.cnstrc_last_updt_dt,
+			ECS_VIEW.cnstrc_last_updusr_id,
+			ECS_VIEW.cnstrc_updt_rsn,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.ordg_tit
+				ELSE ECS_VIEW.prjct_nm
+			END AS ordg_tit,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.lnrtr_div_nm
+				ELSE ECS_VIEW.lnrtr_div_nm
+			END AS lnrtr_div_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.ntntrs_sport_yn
+				ELSE ECS_VIEW.ntntrs_sport_yn
+			END AS ntntrs_sport_yn,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.bsns_mngdept_nm
+				ELSE ECS_VIEW.mngdept_nm
+			END AS bsns_mngdept_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.edpt_nm
+				ELSE ECS_VIEW.edpt_nm
+			END AS edpt_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.edpt_charger_nm
+				ELSE ECS_VIEW.edpt_charger_nm
+			END AS edpt_charger_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.edpt_charger_id
+				ELSE ECS_VIEW.edpt_charger_id
+			END AS edpt_charger_id,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.strwrk_de
+				ELSE ECS_VIEW.strwrk_de
+			END AS strwrk_de,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.last_compet_de
+				ELSE ECS_VIEW.last_compet_de
+			END AS last_compet_de,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.abslt_cntrwk_pd_info
+				ELSE ECS_VIEW.abslt_cntrwk_pd_info
+			END AS abslt_cntrwk_pd_info,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.last_cntrwk_pd_info
+				ELSE ECS_VIEW.last_cntrwk_pd_info
+			END AS last_cntrwk_pd_info,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.cntrct_entrps_nm
+				ELSE ECS_VIEW.entrps_nm
+			END AS cntrct_entrps_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.entrps_rprsr_nm
+				ELSE ECS_VIEW.entrps_rprsr_nm
+			END AS entrps_rprsr_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.spt_addr
+				ELSE ECS_VIEW.spt_addr
+			END AS spt_addr,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.competam
+				ELSE ECS_VIEW.competam
+			END AS competam,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.bsns_div_nm
+				ELSE ECS_VIEW.bsns_div_nm
+			END AS bsns_div_nm
+		FROM
+			ECS_VIEW
+		LEFT JOIN (
+			SELECT /*+ LEADING(B A) */
+				/*
+				(
+					SELECT
+						stext
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						(objid, enddt) = (
+							SELECT
+								objid,
+								MAX(enddt) AS enddt
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								objid = basin_cd
+							GROUP BY
+								objid
+						)
+				) AS basin_nm,
+				*/
+				B.cmmn_cd,
+				B.cmmn_cd_nm,
+				A.basin_cd,
+				A.bsns_cd,
+				A.prjct_cd,
+				A.prjct_sqnc_idtfr,
+				A.ordg_tit,
+				A.lnrtr_div_nm,
+				A.ntntrs_sport_yn,
+				A.bsns_mngdept_nm,
+				A.edpt_nm,
+				A.edpt_cd,
+				A.edpt_charger_nm,
+				A.edpt_charger_id,
+				A.strwrk_de,
+				A.last_compet_de,
+				A.abslt_cntrwk_pd_info,
+				A.last_cntrwk_pd_info,
+				A.cntrct_entrps_nm,
+				A.entrps_rprsr_nm,
+				A.spt_addr,
+				A.competam,
+				A.bsns_div_nm
+			FROM (
+				SELECT
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SearchCMSAllDeptBasinMapping"></include> AS basin_cd,
+					bsns_cd,
+					prjct_cd,
+					prjct_sqnc_idtfr,
+					ordg_tit,
+					lnrtr_div_nm,
+					ntntrs_sport_yn,
+					bsns_mngdept_nm,
+					edpt_nm,
+					edpt_cd,
+					edpt_charger_nm,
+					edpt_charger_id,
+					strwrk_de,
+					last_compet_de,
+					abslt_cntrwk_pd_info,
+					last_cntrwk_pd_info,
+					cntrct_entrps_nm,
+					entrps_rprsr_nm,
+					spt_addr,
+					competam,
+					bsns_div_nm
+				FROM
+					CMS.vm_cs01003_01 A
+				WHERE
+					bsns_cd IN (
+						SELECT
+							DISTINCT cms_bsns_cd
+						FROM
+							ECS_VIEW
+					)
+					<!-- cd_creat_dt >= TO_DATE(#{strtDt}, 'yyyyMMdd') -->
+					<if test='null != ntntrsSportYn and "" neq ntntrsSportYn and "ALL" neq ntntrsSportYn'>
+					AND ntntrs_sport_yn = #{ntntrsSportYn}
+					</if>
+					<!--
+					<if test='null != cnd and "C" eq cnd'>
+					AND A.last_compet_de BETWEEN #{strtDt} AND #{endDt}
+					</if>
+					-->
+			) A, (
+				SELECT
+					upobj,
+					MAX(cmmn_cd_nm) AS cmmn_cd_nm,
+					MAX(cmmn_cd) AS cmmn_cd
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptBasinMapping"></include>
+				)
+				GROUP BY
+					upobj
+			) B
+			WHERE
+				A.basin_cd = B.upobj(+)
+		) CMS_VIEW
+		ON
+			ECS_VIEW.cms_bsns_cd = CMS_VIEW.bsns_cd
+			AND ECS_VIEW.cms_prjct_cd = CMS_VIEW.prjct_cd
+			AND ECS_VIEW.cms_prjct_sqnc_idtfr = CMS_VIEW.prjct_sqnc_idtfr
+		WHERE
+			1 = 1
+			<if test='null != cnd and "C" eq cnd and null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+			AND (ECS_VIEW.basin_cd = #{ecsBasinDivCd} OR CMS_VIEW.cmmn_cd = #{ecsBasinDivCd})
+			</if>
+			<choose>
+				<when test='null != cnd and "C" eq cnd'>
+			AND (
+				<!--
+				ECS_VIEW.last_compet_de BETWEEN #{strtDt} AND #{endDt}
+				OR CMS_VIEW.last_compet_de BETWEEN #{strtDt} AND #{endDt}
+				OR
+				-->
+				ECS_VIEW.cnstrc_foundng_de BETWEEN #{strtDt} AND #{endDt}
+				OR ECS_VIEW.cnstrc_prgs_de BETWEEN #{strtDt} AND #{endDt}
+				OR ECS_VIEW.cnstrc_compt_de BETWEEN #{strtDt} AND #{endDt}
+			)
+				</when>
+				<otherwise>
+			AND (
+				ECS_VIEW.plan_foundng_de BETWEEN #{strtDt} AND #{endDt}
+				OR ECS_VIEW.plan_foundng_de IS NULL
+				OR ECS_VIEW.plan_prgs_de BETWEEN #{strtDt} AND #{endDt}
+				OR ECS_VIEW.plan_compt_de BETWEEN #{strtDt} AND #{endDt}
+			)
+				</otherwise>
+			</choose>
+			<if test='null != ntntrsSportYn and "" neq ntntrsSportYn and "ALL" neq ntntrsSportYn'>
+			AND (ECS_VIEW.ntntrs_sport_yn = #{ntntrsSportYn} OR CMS_VIEW.ntntrs_sport_yn = #{ntntrsSportYn})
+			</if>
+			<if test='null != prgsSttusCd and "" neq prgsSttusCd and "ALL" neq prgsSttusCd'>
+			AND ECS_VIEW.prgs_sttus_cd = #{prgsSttusCd}
+			</if>
+		ORDER BY
+			ecs_setcsc_div_cd,
+			plan_foundng_de
+	</select>
+
+	<select id="TM_PB10001_Dao_retrievePlanList" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo" resultType="egovMap">
+		/* TM_PB10001_Dao_retrievePlanList */
+		SELECT
+			plan_esntl_id,
+			ecs_setcsc_div_cd,
+			setcsc_nm,
+			plan_bsns_nm,
+			ecs_chrg_dept_id,
+			plan_chrg_dept_nm,
+			plan_charger_empno,
+			plan_charger_nm,
+			plan_foundng_de,
+			plan_eqp_cpcty,
+			plan_amt,
+			rm_ctnt
+		FROM (
+			SELECT
+				plan_esntl_id,
+				ecs_setcsc_div_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1001'
+						AND usr_dfn_vu3 LIKE '%01%'
+						AND cmmn_cd = A.ecs_setcsc_div_cd
+				) AS setcsc_nm,
+				plan_bsns_nm,
+				ecs_chrg_dept_id,
+				(
+					SELECT
+						STEXT
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						SYSDATE BETWEEN strdt AND enddt
+						AND objid = A.ecs_chrg_dept_id
+				) AS plan_chrg_dept_nm,
+				plan_charger_empno,
+				(
+					SELECT
+						korname
+					FROM
+						HRM.vm_hr01601
+					WHERE
+						EMPNO = A.plan_charger_empno
+				) AS plan_charger_nm,
+				plan_foundng_de,
+				plan_eqp_cpcty,
+				plan_amt,
+				rm_ctnt,
+				last_updt_dt,
+				updt_rsn
+			FROM
+				tm_pb10001 A
+		)
+		WHERE
+			1 = 1
+			<if test='null != planBsnsNm and "" neq planBsnsNm'>
+				AND plan_bsns_nm like '%' || #{planBsnsNm} || '%'
+			</if>
+			<if test='null != planChargerEmpno and "" neq planChargerEmpno'>
+				AND plan_charger_empno = #{planChargerEmpno}
+			</if>
+		ORDER BY
+			last_updt_dt DESC
+	</select>
+
+	<select id="TM_PB10001_Dao_selectPlanCnstrc" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo" resultType="egovMap">
+		/* TM_PB10001_Dao_retrievePlanCnstrc */
+		WITH ECS_VIEW AS (
+			SELECT /*+ MATERIALZE LEADING(B A) */
+				A.plan_esntl_id,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1001'
+						AND usr_dfn_vu3 LIKE '%01%'
+						AND cmmn_cd = A.ecs_setcsc_div_cd
+				) AS setcsc_nm,
+				A.ecs_setcsc_div_cd,
+				A.plan_bsns_nm,
+				(
+					SELECT
+						stext
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						SYSDATE BETWEEN strdt AND enddt
+						AND objid = A.ecs_chrg_dept_id
+				) AS plan_chrg_dept_nm,
+				A.ecs_chrg_dept_id,
+				(
+					SELECT
+						korname
+					FROM
+						HRM.vm_hr01601
+					WHERE
+						empno = A.plan_charger_empno
+				) AS plan_charger_nm,
+				A.plan_charger_empno,
+				A.plan_foundng_de,
+				A.plan_eqp_cpcty,
+				A.plan_amt,
+				A.rm_ctnt,
+				B.cnstrc_esntl_id,
+				B.cnstrc_eqp_cpcty,
+				B.cms_bsns_cd,
+				B.cms_prjct_cd,
+				B.cms_prjct_sqnc_idtfr,
+				B.prjct_nm,
+				B.competam,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2005'
+						AND cmmn_cd = B.lnrtr_div_cd
+				) AS lnrtr_div_nm,
+				B.lnrtr_div_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2005'
+						AND cmmn_cd = B.bsns_div_cd
+				) AS bsns_div_nm,
+				B.bsns_div_cd,
+				B.ntntrs_sport_yn,
+				(
+					SELECT
+						stext
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						SYSDATE BETWEEN strdt AND enddt
+						AND objid = B.mngdept_cd
+				) AS mngdept_nm,
+				B.mngdept_cd,
+				(
+					SELECT
+						stext
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						SYSDATE BETWEEN strdt AND enddt
+						AND objid = B.edpt_cd
+				) AS edpt_nm,
+				B.edpt_cd,
+				(
+					SELECT
+						korname
+					FROM
+						HRM.vm_hr01601
+					WHERE
+						empno = B.edpt_charger_id
+				) AS edpt_charger_nm,
+				B.edpt_charger_id,
+				B.strwrk_de,
+				B.last_compet_de,
+				B.abslt_cntrwk_pd_info,
+				B.last_cntrwk_pd_info,
+				B.entrps_nm,
+				B.entrps_rprsr_nm,
+				B.spt_addr,
+				DECODE(TRIM(B.cnstrc_esntl_id), NULL, '계획', '건설') AS prgs_sttus,
+				A.frst_regist_dt AS plan_frst_regist_dt,
+				A.frst_rgstr_id AS plan_frst_rgstr_id,
+				A.last_updt_dt AS plan_last_updt_dt,
+				A.last_updusr_id AS plan_last_updusr_id,
+				A.updt_rsn AS plan_updt_rsn,
+				B.frst_regist_dt AS cnstrc_frst_regist_dt,
+				B.frst_rgstr_id AS cnstrc_frst_rgstr_id,
+				B.last_updt_dt AS cnstrc_last_updt_dt,
+				B.last_updusr_id AS cnstrc_last_updusr_id,
+				B.updt_rsn AS cnstrc_updt_rsn
+			FROM
+				tm_pb10001 A
+			LEFT JOIN
+				tm_pb10002 B
+			ON (
+				A.plan_esntl_id = B.plan_esntl_id
+			)
+			WHERE
+				(
+					A.plan_foundng_de BETWEEN #{strtDt} AND #{endDt}
+					OR A.plan_foundng_de IS NULL
+				)
+		)
+		SELECT /*+ LEADING(ECS_VIEW CMS_VIEW) */
+			ECS_VIEW.plan_esntl_id,
+			ECS_VIEW.setcsc_nm,
+			ECS_VIEW.ecs_setcsc_div_cd,
+			ECS_VIEW.plan_bsns_nm,
+			ECS_VIEW.plan_chrg_dept_nm,
+			ECS_VIEW.ecs_chrg_dept_id,
+			ECS_VIEW.plan_charger_nm,
+			ECS_VIEW.plan_charger_empno,
+			ECS_VIEW.plan_foundng_de,
+			ECS_VIEW.plan_eqp_cpcty,
+			ECS_VIEW.plan_amt,
+			ECS_VIEW.rm_ctnt,
+			ECS_VIEW.cnstrc_esntl_id,
+			ECS_VIEW.cnstrc_eqp_cpcty,
+			ECS_VIEW.cms_bsns_cd,
+			ECS_VIEW.cms_prjct_cd,
+			ECS_VIEW.cms_prjct_sqnc_idtfr,
+			ECS_VIEW.prgs_sttus,
+			ECS_VIEW.plan_frst_regist_dt,
+			ECS_VIEW.plan_frst_rgstr_id,
+			ECS_VIEW.plan_last_updt_dt,
+			ECS_VIEW.plan_last_updusr_id,
+			ECS_VIEW.plan_updt_rsn,
+			ECS_VIEW.cnstrc_frst_regist_dt,
+			ECS_VIEW.cnstrc_frst_rgstr_id,
+			ECS_VIEW.cnstrc_last_updt_dt,
+			ECS_VIEW.cnstrc_last_updusr_id,
+			ECS_VIEW.cnstrc_updt_rsn,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.ordg_tit
+				ELSE ECS_VIEW.prjct_nm
+			END AS ordg_tit,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.lnrtr_div_nm
+				ELSE ECS_VIEW.lnrtr_div_cd
+			END AS lnrtr_div_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.ntntrs_sport_yn
+				ELSE ECS_VIEW.ntntrs_sport_yn
+			END AS ntntrs_sport_yn,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.bsns_mngdept_nm
+				ELSE ECS_VIEW.mngdept_cd
+			END AS bsns_mngdept_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.edpt_nm
+				ELSE ECS_VIEW.edpt_cd
+			END AS edpt_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.edpt_charger_nm
+				ELSE ECS_VIEW.edpt_charger_id
+			END AS edpt_charger_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.strwrk_de
+				ELSE ECS_VIEW.strwrk_de
+			END AS strwrk_de,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.last_compet_de
+				ELSE ECS_VIEW.last_compet_de
+			END AS last_compet_de,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.abslt_cntrwk_pd_info
+				ELSE ECS_VIEW.abslt_cntrwk_pd_info
+			END AS abslt_cntrwk_pd_info,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.last_cntrwk_pd_info
+				ELSE ECS_VIEW.last_cntrwk_pd_info
+			END AS last_cntrwk_pd_info,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.cntrct_entrps_nm
+				ELSE ECS_VIEW.entrps_nm
+			END AS cntrct_entrps_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.entrps_rprsr_nm
+				ELSE ECS_VIEW.entrps_rprsr_nm
+			END AS entrps_rprsr_nm,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.spt_addr
+				ELSE ECS_VIEW.spt_addr
+			END AS spt_addr,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.competam
+				ELSE ECS_VIEW.competam
+			END AS competam,
+			CASE
+				WHEN TRIM(ECS_VIEW.cms_bsns_cd) IS NOT NULL
+				THEN CMS_VIEW.bsns_div_nm
+				ELSE ECS_VIEW.bsns_div_cd
+			END AS bsns_div_nm
+		FROM
+			ECS_VIEW
+		LEFT JOIN (
+			SELECT /*+ LEADING(B A) */
+				/*
+				(
+					SELECT
+						stext
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						(objid, enddt) = (
+							SELECT
+								objid,
+								MAX(enddt) AS enddt
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								objid = basin_cd
+							GROUP BY
+								objid
+						)
+				) AS basin_nm,
+				*/
+				cmmn_cd_nm AS basin_nm,
+				basin_cd,
+				bsns_cd,
+				prjct_cd,
+				prjct_sqnc_idtfr,
+				ordg_tit,
+				lnrtr_div_nm,
+				ntntrs_sport_yn,
+				bsns_mngdept_nm,
+				edpt_nm,
+				edpt_cd,
+				edpt_charger_nm,
+				strwrk_de,
+				last_compet_de,
+				abslt_cntrwk_pd_info,
+				last_cntrwk_pd_info,
+				cntrct_entrps_nm,
+				entrps_rprsr_nm,
+				spt_addr,
+				competam,
+				bsns_div_nm
+			FROM (
+				SELECT
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SearchCMSAllDeptBasinMapping"></include> AS basin_cd,
+					bsns_cd,
+					prjct_cd,
+					prjct_sqnc_idtfr,
+					ordg_tit,
+					lnrtr_div_nm,
+					ntntrs_sport_yn,
+					bsns_mngdept_nm,
+					edpt_nm,
+					edpt_cd,
+					edpt_charger_nm,
+					strwrk_de,
+					last_compet_de,
+					abslt_cntrwk_pd_info,
+					last_cntrwk_pd_info,
+					cntrct_entrps_nm,
+					entrps_rprsr_nm,
+					spt_addr,
+					competam,
+					bsns_div_nm
+				FROM
+					CMS.vm_cs01003_01 A
+				WHERE
+					bsns_cd IN (
+						SELECT
+							DISTINCT cms_bsns_cd
+						FROM
+							ECS_VIEW
+					)
+					<!-- cd_creat_dt >= TO_DATE(#{strtDt}, 'yyyyMMdd') -->
+			) A, (
+				SELECT
+					upobj,
+					MAX(cmmn_cd_nm) AS cmmn_cd_nm,
+					MAX(cmmn_cd) AS cmmn_cd
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptBasinMapping"></include>
+				)
+				GROUP BY
+					upobj
+			) B
+			WHERE
+				A.basin_cd = B.upobj(+)
+		) CMS_VIEW
+		ON
+			ECS_VIEW.cms_bsns_cd = CMS_VIEW.bsns_cd
+			AND ECS_VIEW.cms_prjct_cd = CMS_VIEW.prjct_cd
+			AND ECS_VIEW.cms_prjct_sqnc_idtfr = CMS_VIEW.prjct_sqnc_idtfr
+		WHERE
+			1 = 1
+			<choose>
+				<when test='null != cnstrcEsntlId and "" neq ecsBasinDivCd'>
+			AND ECS_VIEW.cnstrc_esntl_id = #{cnstrcEsntlId}
+				</when>
+				<otherwise>
+			AND ECS_VIEW.cnstrc_esntl_id IS NULL
+				</otherwise>
+			</choose>
+		ORDER BY
+			ecs_setcsc_div_cd,
+			plan_foundng_de
+	</select>
+
+	<select id="TM_PB10001_Dao_retrievePlanCnstrcElctrnDoc" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo" resultType="egovMap">
+		/* TM_PB10001_Dao_retrievePlanCnstrcElctrnDoc */
+		SELECT
+			plan_esntl_id,
+			ecs_setcsc_div_cd,
+			plan_bsns_nm,
+			ecs_chrg_dept_id,
+			plan_charger_empno,
+			plan_foundng_de,
+			plan_eqp_cpcty,
+			plan_amt,
+			rm_ctnt,
+			frst_regist_dt,
+			frst_rgstr_id,
+			last_updt_dt,
+			last_updusr_id,
+			updt_rsn
+		FROM
+			tm_pb10001
+		WHERE
+			plan_esntl_id = #{planEsntlId}
+		ORDER BY
+			last_updt_dt DESC
+	</select>
+
+	<update id="TM_PB10001_Dao_savePlan" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo">
+		/* TM_PB10001_Dao_savePlan */
+		MERGE INTO
+			tm_pb10001 A
+		USING (
+			SELECT
+				#{planEsntlId} AS plan_esntl_id,
+				#{ecsSetcscDivCd} AS ecs_setcsc_div_cd,
+				#{planBsnsNm} AS plan_bsns_nm,
+				<!-- #{ecsChrgDeptId} AS ecs_chrg_dept_id, -->
+				<!-- #{planChargerEmpno} AS plan_charger_empno, -->
+				<!-- #{planFoundngDe} AS plan_foundng_de, -->
+				#{planEqpCpcty} AS plan_eqp_cpcty,
+				#{planAmt} AS plan_amt,
+				#{rmCtnt} AS rm_ctnt,
+				#{frstRgstrId} AS frst_rgstr_id,
+				#{lastUpdusrId} AS last_updusr_id,
+				#{updtRsn} AS updt_rsn
+			FROM
+				DUAL
+		) B
+		ON (
+			A.plan_esntl_id = B.plan_esntl_id
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.ecs_setcsc_div_cd = B.ecs_setcsc_div_cd,
+				A.plan_bsns_nm = B.plan_bsns_nm,
+				<!-- A.ecs_chrg_dept_id = B.ecs_chrg_dept_id, -->
+				<!-- A.plan_charger_empno = B.plan_charger_empno, -->
+				<!-- A.plan_foundng_de = B.plan_foundng_de, -->
+				A.plan_eqp_cpcty = B.plan_eqp_cpcty,
+				A.plan_amt = B.plan_amt,
+				A.rm_ctnt = B.rm_ctnt,
+				A.last_updt_dt = SYSDATE,
+				A.last_updusr_id = B.last_updusr_id,
+				A.updt_rsn = B.updt_rsn
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.plan_esntl_id,
+				A.ecs_setcsc_div_cd,
+				A.plan_bsns_nm,
+				<!-- A.ecs_chrg_dept_id, -->
+				<!-- A.plan_charger_empno, -->
+				<!-- A.plan_foundng_de, -->
+				A.plan_eqp_cpcty,
+				A.plan_amt,
+				A.rm_ctnt,
+				A.frst_regist_dt,
+				A.frst_rgstr_id,
+				A.last_updt_dt,
+				A.last_updusr_id,
+				A.updt_rsn
+			) VALUES (
+				B.plan_esntl_id,
+				B.ecs_setcsc_div_cd,
+				B.plan_bsns_nm,
+				<!-- B.ecs_chrg_dept_id, -->
+				<!-- B.plan_charger_empno, -->
+				<!-- B.plan_foundng_de, -->
+				B.plan_eqp_cpcty,
+				B.plan_amt,
+				B.rm_ctnt,
+				SYSDATE,
+				B.frst_rgstr_id,
+				SYSDATE,
+				B.last_updusr_id,
+				B.updt_rsn
+			)
+	</update>
+
+	<update id="TM_PB10001_Dao_savePlanData" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo">
+		/* TM_PB10001_Dao_savePlanData */
+		MERGE INTO
+			tm_pb10001 A
+		USING (
+			SELECT
+				#{planEsntlId} AS plan_esntl_id,
+				#{ecsChrgDeptId} AS ecs_chrg_dept_id,
+				#{planChargerEmpno} AS plan_charger_empno,
+				#{planFoundngDe} AS plan_foundng_de
+			FROM
+				DUAL
+		) B
+		ON (
+			A.plan_esntl_id = B.plan_esntl_id
+		)
+		WHEN MATCHED THEN
+			UPDATE SET
+				A.ecs_chrg_dept_id = B.ecs_chrg_dept_id,
+				A.plan_charger_empno = B.plan_charger_empno,
+				A.plan_foundng_de = B.plan_foundng_de
+		WHEN NOT MATCHED THEN
+			INSERT (
+				A.plan_esntl_id,
+				A.ecs_chrg_dept_id,
+				A.plan_charger_empno,
+				A.plan_foundng_de
+			) VALUES (
+				B.plan_esntl_id,
+				B.ecs_chrg_dept_id,
+				B.plan_charger_empno,
+				B.plan_foundng_de
+			)
+	</update>
+
+	<update id="TM_PB10001_Dao_updatePlanData" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo">
+		/* TM_PB10001_Dao_updatePlanData */
+		UPDATE
+			TM_PB10001
+		SET
+			ecs_chrg_dept_id = #{ecsChrgDeptId},
+			plan_charger_empno = #{planChargerEmpno},
+			plan_foundng_de = #{planFoundngDe}
+		WHERE
+			plan_esntl_id = #{planEsntlId}
+	</update>
+
+	<update id="TM_PB10001_Dao_updatePlanCpctyAmtCtnt" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo">
+		/* TM_PB10001_Dao_updatePlanCpctyAmtCtnt */
+		UPDATE
+			TM_PB10001
+		SET
+			plan_eqp_cpcty = #{planEqpCpcty},
+			plan_amt = #{planAmt},
+			rm_ctnt = #{rmCtnt},
+			updt_rsn = #{updtRsn},
+			last_updt_dt = SYSDATE,
+			last_updusr_id = #{lastUpdusrId}
+		WHERE
+			plan_esntl_id = #{planEsntlId}
+	</update>
+
+	<delete id="TM_PB10001_Dao_deletePlan" parameterType="kw.ecs.pb.plancnstrc.vo.PlanCnstrcVo">
+		/* TM_PB10001_Dao_deletePlan */
+		DELETE FROM
+			tm_pb10001
+		WHERE
+			plan_esntl_id = #{planEsntlId}
+	</delete>
+</mapper>

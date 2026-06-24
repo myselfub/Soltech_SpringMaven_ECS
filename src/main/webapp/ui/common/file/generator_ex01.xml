@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ev="http://www.w3.org/2001/xml-events"
+    xmlns:w2="http://www.inswave.com/websquare" xmlns:xf="http://www.w3.org/2002/xforms">
+    <head>
+        <w2:type>DEFAULT</w2:type>
+        <w2:buildDate />
+        <xf:model>
+            <xf:instance>
+                <data xmlns="" />
+            </xf:instance>
+            <w2:dataCollection baseNode="map">
+                <w2:dataList baseNode="list" repeatNode="map" id="dlt_GenMpdFileInfos" saveRemovedData="true">
+                    <w2:columnInfo>
+                        <w2:column id="originlFileNm" name="원본파일명" dataType="text"></w2:column>
+                        <w2:column id="fileTempPath" name="임시파일명" dataType="text"></w2:column>
+                    </w2:columnInfo>
+                </w2:dataList>
+            </w2:dataCollection>
+            <w2:workflowCollection></w2:workflowCollection>
+        </xf:model>
+        <script lazy="false" type="text/javascript"><![CDATA[
+        var funcCallback1;  //selectCallback0
+        var funcCallback2;  //selectCallback1
+        var funcCallback3;  //selectCallback2
+        var funcCallback4;  //selectCallback3
+        var funcCallback5;  //selectCallback4
+        var funcCallback6;  //selectCallback5
+        var funcCallback7;  //selectCallback6
+        var funcCallback8;  //selectCallback7
+        var funcCallback9;  //selectCallback8
+        var funcCallback10; //selectCallback8
+        
+        var funcDone1;  //mpd_0_ondone
+        var funcDone2;  //mpd_1_ondone
+        var funcDone3;  //mpd_2_ondone
+        var funcDone4;  //mpd_3_ondone
+        var funcDone5;  //mpd_4_ondone
+        var funcDone6;  //mpd_5_ondone
+        var funcDone7;  //mpd_6_ondone
+        var funcDone8;  //mpd_7_ondone
+        var funcDone9;  //mpd_8_ondone
+        var funcDone10; //mpd_9_ondone
+        
+        var funcError1; //mpd_0_onerror
+        var funcError2; //mpd_1_onerror
+        var funcError3; //mpd_2_onerror
+        var funcError4; //mpd_3_onerror
+        var funcError5; //mpd_4_onerror
+        var funcError6; //mpd_5_onerror
+        var funcError7; //mpd_6_onerror
+        var funcError8; //mpd_7_onerror
+        var funcError9; //mpd_8_onerror
+        var funcError10;    //mpd_9_onerror
+        
+        /**
+         * 화면 초기화에 필요한 로직을 수행한다.
+         */
+        scwin.initScreen = function() {
+            var rtnData;
+            gen_uploadFile.insertChild();
+            
+            rtnData = fileLib.makeSelectCallback(0, 0);
+            eval(rtnData[1]);
+//          console.log("1="+selectCallback0);
+            funcCallback1 = selectCallback0;
+            gen_uploadFile_0_mpd_File.selectCallback = "funcCallback1"
+            
+            rtnData = fileLib.makeEvDone(0, 0);
+            eval(rtnData[1]);
+            funcDone1 = mpd_0_ondone;
+            gen_uploadFile_0_mpd_File.bind("ondone", mpd_0_ondone);
+            
+            rtnData = fileLib.makeEvError(0, 0);
+            eval(rtnData[1]);
+            funcError1 = mpd_0_onerror;
+            gen_uploadFile_0_mpd_File.bind("onerror", mpd_0_onerror);
+            
+//          var userEv = { "action" : "script", "name" : "onclick", "param" : { "handler" : "scwin.mpd_File_onclick" } };
+//          gen_uploadFile_0_mpd_File.userEventList.push(userEv);
+        };
+        
+        //추가
+        scwin.btn_Add_onclick = function() {
+            if (gen_uploadFile.getLength() == 5) {
+                comLib.alert($p, "최대 개수는 5개 입니다.");
+                return;
+            }
+            
+            var idx = gen_uploadFile.insertChild();
+            var cnt = gen_uploadFile.getLength() - 1;
+            var height = parseInt(eval('gen_uploadFile_' + idx + '_mpd_File.getStyle("top").replace("px", "")')) + 24*cnt;
+            eval('gen_uploadFile_' + idx + '_mpd_File.setStyle("top", height + "px")');
+            
+            //selectCallback 설정
+            var mpdObj = eval('gen_uploadFile_' + idx + '_mpd_File');
+            
+            var str = "";
+            var rtnData;
+            rtnData = fileLib.makeSelectCallback(idx, cnt);
+            eval(rtnData[1]);
+            eval("funcCallback" + (cnt+1) + " = " + rtnData[0]);
+            mpdObj.selectCallback = "funcCallback" + gen_uploadFile.getLength();
+            
+            //bind ondone event
+            rtnData = fileLib.makeEvDone(idx, cnt);
+            eval(rtnData[1]);
+            eval("funcDone" +  (cnt+1) + " = " + rtnData[0]);
+            eval('gen_uploadFile_' + idx + '_mpd_File.bind("ondone", mpd_' + cnt + '_ondone)');
+            
+            //bind onerror event
+            rtnData = fileLib.makeEvError(idx, cnt);
+            eval(rtnData[1]);
+            eval("funcError" +  (cnt+1) + " = " + rtnData[0]);
+            eval('gen_uploadFile_' + idx + '_mpd_File.bind("onerror", mpd_' + cnt + '_onerror)');
+        };
+        
+        //삭제
+        scwin.btn_Del_onclick = function() {
+            for (var i=gen_uploadFile.getLength()-1; i>=0; i--) {
+                if (gen_uploadFile.getChild(i, "cbx_File").getValue() == "1") {
+                    eval("funcCallback" + (i+1) + "= undefined");
+                    gen_uploadFile.removeChild(i);
+                }
+            }
+            
+            //mpd_File top 위치 조정
+            for (var i=0; i<gen_uploadFile.getLength(); i++) {
+                var height = 24*i;
+                gen_uploadFile.getChild(i, "mpd_File").setStyle("top", height + "px");
+            }
+        };
+        
+        //전송
+        scwin.btn_Send_onclick = function() {
+            for (var i=0; i<gen_uploadFile.getLength(); i++) {
+                if ( gen_uploadFile.getChild(i, "mpd_File").getFileInfos().length > 0 ) {
+                    gen_uploadFile.getChild(i, "mpd_File").startUpload();
+                }
+            }
+        };
+        
+        
+        
+    
+    
+    ]]></script>
+    </head>
+    <body>
+        <xf:group style="" id="" class="file-btn-group">
+        	<w2:anchor ev:onclick="scwin.btn_Send_onclick" outerDiv="false" style="" id="btn_Send">
+        		<xf:label><![CDATA[전송]]></xf:label>
+        	</w2:anchor><w2:anchor outerDiv="false"
+        		ev:onclick="scwin.btn_Add_onclick" style="" id="btn_Add" class="add_row fa fa-plus">
+        		<xf:label><![CDATA[추가]]></xf:label>
+        	</w2:anchor>
+        	<w2:anchor ev:onclick="scwin.btn_Del_onclick"
+        		outerDiv="false" style="" id="btn_Del" class="del_row fa fa-minus">
+        		<xf:label><![CDATA[삭제]]></xf:label>
+        	</w2:anchor>
+        	
+        </xf:group>
+
+        <xf:group style="" id="" class="file-table">
+	        
+	        <xf:group style="" id="" class="file-table-header">
+	        	<xf:group style="" id="" class="file-th file-check">
+	        		<w2:span label=" " style="" id=""></w2:span>
+	        	</xf:group>
+	        	<xf:group style="" id="" class="file-th cw5">
+	        		<w2:span id="" label="문서명" style=""></w2:span>
+	        	</xf:group>
+	        	<xf:group style="min-width:15px;" id="" class="file-th file">
+	        		<w2:span id="" label="파일" style=""></w2:span>
+	        	</xf:group>
+	        	<xf:group class="file-th cw5" id="" style="">
+	        		<w2:span id="" label="진행구분" style=""></w2:span>
+	        	</xf:group>
+	        	<xf:group class="file-th prog" id="" style="">
+	        		<w2:span id="" label="진행상태" style=""></w2:span>
+	        	</xf:group>
+	        </xf:group><w2:generator style="" id="gen_uploadFile">
+	        <xf:group style="" id="" class="file-row">
+	        	<xf:group style="" id="" class="file-check">
+	        		<xf:select appearance="full" style="" id="cbx_File"
+	        			selectedindex="-1" rows="" renderType="checkboxgroup"
+	        			cols="">
+	        			<xf:choices>
+	        				<xf:item>
+	        					<xf:label><![CDATA[]]></xf:label>
+	        					<xf:value><![CDATA[1]]></xf:value>
+	        				</xf:item>
+	        			</xf:choices>
+	        		</xf:select>
+	        	</xf:group>
+	        	<xf:group class="file-name cw5" id="" style="">
+	        		<xf:input id=""
+	        			style="">
+	        		</xf:input>
+	        	</xf:group>
+	        	<xf:group style="" id="" class="file-search-in">
+	        		<xf:group style="" id="" class="file-input">
+	        			<w2:textbox style="" id="txb_FileName"
+	        				label="선택된 파일명">
+	        			</w2:textbox>
+	        			<w2:multiupload filter=""
+	        				mode="html5_transparent" ev:ondone="" maxcount="1"
+	        				ev:onerror="" action="" wmode="false" style=""
+	        				id="mpd_File" maxsize="" uploadButton=""
+	        				selectCallback="">
+	        			</w2:multiupload>
+	        			<w2:anchor outerDiv="false" style=""
+	        				id="btn_FileSelect">
+	        				<xf:label><![CDATA[찾아보기]]></xf:label>
+	        			</w2:anchor>
+	        		</xf:group>
+	        	</xf:group>
+	        	<xf:group class="file-select cw5" id="" style="">
+	        		<xf:select1 allOption="" appearance="minimal"
+	        			chooseOption="" direction="auto" disabled="false"
+	        			disabledClass="w2selectbox_disabled" displayMode="label"
+	        			id="cbSearchTp" optionOrder="false" selectedData="true"
+	        			style="" submenuSize="auto">
+	        			<xf:choices>
+	        				<xf:item>
+	        					<xf:label><![CDATA[테스트]]></xf:label>
+	        					<xf:value><![CDATA[]]></xf:value>
+	        				</xf:item>
+	        			</xf:choices>
+	        		</xf:select1>
+	        	</xf:group>
+	        	<xf:group class="file-prog" id="" style="">
+	        		<xf:group class="file-bar" id="file_status"
+	        			style="">
+	        			<xf:input id="ibx_BigFileStatus" initValue="0%"
+	        				style="" title="0%">
+	        			</xf:input>
+	        		</xf:group>
+	        	</xf:group>
+	        	
+	        </xf:group>
+	        </w2:generator>
+        </xf:group>
+        </body>
+</html>

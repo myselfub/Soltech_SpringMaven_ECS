@@ -1,0 +1,2106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "/WEB-INF/dtd/mybatis-3-mapper.dtd">
+<!-- 공통 SQL -->
+<mapper namespace="CMMN_SQL_Dao">
+	<!-- 본사/K-water연구원 등 => 금강유역, 시화 => 한강유역 맵핑 리스트 -->
+	<sql id="CMMN_SQL_Dao_ChnBasin">
+		DECODE(hq_cd, '50013977', DECODE(sap_bplc_vu, '100', '20060557', '10990028'), '50029610', '10990028', hq_cd)
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_ChnAllBasin">
+		DECODE(objid,
+			'10690002', '20060557', /* K-water연구원 */
+			'50013977', '20060557', /* 본사 */
+			'10670007', '20060557', /* 상임감사위원직속 */
+			'50043062', '20060557', /* 그린인프라부문 */
+			'50043335', '20060557', /* 인재개발원 */
+			'10740002', '20060557', /* 기획부문 */
+			'50043334', '20060557', /* 환경에너지본부 */
+			'10670002', '20060557', /* 사장직속 */
+			'50041298', '20060557', /* 수자원환경부문 */
+			'50043825', '20060557', /* 디지털혁신본부 */
+			'10680001', '20060557', /* 경영부문 */
+			'50042592', '20060557', /* 수도부문 */
+			'50029610', '10990028', /* 시화사업본부 */
+		objid)
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_ChnCmmnAllBasin">
+		DECODE(upper_cmmn_cd, '10690002', '20060557', '50013977', '20060557', '10000000', '20060557', '50029610', '10990028', upper_cmmn_cd)
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_ChnCbnNtrltDsqtyBasin">
+		DECODE(dscfc_lclhq_cd, '10000000', '20060557', '50029610', '10990028', dscfc_lclhq_cd)
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_ChnCbnNtrltRqtyBasin">
+		DECODE(hq_cd, '50013977', '20060557', '50029610', '10990028', hq_cd)
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_BasinMapping">
+		SELECT /*+ LEADING(B A) */
+			objid,
+			stext,
+			cmmn_cd_nm,
+			cmmn_cd,
+			sort_ordr
+		FROM (
+			SELECT
+				objid,
+				stext
+			FROM
+				HRM.vm_hr01a01
+			WHERE
+				SYSDATE BETWEEN strdt AND enddt
+				AND depth = '2'
+				AND parts = '1'
+				AND TRIM(kostl) IS NULL
+		) A
+		LEFT JOIN (
+			SELECT
+				REPLACE(cmmn_cd_nm, '영섬', '영·섬') AS cmmn_cd_nm,
+				cmmn_cd,
+				usr_dfn_vu2,
+				sort_ordr
+			FROM
+				tc_ecs_cd
+			WHERE
+				use_yn = 'Y'
+				AND cls_cd = 'ECS_1000'
+		) B
+		ON
+			<!-- SUBSTR(A.stext, 0, 2) = SUBSTR(B.cmmn_cd_nm, 0, 2) -->
+			A.objid = B.usr_dfn_vu2
+		WHERE
+			cmmn_cd_nm IS NOT NULL
+		ORDER BY
+			sort_ordr
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_AllBasinMapping">
+		SELECT /*+ LEADING(B A) */
+			objid,
+			stext,
+			cmmn_cd_nm,
+			cmmn_cd,
+			sort_ordr
+		FROM (
+			SELECT
+				objid,
+				stext
+			FROM
+				HRM.vm_hr01a01
+			WHERE
+				SYSDATE BETWEEN strdt AND enddt
+				AND objid IN (
+					SELECT
+						upobj
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptMapping"></include>
+					)
+					GROUP BY
+						upobj
+				)
+				AND parts = '1'
+				AND depth = '2'
+		) A
+		LEFT JOIN (
+			SELECT
+				REPLACE(cmmn_cd_nm, '영섬', '영·섬') AS cmmn_cd_nm,
+				cmmn_cd,
+				usr_dfn_vu1,
+				usr_dfn_vu2,
+				sort_ordr
+			FROM
+				tc_ecs_cd
+			WHERE
+				cls_cd = 'ECS_1000'
+		) B
+		ON
+			<!-- SUBSTR(A.stext, 0, 2) = SUBSTR(B.cmmn_cd_nm, 0, 2) -->
+			A.objid = B.usr_dfn_vu2
+		WHERE
+			cmmn_cd_nm IS NOT NULL
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_SetcscMapping">
+		<!--
+		SELECT /*+ LEADING(B A) */
+			A.cmmn_cd AS elcpwstn_cls_cd,
+			A.cmmn_cd_nm AS elcpwstn_cls_nm,
+			B.cmmn_cd,
+			B.cmmn_cd_nm
+		FROM (
+			SELECT
+				cmmn_cd,
+				DECODE(cmmn_cd,
+					'0004', '태양광',
+					'0005', '태양광',
+					'0007', '보소수력',
+					cmmn_cd_nm
+				) AS cmmn_cd_nm
+			FROM
+				SCM.tc_sc_unif_cmmn_cd
+			WHERE
+				sys_div_cd = 'WRO'
+				AND cls_cd = 'WRO_3003'
+		) A LEFT JOIN (
+			SELECT
+				cmmn_cd,
+				cmmn_cd_nm,
+				usr_dfn_vu2
+			FROM
+				tc_ecs_cd
+			WHERE
+				use_yn = 'Y'
+				AND cls_cd = 'ECS_1001'
+				AND usr_dfn_vu3 LIKE '%01%'
+			ORDER BY
+				sort_ordr
+		) B
+		ON
+			A.cmmn_cd_nm = B.cmmn_cd_nm
+		WHERE
+			B.cmmn_cd IS NOT NULL
+		-->
+		SELECT
+			cmmn_cd,
+			cmmn_cd_nm,
+			usr_dfn_vu1 AS cmmn_cd_nm_en,
+			usr_dfn_vu2 AS elcpwstn_cls_cd,
+			usr_dfn_vu3 AS cnd
+		FROM
+			tc_ecs_cd
+		WHERE
+			use_yn = 'Y'
+			AND cls_cd = 'ECS_1001'
+		ORDER BY
+			sort_ordr
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_ElcpwstnMapping">
+		SELECT
+			cls_cd,
+			cmmn_cd,
+			cmmn_cd_nm,
+			usr_dfn_vu1,
+			usr_dfn_vu2,
+			usr_dfn_vu3
+		FROM
+			tc_ecs_cd
+		WHERE
+			use_yn = 'Y'
+			AND cls_cd = 'ECS_1002'
+			<choose>
+				<when test='null != cnd and "" neq cnd and "1" eq cnd'>
+					AND SUBSTR(cmmn_cd, 2, 2) = '10'
+				</when>
+				<when test='null != cnd and "" neq cnd and "2" eq cnd'>
+					AND SUBSTR(cmmn_cd, 2, 2) = '21'
+				</when>
+				<when test='null != cnd and "" neq cnd and "3" eq cnd'>
+					AND SUBSTR(cmmn_cd, 2, 2) = '22'
+				</when>
+				<when test='null != cnd and "" neq cnd and "4" eq cnd'>
+					AND SUBSTR(cmmn_cd, 2, 1) = '2'
+				</when>
+				<when test='null != cnd and "" neq cnd and "5" eq cnd'>
+					AND SUBSTR(cmmn_cd, 2, 2) = '30'
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_HRMHQMapping">
+		<!-- HRM 본부 -->
+		SELECT
+			objid,
+			stext,
+			seqno
+		FROM
+			HRM.vm_hr01a01
+		WHERE
+			SYSDATE BETWEEN strdt AND enddt
+			AND objid IN (
+				SELECT
+					upobj
+				FROM
+					HRM.vm_hr01a01
+				WHERE
+					SYSDATE BETWEEN strdt AND enddt
+					AND objid IN (
+							SELECT
+								DISTINCT
+								CASE
+									WHEN MIN(depth) OVER(PARTITION BY kostl) = depth
+									THEN objid
+									ELSE NULL
+								END
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								SYSDATE BETWEEN strdt AND enddt
+								AND TRIM(kostl) IS NOT NULL
+						)
+				GROUP BY
+					upobj
+			)
+			AND parts = '1'
+			AND depth = '2'
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_GHGHQMapping">
+	<!-- GHG 지사 -->
+		SELECT /*+ LEADING(B A) */
+			A.cmmn_cd AS objid,
+			A.cmmn_cd_nm AS stext,
+			B.cmmn_cd_nm,
+			B.cmmn_cd,
+			B.sort_ordr
+		FROM (
+			SELECT
+				cmmn_cd,
+				REPLACE(cmmn_cd_nm, '영·섬', '영섬') AS cmmn_cd_nm
+			FROM
+				SCM.tc_sc_unif_cmmn_cd
+			WHERE
+				use_yn = 'Y'
+				AND cls_cd LIKE 'GHG_1001'
+				AND cmmn_cd != '88888888' /* 위탁 */
+		) A
+		LEFT JOIN (
+			SELECT
+				cmmn_cd_nm,
+				cmmn_cd,
+				usr_dfn_vu1,
+				usr_dfn_vu2,
+				sort_ordr
+			FROM
+				tc_ecs_cd
+			WHERE
+				use_yn = 'Y'
+				AND cls_cd = 'ECS_1000'
+		) B
+		ON
+			<!-- SUBSTR(A.cmmn_cd_nm, 0, 2) = SUBSTR(B.cmmn_cd_nm, 0, 2) -->
+			A.cmmn_cd = B.usr_dfn_vu2
+		WHERE
+			B.cmmn_cd_nm IS NOT NULL
+		ORDER BY
+			B.sort_ordr
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_HRMDeptMapping">
+		<!-- HRM 지사 -->
+		SELECT
+			objid,
+			stext,
+			upobj,
+			kostl,
+			kostx,
+			seqno
+		FROM
+			HRM.vm_hr01a01
+		WHERE
+			SYSDATE BETWEEN strdt AND enddt
+			AND objid IN (
+				SELECT
+					DISTINCT
+					CASE
+						WHEN MIN(depth) OVER(PARTITION BY kostl) = depth
+						THEN objid
+						ELSE NULL
+					END
+				FROM
+					HRM.vm_hr01a01
+				WHERE
+					SYSDATE BETWEEN strdt AND enddt
+					AND TRIM(kostl) IS NOT NULL
+			)
+			AND parts = '1'
+			AND stext NOT LIKE '%처'
+			AND upobj != '50039528' -- 해외
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_HRMAllDeptMapping">
+		<!-- HRM 전체 지사 -->
+		SELECT
+			objid,
+			stext,
+			upobj,
+			kostl,
+			kostx,
+			seqno
+		FROM
+			HRM.vm_hr01a01
+		WHERE
+			SYSDATE BETWEEN strdt AND enddt
+			AND objid IN (
+				SELECT
+					DISTINCT
+					CASE
+						WHEN MIN(depth) OVER(PARTITION BY kostl) = depth
+						THEN objid
+						ELSE NULL
+					END
+				FROM
+					HRM.vm_hr01a01
+				WHERE
+					SYSDATE BETWEEN strdt AND enddt
+					AND TRIM(kostl) IS NOT NULL
+			)
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_HRMAllDeptBasinMapping">
+		<!-- HRM 전체 지사와 유역 맵핑 -->
+		SELECT /*+ LEADING(A B) */
+			A.objid,
+			A.stext,
+			A.upobj,
+			A.kostl,
+			A.seqno,
+			NVL(B.cmmn_cd_nm, '금강') AS cmmn_cd_nm,
+			NVL(B.cmmn_cd, '02') AS cmmn_cd,
+			NVL(B.sort_ordr, 2) AS sort_ordr
+		FROM (
+			SELECT
+				objid,
+				stext,
+				DECODE(upobj, '10690002', '20060557', '50013977', '20060557', '50029610', '10990028', upobj) AS upobj,
+				kostl,
+				seqno
+			FROM (
+				<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptMapping"></include>
+			)
+		) A, (
+			<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_AllBasinMapping"></include>
+		) B
+		WHERE
+			A.upobj = B.objid(+)
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_AllDeptMappingList">
+		SELECT
+			'deptMapping' AS cls_cd,
+			'부서코드' AS cls_cd_nm,
+			A.objid AS cmmn_cd,
+			A.stext AS cmmn_cd_nm,
+			DECODE(A.upobj,
+				'10690002', '20060557', /* K-water연구원 */
+				'50013977', '20060557', /* 본사 */
+				'10670007', '20060557', /* 상임감사위원직속 */
+				'50043062', '20060557', /* 그린인프라부문 */
+				'50043335', '20060557', /* 인재개발원 */
+				'10740002', '20060557', /* 기획부문 */
+				'50043334', '20060557', /* 환경에너지본부 */
+				'10670002', '20060557', /* 사장직속 */
+				'50041298', '20060557', /* 수자원환경부문 */
+				'50043825', '20060557', /* 디지털혁신본부 */
+				'10680001', '20060557', /* 경영부문 */
+				'50042592', '20060557', /* 수도부문 */
+				'50029610', '10990028', /* 시화사업본부 */
+			A.upobj) AS upper_cmmn_cd,
+			(
+				SELECT
+					stext
+				FROM
+					HRM.vm_hr01a01
+				WHERE
+					SYSDATE BETWEEN strdt AND enddt
+					AND objid = DECODE(A.upobj,
+						'10690002', '20060557', /* K-water연구원 */
+						'50013977', '20060557', /* 본사 */
+						'10670007', '20060557', /* 상임감사위원직속 */
+						'50043062', '20060557', /* 그린인프라부문 */
+						'50043335', '20060557', /* 인재개발원 */
+						'10740002', '20060557', /* 기획부문 */
+						'50043334', '20060557', /* 환경에너지본부 */
+						'10670002', '20060557', /* 사장직속 */
+						'50041298', '20060557', /* 수자원환경부문 */
+						'50043825', '20060557', /* 디지털혁신본부 */
+						'10680001', '20060557', /* 경영부문 */
+						'50042592', '20060557', /* 수도부문 */
+						'50029610', '10990028', /* 시화사업본부 */
+					A.upobj)
+			) AS upper_cmmn_cd_nm
+		FROM (
+			<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptMapping"></include>
+		) A
+		WHERE
+			A.kostx = A.stext
+			AND A.upobj != '50039528' -- 해외
+		ORDER BY
+			seqno
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_SearchCMSAllDeptBasinMapping">
+		CASE
+			WHEN (
+				SELECT
+					depth
+				FROM
+					HRM.vm_hr01a01
+				WHERE
+					(objid, enddt) = (
+						SELECT
+							objid,
+							MAX(enddt) AS enddt
+						FROM
+							HRM.vm_hr01a01
+						WHERE
+							objid = A.edpt_cd
+						GROUP BY
+							objid
+					)
+			) IN ('1', '2')
+			THEN A.edpt_nm
+			ELSE (
+				/* depth3 */
+				SELECT
+					CASE
+						WHEN AA.depth = '1' OR AA.depth = '2'
+						THEN DECODE(AA.objid, '10690002', '20060557', '50013977', '20060557', '50029610', '10990028', AA.objid)
+						ELSE (
+							/* depth4 */
+							SELECT
+								CASE
+									WHEN AAA.depth = '1' OR AAA.depth = '2'
+									THEN DECODE(AAA.objid, '10690002', '20060557', '50013977', '20060557', '50029610', '10990028', AAA.objid)
+									ELSE (
+										/* depth5 */
+										SELECT
+											objid
+										FROM (
+											SELECT
+												objid,
+												stext,
+												upobj,
+												depth
+											FROM
+												HRM.vm_hr01a01
+											WHERE
+												(objid, enddt) = (
+													SELECT
+														objid,
+														MAX(enddt)
+													FROM
+														HRM.vm_hr01a01
+													WHERE
+														objid = AAA.upobj
+													GROUP BY
+														objid
+												)
+										)
+									)
+								END
+							FROM (
+								SELECT
+									objid,
+									stext,
+									upobj,
+									depth
+								FROM
+									HRM.vm_hr01a01
+								WHERE
+									(objid, enddt) = (
+										SELECT
+											objid,
+											MAX(enddt)
+										FROM
+											HRM.vm_hr01a01
+										WHERE
+											objid = AA.upobj
+										GROUP BY
+											objid
+									)
+							) AAA
+						)
+					END
+				FROM (
+					SELECT
+						objid,
+						stext,
+						upobj,
+						depth
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						(objid, enddt) = (
+							SELECT
+								objid,
+								MAX(enddt) AS enddt
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								objid = (
+									SELECT
+										upobj
+									FROM
+										HRM.vm_hr01a01
+									WHERE
+										(objid, enddt) = (
+											SELECT
+												objid,
+												MAX(enddt) AS enddt
+											FROM
+												HRM.vm_hr01a01
+											WHERE
+												objid = A.edpt_cd
+											GROUP BY
+												objid
+										)
+								)
+							GROUP BY
+								objid
+						)
+				) AA
+			)
+		END
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_SearchFMSAllDeptBasinMappingInit">
+		HRM_SEARCH_LIST AS (
+			SELECT /*+ MATERIALZE */
+				objid,
+				kostl,
+				enddt
+			FROM
+				HRM.vm_hr01a01
+			WHERE
+				kostx = stext
+		)
+	</sql>
+
+	<sql id="CMMN_SQL_Dao_SearchFMSAllDeptBasinMapping">
+		CASE
+			WHEN (
+				SELECT
+					depth
+				FROM
+					HRM.vm_hr01a01
+				WHERE
+					(objid, enddt) = (
+						SELECT
+							objid,
+							enddt
+						FROM (
+							SELECT
+								rownum AS no,
+								objid,
+								enddt
+							FROM (
+								SELECT
+									objid,
+									MAX(enddt) AS enddt
+								FROM
+									HRM_SEARCH_LIST
+								WHERE
+									kostl = LPAD(A.requst_dept_cd, 10, '0')
+								GROUP BY
+									objid
+								ORDER BY
+									enddt
+							)
+						)
+						WHERE
+							no = 1
+					)
+			) IN ('1', '2')
+			THEN (
+				SELECT
+					objid
+				FROM (
+					SELECT
+						rownum AS no,
+						objid,
+						enddt
+					FROM (
+						SELECT
+							objid,
+							MAX(enddt) AS enddt
+						FROM
+							HRM_SEARCH_LIST
+						WHERE
+							kostl = LPAD(A.requst_dept_cd, 10, '0')
+						GROUP BY
+							objid
+						ORDER BY
+							enddt
+					)
+				)
+				WHERE
+					no = 1
+			)
+			ELSE (
+				/* depth3 */
+				SELECT
+					CASE
+						WHEN AA.depth = '1' OR AA.depth = '2'
+						THEN DECODE(AA.objid, '10690002', '20060557', '50013977', '20060557', '50029610', '10990028', AA.objid)
+						ELSE (
+							/* depth4 */
+							SELECT
+								CASE
+									WHEN AAA.depth = '1' OR AAA.depth = '2'
+									THEN DECODE(AAA.objid, '10690002', '20060557', '50013977', '20060557', '50029610', '10990028', AAA.objid)
+									ELSE (
+										/* depth5 */
+										SELECT
+											objid
+										FROM (
+											SELECT
+												objid,
+												stext,
+												upobj,
+												depth
+											FROM
+												HRM.vm_hr01a01
+											WHERE
+												(objid, enddt) = (
+													SELECT
+														objid,
+														MAX(enddt)
+													FROM
+														HRM.vm_hr01a01
+													WHERE
+														objid = AAA.upobj
+													GROUP BY
+														objid
+												)
+										)
+									)
+								END
+							FROM (
+								SELECT
+									objid,
+									stext,
+									upobj,
+									depth
+								FROM
+									HRM.vm_hr01a01
+								WHERE
+									(objid, enddt) = (
+										SELECT
+											objid,
+											MAX(enddt)
+										FROM
+											HRM.vm_hr01a01
+										WHERE
+											objid = AA.upobj
+										GROUP BY
+											objid
+									)
+							) AAA
+						)
+					END
+				FROM (
+					SELECT
+						objid,
+						stext,
+						upobj,
+						depth
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						(objid, enddt) = (
+							SELECT
+								objid,
+								MAX(enddt) AS enddt
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								objid = (
+									SELECT
+										upobj
+									FROM
+										HRM.vm_hr01a01
+									WHERE
+										(objid, enddt) = (
+											SELECT
+												objid,
+												enddt
+											FROM (
+												SELECT
+													rownum AS no,
+													objid,
+													enddt
+												FROM (
+													SELECT
+														objid,
+														MAX(enddt) AS enddt
+													FROM
+														HRM_SEARCH_LIST
+													WHERE
+														kostl = LPAD(A.requst_dept_cd, 10, '0')
+													GROUP BY
+														objid
+													ORDER BY
+														enddt
+												)
+											)
+											WHERE
+												no = 1
+										)
+								)
+							GROUP BY
+								objid
+						)
+				) AA
+			)
+		END
+	</sql>
+
+	<select id="CMMN_SQL_Dao_retrieveHRMHQList" resultType="egovMap">
+		<!-- HRM 본부 목록 -->
+		/* CMMN_SQL_Dao_retrieveHRMHQList */
+		SELECT
+			'hq' AS cls_cd,
+			'본부' AS cls_cd_nm,
+			objid AS cmmn_cd,
+			stext AS cmmn_cd_nm
+		FROM (
+			<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMHQMapping"></include>
+		)
+		ORDER BY
+			seqno
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveHRMDeptList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- HRM 부서(지사) 목록 -->
+		/* CMMN_SQL_Dao_retrieveHRMDeptList */
+		WITH HRM_DEPT_LIST AS (
+			SELECT /*+ MATERIALZE */
+				objid,
+				stext,
+				upobj,
+				kostl,
+				kostx,
+				seqno
+			FROM
+				HRM.vm_hr01a01
+			WHERE
+				SYSDATE BETWEEN strdt AND enddt
+				AND objid IN (
+					SELECT
+						DISTINCT
+						CASE
+							WHEN MIN(depth) OVER(PARTITION BY kostl) = depth
+							THEN objid
+							ELSE NULL
+						END
+					FROM
+						HRM.vm_hr01a01
+					WHERE
+						SYSDATE BETWEEN strdt AND enddt
+						AND TRIM(kostl) IS NOT NULL
+				)
+		)
+		SELECT
+			cls_cd,
+			cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm,
+			upper_cmmn_cd,
+			empno
+		FROM (
+			SELECT
+				'dept' AS cls_cd,
+				'지사부서' AS cls_cd_nm,
+				objid AS cmmn_cd,
+				stext AS cmmn_cd_nm,
+				kostl AS upper_cmmn_cd,
+				'' AS empno
+			FROM (
+				<!-- <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptBasinMapping"></include> -->
+				SELECT /*+ LEADING(A B) */
+					A.objid,
+					A.stext,
+					A.upobj,
+					A.kostl,
+					A.seqno,
+					NVL(B.cmmn_cd_nm, '금강') AS cmmn_cd_nm,
+					NVL(B.cmmn_cd, '02') AS cmmn_cd,
+					NVL(B.sort_ordr, 2) AS sort_ordr
+				FROM (
+					SELECT
+						objid,
+						stext,
+						DECODE(upobj, '10690002', '20060557', '50013977', '20060557', '50029610', '10990028', upobj) AS upobj,
+						kostl,
+						seqno
+					FROM (
+						<!-- <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptMapping"></include> -->
+						SELECT
+							objid,
+							stext,
+							upobj,
+							kostl,
+							kostx,
+							seqno
+						FROM
+							HRM_DEPT_LIST
+						<!--
+						<if test='null != cnd2 and "" neq cnd2 and "ALL" eq cnd2'>
+						UNION
+						SELECT
+							objid,
+							stext || '(폐지)',
+							upobj,
+							kostl,
+							kostx,
+							seqno
+						FROM (
+							SELECT
+								objid,
+								stext,
+								upobj,
+								kostl,
+								kostx,
+								seqno
+							FROM
+								HRM.vm_hr01a01
+							WHERE
+								(objid, strdt) IN (
+									SELECT
+										DISTINCT
+										objid,
+										MAX(strdt) OVER(PARTITION BY objid) AS strdt
+									FROM
+										HRM.vm_hr01a01
+									WHERE
+										TRIM(kostl) IS NOT NULL
+										AND stext = kostx
+								)
+								AND objid NOT IN (
+									SELECT
+										objid
+									FROM
+										HRM_DEPT_LIST
+								)
+							MINUS
+							SELECT
+								objid,
+								stext,
+								upobj,
+								kostl,
+								kostx,
+								seqno
+							FROM
+								HRM_DEPT_LIST
+						)
+						</if>
+						-->
+					)
+				) A, (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_AllBasinMapping"></include>
+				) B
+				WHERE
+					A.upobj = B.objid(+)
+				ORDER BY
+					seqno
+			)
+			WHERE
+				1 = 1
+				<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+				AND cmmn_cd = #{ecsBasinDivCd}
+				</if>
+			ORDER BY
+				cmmn_cd_nm
+		)
+		<if test='null != cnd2 and "" neq cnd2 and "ALL" eq cnd2'>
+		UNION ALL
+		SELECT /*+ LEADING(B A) */
+			'dsuseDept' AS cls_cd,
+			'폐기부서' AS cls_cd_nm,
+			A.dept_id AS cmmn_cd,
+			'[폐기] ' || A.dept_name AS cmmn_cd_nm,
+			A.par_id AS upper_cmmn_cd,
+			B.emp_code AS empno
+		FROM (
+				SELECT
+					dept_id,
+					dept_name,
+					par_id,
+					seq AS seqno,
+					LEVEL AS depth
+				FROM
+					DBLINKUSR.v_dept_global_ecs
+				CONNECT BY
+					PRIOR dept_id = par_id
+				START WITH
+					dept_id = '000000101'
+				ORDER SIBLINGS BY seq
+			) A, (
+				SELECT
+					dept_id,
+					emp_code
+				FROM
+					DBLINKUSR.v_usr_global_ecs
+				WHERE
+					name LIKE '%_폐기%'
+			) B
+		WHERE
+			A.dept_id = B.dept_id
+		</if>
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveHRMUserList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* CMMN_SQL_Dao_retrieveHRMUserList */
+		SELECT
+			dept,
+			posit,
+			grade,
+			korname,
+			empno
+		FROM
+			HRM.vm_hr01601
+		WHERE
+			1 = 1
+			<if test='null != usrNm and "" neq usrNm'>
+			AND korname like '%' || #{usrNm} || '%'
+			</if>
+			<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+			AND objid = #{ecsChrgDeptId}
+			</if>
+		ORDER BY
+			boncd, /* 유역(HADE) */
+			objid, /* 지사(DEPT) */
+			timcd, /* 부서(sect) */
+			/* kwacd, -- 팀(team) */
+			calcd /* 직급(posit) */
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveOasisElctrnDocHRMUser" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* CMMN_SQL_Dao_retrieveOasisElctrnDocHRMUser */
+		WITH HRM_USR_LIST AS (
+			SELECT /*+ MATERIALZE */
+				empno,
+				dept,
+				objid
+			FROM
+				HRM.vm_hr01601
+			WHERE
+				1 = 1
+				<if test='null != usrNm and "" neq usrNm'>
+				AND korname = #{usrNm}
+				</if>
+			ORDER BY
+				empno DESC
+		)
+		SELECT
+			CASE
+				WHEN (
+						SELECT
+							COUNT(empno)
+						FROM
+							HRM_USR_LIST
+						WHERE
+							1 = 1
+							<if test='null != deptNm and "" neq deptNm'>
+							AND dept = #{deptNm}
+							</if>
+							<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId'>
+							AND objid = #{ecsChrgDeptId}
+							</if>
+							AND empno &lt; 30000000
+					) &gt; 0
+				THEN (
+						SELECT
+							MAX(empno)
+						FROM
+							HRM_USR_LIST
+						WHERE
+							1 = 1
+							<if test='null != deptNm and "" neq deptNm'>
+							AND dept = #{deptNm}
+							</if>
+							<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId'>
+							AND objid = #{ecsChrgDeptId}
+							</if>
+							AND empno &lt; 30000000
+					)
+				WHEN (
+						SELECT
+							COUNT(empno)
+						FROM
+							HRM_USR_LIST
+						WHERE
+							1 = 1
+							<if test='null != deptNm and "" neq deptNm'>
+							AND dept = #{deptNm}
+							</if>
+							<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId'>
+							AND objid = #{ecsChrgDeptId}
+							</if>
+					) &gt; 0
+				THEN (
+						SELECT
+							MAX(empno)
+						FROM
+							HRM_USR_LIST
+						WHERE
+							1 = 1
+							<if test='null != deptNm and "" neq deptNm'>
+							AND dept = #{deptNm}
+							</if>
+							<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId'>
+							AND objid = #{ecsChrgDeptId}
+							</if>
+					)
+				WHEN (
+						SELECT
+							COUNT(empno)
+						FROM
+							HRM_USR_LIST
+						WHERE
+							empno &lt; 30000000
+					) &gt; 0
+				THEN (
+						SELECT
+							MAX(empno)
+						FROM
+							HRM_USR_LIST
+						WHERE
+							empno &lt; 30000000
+					)
+				ELSE (
+						SELECT
+							MAX(empno)
+						FROM
+							HRM_USR_LIST
+					)
+			END AS empno
+		FROM
+			dual
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveOasisElctrnDocHRMDept" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* CMMN_SQL_Dao_retrieveOasisElctrnDocHRMDept */
+		WITH OASIS_DEPT AS (
+			SELECT /*+ MATERIALZE */
+				dept_id,
+				dept_name,
+				par_id,
+				seq,
+				LEVEL AS depth
+			FROM
+				DBLINKUSR.v_dept_global_ecs
+			WHERE
+				1 = 1
+				AND dept_id NOT IN (
+					SELECT
+						dept_id
+					FROM
+						DBLINKUSR.v_usr_global_ecs
+					WHERE
+						name LIKE '%_폐기%'
+				)
+			CONNECT BY
+				PRIOR dept_id = par_id
+			START WITH
+				dept_id = '000000101'
+			ORDER SIBLINGS BY seq
+		), HRM_DEPT AS (
+			SELECT /*+ MATERIALZE */
+				objid,
+				stext,
+				depth,
+				upobj,
+				kostl,
+				kostx,
+				seqno
+			FROM
+				HRM.vm_hr01a01
+			WHERE
+				SYSDATE BETWEEN strdt AND enddt
+		)
+		SELECT /*+ LEADING(A B) */
+			A.dept_id AS oasis_dept_id,
+			A.dept_name AS oasis_dept_nm,
+			A.seq AS oasis_seq,
+			A.depth AS oasis_depth,
+			A.par_id AS oasis_upp_dept_id,
+			A.par_dept_name AS oasis_up_dept_nm,
+			B.objid AS hrm_dept_id,
+			B.stext AS hrm_dept_nm,
+			B.depth AS hrm_depth,
+			B.upstext AS hrm_up_dept_nm
+		FROM (
+				SELECT
+					dept_id,
+					dept_name,
+					par_id,
+					seq,
+					DECODE(dept_name, '인재개발원', depth + 1, depth) AS depth,
+					DECODE(dept_name, '인재개발원', '인재개발원', (
+						SELECT
+							REPLACE(REPLACE(dept_name, '사장직할', '사장직속'), '감사직할', '상임감사위원직속')
+						FROM
+							OASIS_DEPT
+						WHERE
+							dept_id = A.par_id
+					)) AS par_dept_name
+				FROM
+					OASIS_DEPT A
+				WHERE
+					1 = 1
+					<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+					AND dept_id = #{ecsChrgDeptId}
+					</if>
+			) A, (
+				SELECT
+					objid,
+					stext,
+					depth,
+					(
+						SELECT
+							stext
+						FROM
+							HRM_DEPT
+						WHERE
+							objid = A.upobj
+					) AS upstext
+				FROM
+					HRM_DEPT A
+				WHERE
+					objid IN (
+						SELECT
+							DISTINCT
+							CASE
+								WHEN MIN(depth) OVER(PARTITION BY kostl) = depth
+								THEN objid
+								ELSE NULL
+							END
+						FROM
+							HRM_DEPT
+						WHERE
+							TRIM(kostl) IS NOT NULL
+					)
+			) B
+		WHERE
+			A.dept_name = B.stext
+			AND A.depth = B.depth
+			AND A.par_dept_name = B.upstext
+		ORDER BY
+			hrm_dept_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveOasisElctrnDocHRMDsuseDept" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* CMMN_SQL_Dao_retrieveOasisElctrnDocHRMDsuseDept */
+		WITH HRM_DEPT AS (
+			SELECT /*+ MATERIALZE */
+				objid,
+				stext,
+				depth,
+				upobj,
+				strdt,
+				enddt,
+				kostl,
+				kostx,
+				seqno
+			FROM
+				HRM.vm_hr01a01
+		)
+		SELECT
+			objid,
+			stext,
+			upobj
+		FROM
+			HRM_DEPT
+		WHERE
+			(objid, strdt) IN (
+				SELECT
+					DISTINCT
+					objid,
+					MAX(strdt) OVER(PARTITION BY objid) AS strdt
+				FROM
+					HRM_DEPT
+				WHERE
+					stext LIKE '%' || REPLACE(REPLACE(
+						(
+							SELECT
+								dept_name
+							FROM
+								DBLINKUSR.v_dept_global_ecs
+							WHERE
+								dept_id IN (
+									SELECT
+										dept_id
+									FROM
+										DBLINKUSR.v_usr_global_ecs
+									WHERE
+										name LIKE '%_폐기%'
+								)
+								AND dept_id = #{ecsChrgDeptId}
+						)
+					, '(폐기)', ''), '_폐기', '') || '%'
+			)
+			AND SYSDATE NOT BETWEEN strdt AND enddt
+		ORDER BY
+			stext
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveSetcscList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- 발전원 목록 -->
+		/* CMMN_SQL_Dao_retrieveSetcscList */
+		SELECT
+			cls_cd,
+			cmmn_cd,
+			cmmn_cd_nm,
+			usr_dfn_vu2 AS elcpwstn_cls_cd,
+			sort_ordr
+		FROM
+			tc_ecs_cd
+		WHERE
+			use_yn = 'Y'
+			AND cls_cd = 'ECS_1001'
+			AND usr_dfn_vu3 LIKE '%' || #{cnd} || '%'
+		<if test='null != cnd1 and "" neq cnd1 and "99" eq cnd1'>
+		UNION ALL
+		SELECT
+			'' AS cls_cd,
+			'99' AS cmmn_cd,
+			'해당없음' AS cmmn_cd_nm,
+			'' AS elcpwstn_cls_cd,
+			99 AS sort_ordr
+		FROM
+			dual
+		</if>
+		ORDER BY
+			sort_ordr
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveElcpwstnList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- 발전소 목록 -->
+		/* CMMN_SQL_Dao_retrieveElcpwstnList */
+		SELECT
+			cls_cd,
+			cmmn_cd,
+			cmmn_cd_nm,
+			usr_dfn_vu1,
+			usr_dfn_vu2,
+			usr_dfn_vu3
+		FROM (
+			<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ElcpwstnMapping"></include>
+		)
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveBasinMappingList" resultType="egovMap">
+		<!-- ECS 연동 유역(공통코드) -->
+		/* CMMN_SQL_Dao_retrieveBasinMappingList */
+		SELECT
+			'basinMapping' AS cls_cd,
+			'유역공통코드' AS cls_cd_nm,
+			objid,
+			stext,
+			cmmn_cd_nm,
+			cmmn_cd,
+			sort_ordr
+		FROM (
+			<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+		)
+		ORDER BY
+			sort_ordr
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveAllDeptMappingList" resultType="egovMap">
+		<!-- ECS 연동 전체부서 -->
+		/* CMMN_SQL_Dao_retrieveAllDeptMappingList */
+		SELECT
+			cls_cd,
+			cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm,
+			upper_cmmn_cd,
+			upper_cmmn_cd_nm
+		FROM (
+			<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_AllDeptMappingList"></include>
+		)
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveDeptMappingList" resultType="egovMap">
+		<!-- ECS 연동 부서(지사) -->
+		/* CMMN_SQL_Dao_retrieveDeptMappingList */
+		SELECT
+			'deptMapping' AS cls_cd,
+			'부서코드' AS cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm,
+			upper_cmmn_cd,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+				)
+				WHERE
+					objid = <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCmmnAllBasin"></include>
+			) AS upper_cmmn_cd_nm
+		FROM (
+			SELECT
+				'deptMapping' AS cls_cd,
+				'부서코드' AS cls_cd_nm,
+				objid AS cmmn_cd,
+				stext AS cmmn_cd_nm,
+				upobj AS upper_cmmn_cd
+			FROM (
+				<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMDeptMapping"></include>
+			)
+			WHERE
+				upobj IN (
+					SELECT
+						objid
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_AllBasinMapping"></include>
+					)
+				)
+			ORDER BY
+				seqno
+		)
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveBplcList" resultType="egovMap">
+		<!-- ECS 사업장(공통코드) -->
+		/* CMMN_SQL_Dao_retrieveBplcList */
+		SELECT
+			cls_cd,
+			cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm,
+			upper_cmmn_cd,
+			upper_cmmn_cd_nm,
+			upper_cmmn_cd2,
+			upper_cmmn_cd_nm2
+		FROM (
+			SELECT
+				A.cls_cd,
+				(
+					SELECT
+						cls_cd_nm
+					FROM
+						tc_ecs_cls_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2002'
+				) AS cls_cd_nm,
+				A.cmmn_cd,
+				A.cmmn_cd_nm,
+				(
+					SELECT
+						cmmn_cd
+					FROM
+						tc_ecs_cd
+					WHERE
+						cls_cd = (
+							SELECT
+								upper_cls_cd
+							FROM
+								tc_ecs_cd
+							WHERE
+								cls_cd = A.upper_cls_cd
+								AND cmmn_cd = A.upper_cmmn_cd
+						)
+						AND cmmn_cd = (
+							SELECT
+								upper_cmmn_cd
+							FROM
+								tc_ecs_cd
+							WHERE
+								cls_cd = A.upper_cls_cd
+								AND cmmn_cd = A.upper_cmmn_cd
+						)
+				) AS upper_cmmn_cd,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						cls_cd = (
+							SELECT
+								upper_cls_cd
+							FROM
+								tc_ecs_cd
+							WHERE
+								cls_cd = A.upper_cls_cd
+								AND cmmn_cd = A.upper_cmmn_cd
+						)
+						AND cmmn_cd = (
+							SELECT
+								upper_cmmn_cd
+							FROM
+								tc_ecs_cd
+							WHERE
+								cls_cd = A.upper_cls_cd
+								AND cmmn_cd = A.upper_cmmn_cd
+						)
+				) AS upper_cmmn_cd_nm,
+				upper_cmmn_cd AS upper_cmmn_cd2,
+				(
+					SELECT
+						cmmn_cd_nm
+					FROM
+						tc_ecs_cd
+					WHERE
+						cls_cd = A.upper_cls_cd
+						AND cmmn_cd = A.upper_cmmn_cd
+				) AS upper_cmmn_cd_nm2
+			FROM
+				tc_ecs_cd A
+			WHERE
+				A.use_yn = 'Y'
+				AND A.cls_cd = 'ECS_2002'
+			ORDER BY
+				A.sort_ordr
+		)
+		WHERE
+			1 = 1
+			<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+			AND upper_cmmn_cd = #{ecsBasinDivCd}
+			</if>
+			<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+			AND upper_cmmn_cd2 = #{ecsChrgDeptId}
+			</if>
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveCnsmpCndDeptList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- GHG 연계 부서(지사) -->
+		/* CMMN_SQL_Dao_retrieveCnsmpCndDeptList */
+		SELECT
+			'GHGDeptMapping' AS cls_cd,
+			'GHG부서코드' AS cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm
+		FROM
+			SCM.tc_sc_unif_cmmn_cd
+		WHERE
+			use_yn = 'Y'
+			AND cls_cd LIKE 'GHG_1002'
+			AND cmmn_cd != '88888889' /* 위탁 */
+			AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnCmmnAllBasin"></include> IN (
+				SELECT
+					objid
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_GHGHQMapping"></include>
+				)
+				WHERE
+					1 = 1
+					<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+					AND cmmn_cd = #{ecsBasinDivCd}
+					</if>
+			)
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveCnstscList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* CMMN_SQL_Dao_retrieveCnstscList */
+		SELECT /*+ LEADING(A B) */
+			A.cmmn_cd,
+			A.cmmn_cd_nm,
+			B.cmmn_cd AS cmmn_cd1,
+			B.cmmn_cd_nm AS cmmn_cd_nm1
+		FROM (
+			SELECT
+				cmmn_cd,
+				usr_dfn_vu2,
+				cmmn_cd_nm
+			FROM
+				tc_ecs_cd
+			WHERE
+				use_yn = 'Y'
+				AND cls_cd = 'ECS_1003'
+		) A, (
+			SELECT
+				cmmn_cd,
+				cmmn_cd_nm
+			FROM
+				SCM.tc_sc_unif_cmmn_cd
+			WHERE
+				use_yn = 'Y'
+				AND cls_cd = 'GHG_0024'
+		) B
+		WHERE
+			A.usr_dfn_vu2 = B.cmmn_cd
+			<if test='null != ecsCnstscDivCd and "" neq ecsCnstscDivCd and "ALL" neq ecsCnstscDivCd'>
+			AND usr_dfn_vu2 IN
+			<foreach item="item" collection="ecsCnstscDivCd.split('/')" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+			</if>
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveWtwkEltengMsrinsCndDeptList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* CMMN_SQL_Dao_retrieveWtwkEltengMsrinsCndDeptList */
+		SELECT
+			'WtwkEltengMsrinsDept' AS cls_cd,
+			'수전전력량계부서코드' AS cls_cd_nm,
+			objid AS cmmn_cd,
+			stext AS cmmn_cd_nm
+		FROM (
+			SELECT
+				objid,
+				stext,
+				seqno
+			FROM (
+				<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMHQMapping"></include>
+			)
+			UNION ALL
+			SELECT
+				objid,
+				stext,
+				seqno
+			FROM (
+				<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMDeptMapping"></include>
+			)
+			UNION ALL
+			SELECT
+				objid,
+				stext,
+				seqno
+			FROM
+				HRM.VM_HR01A01
+			WHERE
+				SYSDATE BETWEEN strdt AND enddt
+				AND stext = '본사'
+			ORDER BY
+				seqno
+		)
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrievePrdctnCndDeptList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- WRO 연계 부서(지사) -->
+		/* CMMN_SQL_Dao_retrievePrdctnCndDeptList */
+		SELECT
+			'WRODeptMapping' AS cls_cd,
+			'WRO부서코드' AS cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm,
+			(
+				SELECT
+					objid
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMDeptMapping"></include>
+				)
+				WHERE
+					objid = elcpwstn_mnggrp_dept_cd
+					<!-- AND (stext = cmmn_cd_nm OR REPLACE(stext, '댐지사', '지사') = cmmn_cd_nm) -->
+				GROUP BY
+					objid
+			) AS objid,
+			hq_cd AS upper_cmmn_cd,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+				)
+				WHERE
+					objid = hq_cd
+			) AS upper_cmmn_cd_nm
+		FROM (
+			SELECT
+				cstct_vu AS cmmn_cd,
+				(
+					SELECT
+						stext
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptMapping"></include>
+					)
+					WHERE
+						kostl = LPAD(cstct_vu, 10, '0')
+				) AS cmmn_cd_nm,
+				MAX(elcpwstn_mnggrp_dept_cd) AS elcpwstn_mnggrp_dept_cd,
+				MAX(<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include>) AS hq_cd,
+				MAX(dsply_ordr) AS dsply_ordr
+			FROM
+				WRO.tc_eg10101
+			WHERE
+				/*
+				centr_elyrs_yn IN ('Y', 'N', 'X')
+				AND accnut_acnt_cd LIKE '' || '%'
+				*/
+				accnut_lnk_elcpwstn_yn = 'Y'
+				AND elcpwstn_div_cd != 'X'
+				AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> IN (
+					SELECT
+						objid
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+					)
+					WHERE
+						1 = 1
+						<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+						AND cmmn_cd = #{ecsBasinDivCd}
+						</if>
+				)
+				AND elcpwstn_cls_cd IN (
+					SELECT
+						DISTINCT REGEXP_SUBSTR(elcpwstn_cls_cd, '[^,]+', 1, LEVEL) AS elcpwstn_cls_cd
+					FROM (
+						SELECT
+							elcpwstn_cls_cd
+						FROM (
+							<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+						)
+						WHERE
+							1 = 1
+							<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+							AND cmmn_cd = #{ecsSetcscDivCd}
+							</if>
+					)
+					CONNECT BY
+						LEVEL &lt;= LENGTH(REGEXP_REPLACE(elcpwstn_cls_cd, '[^,]+', '')) + 1
+				)
+				<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+				AND cstct_vu = #{ecsChrgDeptId}
+				</if>
+			GROUP BY
+				cstct_vu
+		)
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrievePrdctnCndElcpwstnList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- WRO 연계 발전소 -->
+		/* CMMN_SQL_Dao_retrievePrdctnCndSetcscList */
+		SELECT
+			'WROElcpwstnMapping' AS cls_cd,
+			'WRO발전소코드' AS cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm,
+			hq_cd AS upper_cmmn_cd,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+				)
+				WHERE
+					objid = hq_cd
+			) AS upper_cmmn_cd_nm,
+			elcpwstn_cls_cd AS upper_cmmn_cd2,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+				) B
+				WHERE
+					B.elcpwstn_cls_cd LIKE '%' || A.elcpwstn_cls_cd || '%'
+					<if test='null != cnd1 and "" neq cnd1 and "ALL" neq cnd1'>
+					AND B.cnd LIKE '%' || #{cnd1} || '%'
+					</if>
+					AND ROWNUM = 1
+			) AS upper_cmmn_cd_nm2,
+			cstct_vu AS upper_cmmn_cd3,
+			cstct_nm AS upper_cmmn_cd_nm3
+		FROM (
+			SELECT
+				cmmn_cd,
+				cmmn_cd_nm,
+				hq_cd,
+				elcpwstn_cls_cd,
+				cstct_vu,
+				(
+					SELECT
+						stext
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptMapping"></include>
+					)
+					WHERE
+						kostl = LPAD(cstct_vu, 10, '0')
+				) AS cstct_nm
+			FROM (
+				SELECT
+					elcpwstn_cd AS cmmn_cd,
+					MAX(elcpwstn_nm) AS cmmn_cd_nm,
+					MAX(hq_cd) AS hq_cd,
+					MAX(elcpwstn_cls_cd) AS elcpwstn_cls_cd,
+					MAX(cstct_vu) AS cstct_vu,
+					MAX(cstct_nm) AS cstct_nm
+				FROM
+					WRO.tc_eg10101
+				WHERE
+					centr_elyrs_yn IN ('Y', 'N', 'X')
+					AND accnut_acnt_cd LIKE '' || '%'
+					/*
+					elcpwstn_div_cd != 'X'
+					AND accnut_lnk_elcpwstn_yn = 'Y'
+					*/
+					AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> IN (
+						SELECT
+							objid
+						FROM (
+							<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+						)
+						WHERE
+							1 = 1
+							<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+							AND cmmn_cd = #{ecsBasinDivCd}
+							</if>
+					)
+					AND elcpwstn_cls_cd IN (
+						SELECT
+							DISTINCT REGEXP_SUBSTR(elcpwstn_cls_cd, '[^,]+', 1, LEVEL) AS elcpwstn_cls_cd
+						FROM (
+							SELECT
+								elcpwstn_cls_cd
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+							)
+							WHERE
+								1 = 1
+								<if test='null != cnd1 and "" neq cnd1 and "ALL" neq cnd1'>
+								AND cnd LIKE '%' || #{cnd1} || '%'
+								</if>
+								<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+								AND cmmn_cd = #{ecsSetcscDivCd}
+								</if>
+						)
+						CONNECT BY
+							LEVEL &lt;= LENGTH(REGEXP_REPLACE(elcpwstn_cls_cd, '[^,]+', '')) + 1
+					)
+					<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+					AND cstct_vu = #{ecsChrgDeptId}
+					</if>
+				GROUP BY
+					elcpwstn_cd
+				ORDER BY
+					MAX(dsply_ordr)
+			)
+			<if test='null != cnd and "elcpwstnKepco" eq cnd'>
+			/* 한전거래 태양광 */
+			UNION ALL
+			SELECT
+				cmmn_cd,
+				cmmn_cd_nm,
+				hq_cd,
+				elcpwstn_cls_cd,
+				cstct_vu,
+				(
+					SELECT
+						stext
+					FROM (
+						<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptMapping"></include>
+					)
+					WHERE
+						kostl = LPAD(cstct_vu, 10, '0')
+				) AS cstct_nm
+			FROM (
+				SELECT
+					elcpwstn_cd AS cmmn_cd,
+					MAX(elcpwstn_nm) AS cmmn_cd_nm,
+					MAX(hq_cd) AS hq_cd,
+					MAX(elcpwstn_cls_cd) AS elcpwstn_cls_cd,
+					MAX(cstct_vu) AS cstct_vu,
+					MAX(cstct_nm) AS cstct_nm
+				FROM
+					WRO.tc_eg10101
+				WHERE
+					elcpwstn_cls_cd = '0005'
+					AND <include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_ChnBasin"></include> IN (
+						SELECT
+							objid
+						FROM (
+							<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+						)
+						WHERE
+							1 = 1
+							<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+							AND cmmn_cd = #{ecsBasinDivCd}
+							</if>
+					)
+					AND elcpwstn_cls_cd IN (
+						SELECT
+							DISTINCT REGEXP_SUBSTR(elcpwstn_cls_cd, '[^,]+', 1, LEVEL) AS elcpwstn_cls_cd
+						FROM (
+							SELECT
+								elcpwstn_cls_cd
+							FROM (
+								<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+							)
+							WHERE
+								1 = 1
+								<if test='null != cnd1 and "" neq cnd1 and "ALL" neq cnd1'>
+								AND cnd LIKE '%' || #{cnd1} || '%'
+								</if>
+								<if test='null != ecsSetcscDivCd and "" neq ecsSetcscDivCd and "ALL" neq ecsSetcscDivCd'>
+								AND cmmn_cd = #{ecsSetcscDivCd}
+								</if>
+						)
+						CONNECT BY
+							LEVEL &lt;= LENGTH(REGEXP_REPLACE(elcpwstn_cls_cd, '[^,]+', '')) + 1
+					)
+					<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+					AND cstct_vu = #{ecsChrgDeptId}
+					</if>
+				GROUP BY
+					elcpwstn_cd
+				ORDER BY
+					MAX(dsply_ordr)
+			)
+			</if>
+		) A
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveCnsmpSttusCndKepcoDeptList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- ECS 한전 부서(공통코드) -->
+		/* CMMN_SQL_Dao_retrieveCnsmpSttusCndKepcoDeptList */
+		SELECT
+			'kepcoDept' AS cls_cd,
+			'한전부서코드' AS cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm
+		FROM
+			tc_ecs_cd
+		WHERE
+			use_yn = 'Y'
+			AND cls_cd = 'ECS_2001'
+			<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+			AND upper_cmmn_cd = #{ecsBasinDivCd}
+			</if>
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveInhouseSnpwDeptList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- ECS 소내태양광 부서 -->
+		/* CMMN_SQL_Dao_retrieveInhouseSnpwDeptList */
+		SELECT
+			'inhouseSnpw' AS cls_cd,
+			'소내태양광' AS cls_cd_nm,
+			<choose>
+				<when test='null != cnd and "dept" == cnd'>
+			dept_cd AS cmmn_cd,
+			MAX(dept_nm) AS cmmn_cd_nm,
+			MAX(basin_cd) AS upper_cmmn_cd,
+			MAX(basin_nm) AS upper_cmmn_cd_nm
+				</when>
+				<otherwise>
+			bplc_cd AS cmmn_cd,
+			MAX(bplc_nm) AS cmmn_cd_nm,
+			MAX(dept_cd) AS upper_cmmn_cd,
+			MAX(dept_nm) AS upper_cmmn_cd_nm,
+			MAX(inhouse_cnsmp_eqp_cpcty) AS upper_cmmn_cd2
+				</otherwise>
+			</choose>
+		FROM (
+			SELECT /*+ LEADING(BASIN DEPT BPLC USWTR_SQTY INHOUSE_CNSMP_SNPW) */
+				BASIN.cmmn_cd AS basin_cd,
+				BASIN.cmmn_cd_nm AS basin_nm,
+				BASIN.sort_ordr AS basin_sort,
+				DEPT.cmmn_cd AS dept_cd,
+				DEPT.cmmn_cd_nm AS dept_nm,
+				DEPT.sort_ordr AS dept_sort,
+				BPLC.cmmn_cd AS bplc_cd,
+				BPLC.cmmn_cd_nm AS bplc_nm,
+				BPLC.sort_ordr AS bplc_sort,
+				INHOUSE_CNSMP_SNPW.cmmn_cd AS inhouse_cnsmp_snpw_cd,
+				INHOUSE_CNSMP_SNPW.cmmn_cd_nm AS inhouse_cnsmp_snpw_cd_nm,
+				INHOUSE_CNSMP_SNPW.usr_dfn_vu1 AS inhouse_cnsmp_eqp_cpcty,
+				INHOUSE_CNSMP_SNPW.sort_ordr AS inhouse_cnsmp_snpw_cd_sort
+			FROM (
+					SELECT
+						cls_cd,
+						cmmn_cd,
+						cmmn_cd_nm,
+						upper_cls_cd,
+						upper_cmmn_cd,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_1000'
+				) BASIN, (
+					SELECT
+						cls_cd,
+						cmmn_cd,
+						cmmn_cd_nm,
+						upper_cls_cd,
+						upper_cmmn_cd,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2001'
+				) DEPT, (
+					SELECT
+						cls_cd,
+						cmmn_cd,
+						cmmn_cd_nm,
+						upper_cls_cd,
+						upper_cmmn_cd,
+						usr_dfn_vu1,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2002'
+				) BPLC, (
+					SELECT
+						cls_cd,
+						cmmn_cd,
+						cmmn_cd_nm,
+						upper_cls_cd,
+						upper_cmmn_cd,
+						usr_dfn_vu1,
+						sort_ordr
+					FROM
+						tc_ecs_cd
+					WHERE
+						use_yn = 'Y'
+						AND cls_cd = 'ECS_2011'
+				) INHOUSE_CNSMP_SNPW
+			WHERE
+				INHOUSE_CNSMP_SNPW.upper_cls_cd = BPLC.cls_cd
+				AND INHOUSE_CNSMP_SNPW.upper_cmmn_cd = BPLC.cmmn_cd
+				AND BPLC.upper_cls_cd = DEPT.cls_cd
+				AND BPLC.upper_cmmn_cd = DEPT.cmmn_cd
+				AND DEPT.upper_cls_cd = BASIN.cls_cd
+				AND DEPT.upper_cmmn_cd = BASIN.cmmn_cd
+				<if test='null != ecsBasinDivCd and "" neq ecsBasinDivCd and "ALL" neq ecsBasinDivCd'>
+				AND BASIN.cmmn_cd = #{ecsBasinDivCd}
+				</if>
+				<if test='null != ecsChrgDeptId and "" neq ecsChrgDeptId and "ALL" neq ecsChrgDeptId'>
+				AND DEPT.cmmn_cd = #{ecsChrgDeptId}
+				</if>
+			ORDER BY
+				basin_sort,
+				dept_sort,
+				bplc_sort,
+				inhouse_cnsmp_snpw_cd_sort
+		)
+		GROUP BY
+			<choose>
+				<when test='null != cnd and "dept" == cnd'>
+			dept_cd
+				</when>
+				<otherwise>
+			bplc_cd
+				</otherwise>
+			</choose>
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveRecCndSetcscList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		<!-- WRO, 공통코드 연계 발전원 -->
+		/* CMMN_SQL_Dao_retrieveRecCndSetcscList */
+		SELECT
+			'recSetcsc' AS cls_cd,
+			'REC발전원코드' AS cls_cd_nm,
+			cmmn_cd,
+			cmmn_cd_nm,
+			hq_cd AS upper_cmmn_cd,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_BasinMapping"></include>
+				)
+				WHERE
+					objid = hq_cd
+			) AS upper_cmmn_cd_nm,
+			elcpwstn_cls_cd AS upper_cmmn_cd2,
+			(
+				SELECT
+					cmmn_cd_nm
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_SetcscMapping"></include>
+				) B
+				WHERE
+					B.elcpwstn_cls_cd LIKE '%' || A.elcpwstn_cls_cd || '%'
+					AND cnd LIKE '%02%'
+					AND ROWNUM = 1
+			) AS upper_cmmn_cd_nm2,
+			cstct_vu AS upper_cmmn_cd3,
+			(
+				SELECT
+					stext
+				FROM (
+					<include refid="CMMN_SQL_Dao.CMMN_SQL_Dao_HRMAllDeptMapping"></include>
+				)
+				WHERE
+					kostl = LPAD(cstct_vu, 10, '0')
+			) AS upper_cmmn_cd_nm3
+		FROM (
+			<include refid="TM_CL22001_Dao.TM_CL22001_Dao_Common"></include>
+		) A
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrieveCmprSttusDeptList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* CMMN_SQL_Dao_retrieveCmprSttusDeptList */
+		SELECT
+			A.cls_cd,
+			A.cls_cd_nm,
+			B.cmmn_cd,
+			B.cmmn_cd_nm,
+			B.cmmn_cd_dc,
+			B.upper_cls_cd,
+			B.upper_cmmn_cd
+		FROM
+			tc_ecs_cls_cd A,
+			tc_ecs_cd B
+		WHERE
+			A.cls_cd = B.cls_cd
+			AND A.use_yn = 'Y'
+			AND B.use_yn = 'Y'
+			AND A.cls_cd = 'ECS_2001'
+		ORDER BY
+			cmmn_cd_nm
+	</select>
+
+	<select id="CMMN_SQL_Dao_retrievePrgsSttusList" parameterType="kw.ecs.common.vo.ECSDefaultVo" resultType="egovMap">
+		/* CMMN_SQL_Dao_retrievePrgsSttusList */
+		SELECT
+			MAX(cls_cd) AS cls_cd,
+			'진행현황' AS cls_cd_nm,
+			REPLACE(SUBSTR(cmmn_cd, 0, 3), 'P1', 'P0') AS cmmn_cd,
+			REGEXP_SUBSTR(MAX(cmmn_cd_nm), '[^-]+', 1, 1) || REGEXP_SUBSTR(MAX(cmmn_cd_nm), '[^-]+', 1, 2) AS cmmn_cd_nm,
+			MIN(sort_ordr) AS sort_ordr
+		FROM
+			tc_ecs_cd
+		WHERE
+			use_yn = 'Y'
+			AND cls_cd = 'ECS_2000'
+			<choose>
+				<when test='null != cnd and "PC" eq cnd'>
+			AND (
+				REPLACE(SUBSTR(cmmn_cd, 0, 3), 'P1', 'P0') LIKE 'P%'
+				OR REPLACE(SUBSTR(cmmn_cd, 0, 3), 'P1', 'P0') LIKE 'C%'
+			)
+				</when>
+				<when test='null != cnd and "" neq cnd'>
+			AND (
+				REPLACE(SUBSTR(cmmn_cd, 0, 3), 'P1', 'P0') LIKE #{cnd} || '%'
+			)
+				</when>
+				<otherwise>
+				</otherwise>
+			</choose>
+		GROUP BY
+			REPLACE(SUBSTR(cmmn_cd, 0, 3), 'P1', 'P0')
+		ORDER BY
+			sort_ordr
+	</select>
+</mapper>

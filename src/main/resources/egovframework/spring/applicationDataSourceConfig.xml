@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:lang="http://www.springframework.org/schema/lang" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:tool="http://www.springframework.org/schema/tool" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	default-autowire="byName"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+http://www.springframework.org/schema/tool http://www.springframework.org/schema/tool/spring-tool.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+	<!--
+		====================================================================
+		Transaction Manager by Subject Area
+		====================================================================
+	-->
+	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean id="txManager1" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource1" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<tx:attributes>
+			<tx:method name="*Tx" rollback-for="Exception" propagation="REQUIRES_NEW" />
+			<tx:method name="*" rollback-for="Exception" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<tx:advice id="txAdvice1" transaction-manager="txManager1">
+		<tx:attributes>
+			<tx:method name="*Tx" rollback-for="Exception" propagation="REQUIRES_NEW" />
+			<tx:method name="*" rollback-for="Exception" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="requiredTx" expression="execution(* *..*service.impl.*Impl.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="requiredTx" />
+	</aop:config>
+
+	<aop:config>
+		<aop:pointcut id="requiredTx1" expression="execution(* *..*service.impl.*Impl.*(..))" />
+		<aop:advisor advice-ref="txAdvice1" pointcut-ref="requiredTx1" />
+	</aop:config>
+
+	<!--
+		====================================================================
+		DataSource Encrypter
+		====================================================================
+	-->
+	<bean id="environmentVariablesConfiguration" class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+		<property name="algorithm" value="PBEWithMD5AndDES" />
+		<property name="password" value="[DBPASSWORD]" />
+	</bean>
+
+	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config" ref="environmentVariablesConfiguration" />
+	</bean>
+
+	<bean id="propertyConfigurer" class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+		<constructor-arg ref="configurationEncryptor" />
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/classes/egovframework/property/globals.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!--
+		====================================================================
+		DataSource by Subject Area
+		====================================================================
+	-->
+	<bean id="dataSourceSpied" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${global.db.driverclassname}" />
+		<property name="url" value="${global.db.url.DEV}" />
+		<property name="username" value="${global.db.username.SCM}" />
+		<property name="password" value="${global.db.password.SCM}" />
+		<property name="initialSize" value="${global.db.initialSize.SCM}" />
+		<property name="maxActive" value="${global.db.maxActive.SCM}" />
+		<property name="maxIdle" value="${global.db.maxIdle.SCM}" />
+		<property name="minIdle" value="${global.db.minIdle.SCM}" />
+		<property name="maxWait" value="${global.db.maxWait.SCM}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${global.db.timeBetweenEvictionRunsMillis.SCM}" />
+		<property name="numTestsPerEvictionRun" value="${global.db.numTestsPerEvictionRun.SCM}" />
+		<property name="removeAbandonedTimeout" value="${global.db.removeAbandonedTimeout.SCM}" />
+		<property name="removeAbandoned" value="${global.db.removeAbandoned.SCM}" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="connectionProperties" value="oracle.net.CONNECT_TIMEOUT=6000" />
+	</bean>
+
+	<!-- <jee:jndi-lookup jndi-name="jdbc/scm" id="dataSourceSpied" expected-type="javax.sql.DataSource"></jee:jndi-lookup> -->
+
+	<bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSourceSpied" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE" />
+				<property name="sqlPrefix" value="SQL         :  " />
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="dataSourceSpied1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${global.db.driverclassname}" />
+		<property name="url" value="${global.db.url.OPER}" />
+		<property name="username" value="${global.db.username.ECS}" />
+		<property name="password" value="${global.db.password.ECS}" />
+		<property name="initialSize" value="${global.db.initialSize.ECS}" />
+		<property name="maxActive" value="${global.db.maxActive.ECS}" />
+		<property name="maxIdle" value="${global.db.maxIdle.ECS}" />
+		<property name="minIdle" value="${global.db.minIdle.ECS}" />
+		<property name="maxWait" value="${global.db.maxWait.ECS}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${global.db.timeBetweenEvictionRunsMillis.ECS}" />
+		<property name="numTestsPerEvictionRun" value="${global.db.numTestsPerEvictionRun.ECS}" />
+		<property name="removeAbandonedTimeout" value="${global.db.removeAbandonedTimeout.ECS}" />
+		<property name="removeAbandoned" value="${global.db.removeAbandoned.ECS}" />
+		<property name="defaultAutoCommit" value="false" />
+		<property name="poolPreparedStatements" value="true" />
+		<property name="connectionProperties" value="oracle.net.CONNECT_TIMEOUT=6000" />
+	</bean>
+
+	<!-- <jee:jndi-lookup jndi-name="jdbc/ecs" id="dataSourceSpied1" expected-type="javax.sql.DataSource"></jee:jndi-lookup> -->
+
+	<bean id="dataSource1" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+		<constructor-arg ref="dataSourceSpied1" />
+		<property name="logFormatter">
+			<bean class="net.sf.log4jdbc.tools.Log4JdbcCustomFormatter">
+				<property name="loggingType" value="MULTI_LINE" />
+				<property name="sqlPrefix" value="SQL         :  " />
+			</bean>
+		</property>
+	</bean>
+
+	<!--
+		====================================================================
+		SqlMap by Subject Area
+		====================================================================
+	-->
+	<bean id="sqlSession" class="kw.fw.cmn.RefreshableSqlMapClientFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis-config-scm.xml" />
+		<property name="mapperLocations" value="classpath*:egovframework/sqlmap/scm/**/*Dao.xml" />
+		<property name="checkInterval" value="1000" />
+	</bean>
+
+	<bean id="sqlSessionTemplate" name="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg ref="sqlSession" />
+	</bean>
+
+	<bean id="sqlSession1" class="kw.fw.cmn.RefreshableSqlMapClientFactoryBean">
+		<property name="dataSource" ref="dataSource1" />
+		<property name="configLocation" value="classpath:mybatis-config-ecs.xml" />
+		<property name="mapperLocations" value="classpath*:egovframework/sqlmap/ecs/**/*Dao.xml" />
+		<property name="checkInterval" value="1000" />
+	</bean>
+
+	<bean id="sqlSessionTemplate1" name="sqlSessionTemplate1" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">
+		<constructor-arg ref="sqlSession1" />
+	</bean>
+
+	<!--
+		====================================================================
+		Common DAO & DAO by Subject Area
+		====================================================================
+	-->
+	<bean id="commonDao" class="kw.fw.dao.CommonDao">
+		<property name="sqlSession" ref="sqlSessionTemplate" />
+	</bean>
+
+	<bean id="ecsCommonDao" class="kw.ecs.dao.EcsCommonDao">
+		<property name="sqlSession" ref="sqlSessionTemplate1" />
+	</bean>
+
+</beans>
